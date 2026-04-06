@@ -1,0 +1,105 @@
+name: New Indian Identifier Request
+description: Request a new Indian identifier for the Data Faker tool
+title: "[Data Faker] Add [IDENTIFIER_NAME] generator"
+labels: ["enhancement", "data-faker"]
+assignees:
+  - navrattan
+body:
+  - type: markdown
+    attributes:
+      value: |
+        Request a new Indian identifier to be added to the Data Faker tool.
+
+  - type: input
+    id: identifier-name
+    attributes:
+      label: Identifier Name
+      description: Full name of the identifier
+      placeholder: e.g., "Vehicle Registration Number (VRN)"
+    validations:
+      required: true
+
+  - type: input
+    id: acronym
+    attributes:
+      label: Common Acronym
+      description: How it's commonly abbreviated
+      placeholder: e.g., "VRN"
+
+  - type: textarea
+    id: description
+    attributes:
+      label: Description
+      description: What is this identifier used for?
+      placeholder: e.g., "Unique number assigned to vehicles for registration"
+    validations:
+      required: true
+
+  - type: textarea
+    id: format
+    attributes:
+      label: Format/Structure
+      description: Describe the format, length, pattern
+      placeholder: |
+        e.g.,
+        Format: [State Code][District Code][Series][Number]
+        Length: 10 characters
+        Example: MH12AB1234
+    validations:
+      required: true
+
+  - type: textarea
+    id: validation-rules
+    attributes:
+      label: Validation Rules
+      description: Any checksum algorithms, validation rules, or constraints
+      placeholder: |
+        e.g.,
+        - Uses Luhn checksum on last 4 digits
+        - State codes must be valid (01-37)
+        - Series must be alphabetic
+
+  - type: textarea
+    id: official-source
+    attributes:
+      label: Official Documentation
+      description: Links to government/official sources that document this identifier
+      placeholder: Provide URLs or document names
+
+  - type: textarea
+    id: sample-data
+    attributes:
+      label: Sample Valid Data
+      description: Provide 3-5 examples of valid identifiers (masked/anonymized)
+      placeholder: |
+        e.g.,
+        MH12AB1234
+        DL01CA5678
+        KA03XY9012
+
+  - type: dropdown
+    id: entity-types
+    attributes:
+      label: Entity Types
+      description: Which entity types can have this identifier?
+      multiple: true
+      options:
+        - Individual
+        - Company
+        - Proprietorship
+        - Partnership
+        - Trust
+        - Government
+        - Other
+
+  - type: checkboxes
+    id: research-done
+    attributes:
+      label: Research Confirmation
+      options:
+        - label: I've verified this is an official Indian identifier
+          required: true
+        - label: I've provided accurate format specifications
+          required: true
+        - label: I understand this will generate synthetic test data only
+          required: true

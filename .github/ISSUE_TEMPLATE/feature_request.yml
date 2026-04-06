@@ -1,0 +1,75 @@
+name: Feature Request
+description: Suggest a new feature or improvement
+title: "[Feature] "
+labels: ["enhancement"]
+assignees:
+  - navrattan
+body:
+  - type: markdown
+    attributes:
+      value: |
+        Thanks for suggesting a feature! Please provide details below.
+
+  - type: dropdown
+    id: tool
+    attributes:
+      label: Which tool would this enhance?
+      options:
+        - Document Scanner
+        - Image Size Reducer
+        - PDF Merger
+        - String-to-JSON Converter
+        - Indian Data Faker
+        - App Navigation/General
+        - New tool entirely
+    validations:
+      required: true
+
+  - type: textarea
+    id: problem
+    attributes:
+      label: Problem/Use Case
+      description: What problem would this feature solve?
+      placeholder: As a developer, I need...
+    validations:
+      required: true
+
+  - type: textarea
+    id: solution
+    attributes:
+      label: Proposed Solution
+      description: How would you like this feature to work?
+    validations:
+      required: true
+
+  - type: textarea
+    id: alternatives
+    attributes:
+      label: Alternatives Considered
+      description: What other solutions did you consider?
+
+  - type: checkboxes
+    id: constraints
+    attributes:
+      label: Project Constraints Check
+      description: Ensure the feature aligns with our principles
+      options:
+        - label: This feature works 100% offline (no network calls)
+          required: true
+        - label: This feature doesn't require backend/cloud services
+          required: true
+        - label: This feature respects privacy (no data collection)
+          required: true
+        - label: This feature can work on Android/iOS/Web
+          required: false
+
+  - type: dropdown
+    id: priority
+    attributes:
+      label: Priority
+      options:
+        - Nice to have
+        - Important for workflow
+        - Critical for adoption
+    validations:
+      required: true

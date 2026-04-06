@@ -1,0 +1,43 @@
+version: 2
+updates:
+  # Core Dart package
+  - package-ecosystem: "pub"
+    directory: "/core"
+    schedule:
+      interval: "weekly"
+      day: "monday"
+      time: "06:00"
+      timezone: "Asia/Kolkata"
+    open-pull-requests-limit: 5
+    reviewers:
+      - "navrattan"
+    commit-message:
+      prefix: "chore"
+      include: "scope"
+
+  # Flutter app
+  - package-ecosystem: "pub"
+    directory: "/app"
+    schedule:
+      interval: "weekly"
+      day: "monday"
+      time: "06:00"
+      timezone: "Asia/Kolkata"
+    open-pull-requests-limit: 5
+    reviewers:
+      - "navrattan"
+    commit-message:
+      prefix: "chore"
+      include: "scope"
+
+  # GitHub Actions
+  - package-ecosystem: "github-actions"
+    directory: "/"
+    schedule:
+      interval: "weekly"
+      day: "monday"
+      time: "06:00"
+      timezone: "Asia/Kolkata"
+    open-pull-requests-limit: 3
+    reviewers:
+      - "navrattan"
