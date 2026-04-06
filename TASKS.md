@@ -12,98 +12,98 @@ Mark tasks done with `[x]` as you complete them.
 ## Phase 1: Foundation (Week 1)
 
 ### Task 1.1: Initialize Monorepo
-- [ ] Create `bharattesting-utilities/` root directory
-- [ ] Create `core/` package with `pubspec.yaml` (pure Dart, no Flutter dependency)
-- [ ] Create `app/` Flutter project: `flutter create --org com.btqas --project-name bharattesting_app app`
-- [ ] Add `core` as path dependency in `app/pubspec.yaml`
-- [ ] Create `docs/` folder, copy `BharatTesting_Developer_Spec.pdf` into it
-- [ ] Create `LICENSE` (MIT full text)
-- [ ] Create `README.md` from template in spec Section 37
-- [ ] Create `CONTRIBUTING.md` with branch/PR rules
-- [ ] Create `CODE_OF_CONDUCT.md` (Contributor Covenant)
-- [ ] Create `CHANGELOG.md` with initial entry
-- [ ] Verify: `cd core && dart pub get && dart test` (empty test passes)
-- [ ] Verify: `cd app && flutter pub get && flutter run -d chrome`
-- [ ] **Commit:** `feat: initialize monorepo structure`
+- [x] Create `bharattesting-utilities/` root directory
+- [x] Create `core/` package with `pubspec.yaml` (pure Dart, no Flutter dependency)
+- [x] Create `app/` Flutter project: `flutter create --org com.btqas --project-name bharattesting_app app`
+- [x] Add `core` as path dependency in `app/pubspec.yaml`
+- [x] Create `docs/` folder, copy `BharatTesting_Developer_Spec.pdf` into it
+- [x] Create `LICENSE` (MIT full text)
+- [x] Create `README.md` from template in spec Section 37
+- [x] Create `CONTRIBUTING.md` with branch/PR rules
+- [x] Create `CODE_OF_CONDUCT.md` (Contributor Covenant)
+- [x] Create `CHANGELOG.md` with initial entry
+- [x] Verify: `cd core && dart pub get && dart test` (empty test passes)
+- [x] Verify: `cd app && flutter pub get && flutter run -d chrome`
+- [x] **Commit:** `feat: initialize monorepo structure`
 
 ### Task 1.2: GitHub Configuration
-- [ ] Create `.github/CODEOWNERS` (owner approves all)
-- [ ] Create `.github/PULL_REQUEST_TEMPLATE.md` (from spec Section 25.4)
-- [ ] Create `.github/ISSUE_TEMPLATE/bug_report.yml`
-- [ ] Create `.github/ISSUE_TEMPLATE/feature_request.yml`
-- [ ] Create `.github/ISSUE_TEMPLATE/new_identifier_request.yml`
-- [ ] Create `.github/stale.yml` (60-day stale, 14-day close)
-- [ ] Create `.github/dependabot.yml` (weekly pub updates)
-- [ ] **Commit:** `chore: add GitHub templates and automation config`
+- [x] Create `.github/CODEOWNERS` (owner approves all)
+- [x] Create `.github/PULL_REQUEST_TEMPLATE.md` (from spec Section 25.4)
+- [x] Create `.github/ISSUE_TEMPLATE/bug_report.yml`
+- [x] Create `.github/ISSUE_TEMPLATE/feature_request.yml`
+- [x] Create `.github/ISSUE_TEMPLATE/new_identifier_request.yml`
+- [x] Create `.github/stale.yml` (60-day stale, 14-day close)
+- [x] Create `.github/dependabot.yml` (weekly pub updates)
+- [x] **Commit:** `chore: add GitHub templates and automation config`
 
 ### Task 1.3: CI/CD Workflows
-- [ ] Create `.github/workflows/pr-checks.yml` (from spec Section 31.1)
-- [ ] Create `.github/workflows/build-main.yml` (from spec Section 31.2)
-- [ ] Create `.github/workflows/release.yml` (from spec Section 31.3)
-- [ ] **Commit:** `ci: add GitHub Actions workflows`
+- [x] Create `.github/workflows/pr-checks.yml` (from spec Section 31.1)
+- [x] Create `.github/workflows/build-main.yml` (from spec Section 31.2)
+- [x] Create `.github/workflows/release.yml` (from spec Section 31.3)
+- [x] **Commit:** `ci: add GitHub Actions workflows`
 
 ### Task 1.4: Lint & Analysis
-- [ ] Create `core/analysis_options.yaml` (from spec Section 33)
-- [ ] Create `app/analysis_options.yaml` (from spec Section 33)
-- [ ] Run `flutter analyze` — must pass with zero issues
-- [ ] **Commit:** `chore: add analysis_options lint rules`
+- [x] Create `core/analysis_options.yaml` (from spec Section 33)
+- [x] Create `app/analysis_options.yaml` (from spec Section 33)
+- [x] Run `flutter analyze` — must pass with zero issues
+- [x] **Commit:** `chore: add analysis_options lint rules`
 
 ### Task 1.5: Theme & Design System
-- [ ] Create `app/lib/theme/app_colors.dart` — all color tokens (dark + light) from spec Section 7.1
-- [ ] Create `app/lib/theme/app_typography.dart` — text styles from spec Section 7.2
-- [ ] Create `app/lib/theme/app_theme.dart` — ThemeData.dark() + ThemeData.light() with Material 3
-- [ ] Verify: app launches in dark mode by default
-- [ ] **Commit:** `feat: add Material 3 theme system (dark + light)`
+- [x] Create `app/lib/theme/app_colors.dart` — all color tokens (dark + light) from spec Section 7.1
+- [x] Create `app/lib/theme/app_typography.dart` — text styles from spec Section 7.2
+- [x] Create `app/lib/theme/app_theme.dart` — ThemeData.dark() + ThemeData.light() with Material 3
+- [x] Verify: app launches in dark mode by default
+- [x] **Commit:** `feat: add Material 3 theme system (dark + light)`
 
 ### Task 1.6: Routing & Navigation Shell
-- [ ] Create `app/lib/router/app_router.dart` — GoRouter config with all 7 routes (from spec Section 6)
-- [ ] Create `app/lib/shared/widgets/responsive_layout.dart` (from spec Section 8)
-- [ ] Create `app/lib/shared/widgets/btqa_footer.dart` — footer on every screen
-- [ ] Create `app/lib/shared/widgets/tool_scaffold.dart` — shared scaffold with AppBar + footer
-- [ ] Create `app/lib/shared/widgets/github_buttons.dart` — Star, Report Bug, Contribute buttons
-- [ ] Create `app/lib/app.dart` — MaterialApp.router with theme + GoRouter
-- [ ] Create `app/lib/main.dart` — ProviderScope entry point
-- [ ] Verify: navigation works between all routes on mobile and web
-- [ ] **Commit:** `feat: add GoRouter navigation with responsive shell`
+- [x] Create `app/lib/router/app_router.dart` — GoRouter config with all 7 routes (from spec Section 6)
+- [x] Create `app/lib/shared/widgets/responsive_layout.dart` (from spec Section 8)
+- [x] Create `app/lib/shared/widgets/btqa_footer.dart` — footer on every screen
+- [x] Create `app/lib/shared/widgets/tool_scaffold.dart` — shared scaffold with AppBar + footer
+- [x] Create `app/lib/shared/widgets/github_buttons.dart` — Star, Report Bug, Contribute buttons
+- [x] Create `app/lib/app.dart` — MaterialApp.router with theme + GoRouter
+- [x] Create `app/lib/main.dart` — ProviderScope entry point
+- [x] Verify: navigation works between all routes on mobile and web
+- [x] **Commit:** `feat: add GoRouter navigation with responsive shell`
 
 ### Task 1.7: Home Screen
-- [ ] Create `app/lib/features/home/home_screen.dart` — tool card grid (from spec Section 28)
-- [ ] Create tool card widget with icon, name, description, tap-to-navigate
-- [ ] Verify: all 5 tool cards render and navigate to placeholder screens
-- [ ] **Commit:** `feat: add home screen with tool cards`
+- [x] Create `app/lib/features/home/home_screen.dart` — tool card grid (from spec Section 28)
+- [x] Create tool card widget with icon, name, description, tap-to-navigate
+- [x] Verify: all 5 tool cards render and navigate to placeholder screens
+- [x] **Commit:** `feat: add home screen with tool cards`
 
 ---
 
 ## Phase 2: Core Logic — Data Faker (Week 2)
 
 ### Task 2.1: Checksum Algorithms
-- [ ] Create `core/lib/src/data_faker/checksums/verhoeff.dart` — full Verhoeff with lookup tables
-- [ ] Create `core/lib/src/data_faker/checksums/luhn_mod36.dart` — GSTIN checksum
-- [ ] Write unit tests: known valid Aadhaar numbers pass, invalid fail
-- [ ] Write unit tests: known valid GSTINs pass, invalid fail
-- [ ] **Commit:** `feat(core): add Verhoeff and Luhn Mod-36 checksum algorithms`
+- [x] Create `core/lib/src/data_faker/checksums/verhoeff.dart` — full Verhoeff with lookup tables
+- [x] Create `core/lib/src/data_faker/checksums/luhn_mod36.dart` — GSTIN checksum
+- [x] Write unit tests: known valid Aadhaar numbers pass, invalid fail
+- [x] Write unit tests: known valid GSTINs pass, invalid fail
+- [x] **Commit:** `feat(core): add Verhoeff and Luhn Mod-36 checksum algorithms`
 
 ### Task 2.2: Lookup Data
-- [ ] Create `core/lib/src/data_faker/data/state_codes.dart` — GSTIN 01-37, PIN-to-state, CIN codes
-- [ ] Create `core/lib/src/data_faker/data/bank_codes.dart` — 20+ IFSC prefixes, UPI handles
-- [ ] Create `core/lib/src/data_faker/data/industry_codes.dart` — CIN industry codes
-- [ ] Write unit tests: verify all maps are non-empty, keys valid
-- [ ] **Commit:** `feat(core): add Indian identifier lookup data`
+- [x] Create `core/lib/src/data_faker/data/state_codes.dart` — GSTIN 01-37, PIN-to-state, CIN codes
+- [x] Create `core/lib/src/data_faker/data/bank_codes.dart` — 20+ IFSC prefixes, UPI handles
+- [x] Create `core/lib/src/data_faker/data/industry_codes.dart` — CIN industry codes
+- [x] Write unit tests: verify all maps are non-empty, keys valid
+- [x] **Commit:** `feat(core): add Indian identifier lookup data`
 
 ### Task 2.3: Individual Generators
-- [ ] Create `core/lib/src/data_faker/pan_generator.dart` — valid PAN per entity type
-- [ ] Create `core/lib/src/data_faker/gstin_generator.dart` — valid GSTIN with Luhn Mod-36
-- [ ] Create `core/lib/src/data_faker/aadhaar_generator.dart` — valid Aadhaar with Verhoeff
-- [ ] Create `core/lib/src/data_faker/cin_generator.dart` — valid CIN format
-- [ ] Create `core/lib/src/data_faker/tan_generator.dart` — valid TAN format
-- [ ] Create `core/lib/src/data_faker/ifsc_generator.dart` — valid IFSC from bank codes
-- [ ] Create `core/lib/src/data_faker/upi_generator.dart` — valid UPI linked to bank
-- [ ] Create `core/lib/src/data_faker/udyam_generator.dart` — valid Udyam format
-- [ ] Create `core/lib/src/data_faker/pin_code_generator.dart` — valid PIN linked to state
-- [ ] Create `core/lib/src/data_faker/address_generator.dart` — city/state linked to PIN
-- [ ] Write unit tests for EACH generator: format validation, checksum verification
-- [ ] Write unit test: seed reproducibility (same seed → same output)
-- [ ] **Commit:** `feat(core): add all 9 Indian identifier generators with tests`
+- [x] Create `core/lib/src/data_faker/pan_generator.dart` — valid PAN per entity type
+- [x] Create `core/lib/src/data_faker/gstin_generator.dart` — valid GSTIN with Luhn Mod-36
+- [x] Create `core/lib/src/data_faker/aadhaar_generator.dart` — valid Aadhaar with Verhoeff
+- [x] Create `core/lib/src/data_faker/cin_generator.dart` — valid CIN format
+- [x] Create `core/lib/src/data_faker/tan_generator.dart` — valid TAN format
+- [x] Create `core/lib/src/data_faker/ifsc_generator.dart` — valid IFSC from bank codes
+- [x] Create `core/lib/src/data_faker/upi_generator.dart` — valid UPI linked to bank
+- [x] Create `core/lib/src/data_faker/udyam_generator.dart` — valid Udyam format
+- [x] Create `core/lib/src/data_faker/pin_code_generator.dart` — valid PIN linked to state
+- [x] Create `core/lib/src/data_faker/address_generator.dart` — city/state linked to PIN
+- [x] Write unit tests for EACH generator: format validation, checksum verification
+- [x] Write unit test: seed reproducibility (same seed → same output)
+- [x] **Commit:** `feat(core): add all 9 Indian identifier generators with tests`
 
 ### Task 2.4: Cross-Field Consistency & Templates
 - [ ] Create `core/lib/src/data_faker/templates/individual_template.dart`
