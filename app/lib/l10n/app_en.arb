@@ -29,6 +29,16 @@
     "description": "Title for the string-to-JSON converter tool"
   },
 
+  "jsonConverterTitle": "String-to-JSON Converter",
+  "@jsonConverterTitle": {
+    "description": "Title for the JSON converter screen"
+  },
+
+  "jsonConverterSubtitle": "Auto-detect format, repair JSON, convert to JSON",
+  "@jsonConverterSubtitle": {
+    "description": "Subtitle for the JSON converter screen"
+  },
+
   "dataFakerTitle": "Indian Data Faker",
   "@dataFakerTitle": {
     "description": "Title for the Indian data faker tool"
