@@ -184,14 +184,14 @@ Mark tasks done with `[x]` as you complete them.
 - [x] **Commit:** `feat(core): add PDF merge, rotate, encrypt logic`
 
 ### Task 4.2: PDF Merger UI
-- [ ] Create state, provider, screen for pdf_merger feature
-- [ ] Create widgets: pdf_page_grid (thumbnails), reorderable_page_list, password_dialog
-- [ ] Drag & drop file upload
-- [ ] Drag & drop page reorder
-- [ ] Visual page thumbnails (lazy-loaded)
-- [ ] Progress bar for merge operation
-- [ ] Write widget tests
-- [ ] **Commit:** `feat: add PDF Merger UI with drag-and-drop reorder`
+- [x] Create state, provider, screen for pdf_merger feature
+- [x] Create widgets: pdf_page_grid (thumbnails), reorderable_page_list, password_dialog
+- [x] Drag & drop file upload
+- [x] Drag & drop page reorder
+- [x] Visual page thumbnails (lazy-loaded)
+- [x] Progress bar for merge operation
+- [x] Write widget tests
+- [x] **Commit:** `feat: add PDF Merger UI with drag-and-drop reorder`
 
 ### Task 4.3: Document Scanner Core
 - [ ] Create `core/lib/src/document_scanner/edge_detector.dart` — Canny + contour + quadrilateral
