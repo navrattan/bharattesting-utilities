@@ -55,5 +55,8 @@ export 'src/pdf_merger/merger.dart';
 export 'src/pdf_merger/page_manipulator.dart';
 export 'src/pdf_merger/encryptor.dart';
 
-// TODO: Future exports for document scanner
-// export 'src/document_scanner/edge_detector.dart';
+// Document Scanner - Computer vision pipeline for document digitization
+export 'src/document_scanner/edge_detector.dart';
+export 'src/document_scanner/perspective_corrector.dart';
+export 'src/document_scanner/image_enhancer.dart';
+export 'src/document_scanner/ocr_processor.dart';

@@ -194,12 +194,12 @@ Mark tasks done with `[x]` as you complete them.
 - [x] **Commit:** `feat: add PDF Merger UI with drag-and-drop reorder`
 
 ### Task 4.3: Document Scanner Core
-- [ ] Create `core/lib/src/document_scanner/edge_detector.dart` — Canny + contour + quadrilateral
-- [ ] Create `core/lib/src/document_scanner/perspective_corrector.dart` — homography transform
-- [ ] Create `core/lib/src/document_scanner/image_enhancer.dart` — 6 filters (CLAHE, threshold, etc.)
-- [ ] Create `core/lib/src/document_scanner/ocr_processor.dart` — ML Kit text extraction
-- [ ] Write unit tests: filter output not empty, dimensions correct
-- [ ] **Commit:** `feat(core): add document scanner image processing pipeline`
+- [x] Create `core/lib/src/document_scanner/edge_detector.dart` — Canny + contour + quadrilateral
+- [x] Create `core/lib/src/document_scanner/perspective_corrector.dart` — homography transform
+- [x] Create `core/lib/src/document_scanner/image_enhancer.dart` — 6 filters (CLAHE, threshold, etc.)
+- [x] Create `core/lib/src/document_scanner/ocr_processor.dart` — ML Kit text extraction
+- [x] Write unit tests: filter output not empty, dimensions correct
+- [x] **Commit:** `feat(core): add document scanner image processing pipeline`
 
 ### Task 4.4: Document Scanner UI
 - [ ] Create state, provider, screen for document_scanner feature
