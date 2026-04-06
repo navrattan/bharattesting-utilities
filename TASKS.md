@@ -163,14 +163,14 @@ Mark tasks done with `[x]` as you complete them.
 - [x] **Commit:** `feat(core): add image compression and resize logic`
 
 ### Task 3.4: Image Reducer UI
-- [ ] Create state, provider, screen for image_reducer feature
-- [ ] Create widgets: quality_slider, before_after_slider, format_picker, batch_list
-- [ ] File picker + drag-and-drop (desktop_drop)
-- [ ] Real-time preview (debounced 300ms)
-- [ ] Batch processing with progress bar
-- [ ] ZIP export for batch
-- [ ] Write widget tests
-- [ ] **Commit:** `feat: add Image Size Reducer UI with batch support`
+- [x] Create state, provider, screen for image_reducer feature
+- [x] Create widgets: quality_slider, before_after_slider, format_picker, batch_list
+- [x] File picker + drag-and-drop (desktop_drop)
+- [x] Real-time preview (debounced 300ms)
+- [x] Batch processing with progress bar
+- [x] ZIP export for batch
+- [x] Write widget tests
+- [x] **Commit:** `feat: add Image Size Reducer UI with batch support`
 
 ---
 
