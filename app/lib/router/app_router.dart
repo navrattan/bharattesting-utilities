@@ -8,6 +8,7 @@ import '../features/data_faker/faker_screen.dart';
 import '../features/json_converter/json_converter_screen.dart';
 import '../features/image_reducer/image_reducer_screen.dart';
 import '../features/pdf_merger/pdf_merger_screen.dart';
+import '../features/document_scanner/screens/document_scanner_screen.dart';
 import '../shared/widgets/tool_scaffold.dart';
 
 /// Application router using GoRouter for type-safe navigation
@@ -38,11 +39,7 @@ class AppRouter {
           GoRoute(
             path: '/document-scanner',
             name: 'document-scanner',
-            builder: (context, state) => const Placeholder(
-              child: Center(
-                child: Text('Document Scanner\nComing Soon'),
-              ),
-            ),
+            builder: (context, state) => const DocumentScannerScreen(),
           ),
           GoRoute(
             path: '/image-reducer',

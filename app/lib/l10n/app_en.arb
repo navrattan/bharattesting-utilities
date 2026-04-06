@@ -47,5 +47,85 @@
   "aboutTitle": "About",
   "@aboutTitle": {
     "description": "Title for the about page"
+  },
+
+  "documentScannerSubtitle": "Scan documents with camera, edge detection, OCR, and PDF export",
+  "@documentScannerSubtitle": {
+    "description": "Subtitle for document scanner"
+  },
+
+  "cameraPermissionRequired": "Camera Permission Required",
+  "@cameraPermissionRequired": {
+    "description": "Camera permission required message"
+  },
+
+  "cameraPermissionDescription": "Allow camera access to scan documents",
+  "@cameraPermissionDescription": {
+    "description": "Camera permission description"
+  },
+
+  "openSettings": "Open Settings",
+  "@openSettings": {
+    "description": "Open settings button text"
+  },
+
+  "batchScanningMode": "Batch Scanning Mode",
+  "@batchScanningMode": {
+    "description": "Batch scanning mode title"
+  },
+
+  "batchScanningDescription": "Scan multiple documents in sequence",
+  "@batchScanningDescription": {
+    "description": "Batch scanning mode description"
+  },
+
+  "startScanning": "Start Scanning",
+  "@startScanning": {
+    "description": "Start scanning button text"
+  },
+
+  "scannerMode": "Scanner Mode",
+  "@scannerMode": {
+    "description": "Scanner mode label"
+  },
+
+  "cameraSettings": "Camera Settings",
+  "@cameraSettings": {
+    "description": "Camera settings section title"
+  },
+
+  "flashlight": "Flash",
+  "@flashlight": {
+    "description": "Flashlight toggle label"
+  },
+
+  "flashlightDescription": "Enable camera flash",
+  "@flashlightDescription": {
+    "description": "Flashlight toggle description"
+  },
+
+  "autoCapture": "Auto Capture",
+  "@autoCapture": {
+    "description": "Auto capture toggle label"
+  },
+
+  "autoCaptureDescription": "Automatically capture when document is stable",
+  "@autoCaptureDescription": {
+    "description": "Auto capture toggle description"
+  },
+
+  "zoom": "Zoom",
+  "@zoom": {
+    "description": "Zoom control label"
+  },
+
+  "ocrTextDetected": "OCR text detected",
+  "@ocrTextDetected": {
+    "description": "OCR text detected indicator"
+  },
+
+  "scannerSettings": "Scanner Settings",
+  "@scannerSettings": {
+    "description": "Scanner settings title"
   }
 }
