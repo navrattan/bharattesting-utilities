@@ -44,8 +44,10 @@ export 'src/data_faker/export/csv_exporter.dart';
 export 'src/data_faker/export/json_exporter.dart';
 export 'src/data_faker/export/xlsx_exporter.dart';
 
+// JSON Converter - Auto-repair and multi-format parsing
+export 'src/json_converter/json_converter.dart';
+
 // TODO: Future exports for other tools
-// export 'src/json_converter/string_parser.dart';
 // export 'src/image_reducer/compressor.dart';
 // export 'src/pdf_merger/merger.dart';
 // export 'src/document_scanner/edge_detector.dart';
