@@ -177,11 +177,11 @@ Mark tasks done with `[x]` as you complete them.
 ## Phase 4: PDF Merger + Document Scanner (Week 4)
 
 ### Task 4.1: PDF Merger Core
-- [ ] Create `core/lib/src/pdf_merger/merger.dart` — merge multiple PDFs
-- [ ] Create `core/lib/src/pdf_merger/page_manipulator.dart` — rotate, delete, reorder
-- [ ] Create `core/lib/src/pdf_merger/encryptor.dart` — password protection
-- [ ] Write unit tests: merged page count = sum, rotation, password set
-- [ ] **Commit:** `feat(core): add PDF merge, rotate, encrypt logic`
+- [x] Create `core/lib/src/pdf_merger/merger.dart` — merge multiple PDFs
+- [x] Create `core/lib/src/pdf_merger/page_manipulator.dart` — rotate, delete, reorder
+- [x] Create `core/lib/src/pdf_merger/encryptor.dart` — password protection
+- [x] Write unit tests: merged page count = sum, rotation, password set
+- [x] **Commit:** `feat(core): add PDF merge, rotate, encrypt logic`
 
 ### Task 4.2: PDF Merger UI
 - [ ] Create state, provider, screen for pdf_merger feature

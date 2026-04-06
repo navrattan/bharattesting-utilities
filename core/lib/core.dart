@@ -50,6 +50,10 @@ export 'src/json_converter/json_converter.dart';
 // Image Reducer - Compression, resizing, format conversion, metadata stripping
 export 'src/image_reducer/image_reducer.dart';
 
-// TODO: Future exports for other tools
-// export 'src/pdf_merger/merger.dart';
+// PDF Merger - Advanced PDF manipulation with merge, rotate, encrypt
+export 'src/pdf_merger/merger.dart';
+export 'src/pdf_merger/page_manipulator.dart';
+export 'src/pdf_merger/encryptor.dart';
+
+// TODO: Future exports for document scanner
 // export 'src/document_scanner/edge_detector.dart';
