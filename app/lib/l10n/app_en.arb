@@ -1,0 +1,41 @@
+{
+  "appTitle": "BharatTesting Utilities",
+  "@appTitle": {
+    "description": "The title of the application"
+  },
+
+  "homeTitle": "Developer Tools",
+  "@homeTitle": {
+    "description": "Title for the home screen"
+  },
+
+  "documentScannerTitle": "Document Scanner",
+  "@documentScannerTitle": {
+    "description": "Title for the document scanner tool"
+  },
+
+  "imageSizeReducerTitle": "Image Size Reducer",
+  "@imageSizeReducerTitle": {
+    "description": "Title for the image size reducer tool"
+  },
+
+  "pdfMergerTitle": "PDF Merger",
+  "@pdfMergerTitle": {
+    "description": "Title for the PDF merger tool"
+  },
+
+  "stringToJsonTitle": "String-to-JSON Converter",
+  "@stringToJsonTitle": {
+    "description": "Title for the string-to-JSON converter tool"
+  },
+
+  "dataFakerTitle": "Indian Data Faker",
+  "@dataFakerTitle": {
+    "description": "Title for the Indian data faker tool"
+  },
+
+  "aboutTitle": "About",
+  "@aboutTitle": {
+    "description": "Title for the about page"
+  }
+}

@@ -117,11 +117,11 @@ Mark tasks done with `[x]` as you complete them.
 - [x] **Commit:** `feat(core): add 5 faker templates with cross-field consistency`
 
 ### Task 2.5: Export (Core)
-- [ ] Implement CSV export in core
-- [ ] Implement JSON export in core
-- [ ] Implement XLSX export in core (using archive package)
-- [ ] Write unit tests for each export format
-- [ ] **Commit:** `feat(core): add CSV, JSON, XLSX export for faker`
+- [x] Implement CSV export in core
+- [x] Implement JSON export in core
+- [x] Implement XLSX export in core (using archive package)
+- [x] Write unit tests for each export format
+- [x] **Commit:** `feat(core): add CSV, JSON, XLSX export for faker`
 
 ### Task 2.6: Data Faker UI
 - [ ] Create `app/lib/features/data_faker/faker_state.dart`

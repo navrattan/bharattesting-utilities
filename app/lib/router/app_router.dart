@@ -4,6 +4,7 @@ library app_router;
 import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
 import '../features/home/home_screen.dart';
+import '../features/data_faker/faker_screen.dart';
 import '../shared/widgets/tool_scaffold.dart';
 
 /// Application router using GoRouter for type-safe navigation
@@ -70,11 +71,7 @@ class AppRouter {
           GoRoute(
             path: '/indian-data-faker',
             name: 'indian-data-faker',
-            builder: (context, state) => const Placeholder(
-              child: Center(
-                child: Text('Indian Data Faker\nComing Soon'),
-              ),
-            ),
+            builder: (context, state) => const FakerScreen(),
           ),
           GoRoute(
             path: '/about',
