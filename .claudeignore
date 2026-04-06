@@ -1,0 +1,31 @@
+# Build outputs
+app/build/
+core/.dart_tool/
+app/.dart_tool/
+
+# Generated files (read the source, not generated)
+**/*.g.dart
+**/*.freezed.dart
+
+# Platform-specific (only edit when explicitly needed)
+app/android/.gradle/
+app/android/build/
+app/ios/Pods/
+app/ios/.symlinks/
+app/ios/Flutter/Flutter.framework/
+
+# IDE
+.idea/
+.vscode/
+*.iml
+
+# OS
+.DS_Store
+Thumbs.db
+
+# Golden test images (binary, don't read)
+app/test/golden/goldens/*.png
+
+# Dependency caches
+.pub-cache/
+.packages

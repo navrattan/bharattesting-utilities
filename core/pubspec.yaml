@@ -1,0 +1,33 @@
+name: bharattesting_core
+description: Core business logic for BharatTesting Utilities - pure Dart package with no Flutter dependency
+version: 1.0.0
+publish_to: none
+
+environment:
+  sdk: ^3.5.0
+
+dependencies:
+  # Image processing
+  image: ^4.2.0
+
+  # PDF generation
+  pdf: ^3.11.1
+
+  # Archive/ZIP
+  archive: ^3.6.1
+
+  # CSV handling
+  csv: ^6.0.0
+
+  # YAML parsing
+  yaml: ^3.1.2
+
+  # Crypto for random generation
+  crypto: ^3.0.5
+
+dev_dependencies:
+  test: ^1.25.8
+  mocktail: ^1.0.4
+  very_good_analysis: ^6.0.0
+
+# Pure Dart package - no Flutter dependency

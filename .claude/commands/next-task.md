@@ -1,0 +1,1 @@
+Read TASKS.md and find the first task that is NOT marked with [x]. Show me the task details and begin working on it. Follow the RULES.md constraints. After completing all subtasks, mark them [x] in TASKS.md and commit with a descriptive conventional commit message.
