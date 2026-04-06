@@ -124,43 +124,43 @@ Mark tasks done with `[x]` as you complete them.
 - [x] **Commit:** `feat(core): add CSV, JSON, XLSX export for faker`
 
 ### Task 2.6: Data Faker UI
-- [ ] Create `app/lib/features/data_faker/faker_state.dart`
-- [ ] Create `app/lib/features/data_faker/faker_provider.dart`
-- [ ] Create `app/lib/features/data_faker/faker_screen.dart`
-- [ ] Create widgets: template_selector, identifier_picker, bulk_slider, generated_preview, export_options
-- [ ] Add disclaimer text on screen
-- [ ] Verify: generate single record, toggle identifiers, switch templates, export CSV
-- [ ] Write widget tests for faker_screen
-- [ ] **Commit:** `feat: add Indian Data Faker UI with full functionality`
+- [x] Create `app/lib/features/data_faker/faker_state.dart`
+- [x] Create `app/lib/features/data_faker/faker_provider.dart`
+- [x] Create `app/lib/features/data_faker/faker_screen.dart`
+- [x] Create widgets: template_selector, identifier_picker, bulk_slider, generated_preview, export_options
+- [x] Add disclaimer text on screen
+- [x] Verify: generate single record, toggle identifiers, switch templates, export CSV
+- [x] Write widget tests for faker_screen
+- [x] **Commit:** `feat: add Indian Data Faker UI with full functionality`
 
 ---
 
 ## Phase 3: Core Logic — JSON Converter + Image Reducer (Week 3)
 
 ### Task 3.1: JSON Converter Core
-- [ ] Create `core/lib/src/json_converter/string_parser.dart` — detect input format
-- [ ] Create `core/lib/src/json_converter/auto_repair.dart` — 6 repair rules
-- [ ] Create `core/lib/src/json_converter/csv_parser.dart`
-- [ ] Create `core/lib/src/json_converter/yaml_parser.dart`
-- [ ] Create `core/lib/src/json_converter/json_formatter.dart` — pretty-print + minify
-- [ ] Write unit tests: each repair rule, each input format, edge cases
-- [ ] **Commit:** `feat(core): add JSON converter with auto-repair`
+- [x] Create `core/lib/src/json_converter/string_parser.dart` — detect input format
+- [x] Create `core/lib/src/json_converter/auto_repair.dart` — 6 repair rules
+- [x] Create `core/lib/src/json_converter/csv_parser.dart`
+- [x] Create `core/lib/src/json_converter/yaml_parser.dart`
+- [x] Create `core/lib/src/json_converter/json_formatter.dart` — pretty-print + minify
+- [x] Write unit tests: each repair rule, each input format, edge cases
+- [x] **Commit:** `feat(core): add JSON converter with auto-repair`
 
 ### Task 3.2: JSON Converter UI
-- [ ] Create state, provider, screen for json_converter feature
-- [ ] Create widgets: input_editor, output_viewer (syntax highlighted), format_toggle
-- [ ] Add error highlighting with line/column
-- [ ] Copy/Download buttons
-- [ ] Write widget tests
-- [ ] **Commit:** `feat: add String-to-JSON Converter UI`
+- [x] Create state, provider, screen for json_converter feature
+- [x] Create widgets: input_editor, output_viewer (syntax highlighted), format_toggle
+- [x] Add error highlighting with line/column
+- [x] Copy/Download buttons
+- [x] Write widget tests
+- [x] **Commit:** `feat: add String-to-JSON Converter UI`
 
 ### Task 3.3: Image Reducer Core
-- [ ] Create `core/lib/src/image_reducer/compressor.dart` — JPEG/PNG compression
-- [ ] Create `core/lib/src/image_reducer/resizer.dart` — preset + custom resize
-- [ ] Create `core/lib/src/image_reducer/format_converter.dart` — format conversion
-- [ ] Create `core/lib/src/image_reducer/metadata_stripper.dart` — EXIF removal
-- [ ] Write unit tests: compressed size < original, resize dimensions correct
-- [ ] **Commit:** `feat(core): add image compression and resize logic`
+- [x] Create `core/lib/src/image_reducer/compressor.dart` — JPEG/PNG compression
+- [x] Create `core/lib/src/image_reducer/resizer.dart` — preset + custom resize
+- [x] Create `core/lib/src/image_reducer/format_converter.dart` — format conversion
+- [x] Create `core/lib/src/image_reducer/metadata_stripper.dart` — EXIF removal
+- [x] Write unit tests: compressed size < original, resize dimensions correct
+- [x] **Commit:** `feat(core): add image compression and resize logic`
 
 ### Task 3.4: Image Reducer UI
 - [ ] Create state, provider, screen for image_reducer feature

@@ -47,7 +47,9 @@ export 'src/data_faker/export/xlsx_exporter.dart';
 // JSON Converter - Auto-repair and multi-format parsing
 export 'src/json_converter/json_converter.dart';
 
+// Image Reducer - Compression, resizing, format conversion, metadata stripping
+export 'src/image_reducer/image_reducer.dart';
+
 // TODO: Future exports for other tools
-// export 'src/image_reducer/compressor.dart';
 // export 'src/pdf_merger/merger.dart';
 // export 'src/document_scanner/edge_detector.dart';

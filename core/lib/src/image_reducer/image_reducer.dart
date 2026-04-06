@@ -1,4 +1,10 @@
-/// Image Size Reducer - Compress, resize, format conversion
+/// Advanced image reduction library - compression, resizing, format conversion
+///
+/// High-performance image processing with privacy-first metadata handling
 library image_reducer;
 
-// TODO: Implement in Phase 3
+// Core image processing engines
+export 'compressor.dart';
+export 'resizer.dart';
+export 'format_converter.dart';
+export 'metadata_stripper.dart';
