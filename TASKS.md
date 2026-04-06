@@ -106,15 +106,15 @@ Mark tasks done with `[x]` as you complete them.
 - [x] **Commit:** `feat(core): add all 9 Indian identifier generators with tests`
 
 ### Task 2.4: Cross-Field Consistency & Templates
-- [ ] Create `core/lib/src/data_faker/templates/individual_template.dart`
-- [ ] Create `core/lib/src/data_faker/templates/company_template.dart`
-- [ ] Create `core/lib/src/data_faker/templates/proprietorship_template.dart`
-- [ ] Create `core/lib/src/data_faker/templates/partnership_template.dart`
-- [ ] Create `core/lib/src/data_faker/templates/trust_template.dart`
-- [ ] Implement cross-field rules: PAN↔GSTIN, state↔PIN, IFSC↔bank↔UPI, CIN↔state
-- [ ] Write unit tests: verify cross-field consistency in generated records
-- [ ] Write unit tests: bulk generation 10,000 records completes in < 3 seconds
-- [ ] **Commit:** `feat(core): add 5 faker templates with cross-field consistency`
+- [x] Create `core/lib/src/data_faker/templates/individual_template.dart`
+- [x] Create `core/lib/src/data_faker/templates/company_template.dart`
+- [x] Create `core/lib/src/data_faker/templates/proprietorship_template.dart`
+- [x] Create `core/lib/src/data_faker/templates/partnership_template.dart`
+- [x] Create `core/lib/src/data_faker/templates/trust_template.dart`
+- [x] Implement cross-field rules: PAN↔GSTIN, state↔PIN, IFSC↔bank↔UPI, CIN↔state
+- [x] Write unit tests: verify cross-field consistency in generated records
+- [x] Write unit tests: bulk generation 10,000 records completes in < 3 seconds
+- [x] **Commit:** `feat(core): add 5 faker templates with cross-field consistency`
 
 ### Task 2.5: Export (Core)
 - [ ] Implement CSV export in core

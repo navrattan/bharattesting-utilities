@@ -32,12 +32,17 @@ export 'src/data_faker/udyam_generator.dart';
 export 'src/data_faker/pin_code_generator.dart';
 export 'src/data_faker/address_generator.dart';
 
-// Data Faker - Templates (NEW)
+// Data Faker - Templates
 export 'src/data_faker/templates/individual_template.dart';
 export 'src/data_faker/templates/company_template.dart';
 export 'src/data_faker/templates/proprietorship_template.dart';
 export 'src/data_faker/templates/partnership_template.dart';
 export 'src/data_faker/templates/trust_template.dart';
+
+// Data Faker - Export (NEW)
+export 'src/data_faker/export/csv_exporter.dart';
+export 'src/data_faker/export/json_exporter.dart';
+export 'src/data_faker/export/xlsx_exporter.dart';
 
 // TODO: Future exports for other tools
 // export 'src/json_converter/string_parser.dart';
