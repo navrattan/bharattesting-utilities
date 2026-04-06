@@ -1,0 +1,176 @@
+name: Release
+
+on:
+  push:
+    tags:
+      - 'v*'
+
+env:
+  FLUTTER_VERSION: '3.29.0'
+
+jobs:
+  create-release:
+    name: Create Release
+    runs-on: ubuntu-latest
+    outputs:
+      upload_url: ${{ steps.create_release.outputs.upload_url }}
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Extract version
+        id: version
+        run: |
+          VERSION=${GITHUB_REF#refs/tags/}
+          echo "version=$VERSION" >> $GITHUB_OUTPUT
+          echo "tag=$VERSION" >> $GITHUB_OUTPUT
+
+      - name: Create Release
+        id: create_release
+        uses: actions/create-release@v1
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        with:
+          tag_name: ${{ steps.version.outputs.tag }}
+          release_name: BharatTesting Utilities ${{ steps.version.outputs.version }}
+          body: |
+            ## What's New in ${{ steps.version.outputs.version }}
+
+            ### 📱 Downloads
+            - **Web App**: [bharattesting.com](https://bharattesting.com)
+            - **Android**: Download APKs below
+            - **iOS**: Build from source (App Store coming soon)
+
+            ### 🚀 Features
+            - Document Scanner with OCR
+            - Image Size Reducer with batch processing
+            - PDF Merger with drag-and-drop
+            - String-to-JSON Converter with auto-repair
+            - Indian Data Faker with 9 identifiers
+
+            ### 🔒 Privacy & Security
+            - 100% offline operation
+            - No data collection or analytics
+            - Files processed in memory only
+            - Open source MIT license
+
+            ### 📋 Checksums
+            Check file integrity after download using the checksums below.
+
+            ### 🐛 Known Issues
+            See [GitHub Issues](https://github.com/navrattan/bharattesting-utilities/issues) for known bugs.
+
+            ---
+            **Made with ❤️ in Bengaluru • BTQA Services Pvt Ltd**
+          draft: false
+          prerelease: false
+
+  build-android:
+    name: Build Android
+    runs-on: ubuntu-latest
+    needs: create-release
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Setup Flutter
+        uses: subosito/flutter-action@v2
+        with:
+          flutter-version: ${{ env.FLUTTER_VERSION }}
+          channel: 'stable'
+
+      - name: Install Dependencies
+        run: |
+          cd app
+          flutter pub get
+
+      - name: Build APK (Release)
+        run: |
+          cd app
+          flutter build apk --release --split-per-abi
+
+      - name: Build App Bundle (Release)
+        run: |
+          cd app
+          flutter build appbundle --release
+
+      - name: Generate Checksums
+        run: |
+          cd app/build/app/outputs/flutter-apk/
+          sha256sum *.apk > checksums-apk.txt
+          cd ../../bundle/release/
+          sha256sum app-release.aab > checksums-aab.txt
+
+      - name: Upload APK (ARM64)
+        uses: actions/upload-release-asset@v1
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        with:
+          upload_url: ${{ needs.create-release.outputs.upload_url }}
+          asset_path: app/build/app/outputs/flutter-apk/app-arm64-v8a-release.apk
+          asset_name: bharattesting-utilities-android-arm64.apk
+          asset_content_type: application/vnd.android.package-archive
+
+      - name: Upload APK (ARMv7)
+        uses: actions/upload-release-asset@v1
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        with:
+          upload_url: ${{ needs.create-release.outputs.upload_url }}
+          asset_path: app/build/app/outputs/flutter-apk/app-armeabi-v7a-release.apk
+          asset_name: bharattesting-utilities-android-armv7.apk
+          asset_content_type: application/vnd.android.package-archive
+
+      - name: Upload APK (x86_64)
+        uses: actions/upload-release-asset@v1
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        with:
+          upload_url: ${{ needs.create-release.outputs.upload_url }}
+          asset_path: app/build/app/outputs/flutter-apk/app-x86_64-release.apk
+          asset_name: bharattesting-utilities-android-x86_64.apk
+          asset_content_type: application/vnd.android.package-archive
+
+      - name: Upload App Bundle
+        uses: actions/upload-release-asset@v1
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        with:
+          upload_url: ${{ needs.create-release.outputs.upload_url }}
+          asset_path: app/build/app/outputs/bundle/release/app-release.aab
+          asset_name: bharattesting-utilities-android-release.aab
+          asset_content_type: application/octet-stream
+
+  build-web:
+    name: Build & Deploy Web
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Setup Flutter
+        uses: subosito/flutter-action@v2
+        with:
+          flutter-version: ${{ env.FLUTTER_VERSION }}
+          channel: 'stable'
+
+      - name: Install Dependencies
+        run: |
+          cd app
+          flutter pub get
+
+      - name: Build Web
+        run: |
+          cd app
+          flutter build web --release --web-renderer canvaskit
+
+      - name: Deploy to Vercel
+        if: github.repository == 'navrattan/bharattesting-utilities'
+        uses: amondnet/vercel-action@v25
+        with:
+          vercel-token: ${{ secrets.VERCEL_TOKEN }}
+          vercel-org-id: ${{ secrets.VERCEL_ORG_ID }}
+          vercel-project-id: ${{ secrets.VERCEL_PROJECT_ID }}
+          working-directory: app/build/web
+          scope: ${{ secrets.VERCEL_ORG_ID }}
+          alias-domains: bharattesting.com
