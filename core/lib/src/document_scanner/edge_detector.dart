@@ -348,14 +348,14 @@ class DocumentEdgeDetector {
     int directionIndex = 0;
 
     do {
-      points.add(Point(x, y));
+      points.add(Point(x.toDouble(), y.toDouble()));
       visited[y * width + x] = true;
 
       bool found = false;
       for (int i = 0; i < 8; i++) {
         final dir = directions[(directionIndex + i) % 8];
-        final nextX = x + dir.x;
-        final nextY = y + dir.y;
+        final nextX = x + dir.x.toInt();
+        final nextY = y + dir.y.toInt();
 
         if (nextX >= 0 && nextX < width && nextY >= 0 && nextY < height) {
           final index = nextY * width + nextX;

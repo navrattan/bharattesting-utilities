@@ -3,6 +3,7 @@ library app_router;
 
 import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
+import '../features/document_scanner/screens/document_scanner_screen.dart';
 import '../features/home/home_screen.dart';
 import '../features/json_converter/json_converter_screen.dart';
 import '../shared/widgets/tool_scaffold.dart';
@@ -35,9 +36,7 @@ class AppRouter {
           GoRoute(
             path: '/document-scanner',
             name: 'document-scanner',
-            builder: (context, state) => const _ComingSoonScreen(
-              title: 'Document Scanner',
-            ),
+            builder: (context, state) => const DocumentScannerScreen(),
           ),
           GoRoute(
             path: '/image-reducer',

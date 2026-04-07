@@ -1,6 +1,6 @@
 import 'dart:math' as math;
 import 'package:flutter/material.dart';
-import 'package:bharattesting_core/core.dart';
+import 'package:bharattesting_core/src/document_scanner/edge_detector.dart';
 
 /// Widget that overlays the camera preview with document detection feedback
 class DocumentOverlayWidget extends StatefulWidget {
@@ -229,7 +229,7 @@ class DocumentOverlayPainter extends CustomPainter {
       ..color = Colors.black.withOpacity(0.5 * stabilityOpacity)
       ..style = PaintingStyle.fill;
 
-    final path = Path();
+    var path = Path();
 
     // Create path for entire canvas
     path.addRect(Rect.fromLTWH(0, 0, size.width, size.height));

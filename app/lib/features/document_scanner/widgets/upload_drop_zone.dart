@@ -1,7 +1,6 @@
 import 'dart:typed_data';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_dropzone/flutter_dropzone.dart' if (dart.library.html) 'package:flutter_dropzone/flutter_dropzone.dart';
 import 'package:file_picker/file_picker.dart';
 import 'package:lucide_icons/lucide_icons.dart';
 
@@ -31,8 +30,6 @@ class _UploadDropZoneState extends State<UploadDropZone>
   bool _isDragOver = false;
   bool _isUploading = false;
   String? _errorMessage;
-
-  late DropzoneViewController? _dropzoneController;
 
   @override
   void initState() {
@@ -67,56 +64,23 @@ class _UploadDropZoneState extends State<UploadDropZone>
 
   /// Build web drop zone with drag-and-drop support
   Widget _buildWebDropZone(BuildContext context) {
-    return Container(
-      width: double.infinity,
-      height: double.infinity,
-      child: Stack(
-        children: [
-          // Dropzone area
-          DropzoneView(
-            operation: DragOperation.copy,
-            cursor: CursorType.pointer,
-            onCreated: (controller) => _dropzoneController = controller,
-            onDrop: _handleWebFileDrop,
-            onHover: () => setState(() => _isDragOver = true),
-            onLeave: () => setState(() => _isDragOver = false),
-            onError: (error) => _showError('Drop failed: $error'),
-          ),
-
-          // Visual overlay
-          Positioned.fill(
-            child: AnimatedBuilder(
-              animation: _pulseAnimation,
-              builder: (context, child) {
-                return Transform.scale(
-                  scale: _isDragOver ? _pulseAnimation.value : 1.0,
-                  child: _buildUploadContent(context),
-                );
-              },
-            ),
-          ),
-
-          // Upload progress overlay
-          if (_isUploading)
-            Positioned.fill(
-              child: Container(
-                color: Colors.black54,
-                child: const Center(
-                  child: Column(
-                    mainAxisSize: MainAxisSize.min,
-                    children: [
-                      CircularProgressIndicator(),
-                      SizedBox(height: 16),
-                      Text(
-                        'Processing image...',
-                        style: TextStyle(color: Colors.white),
-                      ),
-                    ],
-                  ),
+    return GestureDetector(
+      onTap: _pickFile,
+      child: SizedBox(
+        width: double.infinity,
+        height: double.infinity,
+        child: _isUploading
+            ? const Center(
+                child: Column(
+                  mainAxisSize: MainAxisSize.min,
+                  children: [
+                    CircularProgressIndicator(),
+                    SizedBox(height: 16),
+                    Text('Processing image...'),
+                  ],
                 ),
-              ),
-            ),
-        ],
+              )
+            : _buildUploadContent(context),
       ),
     );
   }
@@ -282,46 +246,6 @@ class _UploadDropZoneState extends State<UploadDropZone>
         ],
       ),
     );
-  }
-
-  /// Handle web file drop
-  Future<void> _handleWebFileDrop(dynamic event) async {
-    setState(() => _isDragOver = false);
-
-    if (_dropzoneController == null) return;
-
-    try {
-      setState(() {
-        _isUploading = true;
-        _errorMessage = null;
-      });
-
-      final files = await _dropzoneController!.getDroppedFiles();
-      if (files.isEmpty) {
-        _showError('No files were dropped');
-        return;
-      }
-
-      final file = files.first;
-
-      // Validate file
-      final fileName = await _dropzoneController!.getFilename(file);
-      final fileSize = await _dropzoneController!.getFileSize(file);
-
-      if (!_isValidFile(fileName, fileSize)) {
-        return;
-      }
-
-      // Read file data
-      final fileData = await _dropzoneController!.getFileData(file);
-
-      widget.onImageUploaded(fileData);
-
-    } catch (e) {
-      _showError('Failed to process file: $e');
-    } finally {
-      setState(() => _isUploading = false);
-    }
   }
 
   /// Pick file using file picker

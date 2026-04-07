@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
 import 'package:lucide_icons/lucide_icons.dart';
-import 'package:bharattesting_core/core.dart';
 import '../models/document_scanner_state.dart';
 
 /// Widget for configuring export options
@@ -232,9 +231,9 @@ class ExportOptionsWidget extends StatelessWidget {
   IconData _getExportIcon(ExportFormat format) {
     switch (format) {
       case ExportFormat.pdf:
-        return LucideIcons.filePdf;
+        return Icons.picture_as_pdf;
       case ExportFormat.images:
-        return LucideIcons.images;
+        return Icons.image;
       case ExportFormat.zip:
         return LucideIcons.package;
     }
@@ -356,9 +355,9 @@ class _FormatChip extends StatelessWidget {
   IconData _getFormatIcon(ExportFormat format) {
     switch (format) {
       case ExportFormat.pdf:
-        return LucideIcons.filePdf;
+        return Icons.picture_as_pdf;
       case ExportFormat.images:
-        return LucideIcons.images;
+        return Icons.image;
       case ExportFormat.zip:
         return LucideIcons.package;
     }
@@ -531,7 +530,7 @@ class AdvancedExportOptions extends StatelessWidget {
               // Handle orientation change
             },
           ),
-          leading: const Icon(LucideIcons.rotateClockwise),
+          leading: const Icon(Icons.rotate_right),
         ),
       ],
     );

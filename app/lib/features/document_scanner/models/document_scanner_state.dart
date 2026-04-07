@@ -1,7 +1,9 @@
 import 'dart:typed_data';
 import 'package:freezed_annotation/freezed_annotation.dart';
 import 'package:camera/camera.dart';
-import 'package:bharattesting_core/core.dart';
+import 'package:bharattesting_core/src/document_scanner/edge_detector.dart';
+import 'package:bharattesting_core/src/document_scanner/image_enhancer.dart';
+import 'package:bharattesting_core/src/document_scanner/ocr_processor.dart';
 
 part 'document_scanner_state.freezed.dart';
 
