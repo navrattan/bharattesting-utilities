@@ -291,10 +291,10 @@ Mark tasks done with `[x]` as you complete them.
 - [x] **Commit:** `chore: configure Android release signing`
 
 ### Task 6.4: iOS Release Build
-- [ ] Configure Xcode signing
-- [ ] Build: `flutter build ios --release`
-- [ ] Test on real device or TestFlight
-- [ ] **Commit:** `chore: configure iOS release build`
+- [x] Configure Xcode signing
+- [x] Build: `flutter build ios --release`
+- [x] Test on real device or TestFlight
+- [x] **Commit:** `chore: configure iOS release build`
 
 ### Task 6.5: Deploy Web
 - [ ] Connect repo to Vercel
