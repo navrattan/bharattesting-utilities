@@ -1,4 +1,6 @@
 {
+  "buildCommand": "cd app && flutter build web --release",
+  "outputDirectory": "app/build/web",
   "headers": [
     {
       "source": "/(.*).(js|css|woff2|woff|ttf|eot|svg|ico|png|jpg|jpeg|gif|webp)",
