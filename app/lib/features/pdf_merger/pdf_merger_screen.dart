@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
-import 'package:bharattesting_core/core.dart';
+import 'models/pdf_merger_state.dart';
 import 'providers/pdf_merger_provider.dart';
 import 'widgets/pdf_drop_zone.dart';
 import 'widgets/pdf_page_grid.dart';
@@ -8,7 +8,7 @@ import 'widgets/pdf_document_list.dart';
 import 'widgets/merge_controls_panel.dart';
 import 'widgets/merge_statistics_panel.dart';
 import 'widgets/password_dialog.dart';
-import '../shared/widgets/responsive_layout.dart';
+import '../../shared/widgets/responsive_layout.dart';
 
 class PdfMergerScreen extends ConsumerStatefulWidget {
   const PdfMergerScreen({super.key});
@@ -41,7 +41,7 @@ class _PdfMergerScreenState extends ConsumerState<PdfMergerScreen>
     return Scaffold(
       appBar: AppBar(
         title: const Text('PDF Merger'),
-        bottom: ResponsiveLayout.isMobile(context)
+        bottom: isMobile(context)
             ? TabBar(
                 controller: _tabController,
                 tabs: const [
@@ -76,15 +76,14 @@ class _PdfMergerScreenState extends ConsumerState<PdfMergerScreen>
       body: Stack(
         children: [
           // Main content
-          ResponsiveLayout.isMobile(context)
+          isMobile(context)
               ? _buildMobileLayout(state, notifier)
-              : ResponsiveLayout.isTablet(context)
+              : isTablet(context)
                   ? _buildTabletLayout(state, notifier)
                   : _buildDesktopLayout(state, notifier),
 
           // Processing overlay
-          if (state.isProcessing)
-            _buildProcessingOverlay(state),
+          if (state.isProcessing) _buildProcessingOverlay(state),
 
           // Password dialog
           if (state.showPasswordDialog)
@@ -100,7 +99,7 @@ class _PdfMergerScreenState extends ConsumerState<PdfMergerScreen>
     );
   }
 
-  Widget _buildMobileLayout(PdfMergerState state, PdfMergerNotifier notifier) {
+  Widget _buildMobileLayout(PdfMergerState state, PdfMerger notifier) {
     return TabBarView(
       controller: _tabController,
       children: [
@@ -165,7 +164,7 @@ class _PdfMergerScreenState extends ConsumerState<PdfMergerScreen>
     );
   }
 
-  Widget _buildTabletLayout(PdfMergerState state, PdfMergerNotifier notifier) {
+  Widget _buildTabletLayout(PdfMergerState state, PdfMerger notifier) {
     return Row(
       children: [
         // Left panel - Upload & Documents
@@ -212,7 +211,8 @@ class _PdfMergerScreenState extends ConsumerState<PdfMergerScreen>
                   child: Column(
                     mainAxisAlignment: MainAxisAlignment.center,
                     children: [
-                      Icon(Icons.picture_as_pdf_outlined, size: 64, color: Colors.grey),
+                      Icon(Icons.picture_as_pdf_outlined,
+                          size: 64, color: Colors.grey),
                       SizedBox(height: 16),
                       Text('Upload PDF files to see pages'),
                     ],
@@ -244,7 +244,7 @@ class _PdfMergerScreenState extends ConsumerState<PdfMergerScreen>
     );
   }
 
-  Widget _buildDesktopLayout(PdfMergerState state, PdfMergerNotifier notifier) {
+  Widget _buildDesktopLayout(PdfMergerState state, PdfMerger notifier) {
     return Row(
       children: [
         // Left sidebar - Upload & Controls
@@ -265,8 +265,8 @@ class _PdfMergerScreenState extends ConsumerState<PdfMergerScreen>
                   Text(
                     'Loaded Documents',
                     style: Theme.of(context).textTheme.titleMedium?.copyWith(
-                      fontWeight: FontWeight.w600,
-                    ),
+                          fontWeight: FontWeight.w600,
+                        ),
                   ),
                   const SizedBox(height: 12),
                   PdfDocumentList(
@@ -311,7 +311,8 @@ class _PdfMergerScreenState extends ConsumerState<PdfMergerScreen>
                             child: CircularProgressIndicator(strokeWidth: 2),
                           )
                         : const Icon(Icons.merge),
-                    label: Text(state.isProcessing ? 'Merging...' : 'Merge PDFs'),
+                    label:
+                        Text(state.isProcessing ? 'Merging...' : 'Merge PDFs'),
                     style: ElevatedButton.styleFrom(
                       padding: const EdgeInsets.all(16),
                     ),
@@ -334,21 +335,32 @@ class _PdfMergerScreenState extends ConsumerState<PdfMergerScreen>
                       Icon(
                         Icons.picture_as_pdf_outlined,
                         size: 96,
-                        color: Theme.of(context).colorScheme.onSurfaceVariant.withOpacity(0.5),
+                        color: Theme.of(context)
+                            .colorScheme
+                            .onSurfaceVariant
+                            .withOpacity(0.5),
                       ),
                       const SizedBox(height: 24),
                       Text(
                         'No PDF Files Loaded',
-                        style: Theme.of(context).textTheme.headlineMedium?.copyWith(
-                          color: Theme.of(context).colorScheme.onSurfaceVariant,
-                        ),
+                        style: Theme.of(context)
+                            .textTheme
+                            .headlineMedium
+                            ?.copyWith(
+                              color: Theme.of(context)
+                                  .colorScheme
+                                  .onSurfaceVariant,
+                            ),
                       ),
                       const SizedBox(height: 12),
                       Text(
                         'Upload PDF files to the left or drag them here to get started',
                         style: Theme.of(context).textTheme.bodyLarge?.copyWith(
-                          color: Theme.of(context).colorScheme.onSurfaceVariant.withOpacity(0.8),
-                        ),
+                              color: Theme.of(context)
+                                  .colorScheme
+                                  .onSurfaceVariant
+                                  .withOpacity(0.8),
+                            ),
                         textAlign: TextAlign.center,
                       ),
                       const SizedBox(height: 24),
@@ -390,8 +402,8 @@ class _PdfMergerScreenState extends ConsumerState<PdfMergerScreen>
                   Text(
                     'Processing PDF Merge',
                     style: Theme.of(context).textTheme.titleLarge?.copyWith(
-                      fontWeight: FontWeight.w600,
-                    ),
+                          fontWeight: FontWeight.w600,
+                        ),
                   ),
                   const SizedBox(height: 12),
                   LinearProgressIndicator(
@@ -408,7 +420,7 @@ class _PdfMergerScreenState extends ConsumerState<PdfMergerScreen>
     );
   }
 
-  void _showClearConfirmation(BuildContext context, PdfMergerNotifier notifier) {
+  void _showClearConfirmation(BuildContext context, PdfMerger notifier) {
     showDialog(
       context: context,
       builder: (context) => AlertDialog(

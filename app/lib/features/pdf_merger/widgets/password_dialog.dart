@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:bharattesting_core/core.dart';
+import 'dart:math' as math;
 
 class PasswordDialog extends StatefulWidget {
   final Function(String) onPasswordSet;
@@ -45,13 +45,14 @@ class _PasswordDialogState extends State<PasswordDialog> {
               children: [
                 Row(
                   children: [
-                    Icon(Icons.security, color: Theme.of(context).colorScheme.primary),
+                    Icon(Icons.security,
+                        color: Theme.of(context).colorScheme.primary),
                     const SizedBox(width: 12),
                     Text(
                       'Set PDF Password',
                       style: Theme.of(context).textTheme.titleLarge?.copyWith(
-                        fontWeight: FontWeight.w600,
-                      ),
+                            fontWeight: FontWeight.w600,
+                          ),
                     ),
                   ],
                 ),
@@ -67,8 +68,11 @@ class _PasswordDialogState extends State<PasswordDialog> {
                     labelText: 'Password',
                     border: const OutlineInputBorder(),
                     suffixIcon: IconButton(
-                      icon: Icon(_obscurePassword ? Icons.visibility : Icons.visibility_off),
-                      onPressed: () => setState(() => _obscurePassword = !_obscurePassword),
+                      icon: Icon(_obscurePassword
+                          ? Icons.visibility
+                          : Icons.visibility_off),
+                      onPressed: () =>
+                          setState(() => _obscurePassword = !_obscurePassword),
                     ),
                   ),
                   validator: (value) {
@@ -85,8 +89,7 @@ class _PasswordDialogState extends State<PasswordDialog> {
                 const SizedBox(height: 8),
 
                 // Password strength indicator
-                if (_strengthResult != null)
-                  _buildStrengthIndicator(),
+                if (_strengthResult != null) _buildStrengthIndicator(),
 
                 const SizedBox(height: 16),
 
@@ -98,8 +101,11 @@ class _PasswordDialogState extends State<PasswordDialog> {
                     labelText: 'Confirm Password',
                     border: const OutlineInputBorder(),
                     suffixIcon: IconButton(
-                      icon: Icon(_obscureConfirm ? Icons.visibility : Icons.visibility_off),
-                      onPressed: () => setState(() => _obscureConfirm = !_obscureConfirm),
+                      icon: Icon(_obscureConfirm
+                          ? Icons.visibility
+                          : Icons.visibility_off),
+                      onPressed: () =>
+                          setState(() => _obscureConfirm = !_obscureConfirm),
                     ),
                   ),
                   validator: (value) {
@@ -213,7 +219,7 @@ class _PasswordDialogState extends State<PasswordDialog> {
   void _validatePassword(String value) {
     if (value.isNotEmpty) {
       setState(() {
-        _strengthResult = PdfEncryptor.validatePasswordStrength(value);
+        _strengthResult = _PasswordUtils.validatePasswordStrength(value);
       });
     } else {
       setState(() {
@@ -223,11 +229,12 @@ class _PasswordDialogState extends State<PasswordDialog> {
   }
 
   void _generatePassword() {
-    final password = PdfEncryptor.generateSecurePassword(length: 16);
+    final password = _PasswordUtils.generateSecurePassword(length: 16);
+    final result = _PasswordUtils.validatePasswordStrength(password);
     setState(() {
       _passwordController.text = password;
       _confirmController.text = password;
-      _validatePassword(password);
+      _strengthResult = result;
     });
   }
 
@@ -235,5 +242,88 @@ class _PasswordDialogState extends State<PasswordDialog> {
     if (_formKey.currentState?.validate() == true) {
       widget.onPasswordSet(_passwordController.text);
     }
+  }
+}
+
+enum PasswordStrength {
+  weak('Weak'),
+  medium('Medium'),
+  strong('Strong');
+
+  const PasswordStrength(this.displayName);
+  final String displayName;
+}
+
+class PasswordStrengthResult {
+  const PasswordStrengthResult({
+    required this.strength,
+    required this.isValid,
+    required this.message,
+  });
+
+  final PasswordStrength strength;
+  final bool isValid;
+  final String message;
+}
+
+class _PasswordUtils {
+  static const _lowercase = 'abcdefghijklmnopqrstuvwxyz';
+  static const _uppercase = 'ABCDEFGHIJKLMNOPQRSTUVWXYZ';
+  static const _digits = '0123456789';
+  static const _symbols = r'!@#$%^&*()_+-=[]{}|;:,.<>?';
+  static const _all = _lowercase + _uppercase + _digits + _symbols;
+
+  static PasswordStrengthResult validatePasswordStrength(String password) {
+    int score = 0;
+
+    if (password.length >= 8) score++;
+    if (password.length >= 12) score++;
+    if (RegExp(r'[A-Z]').hasMatch(password)) score++;
+    if (RegExp(r'[a-z]').hasMatch(password)) score++;
+    if (RegExp(r'\d').hasMatch(password)) score++;
+    if (RegExp(r'[!@#$%^&*()_+\-=\[\]{}|;:,.<>?]').hasMatch(password)) score++;
+
+    if (password.length < 8 || score <= 3) {
+      return const PasswordStrengthResult(
+        strength: PasswordStrength.weak,
+        isValid: false,
+        message: 'Use 8+ chars with upper/lowercase, numbers, and symbols.',
+      );
+    }
+
+    if (score <= 5) {
+      return const PasswordStrengthResult(
+        strength: PasswordStrength.medium,
+        isValid: true,
+        message: 'Good password, but adding more variety improves security.',
+      );
+    }
+
+    return const PasswordStrengthResult(
+      strength: PasswordStrength.strong,
+      isValid: true,
+      message: 'Strong password.',
+    );
+  }
+
+  static String generateSecurePassword({int length = 16}) {
+    final random = math.Random();
+    final chars = <String>[
+      _pick(random, _lowercase),
+      _pick(random, _uppercase),
+      _pick(random, _digits),
+      _pick(random, _symbols),
+    ];
+
+    for (int i = chars.length; i < length; i++) {
+      chars.add(_pick(random, _all));
+    }
+
+    chars.shuffle(random);
+    return chars.join();
+  }
+
+  static String _pick(math.Random random, String source) {
+    return source[random.nextInt(source.length)];
   }
 }

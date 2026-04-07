@@ -1,8 +1,125 @@
 import 'dart:typed_data';
 import 'package:freezed_annotation/freezed_annotation.dart';
-import 'package:bharattesting_core/core.dart';
 
 part 'pdf_merger_state.freezed.dart';
+
+class PdfPermissions {
+  const PdfPermissions({
+    this.allowPrinting = true,
+    this.allowCopy = true,
+    this.allowModification = true,
+    this.allowAnnotations = true,
+  });
+
+  final bool allowPrinting;
+  final bool allowCopy;
+  final bool allowModification;
+  final bool allowAnnotations;
+
+  PdfPermissions copyWith({
+    bool? allowPrinting,
+    bool? allowCopy,
+    bool? allowModification,
+    bool? allowAnnotations,
+  }) {
+    return PdfPermissions(
+      allowPrinting: allowPrinting ?? this.allowPrinting,
+      allowCopy: allowCopy ?? this.allowCopy,
+      allowModification: allowModification ?? this.allowModification,
+      allowAnnotations: allowAnnotations ?? this.allowAnnotations,
+    );
+  }
+}
+
+class PdfMergeOptions {
+  const PdfMergeOptions({
+    this.generateBookmarks = true,
+    this.preserveMetadata = false,
+    this.optimizeForSize = true,
+    this.title,
+    this.author,
+  });
+
+  final bool generateBookmarks;
+  final bool preserveMetadata;
+  final bool optimizeForSize;
+  final String? title;
+  final String? author;
+
+  PdfMergeOptions copyWith({
+    bool? generateBookmarks,
+    bool? preserveMetadata,
+    bool? optimizeForSize,
+    String? title,
+    String? author,
+  }) {
+    return PdfMergeOptions(
+      generateBookmarks: generateBookmarks ?? this.generateBookmarks,
+      preserveMetadata: preserveMetadata ?? this.preserveMetadata,
+      optimizeForSize: optimizeForSize ?? this.optimizeForSize,
+      title: title ?? this.title,
+      author: author ?? this.author,
+    );
+  }
+}
+
+class PdfInputFile {
+  const PdfInputFile({
+    required this.fileName,
+    required this.data,
+    this.password,
+  });
+
+  final String fileName;
+  final Uint8List data;
+  final String? password;
+}
+
+enum PageRotation {
+  none(0),
+  rotate90(90),
+  rotate180(180),
+  rotate270(270);
+
+  const PageRotation(this.degrees);
+  final int degrees;
+
+  static PageRotation fromDegrees(int value) {
+    switch ((value % 360 + 360) % 360) {
+      case 90:
+        return PageRotation.rotate90;
+      case 180:
+        return PageRotation.rotate180;
+      case 270:
+        return PageRotation.rotate270;
+      default:
+        return PageRotation.none;
+    }
+  }
+}
+
+class PageDimensions {
+  const PageDimensions({
+    required this.width,
+    required this.height,
+  });
+
+  final double width;
+  final double height;
+
+  factory PageDimensions.a4() => const PageDimensions(width: 595, height: 842);
+
+  double get aspectRatio {
+    if (height == 0) return 1.0;
+    return width / height;
+  }
+}
+
+enum PageOrientation {
+  portrait,
+  landscape,
+  square,
+}
 
 @freezed
 class PdfMergerState with _$PdfMergerState {

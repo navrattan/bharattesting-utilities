@@ -7,6 +7,7 @@ import '../features/document_scanner/screens/document_scanner_screen.dart';
 import '../features/home/home_screen.dart';
 import '../features/image_reducer/image_reducer_screen.dart';
 import '../features/json_converter/json_converter_screen.dart';
+import '../features/pdf_merger/pdf_merger_screen.dart';
 import '../shared/widgets/tool_scaffold.dart';
 
 /// Application router using GoRouter for type-safe navigation
@@ -47,9 +48,7 @@ class AppRouter {
           GoRoute(
             path: '/pdf-merger',
             name: 'pdf-merger',
-            builder: (context, state) => const _ComingSoonScreen(
-              title: 'PDF Merger',
-            ),
+            builder: (context, state) => const PdfMergerScreen(),
           ),
           GoRoute(
             path: '/string-to-json',

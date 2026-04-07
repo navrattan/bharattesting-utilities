@@ -3,6 +3,8 @@
 /// Manages state and business logic for data generation and export
 
 import 'dart:io';
+import 'dart:convert';
+import 'dart:math' as math;
 import 'dart:typed_data';
 
 import 'package:flutter/foundation.dart';
@@ -10,9 +12,6 @@ import 'package:flutter/services.dart';
 import 'package:path_provider/path_provider.dart';
 import 'package:riverpod_annotation/riverpod_annotation.dart';
 import 'package:share_plus/share_plus.dart';
-
-// Core imports
-import 'package:core/core.dart';
 
 import 'faker_state.dart';
 
@@ -350,9 +349,8 @@ Future<String> _saveAndShareFile(
 
   if (kIsWeb) {
     // Web: Download directly
-    final bytes = data is String
-        ? Uint8List.fromList(data.codeUnits)
-        : data as Uint8List;
+    final bytes =
+        data is String ? Uint8List.fromList(data.codeUnits) : data as Uint8List;
 
     // Use web download (would need platform-specific implementation)
     // For now, copy to clipboard as fallback
@@ -382,6 +380,387 @@ Future<String> _saveAndShareFile(
     await Share.shareXFiles([XFile(file.path)]);
 
     return file.path;
+  }
+}
+
+class IndividualTemplate {
+  static List<Map<String, dynamic>> generateBulk({
+    required int count,
+    int? baseSeed,
+    String? preferredState,
+  }) {
+    return _LocalTemplateGenerator.generateBulk(
+      template: 'individual',
+      count: count,
+      baseSeed: baseSeed,
+      preferredState: preferredState,
+    );
+  }
+}
+
+class CompanyTemplate {
+  static List<Map<String, dynamic>> generateBulk({
+    required int count,
+    int? baseSeed,
+    String? preferredState,
+  }) {
+    return _LocalTemplateGenerator.generateBulk(
+      template: 'company',
+      count: count,
+      baseSeed: baseSeed,
+      preferredState: preferredState,
+    );
+  }
+}
+
+class ProprietorshipTemplate {
+  static List<Map<String, dynamic>> generateBulk({
+    required int count,
+    int? baseSeed,
+    String? preferredState,
+  }) {
+    return _LocalTemplateGenerator.generateBulk(
+      template: 'proprietorship',
+      count: count,
+      baseSeed: baseSeed,
+      preferredState: preferredState,
+    );
+  }
+}
+
+class PartnershipTemplate {
+  static List<Map<String, dynamic>> generateBulk({
+    required int count,
+    int? baseSeed,
+    String? preferredState,
+  }) {
+    return _LocalTemplateGenerator.generateBulk(
+      template: 'partnership',
+      count: count,
+      baseSeed: baseSeed,
+      preferredState: preferredState,
+    );
+  }
+}
+
+class TrustTemplate {
+  static List<Map<String, dynamic>> generateBulk({
+    required int count,
+    int? baseSeed,
+    String? preferredState,
+  }) {
+    return _LocalTemplateGenerator.generateBulk(
+      template: 'trust',
+      count: count,
+      baseSeed: baseSeed,
+      preferredState: preferredState,
+    );
+  }
+}
+
+class JSONExporter {
+  static String exportSingleRecord(
+    Map<String, dynamic> record, {
+    bool prettify = false,
+  }) {
+    return prettify
+        ? const JsonEncoder.withIndent('  ').convert(record)
+        : jsonEncode(record);
+  }
+
+  static String exportToJSONArray(
+    List<Map<String, dynamic>> records, {
+    bool prettify = false,
+  }) {
+    return prettify
+        ? const JsonEncoder.withIndent('  ').convert(records)
+        : jsonEncode(records);
+  }
+
+  static String exportTemplateToJSON(
+    List<Map<String, dynamic>> records,
+    String template, {
+    bool prettify = false,
+  }) {
+    final payload = <String, dynamic>{
+      'template': template,
+      'generatedAt': DateTime.now().toIso8601String(),
+      'recordCount': records.length,
+      'records': records,
+    };
+    return prettify
+        ? const JsonEncoder.withIndent('  ').convert(payload)
+        : jsonEncode(payload);
+  }
+}
+
+class CSVExporter {
+  static String exportTemplateToCSV(
+    List<Map<String, dynamic>> records,
+    String template,
+  ) {
+    if (records.isEmpty) {
+      return '';
+    }
+
+    final headers = records.first.keys.toList();
+    final lines = <String>[
+      headers.join(','),
+      ...records.map((record) {
+        return headers.map((key) => _escapeCsvValue(record[key])).join(',');
+      }),
+    ];
+
+    return lines.join('\n');
+  }
+
+  static String _escapeCsvValue(Object? value) {
+    final raw = value?.toString() ?? '';
+    if (raw.contains(',') || raw.contains('"') || raw.contains('\n')) {
+      final escaped = raw.replaceAll('"', '""');
+      return '"$escaped"';
+    }
+    return raw;
+  }
+}
+
+class XLSXExporter {
+  static Uint8List exportTemplateToXLSX(
+    List<Map<String, dynamic>> records,
+    String template, {
+    bool includeMetadataSheet = true,
+  }) {
+    final csv = CSVExporter.exportTemplateToCSV(records, template);
+    return Uint8List.fromList(utf8.encode(csv));
+  }
+}
+
+class _LocalTemplateGenerator {
+  static const _firstNames = <String>[
+    'Aarav',
+    'Ananya',
+    'Vihaan',
+    'Aditi',
+    'Arjun',
+    'Isha',
+    'Kabir',
+    'Meera',
+    'Rohan',
+    'Diya',
+    'Ravi',
+    'Sneha',
+  ];
+  static const _lastNames = <String>[
+    'Sharma',
+    'Verma',
+    'Patel',
+    'Gupta',
+    'Mehta',
+    'Nair',
+    'Reddy',
+    'Singh',
+    'Khan',
+    'Iyer',
+    'Das',
+    'Kapoor',
+  ];
+  static const _cities = <String>[
+    'Mumbai',
+    'Delhi',
+    'Bengaluru',
+    'Hyderabad',
+    'Pune',
+    'Chennai',
+    'Kolkata',
+    'Ahmedabad',
+    'Jaipur',
+    'Lucknow',
+    'Kochi',
+    'Indore',
+  ];
+  static const _states = <String>[
+    'Maharashtra',
+    'Delhi',
+    'Karnataka',
+    'Telangana',
+    'Tamil Nadu',
+    'Gujarat',
+    'Rajasthan',
+    'Uttar Pradesh',
+    'West Bengal',
+    'Kerala',
+  ];
+  static const _upiHandles = <String>[
+    'okaxis',
+    'okhdfcbank',
+    'oksbi',
+    'paytm',
+    'ibl',
+    'ybl',
+  ];
+  static const _banks = <String>[
+    'HDFC Bank',
+    'ICICI Bank',
+    'State Bank of India',
+    'Axis Bank',
+    'Kotak Mahindra Bank',
+    'Punjab National Bank',
+  ];
+  static const _stateCodes = <String>[
+    '27',
+    '07',
+    '29',
+    '36',
+    '33',
+    '24',
+    '08',
+    '09',
+    '19',
+    '32',
+  ];
+
+  static List<Map<String, dynamic>> generateBulk({
+    required String template,
+    required int count,
+    int? baseSeed,
+    String? preferredState,
+  }) {
+    final seedBase = baseSeed ?? DateTime.now().millisecondsSinceEpoch;
+    return List<Map<String, dynamic>>.generate(count, (index) {
+      final random = math.Random(seedBase + index);
+      return _generateRecord(
+        random: random,
+        index: index + 1,
+        template: template,
+        preferredState: preferredState,
+      );
+    });
+  }
+
+  static Map<String, dynamic> _generateRecord({
+    required math.Random random,
+    required int index,
+    required String template,
+    required String? preferredState,
+  }) {
+    final firstName = _firstNames[random.nextInt(_firstNames.length)];
+    final lastName = _lastNames[random.nextInt(_lastNames.length)];
+    final name = '$firstName $lastName';
+    final state = preferredState ?? _states[random.nextInt(_states.length)];
+    final stateCode = _stateCodes[random.nextInt(_stateCodes.length)];
+    final city = _cities[random.nextInt(_cities.length)];
+    final bank = _banks[random.nextInt(_banks.length)];
+    final ifsc = _generateIfsc(random);
+    final pan = _generatePan(random, template);
+    final gstin = _generateGstin(random, pan, stateCode);
+    final upi = _generateUpi(random, name);
+
+    final base = <String, dynamic>{
+      'index': index,
+      'name': name,
+      'state': state,
+      'city': city,
+      'pan': pan,
+      'address': '${100 + random.nextInt(900)} Test Street, $city, $state',
+      'pin_code': _digits(random, 6),
+      'ifsc': ifsc,
+      'bank_name': bank,
+      'upi_id': upi,
+    };
+
+    switch (template) {
+      case 'individual':
+        return <String, dynamic>{
+          ...base,
+          'aadhaar': _digits(random, 12),
+        };
+      case 'company':
+        return <String, dynamic>{
+          ...base,
+          'company_name': '${lastName} Technologies Pvt Ltd',
+          'gstin': gstin,
+          'cin': _generateCin(random, stateCode),
+          'tan': _generateTan(random),
+          'udyam': _generateUdyam(random, stateCode),
+        };
+      case 'proprietorship':
+        return <String, dynamic>{
+          ...base,
+          'gstin': gstin,
+          'udyam': _generateUdyam(random, stateCode),
+          'tan': _generateTan(random),
+        };
+      case 'partnership':
+        return <String, dynamic>{
+          ...base,
+          'gstin': gstin,
+          'tan': _generateTan(random),
+          'partners': '${_firstNames[random.nextInt(_firstNames.length)]} & '
+              '${_firstNames[random.nextInt(_firstNames.length)]}',
+        };
+      case 'trust':
+      default:
+        return <String, dynamic>{
+          ...base,
+          'gstin': gstin,
+          'tan': _generateTan(random),
+          'registration': 'REG-${_digits(random, 8)}',
+        };
+    }
+  }
+
+  static String _generatePan(math.Random random, String template) {
+    final prefix = switch (template) {
+      'company' => 'C',
+      'trust' => 'A',
+      _ => 'P',
+    };
+    return '$prefix${_letters(random, 4)}${_digits(random, 4)}${_letters(random, 1)}';
+  }
+
+  static String _generateGstin(
+      math.Random random, String pan, String stateCode) {
+    return '$stateCode$pan${random.nextInt(9) + 1}Z${_letters(random, 1)}';
+  }
+
+  static String _generateCin(math.Random random, String stateCode) {
+    final year = 1995 + random.nextInt(31);
+    return 'U${stateCode}${_digits(random, 5)}$year${_letters(random, 3)}${_digits(random, 6)}';
+  }
+
+  static String _generateTan(math.Random random) {
+    return '${_letters(random, 4)}${_digits(random, 5)}${_letters(random, 1)}';
+  }
+
+  static String _generateIfsc(math.Random random) {
+    return '${_letters(random, 4)}0${_letters(random, 6)}';
+  }
+
+  static String _generateUpi(math.Random random, String name) {
+    final handle = _upiHandles[random.nextInt(_upiHandles.length)];
+    final user = name.toLowerCase().replaceAll(' ', '.') + _digits(random, 2);
+    return '$user@$handle';
+  }
+
+  static String _generateUdyam(math.Random random, String stateCode) {
+    return 'UDYAM-$stateCode-${_digits(random, 4)}-${_digits(random, 7)}';
+  }
+
+  static String _digits(math.Random random, int length) {
+    final buffer = StringBuffer();
+    for (int i = 0; i < length; i++) {
+      buffer.write(random.nextInt(10));
+    }
+    return buffer.toString();
+  }
+
+  static String _letters(math.Random random, int length) {
+    const alphabet = 'ABCDEFGHIJKLMNOPQRSTUVWXYZ';
+    final buffer = StringBuffer();
+    for (int i = 0; i < length; i++) {
+      buffer.write(alphabet[random.nextInt(alphabet.length)]);
+    }
+    return buffer.toString();
   }
 }
 

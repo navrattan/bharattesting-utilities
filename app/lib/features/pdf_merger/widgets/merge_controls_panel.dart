@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:bharattesting_core/core.dart';
+import '../models/pdf_merger_state.dart';
 
 class MergeControlsPanel extends StatelessWidget {
   final bool enableEncryption;

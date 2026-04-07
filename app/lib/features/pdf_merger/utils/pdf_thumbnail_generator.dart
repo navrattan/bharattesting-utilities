@@ -1,5 +1,5 @@
 import 'dart:typed_data';
-import 'package:bharattesting_core/core.dart';
+import '../models/pdf_merger_state.dart';
 
 /// Utility class for generating PDF page thumbnails
 class PdfThumbnailGenerator {

@@ -6,7 +6,7 @@ part of 'faker_provider.dart';
 // RiverpodGenerator
 // **************************************************************************
 
-String _$availableStatesHash() => r'4d4e3c2c53751234567890abcdef1234567890ab';
+String _$availableStatesHash() => r'11e6b023e72bea232eedf957c98c4ad7836ab9ce';
 
 /// Provider for available Indian states
 ///
@@ -22,8 +22,10 @@ final availableStatesProvider = AutoDisposeProvider<List<String>>.internal(
   allTransitiveDependencies: null,
 );
 
+@Deprecated('Will be removed in 3.0. Use Ref instead')
+// ignore: unused_element
 typedef AvailableStatesRef = AutoDisposeProviderRef<List<String>>;
-String _$fakerNotifierHash() => r'9a8b7c6d54321098765432109876543210987654';
+String _$fakerNotifierHash() => r'27f3b1375ce32569dc5f4be585d6484cb6d30441';
 
 /// Provider for Indian Data Faker
 ///
@@ -42,4 +44,4 @@ final fakerNotifierProvider =
 
 typedef _$FakerNotifier = AutoDisposeNotifier<FakerState>;
 // ignore_for_file: type=lint
-// ignore_for_file: subtype_of_sealed_class, invalid_use_of_internal_member, invalid_use_of_visible_for_testing_member
+// ignore_for_file: subtype_of_sealed_class, invalid_use_of_internal_member, invalid_use_of_visible_for_testing_member, deprecated_member_use_from_same_package
