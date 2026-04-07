@@ -21,7 +21,7 @@ if [ ! -f "app/build/web/index.html" ]; then
     cd app
     flutter pub get
     dart run build_runner build --delete-conflicting-outputs || true
-    flutter build web --release --web-renderer canvaskit --base-href /
+    flutter build web --release --base-href /
     cd ..
 
     if [ ! -f "app/build/web/index.html" ]; then

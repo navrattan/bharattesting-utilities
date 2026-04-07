@@ -40,7 +40,7 @@ jobs:
       - name: Build web
         run: |
           cd app
-          flutter build web --release --web-renderer canvaskit --base-href /
+          flutter build web --release --base-href /
 
       - name: Verify build
         run: |

@@ -80,7 +80,7 @@ if [ -d "app" ]; then
 
     # Build web release
     echo "🏗️  Building Flutter web release..."
-    flutter build web --release --web-renderer canvaskit --base-href /
+    flutter build web --release --base-href /
 
     # Verify build output
     if [ -f "build/web/index.html" ]; then

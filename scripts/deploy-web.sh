@@ -46,7 +46,7 @@ dart run build_runner build --delete-conflicting-outputs
 
 # Build web release
 echo "🏗️  Building Flutter web release..."
-flutter build web --release --web-renderer canvaskit --base-href /
+flutter build web --release --base-href /
 
 if [ $? -eq 0 ]; then
     echo "✅ Web build successful!"
