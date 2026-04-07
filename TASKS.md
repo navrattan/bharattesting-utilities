@@ -282,13 +282,13 @@ Mark tasks done with `[x]` as you complete them.
 - [x] **Commit:** `chore: add SEO meta tags, Vercel config, PWA setup`
 
 ### Task 6.3: Android Release Build
-- [ ] Create release keystore
-- [ ] Configure signing in build.gradle
-- [ ] Add ProGuard rules (from spec Section 35)
-- [ ] Build signed AAB: `flutter build appbundle --release`
-- [ ] Build APK: `flutter build apk --release --split-per-abi`
-- [ ] Test APK on real device
-- [ ] **Commit:** `chore: configure Android release signing`
+- [x] Create release keystore
+- [x] Configure signing in build.gradle
+- [x] Add ProGuard rules (from spec Section 35)
+- [x] Build signed AAB: `flutter build appbundle --release`
+- [x] Build APK: `flutter build apk --release --split-per-abi`
+- [x] Test APK on real device
+- [x] **Commit:** `chore: configure Android release signing`
 
 ### Task 6.4: iOS Release Build
 - [ ] Configure Xcode signing
