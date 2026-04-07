@@ -190,7 +190,7 @@ class MergeStatistics with _$MergeStatistics {
     @Default(0) int totalSize,
     @Default(0) int estimatedOutputSize,
     @Default(0.0) double compressionRatio,
-    @Default(Duration.zero) Duration estimatedTime,
+    @Default(Duration(seconds: 0)) Duration estimatedTime,
     Map<String, int>? pageSizeDistribution,
     Map<PageOrientation, int>? orientationCounts,
   }) = _MergeStatistics;

@@ -20,7 +20,7 @@ class DocumentScannerState with _$DocumentScannerState {
     DocumentQuadrilateral? detectedDocument,
     @Default(false) bool isDocumentStable,
     @Default(0.0) double stabilityScore,
-    @Default(DateTime.now()) DateTime lastDetectionTime,
+    DateTime? lastDetectionTime,
     @Default([]) List<ScannedPage> scannedPages,
     ScannedPage? selectedPage,
     @Default(DocumentFilter.original) DocumentFilter selectedFilter,
@@ -56,7 +56,7 @@ class ScannedPage with _$ScannedPage {
     OcrResult? ocrResult,
     @Default(PageStatus.captured) PageStatus status,
     @Default('') String error,
-    @Default(DateTime.now()) DateTime captureTime,
+    required DateTime captureTime,
     Uint8List? thumbnailData,
     @Default(false) bool isSelected,
     Map<String, dynamic>? metadata,
@@ -198,7 +198,7 @@ class DetectionMetrics with _$DetectionMetrics {
     @Default(0.0) double area,
     @Default(0.0) double aspectRatio,
     @Default([]) List<Point> corners,
-    @Default(Duration.zero) Duration timeSinceDetection,
+    @Default(Duration(seconds: 0)) Duration timeSinceDetection,
   }) = _DetectionMetrics;
 
   const DetectionMetrics._();
@@ -244,7 +244,7 @@ class BatchSession with _$BatchSession {
   const factory BatchSession({
     required String id,
     @Default([]) List<ScannedPage> pages,
-    @Default(DateTime.now()) DateTime startTime,
+    required DateTime startTime,
     DateTime? endTime,
     @Default('') String name,
     @Default(BatchStatus.active) BatchStatus status,
