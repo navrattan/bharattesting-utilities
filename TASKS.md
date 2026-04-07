@@ -297,12 +297,12 @@ Mark tasks done with `[x]` as you complete them.
 - [x] **Commit:** `chore: configure iOS release build`
 
 ### Task 6.5: Deploy Web
-- [ ] Connect repo to Vercel
-- [ ] Configure build command: `cd app && flutter build web --release --web-renderer canvaskit`
-- [ ] Set output directory: `app/build/web`
-- [ ] Add custom domain: bharattesting.com
-- [ ] Verify all routes work with direct URL access
-- [ ] **Commit:** `deploy: web live on bharattesting.com`
+- [x] Connect repo to Vercel
+- [x] Configure build command: `cd app && flutter build web --release --web-renderer canvaskit`
+- [x] Set output directory: `app/build/web`
+- [x] Add custom domain: bharattesting.com
+- [x] Verify all routes work with direct URL access
+- [x] **Commit:** `deploy: web live on bharattesting.com`
 
 ### Task 6.6: Final Checks
 - [ ] All CI/CD workflows pass
