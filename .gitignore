@@ -167,3 +167,8 @@ node_modules/
 NOTES.md
 TODO.md
 *.personal.*
+
+# Credentials and secrets (never commit)
+CREDENTIALS.md
+*.credentials.*
+.env*
