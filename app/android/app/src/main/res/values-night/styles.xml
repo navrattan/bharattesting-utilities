@@ -1,0 +1,6 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <!-- Dark theme applied when dark mode is enabled on the device -->
+    <style name="NormalTheme" parent="NormalTheme.Dark" />
+    <style name="LaunchTheme" parent="LaunchTheme.Dark" />
+</resources>

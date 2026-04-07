@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="utf-8"?>
+<vector xmlns:android="http://schemas.android.com/apk/res/android"
+    android:width="120dp"
+    android:height="120dp"
+    android:viewportWidth="120"
+    android:viewportHeight="120">
+
+    <!-- BT text in the center -->
+    <group android:pivotX="60" android:pivotY="60">
+        <!-- B letter -->
+        <path
+            android:pathData="M25,30 L25,90 L50,90 Q65,90 65,75 Q65,60 50,60 L25,60 Q60,60 60,45 Q60,30 45,30 Z"
+            android:fillColor="#FFFFFF"
+            android:strokeWidth="2"
+            android:strokeColor="#FFFFFF" />
+
+        <!-- T letter -->
+        <path
+            android:pathData="M70,30 L95,30 M82.5,30 L82.5,90"
+            android:fillColor="#FFFFFF"
+            android:strokeWidth="4"
+            android:strokeColor="#FFFFFF"
+            android:strokeLineCap="round" />
+    </group>
+</vector>

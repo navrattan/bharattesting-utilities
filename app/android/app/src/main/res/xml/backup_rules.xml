@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="utf-8"?>
+<full-backup-content>
+    <!-- Exclude shared preferences that contain sensitive data -->
+    <exclude domain="sharedpref" path="flutter.secure_storage" />
+    <exclude domain="sharedpref" path="camera_settings" />
+
+    <!-- Include only essential data -->
+    <include domain="file" path="." />
+</full-backup-content>

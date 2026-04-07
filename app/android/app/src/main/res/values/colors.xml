@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <!-- BharatTesting brand colors -->
+    <color name="primary">#58A6FF</color>
+    <color name="primary_dark">#0969DA</color>
+    <color name="dark_background">#0D1117</color>
+    <color name="white">#FFFFFF</color>
+    <color name="black">#000000</color>
+</resources>
