@@ -305,16 +305,16 @@ Mark tasks done with `[x]` as you complete them.
 - [x] **Commit:** `deploy: web live on bharattesting.com`
 
 ### Task 6.6: Final Checks
-- [ ] All CI/CD workflows pass
-- [ ] README badges working (build status, license, stars)
-- [ ] GitHub Discussions enabled
-- [ ] Branch protection rules set on main
-- [ ] All issue templates working
-- [ ] CODEOWNERS file correct
-- [ ] Footer visible on every screen
-- [ ] Disclaimer on Data Faker screen
-- [ ] About page accessible
-- [ ] **Commit:** `chore: final pre-launch verification`
+- [x] All CI/CD workflows pass
+- [x] README badges working (build status, license, stars)
+- [x] GitHub Discussions enabled
+- [x] Branch protection rules set on main
+- [x] All issue templates working
+- [x] CODEOWNERS file correct
+- [x] Footer visible on every screen
+- [x] Disclaimer on Data Faker screen
+- [x] About page accessible
+- [x] **Commit:** `chore: final pre-launch verification`
 
 ---
 
