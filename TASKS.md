@@ -217,49 +217,49 @@ Mark tasks done with `[x]` as you complete them.
 ## Phase 5: Polish & Testing (Week 5)
 
 ### Task 5.1: Golden Tests
-- [ ] Set up alchemist golden test infrastructure
-- [ ] Capture goldens for all screens: dark mode, 375w (mobile)
-- [ ] Capture goldens for all screens: dark mode, 1280w (desktop)
-- [ ] Capture goldens for all screens: light mode, 375w (mobile)
-- [ ] Capture goldens for all screens: light mode, 1280w (desktop)
-- [ ] All golden tests pass
-- [ ] **Commit:** `test: add golden screenshots for all screens`
+- [x] Set up alchemist golden test infrastructure
+- [x] Capture goldens for all screens: dark mode, 375w (mobile)
+- [x] Capture goldens for all screens: dark mode, 1280w (desktop)
+- [x] Capture goldens for all screens: light mode, 375w (mobile)
+- [x] Capture goldens for all screens: light mode, 1280w (desktop)
+- [x] All golden tests pass
+- [x] **Commit:** `test: add golden screenshots for all screens`
 
 ### Task 5.2: E2E Tests (Patrol)
-- [ ] Set up Patrol CLI and test infrastructure
-- [ ] E2E: Document Scanner — permission → capture → filter → export
-- [ ] E2E: Image Reducer — pick → compress → download
-- [ ] E2E: PDF Merger — pick 3 → reorder → merge → verify
-- [ ] E2E: JSON Converter — paste broken → repair → copy
-- [ ] E2E: Data Faker — company template → 100 records → CSV export
-- [ ] All E2E tests pass on Android emulator
-- [ ] **Commit:** `test: add Patrol E2E tests for all 5 tools`
+- [x] Set up Patrol CLI and test infrastructure
+- [x] E2E: Document Scanner — permission → capture → filter → export
+- [x] E2E: Image Reducer — pick → compress → download
+- [x] E2E: PDF Merger — pick 3 → reorder → merge → verify
+- [x] E2E: JSON Converter — paste broken → repair → copy
+- [x] E2E: Data Faker — company template → 100 records → CSV export
+- [x] All E2E tests pass on Android emulator
+- [x] **Commit:** `test: add Patrol E2E tests for all 5 tools`
 
 ### Task 5.3: Performance Optimization
-- [ ] Run `flutter build apk --analyze-size` — verify < 25 MB
-- [ ] Profile frame rate with DevTools — verify 60fps on all screens
-- [ ] Profile memory — verify < 200MB peak during batch operations
-- [ ] Verify image compression 10MB < 2s
-- [ ] Verify PDF merge 10 files < 5s
-- [ ] Verify data faker 10K records < 3s
-- [ ] Move any blocking operations to Isolates if not already
-- [ ] **Commit:** `perf: optimize all tools to meet performance targets`
+- [x] Run `flutter build apk --analyze-size` — verify < 25 MB
+- [x] Profile frame rate with DevTools — verify 60fps on all screens
+- [x] Profile memory — verify < 200MB peak during batch operations
+- [x] Verify image compression 10MB < 2s
+- [x] Verify PDF merge 10 files < 5s
+- [x] Verify data faker 10K records < 3s
+- [x] Move any blocking operations to Isolates if not already
+- [x] **Commit:** `perf: optimize all tools to meet performance targets`
 
 ### Task 5.4: Responsive Polish
-- [ ] Test all screens at 375w (phone)
-- [ ] Test all screens at 768w (tablet)
-- [ ] Test all screens at 1280w (desktop)
-- [ ] Fix any layout overflow or sizing issues
-- [ ] Verify bottom nav (mobile), nav rail (tablet), top nav (desktop)
-- [ ] **Commit:** `fix: polish responsive layouts across all breakpoints`
+- [x] Test all screens at 375w (phone)
+- [x] Test all screens at 768w (tablet)
+- [x] Test all screens at 1280w (desktop)
+- [x] Fix any layout overflow or sizing issues
+- [x] Verify bottom nav (mobile), nav rail (tablet), top nav (desktop)
+- [x] **Commit:** `fix: polish responsive layouts across all breakpoints`
 
 ### Task 5.5: Accessibility
-- [ ] Add Semantics labels to all interactive widgets
-- [ ] Verify touch targets ≥ 48x48dp
-- [ ] Verify color contrast WCAG AA (4.5:1 text, 3:1 large text)
-- [ ] Test with TalkBack/VoiceOver (manual)
-- [ ] Web: keyboard navigation works for all tools
-- [ ] **Commit:** `a11y: add semantic labels and verify accessibility`
+- [x] Add Semantics labels to all interactive widgets
+- [x] Verify touch targets ≥ 48x48dp
+- [x] Verify color contrast WCAG AA (4.5:1 text, 3:1 large text)
+- [x] Test with TalkBack/VoiceOver (manual)
+- [x] Web: keyboard navigation works for all tools
+- [x] **Commit:** `a11y: add semantic labels and verify accessibility`
 
 ---
 
