@@ -72,7 +72,7 @@ jobs:
           flutter test --coverage --reporter=expanded
 
       - name: Upload Coverage
-        uses: codecov/codecov-action@v4
+        uses: codecov/codecov-action@v6
         with:
           files: core/coverage/lcov.info,app/coverage/lcov.info
 
