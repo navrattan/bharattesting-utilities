@@ -72,23 +72,23 @@ class CSVParseResult {
 class CSVParser {
   /// Parse CSV string with configuration
   static CSVParseResult parse(String csvContent, [CSVConfig? config]) {
-    config ??= const CSVConfig();
+    final cfg = config ?? const CSVConfig();
 
     if (csvContent.trim().isEmpty) {
       return CSVParseResult(
-        data: config.hasHeader ? <Map<String, dynamic>>[] : <List<dynamic>>[],
+        data: cfg.hasHeader ? <Map<String, dynamic>>[] : <List<dynamic>>[],
         headers: [],
         rowCount: 0,
         columnCount: 0,
       );
     }
 
-    final parseContext = _CSVParseContext(config);
+    final parseContext = _CSVParseContext(cfg);
     final rawRows = _parseRawRows(csvContent, parseContext);
 
     if (rawRows.isEmpty) {
       return CSVParseResult(
-        data: config.hasHeader ? <Map<String, dynamic>>[] : <List<dynamic>>[],
+        data: cfg.hasHeader ? <Map<String, dynamic>>[] : <List<dynamic>>[],
         headers: [],
         rowCount: 0,
         columnCount: 0,
@@ -99,9 +99,9 @@ class CSVParser {
     List<String> headers;
     List<List<String>> dataRows;
 
-    if (config.hasHeader && rawRows.isNotEmpty) {
+    if (cfg.hasHeader && rawRows.isNotEmpty) {
       headers = rawRows[0].map((cell) =>
-        config.trimWhitespace ? cell.trim() : cell).toList();
+        cfg.trimWhitespace ? cell.trim() : cell).toList();
       dataRows = rawRows.skip(1).toList();
     } else {
       // Generate default headers
@@ -111,20 +111,20 @@ class CSVParser {
     }
 
     // Type detection and conversion
-    final typedData = config.autoDetectTypes
+    final typedData = cfg.autoDetectTypes
         ? _convertTypes(dataRows, parseContext)
         : dataRows.map((row) => List<dynamic>.from(row)).toList();
 
     // Format output
-    final data = config.hasHeader
+    final data = cfg.hasHeader
         ? _formatAsMapList(typedData, headers)
         : typedData;
 
     final metadata = {
-      'delimiter': config.delimiter,
-      'hasHeader': config.hasHeader,
-      'autoDetectedTypes': config.autoDetectTypes,
-      'typeInfo': config.autoDetectTypes ? _analyzeTypes(typedData) : null,
+      'delimiter': cfg.delimiter,
+      'hasHeader': cfg.hasHeader,
+      'autoDetectedTypes': cfg.autoDetectTypes,
+      'typeInfo': cfg.autoDetectTypes ? _analyzeTypes(typedData) : null,
       'emptyRowsSkipped': parseContext.emptyRowsSkipped,
       'totalRowsParsed': rawRows.length,
     };

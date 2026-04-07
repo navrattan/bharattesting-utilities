@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_highlight/flutter_highlight.dart';
 import 'package:flutter_highlight/themes/github.dart';
-import 'package:flutter_highlight/themes/github_dark.dart';
+import 'package:flutter_highlight/themes/github-gist.dart';
 
 class OutputViewer extends StatefulWidget {
   final String content;
@@ -158,7 +158,7 @@ class _OutputViewerState extends State<OutputViewer>
             widget.content,
             language: 'json',
             theme: theme.brightness == Brightness.dark
-                ? githubDarkTheme
+                ? githubGistTheme
                 : githubTheme,
             textStyle: const TextStyle(
               fontFamily: 'monospace',

@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_highlight/flutter_highlight.dart';
 import 'package:flutter_highlight/themes/github.dart';
-import 'package:flutter_highlight/themes/github_dark.dart';
+import 'package:flutter_highlight/themes/github-gist.dart';
 
 class InputEditor extends StatefulWidget {
   final String value;
@@ -101,7 +101,7 @@ class _InputEditorState extends State<InputEditor> {
                       child: HighlightView(
                         widget.value,
                         language: _detectLanguage(widget.value),
-                        theme: isDark ? githubDarkTheme : githubTheme,
+                        theme: isDark ? githubGistTheme : githubTheme,
                         textStyle: TextStyle(
                           fontFamily: 'monospace',
                           fontSize: 14,

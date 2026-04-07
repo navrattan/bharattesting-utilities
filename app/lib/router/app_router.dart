@@ -4,6 +4,7 @@ library app_router;
 import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
 import '../features/home/home_screen.dart';
+import '../features/json_converter/json_converter_screen.dart';
 import '../shared/widgets/tool_scaffold.dart';
 
 /// Application router using GoRouter for type-safe navigation
@@ -55,9 +56,7 @@ class AppRouter {
           GoRoute(
             path: '/string-to-json',
             name: 'string-to-json',
-            builder: (context, state) => const _ComingSoonScreen(
-              title: 'String to JSON Converter',
-            ),
+            builder: (context, state) => const JsonConverterScreen(),
           ),
           GoRoute(
             path: '/indian-data-faker',

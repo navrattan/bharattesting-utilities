@@ -2,7 +2,7 @@ import 'dart:async';
 import 'dart:convert';
 import 'package:flutter/services.dart';
 import 'package:riverpod_annotation/riverpod_annotation.dart';
-import 'package:bharattesting_core/core.dart';
+import 'package:bharattesting_core/src/json_converter/json_converter.dart';
 import '../models/json_converter_state.dart';
 
 part 'json_converter_provider.g.dart';
@@ -110,7 +110,7 @@ class JsonConverter extends _$JsonConverter {
           detectedFormat: InputFormat.json,
           formatConfidence: 1.0,
           appliedRepairs: repairResult.appliedRules,
-          warnings: repairResult.warnings ?? <String>[],
+          warnings: const <String>[],
         );
       } else {
         // Repair failed, try multi-format detection
@@ -160,9 +160,6 @@ class JsonConverter extends _$JsonConverter {
       }
 
       final warnings = <String>[];
-      if (parseResult.warnings != null) {
-        warnings.addAll(parseResult.warnings!);
-      }
       if (parseResult.detectedFormat != InputFormat.json) {
         warnings.add('Converted from ${parseResult.detectedFormat.name.toUpperCase()} to JSON');
       }

@@ -12,7 +12,7 @@ part of 'json_converter_state.dart';
 T _$identity<T>(T value) => value;
 
 final _privateConstructorUsedError = UnsupportedError(
-    'It seems like you constructed your class using `MyClass._()`. This constructor is only meant to be used by freezed and you are not supposed to need it nor use it.\nPlease use the `default` constructor instead.');
+    'It seems like you constructed your class using `MyClass._()`. This constructor is only meant to be used by freezed and you are not supposed to need it nor use it.\nPlease check the documentation here for more information: https://github.com/rrousselGit/freezed#adding-getters-and-methods-to-our-models');
 
 /// @nodoc
 mixin _$JsonConverterState {
@@ -31,7 +31,9 @@ mixin _$JsonConverterState {
   String? get errorMessage => throw _privateConstructorUsedError;
   Map<String, dynamic>? get metadata => throw _privateConstructorUsedError;
 
-  @JsonKey(ignore: true)
+  /// Create a copy of JsonConverterState
+  /// with the given fields replaced by the non-null parameter values.
+  @JsonKey(includeFromJson: false, includeToJson: false)
   $JsonConverterStateCopyWith<JsonConverterState> get copyWith =>
       throw _privateConstructorUsedError;
 }
@@ -69,6 +71,8 @@ class _$JsonConverterStateCopyWithImpl<$Res, $Val extends JsonConverterState>
   // ignore: unused_field
   final $Res Function($Val) _then;
 
+  /// Create a copy of JsonConverterState
+  /// with the given fields replaced by the non-null parameter values.
   @pragma('vm:prefer-inline')
   @override
   $Res call({
@@ -181,6 +185,8 @@ class __$$JsonConverterStateImplCopyWithImpl<$Res>
       $Res Function(_$JsonConverterStateImpl) _then)
       : super(_value, _then);
 
+  /// Create a copy of JsonConverterState
+  /// with the given fields replaced by the non-null parameter values.
   @pragma('vm:prefer-inline')
   @override
   $Res call({
@@ -403,7 +409,9 @@ class _$JsonConverterStateImpl extends _JsonConverterState {
       errorMessage,
       const DeepCollectionEquality().hash(_metadata));
 
-  @JsonKey(ignore: true)
+  /// Create a copy of JsonConverterState
+  /// with the given fields replaced by the non-null parameter values.
+  @JsonKey(includeFromJson: false, includeToJson: false)
   @override
   @pragma('vm:prefer-inline')
   _$$JsonConverterStateImplCopyWith<_$JsonConverterStateImpl> get copyWith =>
@@ -457,8 +465,11 @@ abstract class _JsonConverterState extends JsonConverterState {
   String? get errorMessage;
   @override
   Map<String, dynamic>? get metadata;
+
+  /// Create a copy of JsonConverterState
+  /// with the given fields replaced by the non-null parameter values.
   @override
-  @JsonKey(ignore: true)
+  @JsonKey(includeFromJson: false, includeToJson: false)
   _$$JsonConverterStateImplCopyWith<_$JsonConverterStateImpl> get copyWith =>
       throw _privateConstructorUsedError;
 }

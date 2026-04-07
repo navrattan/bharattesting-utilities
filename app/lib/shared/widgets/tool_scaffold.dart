@@ -18,27 +18,73 @@ import '../../theme/app_theme.dart';
 /// - Consistent layout and spacing
 class ToolScaffold extends StatelessWidget {
   const ToolScaffold({
-    required this.child,
+    this.child,
+    this.body,
+    this.title,
+    this.subtitle,
+    this.icon,
+    this.actions,
+    this.drawer,
+    this.endDrawer,
     super.key,
   });
 
-  final Widget child;
+  final Widget? child;
+  final Widget? body;
+  final String? title;
+  final String? subtitle;
+  final IconData? icon;
+  final List<Widget>? actions;
+  final Widget? drawer;
+  final Widget? endDrawer;
 
   @override
   Widget build(BuildContext context) {
+    final content = body ?? child ?? const SizedBox.shrink();
+
     return ResponsiveLayout(
-      mobile: _MobileLayout(child: child),
-      tablet: _TabletLayout(child: child),
-      desktop: _DesktopLayout(child: child),
+      mobile: _MobileLayout(
+        child: content,
+        title: title,
+        actions: actions,
+        drawer: drawer,
+        endDrawer: endDrawer,
+      ),
+      tablet: _TabletLayout(
+        child: content,
+        title: title,
+        subtitle: subtitle,
+        actions: actions,
+        drawer: drawer,
+        endDrawer: endDrawer,
+      ),
+      desktop: _DesktopLayout(
+        child: content,
+        title: title,
+        subtitle: subtitle,
+        actions: actions,
+        drawer: drawer,
+        endDrawer: endDrawer,
+      ),
     );
   }
 }
 
 /// Mobile layout with bottom navigation
 class _MobileLayout extends StatelessWidget {
-  const _MobileLayout({required this.child});
+  const _MobileLayout({
+    required this.child,
+    this.title,
+    this.actions,
+    this.drawer,
+    this.endDrawer,
+  });
 
   final Widget child;
+  final String? title;
+  final List<Widget>? actions;
+  final Widget? drawer;
+  final Widget? endDrawer;
 
   @override
   Widget build(BuildContext context) {
@@ -47,11 +93,14 @@ class _MobileLayout extends StatelessWidget {
 
     return Scaffold(
       appBar: AppBar(
-        title: const Text('BharatTesting'),
-        actions: const [
-          GitHubButtons(compact: true),
+        title: Text(title ?? 'BharatTesting'),
+        actions: [
+          ...?actions,
+          const GitHubButtons(compact: true),
         ],
       ),
+      drawer: drawer,
+      endDrawer: endDrawer,
       body: Column(
         children: [
           Expanded(child: child),
@@ -71,9 +120,21 @@ class _MobileLayout extends StatelessWidget {
 
 /// Tablet layout with navigation rail
 class _TabletLayout extends StatelessWidget {
-  const _TabletLayout({required this.child});
+  const _TabletLayout({
+    required this.child,
+    this.title,
+    this.subtitle,
+    this.actions,
+    this.drawer,
+    this.endDrawer,
+  });
 
   final Widget child;
+  final String? title;
+  final String? subtitle;
+  final List<Widget>? actions;
+  final Widget? drawer;
+  final Widget? endDrawer;
 
   @override
   Widget build(BuildContext context) {
@@ -81,6 +142,8 @@ class _TabletLayout extends StatelessWidget {
     final currentIndex = AppRouter.getCurrentIndex(currentLocation);
 
     return Scaffold(
+      drawer: drawer,
+      endDrawer: endDrawer,
       body: Row(
         children: [
           NavigationRail(
@@ -102,10 +165,24 @@ class _TabletLayout extends StatelessWidget {
             child: Column(
               children: [
                 AppBar(
-                  title: const Text('BharatTesting Utilities'),
-                  actions: const [GitHubButtons()],
+                  title: Text(title ?? 'BharatTesting Utilities'),
+                  actions: [
+                    ...?actions,
+                    const GitHubButtons(),
+                  ],
                   automaticallyImplyLeading: false,
                 ),
+                if (subtitle != null)
+                  Padding(
+                    padding: const EdgeInsets.fromLTRB(16, 8, 16, 0),
+                    child: Align(
+                      alignment: Alignment.centerLeft,
+                      child: Text(
+                        subtitle!,
+                        style: Theme.of(context).textTheme.bodyMedium,
+                      ),
+                    ),
+                  ),
                 Expanded(child: child),
                 const BTQAFooter(),
               ],
@@ -119,9 +196,21 @@ class _TabletLayout extends StatelessWidget {
 
 /// Desktop layout with top navigation and side rail
 class _DesktopLayout extends StatelessWidget {
-  const _DesktopLayout({required this.child});
+  const _DesktopLayout({
+    required this.child,
+    this.title,
+    this.subtitle,
+    this.actions,
+    this.drawer,
+    this.endDrawer,
+  });
 
   final Widget child;
+  final String? title;
+  final String? subtitle;
+  final List<Widget>? actions;
+  final Widget? drawer;
+  final Widget? endDrawer;
 
   @override
   Widget build(BuildContext context) {
@@ -129,6 +218,8 @@ class _DesktopLayout extends StatelessWidget {
     final currentIndex = AppRouter.getCurrentIndex(currentLocation);
 
     return Scaffold(
+      drawer: drawer,
+      endDrawer: endDrawer,
       body: Column(
         children: [
           // Top navigation bar
@@ -142,7 +233,7 @@ class _DesktopLayout extends StatelessWidget {
               child: Row(
                 children: [
                   Text(
-                    'BharatTesting Utilities',
+                    title ?? 'BharatTesting Utilities',
                     style: Theme.of(context).textTheme.titleLarge?.copyWith(
                           fontWeight: FontWeight.w600,
                         ),
@@ -166,11 +257,29 @@ class _DesktopLayout extends StatelessWidget {
                           .toList(),
                     ),
                   ),
+                  if (actions != null) ...actions!,
+                  const SizedBox(width: AppTheme.spacingSm),
                   const GitHubButtons(),
                 ],
               ),
             ),
           ),
+          if (subtitle != null)
+            Padding(
+              padding: const EdgeInsets.fromLTRB(
+                AppTheme.spacingXl,
+                AppTheme.spacingMd,
+                AppTheme.spacingXl,
+                AppTheme.spacingSm,
+              ),
+              child: Align(
+                alignment: Alignment.centerLeft,
+                child: Text(
+                  subtitle!,
+                  style: Theme.of(context).textTheme.bodyMedium,
+                ),
+              ),
+            ),
           Expanded(
             child: ConstrainedBox(
               constraints: const BoxConstraints(

@@ -1,5 +1,5 @@
 import 'package:freezed_annotation/freezed_annotation.dart';
-import 'package:bharattesting_core/core.dart';
+import 'package:bharattesting_core/src/json_converter/json_converter.dart';
 
 part 'json_converter_state.freezed.dart';
 

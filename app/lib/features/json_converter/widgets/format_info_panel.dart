@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:bharattesting_core/core.dart';
+import 'package:bharattesting_core/src/json_converter/json_converter.dart';
 
 class FormatInfoPanel extends StatelessWidget {
   final String detectedFormat;
