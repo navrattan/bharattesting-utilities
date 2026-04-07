@@ -3,7 +3,6 @@
   "outputDirectory": "app/build/web",
   "installCommand": "flutter pub get",
   "framework": null,
-  "functions": {},
   "headers": [
     {
       "source": "/(.*).(js|css|woff2|woff|ttf|eot|svg|ico|png|jpg|jpeg|gif|webp)",
