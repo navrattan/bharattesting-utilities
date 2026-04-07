@@ -1,0 +1,225 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <!-- Basic Meta Tags -->
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+
+  <!-- Primary Meta Tags -->
+  <title>BharatTesting Utilities - 5 Free Offline Developer Tools</title>
+  <meta name="title" content="BharatTesting Utilities - 5 Free Offline Developer Tools">
+  <meta name="description" content="Free, privacy-first, 100% offline developer tools: Document Scanner with OCR, Image Size Reducer, PDF Merger, JSON Converter, and Indian Data Faker. Built by BTQA Services.">
+  <meta name="keywords" content="developer tools, offline tools, document scanner, PDF merger, image compressor, JSON converter, Indian data faker, free tools, privacy-first, OCR, web app">
+  <meta name="author" content="BTQA Services Pvt Ltd">
+  <meta name="robots" content="index, follow">
+  <meta name="language" content="English">
+
+  <!-- Open Graph / Facebook -->
+  <meta property="og:type" content="website">
+  <meta property="og:url" content="https://bharattesting.com/">
+  <meta property="og:title" content="BharatTesting Utilities - 5 Free Offline Developer Tools">
+  <meta property="og:description" content="Free, privacy-first, 100% offline developer tools: Document Scanner with OCR, Image Size Reducer, PDF Merger, JSON Converter, and Indian Data Faker.">
+  <meta property="og:image" content="https://bharattesting.com/og-image.png">
+  <meta property="og:image:width" content="1200">
+  <meta property="og:image:height" content="630">
+  <meta property="og:site_name" content="BharatTesting Utilities">
+
+  <!-- Twitter -->
+  <meta property="twitter:card" content="summary_large_image">
+  <meta property="twitter:url" content="https://bharattesting.com/">
+  <meta property="twitter:title" content="BharatTesting Utilities - 5 Free Offline Developer Tools">
+  <meta property="twitter:description" content="Free, privacy-first, 100% offline developer tools for developers. Document Scanner, PDF Merger, Image Reducer, JSON Converter, Indian Data Faker.">
+  <meta property="twitter:image" content="https://bharattesting.com/og-image.png">
+
+  <!-- Favicon and Icons -->
+  <link rel="icon" type="image/x-icon" href="/favicon.ico">
+  <link rel="icon" type="image/png" sizes="16x16" href="/favicon-16x16.png">
+  <link rel="icon" type="image/png" sizes="32x32" href="/favicon-32x32.png">
+  <link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png">
+  <link rel="icon" type="image/png" sizes="192x192" href="/android-chrome-192x192.png">
+  <link rel="icon" type="image/png" sizes="512x512" href="/android-chrome-512x512.png">
+
+  <!-- PWA Manifest -->
+  <link rel="manifest" href="/manifest.json">
+  <meta name="theme-color" content="#58A6FF">
+  <meta name="background-color" content="#0D1117">
+  <meta name="apple-mobile-web-app-capable" content="yes">
+  <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+  <meta name="apple-mobile-web-app-title" content="BharatTesting">
+  <meta name="msapplication-TileColor" content="#58A6FF">
+  <meta name="msapplication-config" content="/browserconfig.xml">
+
+  <!-- Security Headers -->
+  <meta http-equiv="Content-Security-Policy" content="default-src 'self' data: blob:; script-src 'self' 'unsafe-inline' 'unsafe-eval'; style-src 'self' 'unsafe-inline'; img-src 'self' data: blob:; font-src 'self' data:; connect-src 'self'; media-src 'self' blob:; object-src 'none'; child-src 'self' blob:; worker-src 'self' blob:; frame-src 'none';">
+
+  <!-- Canonical URL -->
+  <link rel="canonical" href="https://bharattesting.com/">
+
+  <!-- Preload Critical Resources -->
+  <link rel="preload" href="/main.dart.js" as="script">
+  <link rel="preload" href="/flutter_service_worker.js" as="script">
+
+  <!-- Schema.org Structured Data -->
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@type": "WebApplication",
+    "name": "BharatTesting Utilities",
+    "description": "Free, privacy-first, 100% offline developer tools: Document Scanner with OCR, Image Size Reducer, PDF Merger, JSON Converter, and Indian Data Faker",
+    "url": "https://bharattesting.com/",
+    "applicationCategory": "DeveloperApplication",
+    "operatingSystem": "Web, Android, iOS",
+    "offers": {
+      "@type": "Offer",
+      "price": "0",
+      "priceCurrency": "USD"
+    },
+    "creator": {
+      "@type": "Organization",
+      "name": "BTQA Services Pvt Ltd",
+      "url": "https://btqas.com"
+    },
+    "sourceOrganization": {
+      "@type": "Organization",
+      "name": "BTQA Services Pvt Ltd",
+      "url": "https://github.com/navrattan"
+    }
+  }
+  </script>
+
+  <!-- Analytics & Performance (Privacy-First) -->
+  <!-- NO TRACKING - This app is privacy-first and offline -->
+
+  <!-- Flutter Service Worker Configuration -->
+  <script>
+    if ('serviceWorker' in navigator) {
+      window.addEventListener('flutter-first-frame', function () {
+        navigator.serviceWorker.register('flutter_service_worker.js?v={{flutter.version}}');
+      });
+    }
+  </script>
+
+  <style>
+    /* Loading Screen Styles */
+    .loading-container {
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      background: #0D1117;
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      align-items: center;
+      z-index: 9999;
+      font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+    }
+
+    .loading-logo {
+      width: 120px;
+      height: 120px;
+      margin-bottom: 24px;
+      background: linear-gradient(135deg, #58A6FF, #0969DA);
+      border-radius: 24px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      color: white;
+      font-size: 48px;
+      font-weight: 700;
+      letter-spacing: -2px;
+      animation: pulse 2s infinite;
+    }
+
+    .loading-text {
+      color: #58A6FF;
+      font-size: 20px;
+      font-weight: 600;
+      margin-bottom: 8px;
+      text-align: center;
+    }
+
+    .loading-subtext {
+      color: #7D8590;
+      font-size: 14px;
+      text-align: center;
+      margin-bottom: 32px;
+    }
+
+    .loading-spinner {
+      width: 24px;
+      height: 24px;
+      border: 2px solid #30363D;
+      border-top: 2px solid #58A6FF;
+      border-radius: 50%;
+      animation: spin 1s linear infinite;
+    }
+
+    @keyframes pulse {
+      0%, 100% { transform: scale(1); }
+      50% { transform: scale(1.05); }
+    }
+
+    @keyframes spin {
+      0% { transform: rotate(0deg); }
+      100% { transform: rotate(360deg); }
+    }
+
+    /* Hide loading screen when Flutter is ready */
+    flt-glass-pane {
+      display: none;
+    }
+  </style>
+</head>
+
+<body>
+  <!-- Loading Screen (shown until Flutter loads) -->
+  <div id="loading-screen" class="loading-container">
+    <div class="loading-logo">BT</div>
+    <div class="loading-text">BharatTesting Utilities</div>
+    <div class="loading-subtext">5 free, offline developer tools</div>
+    <div class="loading-spinner"></div>
+  </div>
+
+  <!-- Flutter App Container -->
+  <div id="flutter-container"></div>
+
+  <!-- Flutter Configuration -->
+  <script>
+    window.addEventListener('flutter-first-frame', function () {
+      // Hide loading screen when Flutter is ready
+      const loadingScreen = document.getElementById('loading-screen');
+      if (loadingScreen) {
+        loadingScreen.style.display = 'none';
+      }
+    });
+
+    // Configure Flutter
+    window.flutterConfiguration = {
+      canvasKitBaseUrl: "https://www.gstatic.com/flutter-canvaskit/"
+    };
+  </script>
+
+  <!-- Flutter Bootstrap Script -->
+  <script src="flutter.js" defer></script>
+
+  <!-- Initialize Flutter -->
+  <script>
+    window.addEventListener('load', function(ev) {
+      // Download main.dart.js
+      _flutter.loader.loadEntrypoint({
+        serviceWorker: {
+          serviceWorkerVersion: serviceWorkerVersion,
+        },
+        onEntrypointLoaded: function(engineInitializer) {
+          engineInitializer.initializeEngine().then(function(appRunner) {
+            appRunner.runApp();
+          });
+        }
+      });
+    });
+  </script>
+</body>
+</html>

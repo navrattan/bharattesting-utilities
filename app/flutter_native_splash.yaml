@@ -1,0 +1,40 @@
+flutter_native_splash:
+  # Background color (dark theme default)
+  color: "#0D1117"
+  color_dark: "#0D1117"
+
+  # App icon for splash
+  image: assets/images/app_icon.png
+  image_dark: assets/images/app_icon.png
+
+  # Brand text below icon
+  branding: assets/images/splash_branding.png
+  branding_dark: assets/images/splash_branding.png
+  branding_mode: bottom
+
+  # Platform specific
+  android_12:
+    image: assets/images/app_icon.png
+    image_dark: assets/images/app_icon.png
+    icon_background_color: "#0D1117"
+    icon_background_color_dark: "#0D1117"
+    branding: assets/images/splash_branding.png
+    branding_dark: assets/images/splash_branding.png
+
+  # Web splash
+  web: true
+  web_image_mode: center
+
+  # iOS specific
+  ios_content_mode: center
+
+  # Remove default Flutter splash
+  android_gravity: center
+  ios_content_mode: center
+
+  # Full screen (hide status bar)
+  fullscreen: true
+
+  # Info.plist modifications for iOS
+  info_plist_files:
+    - 'ios/Runner/Info.plist'

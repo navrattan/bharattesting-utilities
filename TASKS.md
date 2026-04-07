@@ -266,20 +266,20 @@ Mark tasks done with `[x]` as you complete them.
 ## Phase 6: Deployment (Week 6)
 
 ### Task 6.1: App Icons & Splash
-- [ ] Create 1024x1024 app icon (BT monogram, blue on dark)
-- [ ] Configure flutter_launcher_icons (from spec Section 34.1)
-- [ ] Configure flutter_native_splash (from spec Section 34.2)
-- [ ] Run icon + splash generators
-- [ ] Verify on Android + iOS + Web
-- [ ] **Commit:** `chore: add app icons and splash screen`
+- [x] Create 1024x1024 app icon (BT monogram, blue on dark)
+- [x] Configure flutter_launcher_icons (from spec Section 34.1)
+- [x] Configure flutter_native_splash (from spec Section 34.2)
+- [x] Run icon + splash generators
+- [x] Verify on Android + iOS + Web
+- [x] **Commit:** `chore: add app icons and splash screen`
 
 ### Task 6.2: SEO & Web Config
-- [ ] Add meta tags to `app/web/index.html` (from spec Section 36)
-- [ ] Create `vercel.json` (from spec Section 32)
-- [ ] Create OG image (1200x630)
-- [ ] Configure PWA manifest.json (from spec Section 9.5)
-- [ ] Service worker caching strategy
-- [ ] **Commit:** `chore: add SEO meta tags, Vercel config, PWA setup`
+- [x] Add meta tags to `app/web/index.html` (from spec Section 36)
+- [x] Create `vercel.json` (from spec Section 32)
+- [x] Create OG image (1200x630)
+- [x] Configure PWA manifest.json (from spec Section 9.5)
+- [x] Service worker caching strategy
+- [x] **Commit:** `chore: add SEO meta tags, Vercel config, PWA setup`
 
 ### Task 6.3: Android Release Build
 - [ ] Create release keystore

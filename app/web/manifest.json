@@ -1,0 +1,96 @@
+{
+  "name": "BharatTesting Utilities",
+  "short_name": "BharatTesting",
+  "description": "5 free, privacy-first, offline developer tools: Document Scanner, Image Reducer, PDF Merger, JSON Converter, Indian Data Faker",
+  "version": "1.0.0",
+  "orientation": "any",
+  "display": "standalone",
+  "background_color": "#0D1117",
+  "theme_color": "#58A6FF",
+  "start_url": "/",
+  "scope": "/",
+  "lang": "en-US",
+  "categories": ["productivity", "utilities", "developer"],
+  "icons": [
+    {
+      "src": "/android-chrome-192x192.png",
+      "sizes": "192x192",
+      "type": "image/png",
+      "purpose": "any maskable"
+    },
+    {
+      "src": "/android-chrome-512x512.png",
+      "sizes": "512x512",
+      "type": "image/png",
+      "purpose": "any maskable"
+    },
+    {
+      "src": "/favicon-16x16.png",
+      "sizes": "16x16",
+      "type": "image/png"
+    },
+    {
+      "src": "/favicon-32x32.png",
+      "sizes": "32x32",
+      "type": "image/png"
+    },
+    {
+      "src": "/apple-touch-icon.png",
+      "sizes": "180x180",
+      "type": "image/png"
+    }
+  ],
+  "screenshots": [
+    {
+      "src": "/screenshot-desktop.png",
+      "sizes": "1280x800",
+      "type": "image/png",
+      "form_factor": "wide",
+      "label": "BharatTesting Utilities - Desktop View"
+    },
+    {
+      "src": "/screenshot-mobile.png",
+      "sizes": "375x667",
+      "type": "image/png",
+      "form_factor": "narrow",
+      "label": "BharatTesting Utilities - Mobile View"
+    }
+  ],
+  "shortcuts": [
+    {
+      "name": "Document Scanner",
+      "short_name": "Scanner",
+      "description": "Scan documents with OCR and export to PDF",
+      "url": "/document-scanner",
+      "icons": [{ "src": "/favicon-96x96.png", "sizes": "96x96" }]
+    },
+    {
+      "name": "Indian Data Faker",
+      "short_name": "Data Faker",
+      "description": "Generate synthetic Indian identity data",
+      "url": "/indian-data-faker",
+      "icons": [{ "src": "/favicon-96x96.png", "sizes": "96x96" }]
+    },
+    {
+      "name": "JSON Converter",
+      "short_name": "JSON Tools",
+      "description": "Convert and repair JSON, CSV, YAML",
+      "url": "/string-to-json",
+      "icons": [{ "src": "/favicon-96x96.png", "sizes": "96x96" }]
+    }
+  ],
+  "related_applications": [
+    {
+      "platform": "play",
+      "id": "com.btqas.bharattesting_utilities",
+      "url": "https://play.google.com/store/apps/details?id=com.btqas.bharattesting_utilities"
+    }
+  ],
+  "prefer_related_applications": false,
+  "edge_side_panel": {
+    "preferred_width": 400
+  },
+  "launch_handler": {
+    "client_mode": ["navigate-existing", "auto"]
+  }
+}
