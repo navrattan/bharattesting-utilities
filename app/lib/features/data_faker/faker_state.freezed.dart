@@ -16,27 +16,35 @@ final _privateConstructorUsedError = UnsupportedError(
 
 /// @nodoc
 mixin _$FakerState {
-  TemplateType get selectedTemplate => throw _privateConstructorUsedError;
+// Template selection
+  TemplateType get selectedTemplate =>
+      throw _privateConstructorUsedError; // Generation options
   BulkSize get bulkSize => throw _privateConstructorUsedError;
   bool get useRandomSeed => throw _privateConstructorUsedError;
   int? get customSeed => throw _privateConstructorUsedError;
-  String? get preferredState => throw _privateConstructorUsedError;
+  String? get preferredState =>
+      throw _privateConstructorUsedError; // Identifier toggles (for custom selection)
   bool get includeAllIdentifiers => throw _privateConstructorUsedError;
-  Set<String> get selectedIdentifiers => throw _privateConstructorUsedError;
+  Set<String> get selectedIdentifiers =>
+      throw _privateConstructorUsedError; // Generated data
   List<Map<String, dynamic>> get generatedRecords =>
       throw _privateConstructorUsedError;
-  DateTime? get lastGeneratedAt => throw _privateConstructorUsedError;
+  DateTime? get lastGeneratedAt =>
+      throw _privateConstructorUsedError; // Export options
   ExportFormat get selectedExportFormat => throw _privateConstructorUsedError;
   bool get includeMetadata => throw _privateConstructorUsedError;
-  bool get prettifyOutput => throw _privateConstructorUsedError;
+  bool get prettifyOutput => throw _privateConstructorUsedError; // UI state
   bool get isGenerating => throw _privateConstructorUsedError;
   bool get isExporting => throw _privateConstructorUsedError;
   String? get lastExportPath => throw _privateConstructorUsedError;
-  String? get errorMessage => throw _privateConstructorUsedError;
+  String? get errorMessage =>
+      throw _privateConstructorUsedError; // Performance metrics
   int? get lastGenerationTimeMs => throw _privateConstructorUsedError;
   int? get lastExportTimeMs => throw _privateConstructorUsedError;
 
-  @JsonKey(ignore: true)
+  /// Create a copy of FakerState
+  /// with the given fields replaced by the non-null parameter values.
+  @JsonKey(includeFromJson: false, includeToJson: false)
   $FakerStateCopyWith<FakerState> get copyWith =>
       throw _privateConstructorUsedError;
 }
@@ -73,9 +81,13 @@ class _$FakerStateCopyWithImpl<$Res, $Val extends FakerState>
     implements $FakerStateCopyWith<$Res> {
   _$FakerStateCopyWithImpl(this._value, this._then);
 
+  // ignore: unused_field
   final $Val _value;
+  // ignore: unused_field
   final $Res Function($Val) _then;
 
+  /// Create a copy of FakerState
+  /// with the given fields replaced by the non-null parameter values.
   @pragma('vm:prefer-inline')
   @override
   $Res call({
@@ -101,38 +113,76 @@ class _$FakerStateCopyWithImpl<$Res, $Val extends FakerState>
     return _then(_value.copyWith(
       selectedTemplate: null == selectedTemplate
           ? _value.selectedTemplate
-          : selectedTemplate,
-      bulkSize: null == bulkSize ? _value.bulkSize : bulkSize,
-      useRandomSeed: null == useRandomSeed ? _value.useRandomSeed : useRandomSeed,
-      customSeed: freezed == customSeed ? _value.customSeed : customSeed,
-      preferredState: freezed == preferredState ? _value.preferredState : preferredState,
+          : selectedTemplate // ignore: cast_nullable_to_non_nullable
+              as TemplateType,
+      bulkSize: null == bulkSize
+          ? _value.bulkSize
+          : bulkSize // ignore: cast_nullable_to_non_nullable
+              as BulkSize,
+      useRandomSeed: null == useRandomSeed
+          ? _value.useRandomSeed
+          : useRandomSeed // ignore: cast_nullable_to_non_nullable
+              as bool,
+      customSeed: freezed == customSeed
+          ? _value.customSeed
+          : customSeed // ignore: cast_nullable_to_non_nullable
+              as int?,
+      preferredState: freezed == preferredState
+          ? _value.preferredState
+          : preferredState // ignore: cast_nullable_to_non_nullable
+              as String?,
       includeAllIdentifiers: null == includeAllIdentifiers
           ? _value.includeAllIdentifiers
-          : includeAllIdentifiers,
+          : includeAllIdentifiers // ignore: cast_nullable_to_non_nullable
+              as bool,
       selectedIdentifiers: null == selectedIdentifiers
           ? _value.selectedIdentifiers
-          : selectedIdentifiers,
+          : selectedIdentifiers // ignore: cast_nullable_to_non_nullable
+              as Set<String>,
       generatedRecords: null == generatedRecords
           ? _value.generatedRecords
-          : generatedRecords,
+          : generatedRecords // ignore: cast_nullable_to_non_nullable
+              as List<Map<String, dynamic>>,
       lastGeneratedAt: freezed == lastGeneratedAt
           ? _value.lastGeneratedAt
-          : lastGeneratedAt,
+          : lastGeneratedAt // ignore: cast_nullable_to_non_nullable
+              as DateTime?,
       selectedExportFormat: null == selectedExportFormat
           ? _value.selectedExportFormat
-          : selectedExportFormat,
-      includeMetadata: null == includeMetadata ? _value.includeMetadata : includeMetadata,
-      prettifyOutput: null == prettifyOutput ? _value.prettifyOutput : prettifyOutput,
-      isGenerating: null == isGenerating ? _value.isGenerating : isGenerating,
-      isExporting: null == isExporting ? _value.isExporting : isExporting,
-      lastExportPath: freezed == lastExportPath ? _value.lastExportPath : lastExportPath,
-      errorMessage: freezed == errorMessage ? _value.errorMessage : errorMessage,
+          : selectedExportFormat // ignore: cast_nullable_to_non_nullable
+              as ExportFormat,
+      includeMetadata: null == includeMetadata
+          ? _value.includeMetadata
+          : includeMetadata // ignore: cast_nullable_to_non_nullable
+              as bool,
+      prettifyOutput: null == prettifyOutput
+          ? _value.prettifyOutput
+          : prettifyOutput // ignore: cast_nullable_to_non_nullable
+              as bool,
+      isGenerating: null == isGenerating
+          ? _value.isGenerating
+          : isGenerating // ignore: cast_nullable_to_non_nullable
+              as bool,
+      isExporting: null == isExporting
+          ? _value.isExporting
+          : isExporting // ignore: cast_nullable_to_non_nullable
+              as bool,
+      lastExportPath: freezed == lastExportPath
+          ? _value.lastExportPath
+          : lastExportPath // ignore: cast_nullable_to_non_nullable
+              as String?,
+      errorMessage: freezed == errorMessage
+          ? _value.errorMessage
+          : errorMessage // ignore: cast_nullable_to_non_nullable
+              as String?,
       lastGenerationTimeMs: freezed == lastGenerationTimeMs
           ? _value.lastGenerationTimeMs
-          : lastGenerationTimeMs,
+          : lastGenerationTimeMs // ignore: cast_nullable_to_non_nullable
+              as int?,
       lastExportTimeMs: freezed == lastExportTimeMs
           ? _value.lastExportTimeMs
-          : lastExportTimeMs,
+          : lastExportTimeMs // ignore: cast_nullable_to_non_nullable
+              as int?,
     ) as $Val);
   }
 }
@@ -174,6 +224,8 @@ class __$$FakerStateImplCopyWithImpl<$Res>
       _$FakerStateImpl _value, $Res Function(_$FakerStateImpl) _then)
       : super(_value, _then);
 
+  /// Create a copy of FakerState
+  /// with the given fields replaced by the non-null parameter values.
   @pragma('vm:prefer-inline')
   @override
   $Res call({
@@ -199,38 +251,76 @@ class __$$FakerStateImplCopyWithImpl<$Res>
     return _then(_$FakerStateImpl(
       selectedTemplate: null == selectedTemplate
           ? _value.selectedTemplate
-          : selectedTemplate,
-      bulkSize: null == bulkSize ? _value.bulkSize : bulkSize,
-      useRandomSeed: null == useRandomSeed ? _value.useRandomSeed : useRandomSeed,
-      customSeed: freezed == customSeed ? _value.customSeed : customSeed,
-      preferredState: freezed == preferredState ? _value.preferredState : preferredState,
+          : selectedTemplate // ignore: cast_nullable_to_non_nullable
+              as TemplateType,
+      bulkSize: null == bulkSize
+          ? _value.bulkSize
+          : bulkSize // ignore: cast_nullable_to_non_nullable
+              as BulkSize,
+      useRandomSeed: null == useRandomSeed
+          ? _value.useRandomSeed
+          : useRandomSeed // ignore: cast_nullable_to_non_nullable
+              as bool,
+      customSeed: freezed == customSeed
+          ? _value.customSeed
+          : customSeed // ignore: cast_nullable_to_non_nullable
+              as int?,
+      preferredState: freezed == preferredState
+          ? _value.preferredState
+          : preferredState // ignore: cast_nullable_to_non_nullable
+              as String?,
       includeAllIdentifiers: null == includeAllIdentifiers
           ? _value.includeAllIdentifiers
-          : includeAllIdentifiers,
+          : includeAllIdentifiers // ignore: cast_nullable_to_non_nullable
+              as bool,
       selectedIdentifiers: null == selectedIdentifiers
           ? _value._selectedIdentifiers
-          : selectedIdentifiers,
+          : selectedIdentifiers // ignore: cast_nullable_to_non_nullable
+              as Set<String>,
       generatedRecords: null == generatedRecords
           ? _value._generatedRecords
-          : generatedRecords,
+          : generatedRecords // ignore: cast_nullable_to_non_nullable
+              as List<Map<String, dynamic>>,
       lastGeneratedAt: freezed == lastGeneratedAt
           ? _value.lastGeneratedAt
-          : lastGeneratedAt,
+          : lastGeneratedAt // ignore: cast_nullable_to_non_nullable
+              as DateTime?,
       selectedExportFormat: null == selectedExportFormat
           ? _value.selectedExportFormat
-          : selectedExportFormat,
-      includeMetadata: null == includeMetadata ? _value.includeMetadata : includeMetadata,
-      prettifyOutput: null == prettifyOutput ? _value.prettifyOutput : prettifyOutput,
-      isGenerating: null == isGenerating ? _value.isGenerating : isGenerating,
-      isExporting: null == isExporting ? _value.isExporting : isExporting,
-      lastExportPath: freezed == lastExportPath ? _value.lastExportPath : lastExportPath,
-      errorMessage: freezed == errorMessage ? _value.errorMessage : errorMessage,
+          : selectedExportFormat // ignore: cast_nullable_to_non_nullable
+              as ExportFormat,
+      includeMetadata: null == includeMetadata
+          ? _value.includeMetadata
+          : includeMetadata // ignore: cast_nullable_to_non_nullable
+              as bool,
+      prettifyOutput: null == prettifyOutput
+          ? _value.prettifyOutput
+          : prettifyOutput // ignore: cast_nullable_to_non_nullable
+              as bool,
+      isGenerating: null == isGenerating
+          ? _value.isGenerating
+          : isGenerating // ignore: cast_nullable_to_non_nullable
+              as bool,
+      isExporting: null == isExporting
+          ? _value.isExporting
+          : isExporting // ignore: cast_nullable_to_non_nullable
+              as bool,
+      lastExportPath: freezed == lastExportPath
+          ? _value.lastExportPath
+          : lastExportPath // ignore: cast_nullable_to_non_nullable
+              as String?,
+      errorMessage: freezed == errorMessage
+          ? _value.errorMessage
+          : errorMessage // ignore: cast_nullable_to_non_nullable
+              as String?,
       lastGenerationTimeMs: freezed == lastGenerationTimeMs
           ? _value.lastGenerationTimeMs
-          : lastGenerationTimeMs,
+          : lastGenerationTimeMs // ignore: cast_nullable_to_non_nullable
+              as int?,
       lastExportTimeMs: freezed == lastExportTimeMs
           ? _value.lastExportTimeMs
-          : lastExportTimeMs,
+          : lastExportTimeMs // ignore: cast_nullable_to_non_nullable
+              as int?,
     ));
   }
 }
@@ -260,9 +350,11 @@ class _$FakerStateImpl implements _FakerState {
       : _selectedIdentifiers = selectedIdentifiers,
         _generatedRecords = generatedRecords;
 
+// Template selection
   @override
   @JsonKey()
   final TemplateType selectedTemplate;
+// Generation options
   @override
   @JsonKey()
   final BulkSize bulkSize;
@@ -275,6 +367,7 @@ class _$FakerStateImpl implements _FakerState {
   @override
   @JsonKey()
   final String? preferredState;
+// Identifier toggles (for custom selection)
   @override
   @JsonKey()
   final bool includeAllIdentifiers;
@@ -282,21 +375,28 @@ class _$FakerStateImpl implements _FakerState {
   @override
   @JsonKey()
   Set<String> get selectedIdentifiers {
-    if (_selectedIdentifiers is EqualUnmodifiableSetView) return _selectedIdentifiers;
+    if (_selectedIdentifiers is EqualUnmodifiableSetView)
+      return _selectedIdentifiers;
+    // ignore: implicit_dynamic_type
     return EqualUnmodifiableSetView(_selectedIdentifiers);
   }
 
+// Generated data
   final List<Map<String, dynamic>> _generatedRecords;
+// Generated data
   @override
   @JsonKey()
   List<Map<String, dynamic>> get generatedRecords {
-    if (_generatedRecords is EqualUnmodifiableListView) return _generatedRecords;
+    if (_generatedRecords is EqualUnmodifiableListView)
+      return _generatedRecords;
+    // ignore: implicit_dynamic_type
     return EqualUnmodifiableListView(_generatedRecords);
   }
 
   @override
   @JsonKey()
   final DateTime? lastGeneratedAt;
+// Export options
   @override
   @JsonKey()
   final ExportFormat selectedExportFormat;
@@ -306,6 +406,7 @@ class _$FakerStateImpl implements _FakerState {
   @override
   @JsonKey()
   final bool prettifyOutput;
+// UI state
   @override
   @JsonKey()
   final bool isGenerating;
@@ -318,6 +419,7 @@ class _$FakerStateImpl implements _FakerState {
   @override
   @JsonKey()
   final String? errorMessage;
+// Performance metrics
   @override
   @JsonKey()
   final int? lastGenerationTimeMs;
@@ -395,7 +497,9 @@ class _$FakerStateImpl implements _FakerState {
       lastGenerationTimeMs,
       lastExportTimeMs);
 
-  @JsonKey(ignore: true)
+  /// Create a copy of FakerState
+  /// with the given fields replaced by the non-null parameter values.
+  @JsonKey(includeFromJson: false, includeToJson: false)
   @override
   @pragma('vm:prefer-inline')
   _$$FakerStateImplCopyWith<_$FakerStateImpl> get copyWith =>
@@ -423,8 +527,9 @@ abstract class _FakerState implements FakerState {
       final int? lastGenerationTimeMs,
       final int? lastExportTimeMs}) = _$FakerStateImpl;
 
+// Template selection
   @override
-  TemplateType get selectedTemplate;
+  TemplateType get selectedTemplate; // Generation options
   @override
   BulkSize get bulkSize;
   @override
@@ -432,21 +537,21 @@ abstract class _FakerState implements FakerState {
   @override
   int? get customSeed;
   @override
-  String? get preferredState;
+  String? get preferredState; // Identifier toggles (for custom selection)
   @override
   bool get includeAllIdentifiers;
   @override
-  Set<String> get selectedIdentifiers;
+  Set<String> get selectedIdentifiers; // Generated data
   @override
   List<Map<String, dynamic>> get generatedRecords;
   @override
-  DateTime? get lastGeneratedAt;
+  DateTime? get lastGeneratedAt; // Export options
   @override
   ExportFormat get selectedExportFormat;
   @override
   bool get includeMetadata;
   @override
-  bool get prettifyOutput;
+  bool get prettifyOutput; // UI state
   @override
   bool get isGenerating;
   @override
@@ -454,13 +559,16 @@ abstract class _FakerState implements FakerState {
   @override
   String? get lastExportPath;
   @override
-  String? get errorMessage;
+  String? get errorMessage; // Performance metrics
   @override
   int? get lastGenerationTimeMs;
   @override
   int? get lastExportTimeMs;
+
+  /// Create a copy of FakerState
+  /// with the given fields replaced by the non-null parameter values.
   @override
-  @JsonKey(ignore: true)
+  @JsonKey(includeFromJson: false, includeToJson: false)
   _$$FakerStateImplCopyWith<_$FakerStateImpl> get copyWith =>
       throw _privateConstructorUsedError;
 }

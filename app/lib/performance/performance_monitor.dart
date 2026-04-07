@@ -2,6 +2,7 @@ import 'dart:async';
 import 'dart:io';
 import 'dart:isolate';
 import 'package:flutter/foundation.dart';
+import 'package:flutter/material.dart';
 import 'package:flutter/scheduler.dart';
 import 'package:flutter/services.dart';
 
@@ -124,7 +125,7 @@ class PerformanceMonitor {
         // Use platform channel for native memory info
         const platform = MethodChannel('com.bharattesting.performance');
         final result = await platform.invokeMethod('getMemoryInfo');
-        return Map<String, int>.from(result ?? {});
+        return Map<String, int>.from(result as Map? ?? {});
       }
 
       // Desktop platforms - use ProcessInfo if available

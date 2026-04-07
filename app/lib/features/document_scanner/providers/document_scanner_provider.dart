@@ -693,9 +693,9 @@ Future<OcrResult> _extractDocumentText(Map<String, dynamic> params) {
 
 /// Convert image bytes to RGB format
 Future<Uint8List> _convertToRgb(Map<String, dynamic> params) async {
-  final Uint8List imageBytes = params['imageBytes'];
-  final int width = params['width'];
-  final int height = params['height'];
+  final Uint8List imageBytes = params['imageBytes'] as Uint8List;
+  final int width = params['width'] as int;
+  final int height = params['height'] as int;
 
   final ui.Codec codec = await ui.instantiateImageCodec(imageBytes);
   final ui.FrameInfo frame = await codec.getNextFrame();

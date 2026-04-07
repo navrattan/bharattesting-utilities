@@ -3,6 +3,7 @@ library app_router;
 
 import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
+import '../features/data_faker/faker_screen.dart';
 import '../features/document_scanner/screens/document_scanner_screen.dart';
 import '../features/home/home_screen.dart';
 import '../features/image_reducer/image_reducer_screen.dart';
@@ -58,9 +59,7 @@ class AppRouter {
           GoRoute(
             path: '/indian-data-faker',
             name: 'indian-data-faker',
-            builder: (context, state) => const _ComingSoonScreen(
-              title: 'Indian Data Faker',
-            ),
+            builder: (context, state) => const FakerScreen(),
           ),
           GoRoute(
             path: '/about',

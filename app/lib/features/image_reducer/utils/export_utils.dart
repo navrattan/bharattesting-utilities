@@ -8,10 +8,11 @@ class ExportUtils {
     List<ProcessedImage> images, {
     bool includeOriginals = false,
   }) async {
-    return compute(_createZipIsolate, {
+    final result = await compute(_createZipIsolate, {
       'images': images,
       'includeOriginals': includeOriginals,
     });
+    return result['data'] as Uint8List;
   }
 
   static Map<String, dynamic> _createZipIsolate(Map<String, dynamic> params) {

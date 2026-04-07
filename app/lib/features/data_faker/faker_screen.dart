@@ -39,7 +39,7 @@ class FakerScreen extends ConsumerWidget {
             const SizedBox(height: 24),
 
             // Generation options
-            _buildGenerationSection(context, state, notifier),
+            _buildGenerationSection(context, ref, state, notifier),
 
             const SizedBox(height: 24),
 
@@ -103,6 +103,7 @@ class FakerScreen extends ConsumerWidget {
   /// Build generation options section
   Widget _buildGenerationSection(
     BuildContext context,
+    WidgetRef ref,
     FakerState state,
     FakerNotifier notifier,
   ) {
@@ -144,7 +145,7 @@ class FakerScreen extends ConsumerWidget {
         const SizedBox(height: 16),
 
         // Advanced options
-        _buildAdvancedOptions(context, state, notifier),
+              _buildAdvancedOptions(context, ref, state, notifier),
 
         const SizedBox(height: 24),
 
@@ -157,6 +158,7 @@ class FakerScreen extends ConsumerWidget {
   /// Build advanced options
   Widget _buildAdvancedOptions(
     BuildContext context,
+    WidgetRef ref,
     FakerState state,
     FakerNotifier notifier,
   ) {
@@ -201,7 +203,7 @@ class FakerScreen extends ConsumerWidget {
                 title: const Text('Preferred State'),
                 subtitle: Text(state.preferredState ?? 'Random'),
                 trailing: const Icon(LucideIcons.chevronRight),
-                onTap: () => _showStateSelector(context, notifier),
+                onTap: () => _showStateSelector(context, ref, notifier),
               ),
             ],
           ),
@@ -347,6 +349,7 @@ class FakerScreen extends ConsumerWidget {
   /// Show state selector dialog
   Future<void> _showStateSelector(
     BuildContext context,
+    WidgetRef ref,
     FakerNotifier notifier,
   ) async {
     final states = ['Random', ...ref.read(availableStatesProvider)];

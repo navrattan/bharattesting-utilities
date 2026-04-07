@@ -181,8 +181,8 @@ class ImageReducer extends _$ImageReducer {
       });
 
       final updatedImage = image.copyWith(
-        processedData: result['processedData'],
-        result: result['result'],
+        processedData: result['processedData'] as Uint8List?,
+        result: result['result'] as ImageReductionResult?,
         status: ProcessingStatus.completed,
       );
 
@@ -227,8 +227,8 @@ class ImageReducer extends _$ImageReducer {
         });
 
         final processedImage = image.copyWith(
-          processedData: result['processedData'],
-          result: result['result'],
+          processedData: result['processedData'] as Uint8List?,
+          result: result['result'] as ImageReductionResult?,
           status: ProcessingStatus.completed,
         );
 

@@ -2,6 +2,7 @@
 library home_screen;
 
 import 'package:flutter/material.dart';
+import 'package:go_router/go_router.dart';
 import '../../theme/app_theme.dart';
 
 /// Home screen displaying all 5 tools as cards
@@ -73,35 +74,35 @@ class _ToolCardsGrid extends StatelessWidget {
           description: 'Camera + OCR → Searchable PDF',
           icon: Icons.document_scanner,
           route: '/document-scanner',
-          status: 'Coming Soon',
+          status: 'Live',
         ),
         _ToolCard(
           title: 'Image Size Reducer',
           description: 'Compress, resize, batch process',
           icon: Icons.photo_size_select_large,
           route: '/image-reducer',
-          status: 'Coming Soon',
+          status: 'Live',
         ),
         _ToolCard(
           title: 'PDF Merger',
           description: 'Merge, rotate, password-protect',
           icon: Icons.picture_as_pdf,
           route: '/pdf-merger',
-          status: 'Coming Soon',
+          status: 'Live',
         ),
         _ToolCard(
           title: 'String-to-JSON',
           description: 'Auto-repair broken JSON/CSV/YAML',
           icon: Icons.code,
           route: '/string-to-json',
-          status: 'Coming Soon',
+          status: 'Live',
         ),
         _ToolCard(
           title: 'Indian Data Faker',
           description: 'Generate PAN, GSTIN, Aadhaar, etc.',
           icon: Icons.account_circle,
           route: '/indian-data-faker',
-          status: 'Coming Soon',
+          status: 'Live',
         ),
       ],
     );
@@ -136,8 +137,7 @@ class _ToolCard extends StatelessWidget {
     return Card(
       child: InkWell(
         onTap: () {
-          // TODO: Navigate to route
-          debugPrint('Navigate to $route');
+          context.go(route);
         },
         borderRadius: BorderRadius.circular(AppTheme.cardRadius),
         child: Padding(
