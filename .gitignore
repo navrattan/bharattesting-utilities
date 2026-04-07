@@ -168,7 +168,24 @@ NOTES.md
 TODO.md
 *.personal.*
 
-# Credentials and secrets (never commit)
+# Credentials and secrets (NEVER commit)
 CREDENTIALS.md
 *.credentials.*
 .env*
+.env
+.env.*
+*.env
+**/credentials/**
+**/secrets/**
+**/*secret*
+**/*password*
+**/*token*
+**/*key*.pem
+**/*key*.p12
+**/*certificate*.pem
+config/secrets.yaml
+.auth
+.keys
+keys/
+tokens/
+secrets/
