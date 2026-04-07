@@ -1,0 +1,198 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>BharatTesting Utilities - Coming Soon</title>
+    <link rel="icon" href="favicon.png">
+
+    <!-- Meta tags -->
+    <meta name="description" content="5 free, privacy-first, offline developer tools for Indian developers">
+    <meta name="keywords" content="developer tools, indian developers, offline tools, privacy-first">
+    <meta name="author" content="BTQA Services Pvt Ltd">
+
+    <!-- OpenGraph -->
+    <meta property="og:title" content="BharatTesting Utilities">
+    <meta property="og:description" content="5 free, privacy-first, offline developer tools for Indian developers">
+    <meta property="og:type" content="website">
+    <meta property="og:url" content="https://bharattesting.com">
+    <meta property="og:image" content="https://bharattesting.com/og-image.svg">
+
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+            background: linear-gradient(135deg, #0D1117 0%, #161B22 50%, #21262D 100%);
+            color: #C9D1D9;
+            min-height: 100vh;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .container {
+            text-align: center;
+            max-width: 800px;
+            padding: 2rem;
+        }
+
+        .logo {
+            width: 120px;
+            height: 120px;
+            background: linear-gradient(135deg, #58A6FF, #79C0FF);
+            border-radius: 24px;
+            margin: 0 auto 2rem;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 48px;
+            font-weight: 900;
+            color: #0D1117;
+        }
+
+        h1 {
+            font-size: 3rem;
+            font-weight: 800;
+            margin-bottom: 1rem;
+            background: linear-gradient(135deg, #58A6FF, #79C0FF);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+
+        .subtitle {
+            font-size: 1.5rem;
+            margin-bottom: 2rem;
+            color: #7D8590;
+        }
+
+        .tools {
+            margin: 3rem 0;
+        }
+
+        .tool {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin: 1rem 0;
+            font-size: 1.1rem;
+            color: #7D8590;
+        }
+
+        .tool::before {
+            content: attr(data-icon);
+            margin-right: 1rem;
+            font-size: 1.5rem;
+        }
+
+        .badges {
+            display: flex;
+            gap: 1rem;
+            justify-content: center;
+            margin: 2rem 0;
+            flex-wrap: wrap;
+        }
+
+        .badge {
+            padding: 0.5rem 1rem;
+            border-radius: 16px;
+            font-weight: 600;
+            font-size: 0.875rem;
+        }
+
+        .badge-free {
+            background: linear-gradient(135deg, #3FB950, #56D364);
+            color: #0D1117;
+        }
+
+        .badge-offline {
+            background: rgba(253, 126, 20, 0.2);
+            color: #FD7E14;
+            border: 1px solid #FD7E14;
+        }
+
+        .badge-opensource {
+            background: rgba(88, 166, 255, 0.2);
+            color: #58A6FF;
+            border: 1px solid #58A6FF;
+        }
+
+        .status {
+            margin: 2rem 0;
+            padding: 1rem;
+            background: rgba(88, 166, 255, 0.1);
+            border-left: 4px solid #58A6FF;
+            border-radius: 8px;
+        }
+
+        .footer {
+            margin-top: 3rem;
+            font-size: 0.875rem;
+            color: #7D8590;
+        }
+
+        .footer a {
+            color: #58A6FF;
+            text-decoration: none;
+        }
+
+        .footer a:hover {
+            text-decoration: underline;
+        }
+
+        @media (max-width: 640px) {
+            h1 {
+                font-size: 2rem;
+            }
+
+            .subtitle {
+                font-size: 1.2rem;
+            }
+
+            .badges {
+                flex-direction: column;
+                align-items: center;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="logo">BT</div>
+
+        <h1>BharatTesting Utilities</h1>
+        <div class="subtitle">5 Free, Privacy-First, Offline Developer Tools</div>
+
+        <div class="tools">
+            <div class="tool" data-icon="📄">Document Scanner with OCR</div>
+            <div class="tool" data-icon="🖼️">Image Size Reducer</div>
+            <div class="tool" data-icon="📚">PDF Merger</div>
+            <div class="tool" data-icon="🔧">String-to-JSON Converter</div>
+            <div class="tool" data-icon="🇮🇳">Indian Data Faker</div>
+        </div>
+
+        <div class="badges">
+            <span class="badge badge-free">FREE</span>
+            <span class="badge badge-offline">OFFLINE</span>
+            <span class="badge badge-opensource">OPEN SOURCE</span>
+        </div>
+
+        <div class="status">
+            <strong>🚀 Status:</strong> Full Flutter app deployment in progress. This is a temporary landing page.
+            <br><br>
+            <strong>📱 Coming Soon:</strong> Complete web app with all 5 tools, mobile apps on Google Play Store and Apple App Store.
+        </div>
+
+        <div class="footer">
+            Built by <a href="https://btqas.com">BTQA Services Pvt Ltd</a> •
+            <a href="https://github.com/navrattan/bharattesting-utilities">Open Source on GitHub</a> •
+            Made in Bengaluru 🇮🇳
+        </div>
+    </div>
+</body>
+</html>

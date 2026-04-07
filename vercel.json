@@ -1,7 +1,4 @@
 {
-  "buildCommand": "bash scripts/vercel-build.sh",
-  "outputDirectory": "app/build/web",
-  "framework": null,
   "headers": [
     {
       "source": "/(.*).(js|css|woff2|woff|ttf|eot|svg|ico|png|jpg|jpeg|gif|webp)",
@@ -45,9 +42,5 @@
     }
   ],
   "cleanUrls": false,
-  "trailingSlash": false,
-  "github": {
-    "enabled": true,
-    "autoAlias": true
-  }
+  "trailingSlash": false
 }
