@@ -202,15 +202,15 @@ Mark tasks done with `[x]` as you complete them.
 - [x] **Commit:** `feat(core): add document scanner image processing pipeline`
 
 ### Task 4.4: Document Scanner UI
-- [ ] Create state, provider, screen for document_scanner feature
-- [ ] Create widgets: camera_preview, crop_overlay (green polygon), filter_selector, page_thumbnail_strip
-- [ ] Camera permission handling (permission_handler)
-- [ ] Auto-capture logic (stability timer)
-- [ ] Multi-page batch with reorder
-- [ ] PDF export with searchable text layer
-- [ ] Web fallback: image upload + manual 4-corner crop
-- [ ] Write widget tests
-- [ ] **Commit:** `feat: add Document Scanner UI with camera and filters`
+- [x] Create state, provider, screen for document_scanner feature
+- [x] Create widgets: camera_preview, crop_overlay (green polygon), filter_selector, page_thumbnail_strip
+- [x] Camera permission handling (permission_handler)
+- [x] Auto-capture logic (stability timer)
+- [x] Multi-page batch with reorder
+- [x] PDF export with searchable text layer
+- [x] Web fallback: image upload + manual 4-corner crop
+- [x] Write widget tests
+- [x] **Commit:** `feat: add Document Scanner UI with camera and filters`
 
 ---
 
