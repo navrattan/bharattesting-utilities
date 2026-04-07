@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
-import 'package:bharattesting_core/core.dart';
 import '../../shared/widgets/tool_scaffold.dart';
 import '../../l10n/l10n.dart';
+import 'models/image_reducer_state.dart';
 import 'providers/image_reducer_provider.dart';
 import 'widgets/image_upload_zone.dart';
 import 'widgets/quality_control_panel.dart';
@@ -140,7 +140,7 @@ class _ImageReducerScreenState extends ConsumerState<ImageReducerScreen>
     );
   }
 
-  Widget _buildEmptyState(BuildContext context, ImageReducerNotifier notifier) {
+  Widget _buildEmptyState(BuildContext context, ImageReducer notifier) {
     return Center(
       child: Padding(
         padding: const EdgeInsets.all(24),
@@ -162,7 +162,7 @@ class _ImageReducerScreenState extends ConsumerState<ImageReducerScreen>
   Widget _buildImageProcessingInterface(
     BuildContext context,
     ImageReducerState state,
-    ImageReducerNotifier notifier,
+    ImageReducer notifier,
   ) {
     return LayoutBuilder(
       builder: (context, constraints) {
@@ -273,7 +273,7 @@ class _ImageReducerScreenState extends ConsumerState<ImageReducerScreen>
   Widget _buildControlsPanel(
     BuildContext context,
     ImageReducerState state,
-    ImageReducerNotifier notifier,
+    ImageReducer notifier,
   ) {
     return SingleChildScrollView(
       padding: const EdgeInsets.all(16),
@@ -314,7 +314,7 @@ class _ImageReducerScreenState extends ConsumerState<ImageReducerScreen>
   Widget _buildPreviewPanel(
     BuildContext context,
     ImageReducerState state,
-    ImageReducerNotifier notifier,
+    ImageReducer notifier,
   ) {
     if (state.currentImage == null) {
       return const Center(
@@ -333,7 +333,7 @@ class _ImageReducerScreenState extends ConsumerState<ImageReducerScreen>
   Widget _buildResizeSection(
     BuildContext context,
     ImageReducerState state,
-    ImageReducerNotifier notifier,
+    ImageReducer notifier,
   ) {
     return Card(
       child: Padding(
@@ -397,7 +397,7 @@ class _ImageReducerScreenState extends ConsumerState<ImageReducerScreen>
   Widget _buildPrivacySection(
     BuildContext context,
     ImageReducerState state,
-    ImageReducerNotifier notifier,
+    ImageReducer notifier,
   ) {
     return Card(
       child: Padding(
@@ -461,7 +461,7 @@ class _ImageReducerScreenState extends ConsumerState<ImageReducerScreen>
   Widget _buildActionButtons(
     BuildContext context,
     ImageReducerState state,
-    ImageReducerNotifier notifier,
+    ImageReducer notifier,
   ) {
     return Column(
       crossAxisAlignment: CrossAxisAlignment.stretch,
@@ -638,7 +638,7 @@ class _ImageReducerScreenState extends ConsumerState<ImageReducerScreen>
   Widget _buildSettingsDrawer(
     BuildContext context,
     ImageReducerState state,
-    ImageReducerNotifier notifier,
+    ImageReducer notifier,
   ) {
     return Drawer(
       child: SettingsPanel(

@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:bharattesting_core/core.dart';
+import '../models/image_reducer_state.dart';
 
 class QualityControlPanel extends StatefulWidget {
   final int quality;

@@ -5,6 +5,7 @@ import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
 import '../features/document_scanner/screens/document_scanner_screen.dart';
 import '../features/home/home_screen.dart';
+import '../features/image_reducer/image_reducer_screen.dart';
 import '../features/json_converter/json_converter_screen.dart';
 import '../shared/widgets/tool_scaffold.dart';
 
@@ -41,9 +42,7 @@ class AppRouter {
           GoRoute(
             path: '/image-reducer',
             name: 'image-reducer',
-            builder: (context, state) => const _ComingSoonScreen(
-              title: 'Image Size Reducer',
-            ),
+            builder: (context, state) => const ImageReducerScreen(),
           ),
           GoRoute(
             path: '/pdf-merger',

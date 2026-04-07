@@ -1,8 +1,197 @@
-import 'package:freezed_annotation/freezed_annotation.dart';
-import 'package:bharattesting_core/core.dart';
 import 'dart:typed_data';
+import 'package:freezed_annotation/freezed_annotation.dart';
 
 part 'image_reducer_state.freezed.dart';
+
+enum ResizePreset {
+  thumbnail,
+  small,
+  medium,
+  large,
+  ultraHd,
+  square512,
+  square1024,
+}
+
+extension ResizePresetExtension on ResizePreset {
+  String get displayName {
+    switch (this) {
+      case ResizePreset.thumbnail:
+        return 'Thumbnail';
+      case ResizePreset.small:
+        return 'Small';
+      case ResizePreset.medium:
+        return 'Medium';
+      case ResizePreset.large:
+        return 'Large';
+      case ResizePreset.ultraHd:
+        return 'Ultra HD';
+      case ResizePreset.square512:
+        return 'Square 512';
+      case ResizePreset.square1024:
+        return 'Square 1024';
+    }
+  }
+
+  int get width {
+    switch (this) {
+      case ResizePreset.thumbnail:
+        return 150;
+      case ResizePreset.small:
+        return 640;
+      case ResizePreset.medium:
+        return 1024;
+      case ResizePreset.large:
+        return 1920;
+      case ResizePreset.ultraHd:
+        return 3840;
+      case ResizePreset.square512:
+        return 512;
+      case ResizePreset.square1024:
+        return 1024;
+    }
+  }
+
+  int get height {
+    switch (this) {
+      case ResizePreset.thumbnail:
+        return 150;
+      case ResizePreset.small:
+        return 480;
+      case ResizePreset.medium:
+        return 768;
+      case ResizePreset.large:
+        return 1080;
+      case ResizePreset.ultraHd:
+        return 2160;
+      case ResizePreset.square512:
+        return 512;
+      case ResizePreset.square1024:
+        return 1024;
+    }
+  }
+
+  String get dimensions => '$width × $height';
+}
+
+enum ConvertibleFormat {
+  jpeg('JPEG', 'Photographs and complex images', ['.jpg', '.jpeg']),
+  png('PNG', 'Graphics and transparency', ['.png']),
+  webp('WebP', 'Modern web optimized format', ['.webp']),
+  bmp('BMP', 'Bitmap compatibility format', ['.bmp']),
+  gif('GIF', 'Simple animation and graphics', ['.gif']),
+  tiff('TIFF', 'High fidelity archival format', ['.tiff', '.tif']);
+
+  const ConvertibleFormat(this.displayName, this.bestFor, this.extensions);
+  final String displayName;
+  final String bestFor;
+  final List<String> extensions;
+
+  String get primaryExtension => extensions.first;
+  String get extension => primaryExtension.replaceFirst('.', '');
+}
+
+enum ConversionStrategy {
+  preserveQuality('Preserve Quality', 'Maintain maximum quality'),
+  balanceQualitySize('Balanced', 'Balance quality and file size'),
+  minimizeSize('Minimize Size', 'Smallest possible file'),
+  preserveAlpha('Preserve Alpha', 'Keep transparency when possible'),
+  stripMetadata('Strip Metadata', 'Prioritize privacy'),
+  webOptimized('Web Optimized', 'Fast loading for web');
+
+  const ConversionStrategy(this.displayName, this.description);
+  final String displayName;
+  final String description;
+}
+
+enum PrivacyLevel {
+  minimal('Minimal', 'Remove GPS and personal metadata'),
+  moderate('Moderate', 'Remove sensitive metadata'),
+  aggressive('Aggressive', 'Remove all metadata except basic technical info'),
+  complete('Complete', 'Remove all metadata');
+
+  const PrivacyLevel(this.displayName, this.description);
+  final String displayName;
+  final String description;
+}
+
+class ResizeConfig {
+  const ResizeConfig({
+    required this.width,
+    required this.height,
+  });
+
+  final int width;
+  final int height;
+
+  factory ResizeConfig.fromPreset(ResizePreset preset) {
+    return ResizeConfig(width: preset.width, height: preset.height);
+  }
+}
+
+class MetadataStripConfig {
+  const MetadataStripConfig({
+    required this.privacyLevel,
+    this.preserveOrientation = true,
+    this.preserveColorProfile = true,
+  });
+
+  final PrivacyLevel privacyLevel;
+  final bool preserveOrientation;
+  final bool preserveColorProfile;
+}
+
+class ImageReductionConfig {
+  const ImageReductionConfig({
+    required this.stripMetadata,
+    required this.resize,
+    required this.compress,
+    required this.convertFormat,
+    required this.compressionQuality,
+    required this.resizeConfig,
+    required this.metadataConfig,
+    this.targetFormat,
+    this.conversionStrategy = ConversionStrategy.balanceQualitySize,
+  });
+
+  final bool stripMetadata;
+  final bool resize;
+  final bool compress;
+  final bool convertFormat;
+  final int compressionQuality;
+  final ResizeConfig resizeConfig;
+  final MetadataStripConfig metadataConfig;
+  final ConvertibleFormat? targetFormat;
+  final ConversionStrategy conversionStrategy;
+}
+
+class ImageReductionResult {
+  const ImageReductionResult({
+    required this.processedData,
+    required this.originalSize,
+    required this.finalSize,
+    required this.reductionRatio,
+    required this.processingTime,
+    this.operations = const [],
+    this.efficiencyScore = 0.0,
+  });
+
+  final Uint8List processedData;
+  final int originalSize;
+  final int finalSize;
+  final double reductionRatio;
+  final Duration processingTime;
+  final List<String> operations;
+  final double efficiencyScore;
+
+  String get qualityGrade {
+    if (efficiencyScore >= 90) return 'A+';
+    if (efficiencyScore >= 80) return 'A';
+    if (efficiencyScore >= 70) return 'B';
+    if (efficiencyScore >= 60) return 'C';
+    return 'D';
+  }
+}
 
 @freezed
 class ImageReducerState with _$ImageReducerState {
@@ -61,13 +250,13 @@ class ProcessedImage with _$ProcessedImage {
   const factory ProcessedImage({
     required String fileName,
     required Uint8List originalData,
-    @Default(null) Uint8List? processedData,
-    @Default(null) ImageReductionResult? result,
+    Uint8List? processedData,
+    ImageReductionResult? result,
     @Default(ProcessingStatus.pending) ProcessingStatus status,
     @Default('') String error,
     @Default(0) int estimatedSize,
-    @Default(null) ConvertibleFormat? detectedFormat,
-    @Default(null) ImageMetadata? metadata,
+    ConvertibleFormat? detectedFormat,
+    ImageMetadata? metadata,
   }) = _ProcessedImage;
 
   const ProcessedImage._();
@@ -79,11 +268,15 @@ class ProcessedImage with _$ProcessedImage {
   int get originalSize => originalData.length;
   int get processedSize => processedData?.length ?? 0;
   int get currentSize => processedData?.length ?? originalData.length;
+  int get originalFileSize => originalData.length;
+  int? get processedFileSize => processedData?.length;
 
   double get sizeReduction {
     if (originalSize == 0) return 0;
     return ((originalSize - currentSize) / originalSize) * 100;
   }
+  double get reductionPercentage => sizeReduction;
+  String get reductionPercentageText => '${sizeReduction.toStringAsFixed(1)}%';
 
   String get sizeReductionText {
     if (!isProcessed) return 'Not processed';
