@@ -1,3 +1,4 @@
+import 'package:flutter/material.dart';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:patrol/patrol.dart';
 import 'package:bharattesting_utilities/main.dart' as app;
@@ -7,13 +8,9 @@ import 'package:bharattesting_utilities/main.dart' as app;
 /// Tests image compression, batch processing, and export workflows
 void main() {
   group('Image Reducer E2E Tests', () {
-    late PatrolIntegrationTester $;
 
-    setUp(() async {
-      $ = PatrolIntegrationTester();
-    });
 
-    patrolTest('single image compression workflow', ($) async {
+    patrolTest('single image compression workflow', (PatrolTester $) async {
       app.main();
       await $.pumpAndSettle();
 
@@ -68,7 +65,7 @@ void main() {
       }
     });
 
-    patrolTest('batch image processing', ($) async {
+    patrolTest('batch image processing', (PatrolTester $) async {
       app.main();
       await $.pumpAndSettle();
 
@@ -113,7 +110,7 @@ void main() {
       }
     });
 
-    patrolTest('resize presets functionality', ($) async {
+    patrolTest('resize presets functionality', (PatrolTester $) async {
       app.main();
       await $.pumpAndSettle();
 
@@ -157,7 +154,7 @@ void main() {
       }
     });
 
-    patrolTest('metadata stripping options', ($) async {
+    patrolTest('metadata stripping options', (PatrolTester $) async {
       app.main();
       await $.pumpAndSettle();
 
@@ -193,7 +190,7 @@ void main() {
       }
     });
 
-    patrolTest('before after comparison', ($) async {
+    patrolTest('before after comparison', (PatrolTester $) async {
       app.main();
       await $.pumpAndSettle();
 
@@ -236,7 +233,7 @@ void main() {
       }
     });
 
-    patrolTest('format conversion test', ($) async {
+    patrolTest('format conversion test', (PatrolTester $) async {
       app.main();
       await $.pumpAndSettle();
 
@@ -278,7 +275,7 @@ void main() {
       }
     });
 
-    patrolTest('error handling for unsupported formats', ($) async {
+    patrolTest('error handling for unsupported formats', (PatrolTester $) async {
       app.main();
       await $.pumpAndSettle();
 
@@ -302,7 +299,7 @@ void main() {
       }
     });
 
-    patrolTest('maximum file size validation', ($) async {
+    patrolTest('maximum file size validation', (PatrolTester $) async {
       app.main();
       await $.pumpAndSettle();
 
@@ -326,7 +323,7 @@ void main() {
       }
     });
 
-    patrolTest('quality real-time preview', ($) async {
+    patrolTest('quality real-time preview', (PatrolTester $) async {
       app.main();
       await $.pumpAndSettle();
 

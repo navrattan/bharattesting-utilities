@@ -1,3 +1,4 @@
+import 'package:flutter/material.dart';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:patrol/patrol.dart';
 import 'package:bharattesting_utilities/main.dart' as app;
@@ -7,13 +8,9 @@ import 'package:bharattesting_utilities/main.dart' as app;
 /// Tests JSON validation, auto-repair, format detection, and conversion workflows
 void main() {
   group('JSON Converter E2E Tests', () {
-    late PatrolIntegrationTester $;
 
-    setUp(() async {
-      $ = PatrolIntegrationTester();
-    });
 
-    patrolTest('complete JSON validation and repair workflow', ($) async {
+    patrolTest('complete JSON validation and repair workflow', (PatrolTester $) async {
       app.main();
       await $.pumpAndSettle();
 
@@ -72,7 +69,7 @@ void main() {
       }
     });
 
-    patrolTest('CSV to JSON conversion', ($) async {
+    patrolTest('CSV to JSON conversion', (PatrolTester $) async {
       app.main();
       await $.pumpAndSettle();
 
@@ -111,7 +108,7 @@ void main() {
       await $.pumpAndSettle();
     });
 
-    patrolTest('YAML to JSON conversion', ($) async {
+    patrolTest('YAML to JSON conversion', (PatrolTester $) async {
       app.main();
       await $.pumpAndSettle();
 
@@ -149,7 +146,7 @@ void main() {
       }
     });
 
-    patrolTest('JSON formatting and minification', ($) async {
+    patrolTest('JSON formatting and minification', (PatrolTester $) async {
       app.main();
       await $.pumpAndSettle();
 
@@ -180,7 +177,7 @@ void main() {
       }
     });
 
-    patrolTest('syntax highlighting verification', ($) async {
+    patrolTest('syntax highlighting verification', (PatrolTester $) async {
       app.main();
       await $.pumpAndSettle();
 
@@ -213,7 +210,7 @@ void main() {
       await $.pumpAndSettle(const Duration(seconds: 2));
     });
 
-    patrolTest('error line highlighting', ($) async {
+    patrolTest('error line highlighting', (PatrolTester $) async {
       app.main();
       await $.pumpAndSettle();
 
@@ -247,7 +244,7 @@ void main() {
       }
     });
 
-    patrolTest('large JSON handling performance', ($) async {
+    patrolTest('large JSON handling performance', (PatrolTester $) async {
       app.main();
       await $.pumpAndSettle();
 
@@ -296,7 +293,7 @@ void main() {
       }
     });
 
-    patrolTest('download functionality', ($) async {
+    patrolTest('download functionality', (PatrolTester $) async {
       app.main();
       await $.pumpAndSettle();
 

@@ -1,3 +1,4 @@
+import 'package:flutter/material.dart';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:patrol/patrol.dart';
 import 'package:bharattesting_utilities/main.dart' as app;
@@ -7,13 +8,9 @@ import 'package:bharattesting_utilities/main.dart' as app;
 /// Tests PDF upload, page management, reordering, and merge operations
 void main() {
   group('PDF Merger E2E Tests', () {
-    late PatrolIntegrationTester $;
 
-    setUp(() async {
-      $ = PatrolIntegrationTester();
-    });
 
-    patrolTest('complete PDF merge workflow', ($) async {
+    patrolTest('complete PDF merge workflow', (PatrolTester $) async {
       app.main();
       await $.pumpAndSettle();
 
@@ -60,7 +57,7 @@ void main() {
       }
     });
 
-    patrolTest('page thumbnail management', ($) async {
+    patrolTest('page thumbnail management', (PatrolTester $) async {
       app.main();
       await $.pumpAndSettle();
 
@@ -99,7 +96,7 @@ void main() {
       }
     });
 
-    patrolTest('drag and drop page reordering', ($) async {
+    patrolTest('drag and drop page reordering', (PatrolTester $) async {
       app.main();
       await $.pumpAndSettle();
 
@@ -138,7 +135,7 @@ void main() {
       }
     });
 
-    patrolTest('page rotation functionality', ($) async {
+    patrolTest('page rotation functionality', (PatrolTester $) async {
       app.main();
       await $.pumpAndSettle();
 
@@ -174,7 +171,7 @@ void main() {
       }
     });
 
-    patrolTest('page deletion functionality', ($) async {
+    patrolTest('page deletion functionality', (PatrolTester $) async {
       app.main();
       await $.pumpAndSettle();
 
@@ -210,7 +207,7 @@ void main() {
       }
     });
 
-    patrolTest('password protection workflow', ($) async {
+    patrolTest('password protection workflow', (PatrolTester $) async {
       app.main();
       await $.pumpAndSettle();
 
@@ -259,7 +256,7 @@ void main() {
       }
     });
 
-    patrolTest('bookmark generation', ($) async {
+    patrolTest('bookmark generation', (PatrolTester $) async {
       app.main();
       await $.pumpAndSettle();
 
@@ -302,7 +299,7 @@ void main() {
       }
     });
 
-    patrolTest('large PDF handling', ($) async {
+    patrolTest('large PDF handling', (PatrolTester $) async {
       app.main();
       await $.pumpAndSettle();
 
@@ -332,7 +329,7 @@ void main() {
       }
     });
 
-    patrolTest('error handling for corrupted PDFs', ($) async {
+    patrolTest('error handling for corrupted PDFs', (PatrolTester $) async {
       app.main();
       await $.pumpAndSettle();
 
@@ -356,7 +353,7 @@ void main() {
       }
     });
 
-    patrolTest('file size limit validation', ($) async {
+    patrolTest('file size limit validation', (PatrolTester $) async {
       app.main();
       await $.pumpAndSettle();
 

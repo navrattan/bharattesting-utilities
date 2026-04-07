@@ -1,3 +1,4 @@
+import 'package:flutter/material.dart';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:patrol/patrol.dart';
 import 'package:bharattesting_utilities/main.dart' as app;
@@ -23,14 +24,10 @@ import 'e2e_document_scanner_test.dart' as document_scanner;
 /// ensuring all core functionalities work end-to-end.
 void main() {
   group('BharatTesting E2E Test Suite', () {
-    late PatrolIntegrationTester $;
 
-    setUp(() async {
-      $ = PatrolIntegrationTester();
-    });
 
     group('App Navigation and Core Features', () {
-      patrolTest('app launches and displays all tools', ($) async {
+      patrolTest('app launches and displays all tools', (PatrolTester $) async {
         app.main();
         await $.pumpAndSettle();
 
@@ -49,7 +46,7 @@ void main() {
         expect(find.text('Built by BTQA Services Pvt Ltd'), findsOneWidget);
       });
 
-      patrolTest('navigation between tools works correctly', ($) async {
+      patrolTest('navigation between tools works correctly', (PatrolTester $) async {
         app.main();
         await $.pumpAndSettle();
 
@@ -86,12 +83,12 @@ void main() {
         }
       });
 
-      patrolTest('responsive layout adapts correctly', ($) async {
+      patrolTest('responsive layout adapts correctly', (PatrolTester $) async {
         app.main();
         await $.pumpAndSettle();
 
         // Test different screen orientations
-        await $.native.setOrientation(Orientation.portrait);
+        await $.native.configure(Orientation.portrait);
         await $.pumpAndSettle(const Duration(seconds: 1));
 
         // Navigate to a tool in portrait
@@ -100,20 +97,20 @@ void main() {
         await $.waitUntilVisible(find.text('Document Scanner'));
 
         // Rotate to landscape
-        await $.native.setOrientation(Orientation.landscape);
+        await $.native.configure(Orientation.landscape);
         await $.pumpAndSettle(const Duration(seconds: 2));
 
         // Interface should still be functional
         expect(find.text('Document Scanner'), findsOneWidget);
 
         // Rotate back to portrait
-        await $.native.setOrientation(Orientation.portrait);
+        await $.native.configure(Orientation.portrait);
         await $.pumpAndSettle();
       });
     });
 
     group('Document Scanner E2E Tests', () {
-      patrolTest('document scanner upload workflow', ($) async {
+      patrolTest('document scanner upload workflow', (PatrolTester $) async {
         app.main();
         await $.pumpAndSettle();
 
@@ -160,7 +157,7 @@ void main() {
         }
       });
 
-      patrolTest('document scanner camera permissions', ($) async {
+      patrolTest('document scanner camera permissions', (PatrolTester $) async {
         app.main();
         await $.pumpAndSettle();
 
@@ -180,7 +177,7 @@ void main() {
     });
 
     group('Image Size Reducer E2E Tests', () {
-      patrolTest('image reducer compression workflow', ($) async {
+      patrolTest('image reducer compression workflow', (PatrolTester $) async {
         app.main();
         await $.pumpAndSettle();
 
@@ -226,7 +223,7 @@ void main() {
     });
 
     group('PDF Merger E2E Tests', () {
-      patrolTest('pdf merger upload and manipulation workflow', ($) async {
+      patrolTest('pdf merger upload and manipulation workflow', (PatrolTester $) async {
         app.main();
         await $.pumpAndSettle();
 
@@ -272,7 +269,7 @@ void main() {
     });
 
     group('String-to-JSON Converter E2E Tests', () {
-      patrolTest('json converter repair and validation workflow', ($) async {
+      patrolTest('json converter repair and validation workflow', (PatrolTester $) async {
         app.main();
         await $.pumpAndSettle();
 
@@ -326,7 +323,7 @@ void main() {
     });
 
     group('Indian Data Faker E2E Tests', () {
-      patrolTest('data faker generation and export workflow', ($) async {
+      patrolTest('data faker generation and export workflow', (PatrolTester $) async {
         app.main();
         await $.pumpAndSettle();
 
@@ -411,7 +408,7 @@ void main() {
         }
       });
 
-      patrolTest('data faker disclaimer and safety', ($) async {
+      patrolTest('data faker disclaimer and safety', (PatrolTester $) async {
         app.main();
         await $.pumpAndSettle();
 
@@ -430,7 +427,7 @@ void main() {
     });
 
     group('Cross-Feature Integration Tests', () {
-      patrolTest('theme consistency across all tools', ($) async {
+      patrolTest('theme consistency across all tools', (PatrolTester $) async {
         app.main();
         await $.pumpAndSettle();
 
@@ -461,7 +458,7 @@ void main() {
         }
       });
 
-      patrolTest('footer consistency across all screens', ($) async {
+      patrolTest('footer consistency across all screens', (PatrolTester $) async {
         app.main();
         await $.pumpAndSettle();
 
@@ -483,7 +480,7 @@ void main() {
         }
       });
 
-      patrolTest('offline functionality verification', ($) async {
+      patrolTest('offline functionality verification', (PatrolTester $) async {
         app.main();
         await $.pumpAndSettle();
 
@@ -513,7 +510,7 @@ void main() {
     });
 
     group('Performance and Memory Tests', () {
-      patrolTest('app performance under load', ($) async {
+      patrolTest('app performance under load', (PatrolTester $) async {
         app.main();
         await $.pumpAndSettle();
 
@@ -544,7 +541,7 @@ void main() {
         expect(stopwatch.elapsedMilliseconds, lessThan(30000)); // Under 30 seconds
       });
 
-      patrolTest('memory usage remains stable', ($) async {
+      patrolTest('memory usage remains stable', (PatrolTester $) async {
         app.main();
         await $.pumpAndSettle();
 
@@ -568,7 +565,7 @@ void main() {
     });
 
     group('Error Handling and Edge Cases', () {
-      patrolTest('graceful error handling', ($) async {
+      patrolTest('graceful error handling', (PatrolTester $) async {
         app.main();
         await $.pumpAndSettle();
 
@@ -593,7 +590,7 @@ void main() {
         expect(find.text('Developer Tools'), findsOneWidget);
       });
 
-      patrolTest('handles device orientation changes', ($) async {
+      patrolTest('handles device orientation changes', (PatrolTester $) async {
         app.main();
         await $.pumpAndSettle();
 
@@ -601,10 +598,10 @@ void main() {
         await $.tap(find.text('PDF Merger'));
         await $.pumpAndSettle();
 
-        await $.native.setOrientation(Orientation.landscape);
+        await $.native.configure(Orientation.landscape);
         await $.pumpAndSettle(const Duration(seconds: 1));
 
-        await $.native.setOrientation(Orientation.portrait);
+        await $.native.configure(Orientation.portrait);
         await $.pumpAndSettle(const Duration(seconds: 1));
 
         // App should remain functional

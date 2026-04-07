@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter/material.dart';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:patrol/patrol.dart';
 import 'package:bharattesting_utilities/main.dart' as app;
@@ -16,14 +17,10 @@ import 'package:bharattesting_utilities/main.dart' as app;
 /// 5. Cross-tool navigation and state management
 void main() {
   group('Critical Workflow Tests', () {
-    late PatrolIntegrationTester $;
 
-    setUp(() async {
-      $ = PatrolIntegrationTester();
-    });
 
     group('App Launch and Core Navigation', () {
-      patrolTest('successful app launch and tool discovery', ($) async {
+      patrolTest('successful app launch and tool discovery', (PatrolTester $) async {
         // Test the critical app launch sequence
         app.main();
         await $.pumpAndSettle();
@@ -50,7 +47,7 @@ void main() {
         expect(find.text('5 free, privacy-first, offline developer tools'), findsOneWidget);
       });
 
-      patrolTest('tool navigation and back navigation works', ($) async {
+      patrolTest('tool navigation and back navigation works', (PatrolTester $) async {
         app.main();
         await $.pumpAndSettle();
 
@@ -86,7 +83,7 @@ void main() {
     });
 
     group('Document Scanner Critical Path', () {
-      patrolTest('document scanner mode switching and basic functionality', ($) async {
+      patrolTest('document scanner mode switching and basic functionality', (PatrolTester $) async {
         app.main();
         await $.pumpAndSettle();
 
@@ -138,7 +135,7 @@ void main() {
         }
       });
 
-      patrolTest('document scanner error states are handled gracefully', ($) async {
+      patrolTest('document scanner error states are handled gracefully', (PatrolTester $) async {
         app.main();
         await $.pumpAndSettle();
 
@@ -166,7 +163,7 @@ void main() {
     });
 
     group('Indian Data Faker Critical Path', () {
-      patrolTest('complete data generation workflow', ($) async {
+      patrolTest('complete data generation workflow', (PatrolTester $) async {
         app.main();
         await $.pumpAndSettle();
 
@@ -224,7 +221,7 @@ void main() {
         }
       });
 
-      patrolTest('data faker safety disclaimer is always visible', ($) async {
+      patrolTest('data faker safety disclaimer is always visible', (PatrolTester $) async {
         app.main();
         await $.pumpAndSettle();
 
@@ -256,7 +253,7 @@ void main() {
     });
 
     group('JSON Converter Critical Path', () {
-      patrolTest('json validation and repair workflow', ($) async {
+      patrolTest('json validation and repair workflow', (PatrolTester $) async {
         app.main();
         await $.pumpAndSettle();
 
@@ -296,7 +293,7 @@ void main() {
         }
       });
 
-      patrolTest('format detection works for different inputs', ($) async {
+      patrolTest('format detection works for different inputs', (PatrolTester $) async {
         app.main();
         await $.pumpAndSettle();
 
@@ -322,7 +319,7 @@ void main() {
     });
 
     group('Cross-Tool Critical Integration', () {
-      patrolTest('app state management across tools', ($) async {
+      patrolTest('app state management across tools', (PatrolTester $) async {
         app.main();
         await $.pumpAndSettle();
 
@@ -354,7 +351,7 @@ void main() {
         }
       });
 
-      patrolTest('offline functionality verification', ($) async {
+      patrolTest('offline functionality verification', (PatrolTester $) async {
         app.main();
         await $.pumpAndSettle();
 
@@ -394,7 +391,7 @@ void main() {
         await $.native.enableCellular();
       });
 
-      patrolTest('memory and performance under tool switching', ($) async {
+      patrolTest('memory and performance under tool switching', (PatrolTester $) async {
         app.main();
         await $.pumpAndSettle();
 
@@ -425,7 +422,7 @@ void main() {
     });
 
     group('Error Recovery and Edge Cases', () {
-      patrolTest('app recovers from invalid input gracefully', ($) async {
+      patrolTest('app recovers from invalid input gracefully', (PatrolTester $) async {
         app.main();
         await $.pumpAndSettle();
 
@@ -458,7 +455,7 @@ void main() {
         expect(find.text('Developer Tools'), findsOneWidget);
       });
 
-      patrolTest('orientation changes during tool usage', ($) async {
+      patrolTest('orientation changes during tool usage', (PatrolTester $) async {
         app.main();
         await $.pumpAndSettle();
 
@@ -466,14 +463,14 @@ void main() {
         await $.pumpAndSettle();
 
         // Rotate device while in tool
-        await $.native.setOrientation(Orientation.landscape);
+        await $.native.configure(Orientation.landscape);
         await $.pumpAndSettle(const Duration(seconds: 2));
 
         // Tool should still be functional
         expect(find.text('Document Scanner'), findsOneWidget);
 
         // Rotate back
-        await $.native.setOrientation(Orientation.portrait);
+        await $.native.configure(Orientation.portrait);
         await $.pumpAndSettle(const Duration(seconds: 1));
 
         expect(find.text('Document Scanner'), findsOneWidget);
@@ -483,7 +480,7 @@ void main() {
 }
 
 /// Perform a basic action specific to each tool to verify functionality
-Future<void> _performBasicToolAction(PatrolIntegrationTester $, String tool) async {
+Future<void> _performBasicToolAction(PatrolTester $, String tool) async {
   switch (tool) {
     case 'Indian Data Faker':
       final generateButton = find.text('Generate Data');

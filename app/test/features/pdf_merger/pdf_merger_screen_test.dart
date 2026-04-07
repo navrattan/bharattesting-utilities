@@ -2,9 +2,9 @@ import 'dart:typed_data';
 import 'package:flutter/material.dart';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
-import 'package:bharattesting_app/features/pdf_merger/pdf_merger_screen.dart';
-import 'package:bharattesting_app/features/pdf_merger/models/pdf_merger_state.dart';
-import 'package:bharattesting_app/features/pdf_merger/providers/pdf_merger_provider.dart';
+import 'package:bharattesting_utilities/features/pdf_merger/pdf_merger_screen.dart';
+import 'package:bharattesting_utilities/features/pdf_merger/models/pdf_merger_state.dart';
+import 'package:bharattesting_utilities/features/pdf_merger/providers/pdf_merger_provider.dart';
 import 'package:bharattesting_core/core.dart';
 
 void main() {

@@ -1,3 +1,4 @@
+import 'package:flutter/material.dart';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:patrol/patrol.dart';
 import 'package:bharattesting_utilities/main.dart' as app;
@@ -7,13 +8,9 @@ import 'package:bharattesting_utilities/main.dart' as app;
 /// Tests camera functionality, document detection, filters, and export
 void main() {
   group('Document Scanner E2E Tests', () {
-    late PatrolIntegrationTester $;
 
-    setUp(() async {
-      $ = PatrolIntegrationTester();
-    });
 
-    patrolTest('camera permission and initialization', ($) async {
+    patrolTest('camera permission and initialization', (PatrolTester $) async {
       app.main();
       await $.pumpAndSettle();
 
@@ -47,7 +44,7 @@ void main() {
       expect(hasCamera || hasUpload, isTrue);
     });
 
-    patrolTest('upload mode document processing', ($) async {
+    patrolTest('upload mode document processing', (PatrolTester $) async {
       app.main();
       await $.pumpAndSettle();
 
@@ -85,7 +82,7 @@ void main() {
       }
     });
 
-    patrolTest('document filters application', ($) async {
+    patrolTest('document filters application', (PatrolTester $) async {
       app.main();
       await $.pumpAndSettle();
 
@@ -124,7 +121,7 @@ void main() {
       await $.pumpAndSettle(const Duration(seconds: 1));
     });
 
-    patrolTest('multi-page document scanning', ($) async {
+    patrolTest('multi-page document scanning', (PatrolTester $) async {
       app.main();
       await $.pumpAndSettle();
 
@@ -183,7 +180,7 @@ void main() {
       }
     });
 
-    patrolTest('OCR text extraction', ($) async {
+    patrolTest('OCR text extraction', (PatrolTester $) async {
       app.main();
       await $.pumpAndSettle();
 
@@ -233,7 +230,7 @@ void main() {
       }
     });
 
-    patrolTest('PDF export with searchable text', ($) async {
+    patrolTest('PDF export with searchable text', (PatrolTester $) async {
       app.main();
       await $.pumpAndSettle();
 
@@ -289,7 +286,7 @@ void main() {
       }
     });
 
-    patrolTest('image export options', ($) async {
+    patrolTest('image export options', (PatrolTester $) async {
       app.main();
       await $.pumpAndSettle();
 
@@ -345,7 +342,7 @@ void main() {
       }
     });
 
-    patrolTest('manual corner adjustment', ($) async {
+    patrolTest('manual corner adjustment', (PatrolTester $) async {
       app.main();
       await $.pumpAndSettle();
 
@@ -392,7 +389,7 @@ void main() {
       }
     });
 
-    patrolTest('camera controls functionality', ($) async {
+    patrolTest('camera controls functionality', (PatrolTester $) async {
       app.main();
       await $.pumpAndSettle();
 
@@ -435,7 +432,7 @@ void main() {
       }
     });
 
-    patrolTest('error recovery and edge cases', ($) async {
+    patrolTest('error recovery and edge cases', (PatrolTester $) async {
       app.main();
       await $.pumpAndSettle();
 

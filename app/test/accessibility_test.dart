@@ -1,8 +1,9 @@
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:bharattesting_utilities/features/home/home_screen.dart';
 import 'package:bharattesting_utilities/features/data_faker/faker_screen.dart';
-import 'package:bharattesting_utilities/features/document_scanner/screens/document_scanner_screen.dart';
+import 'package:bharattesting_utilities/features/document_scanner/document_scanner_screen.dart';
 
 /// Comprehensive accessibility tests for BharatTesting Utilities
 ///
@@ -17,7 +18,7 @@ void main() {
     group('Semantic Labels Tests', () {
       testWidgets('home screen has proper semantic labels', (tester) async {
         await tester.pumpWidget(
-          const MaterialApp(home: HomeScreen()),
+          MaterialApp(home: HomeScreen()),
         );
 
         // Tool cards should have semantic labels
@@ -115,7 +116,7 @@ void main() {
     group('Touch Target Size Tests', () {
       testWidgets('all interactive elements meet 48x48dp minimum', (tester) async {
         await tester.pumpWidget(
-          const MaterialApp(home: HomeScreen()),
+          MaterialApp(home: HomeScreen()),
         );
 
         await tester.pumpAndSettle();
@@ -161,7 +162,7 @@ void main() {
         }
 
         // Check any radio buttons
-        final radioButtons = find.byType(RadioButton);
+        final radioButtons = find.byType(Radio);
         for (final radio in radioButtons.evaluate()) {
           final radioBox = tester.getRect(find.byWidget(radio.widget));
           expect(radioBox.width, greaterThanOrEqualTo(48.0));
@@ -192,7 +193,7 @@ void main() {
     group('Color Contrast Tests', () {
       testWidgets('text colors meet WCAG contrast requirements', (tester) async {
         await tester.pumpWidget(
-          const MaterialApp(home: HomeScreen()),
+          MaterialApp(home: HomeScreen()),
         );
 
         await tester.pumpAndSettle();
@@ -344,7 +345,7 @@ void main() {
     group('Screen Reader Support Tests', () {
       testWidgets('semantic tree is properly constructed', (tester) async {
         await tester.pumpWidget(
-          const MaterialApp(home: HomeScreen()),
+          MaterialApp(home: HomeScreen()),
         );
 
         await tester.pumpAndSettle();

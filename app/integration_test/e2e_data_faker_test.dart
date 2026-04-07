@@ -1,3 +1,4 @@
+import 'package:flutter/material.dart';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:patrol/patrol.dart';
 import 'package:bharattesting_utilities/main.dart' as app;
@@ -7,13 +8,9 @@ import 'package:bharattesting_utilities/main.dart' as app;
 /// Tests the complete workflow from template selection to data export
 void main() {
   group('Data Faker E2E Tests', () {
-    late PatrolIntegrationTester $;
 
-    setUp(() async {
-      $ = PatrolIntegrationTester();
-    });
 
-    patrolTest('complete data generation workflow - individual template', ($) async {
+    patrolTest('complete data generation workflow - individual template', (PatrolTester $) async {
       // Launch app and navigate to data faker
       app.main();
       await $.pumpAndSettle();
@@ -77,7 +74,7 @@ void main() {
       );
     });
 
-    patrolTest('company template with GSTIN generation', ($) async {
+    patrolTest('company template with GSTIN generation', (PatrolTester $) async {
       app.main();
       await $.pumpAndSettle();
 
@@ -112,7 +109,7 @@ void main() {
       await $.pumpAndSettle();
     });
 
-    patrolTest('bulk data generation with 100 records', ($) async {
+    patrolTest('bulk data generation with 100 records', (PatrolTester $) async {
       app.main();
       await $.pumpAndSettle();
 
@@ -145,7 +142,7 @@ void main() {
       await $.pumpAndSettle();
     });
 
-    patrolTest('export functionality CSV and JSON', ($) async {
+    patrolTest('export functionality CSV and JSON', (PatrolTester $) async {
       app.main();
       await $.pumpAndSettle();
 
@@ -178,7 +175,7 @@ void main() {
       }
     });
 
-    patrolTest('template switching preserves settings', ($) async {
+    patrolTest('template switching preserves settings', (PatrolTester $) async {
       app.main();
       await $.pumpAndSettle();
 
@@ -220,7 +217,7 @@ void main() {
       await $.pumpAndSettle();
     });
 
-    patrolTest('error handling for invalid configurations', ($) async {
+    patrolTest('error handling for invalid configurations', (PatrolTester $) async {
       app.main();
       await $.pumpAndSettle();
 
@@ -246,7 +243,7 @@ void main() {
       await $.waitUntilVisible(find.text('Generated'), timeout: const Duration(seconds: 10));
     });
 
-    patrolTest('seed reproducibility test', ($) async {
+    patrolTest('seed reproducibility test', (PatrolTester $) async {
       app.main();
       await $.pumpAndSettle();
 

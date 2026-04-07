@@ -1,9 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
-import 'package:bharattesting_app/features/image_reducer/image_reducer_screen.dart';
-import 'package:bharattesting_app/features/image_reducer/models/image_reducer_state.dart';
-import 'package:bharattesting_app/features/image_reducer/providers/image_reducer_provider.dart';
+import 'package:bharattesting_utilities/features/image_reducer/image_reducer_screen.dart';
+import 'package:bharattesting_utilities/features/image_reducer/models/image_reducer_state.dart';
+import 'package:bharattesting_utilities/features/image_reducer/providers/image_reducer_provider.dart';
 import 'package:bharattesting_core/core.dart';
 
 void main() {

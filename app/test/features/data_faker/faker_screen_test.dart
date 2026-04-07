@@ -2,9 +2,9 @@ import 'package:flutter/material.dart';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
-import 'package:app/features/data_faker/faker_screen.dart';
-import 'package:app/features/data_faker/faker_provider.dart';
-import 'package:app/features/data_faker/faker_state.dart';
+import 'package:bharattesting_utilities/features/data_faker/faker_screen.dart';
+import 'package:bharattesting_utilities/features/data_faker/faker_provider.dart';
+import 'package:bharattesting_utilities/features/data_faker/faker_state.dart';
 
 /// Test helpers and mock setup
 class MockProviderScope extends StatelessWidget {

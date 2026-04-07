@@ -1,7 +1,7 @@
 import 'package:alchemist/alchemist.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_test/flutter_test.dart';
-import 'package:bharattesting_utilities/features/image_reducer/screens/image_reducer_screen.dart';
+import 'package:bharattesting_utilities/features/image_reducer/image_reducer_screen.dart';
 import 'golden_test_config.dart';
 
 void main() {

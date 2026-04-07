@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
-import 'package:bharattesting_app/features/json_converter/json_converter_screen.dart';
-import 'package:bharattesting_app/l10n/l10n.dart';
+import 'package:bharattesting_utilities/features/json_converter/json_converter_screen.dart';
+import 'package:bharattesting_utilities/l10n/l10n.dart';
 import 'package:flutter_localizations/flutter_localizations.dart';
 
 void main() {

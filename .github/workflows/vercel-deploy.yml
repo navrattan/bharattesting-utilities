@@ -48,3 +48,4 @@ jobs:
           working-directory: app/build/web
           scope: ${{ secrets.VERCEL_ORG_ID }}
           alias-domains: bharattesting.com
+          vercel-args: '--prod'

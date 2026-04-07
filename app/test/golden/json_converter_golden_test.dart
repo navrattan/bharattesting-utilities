@@ -1,7 +1,7 @@
 import 'package:alchemist/alchemist.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_test/flutter_test.dart';
-import 'package:bharattesting_utilities/features/json_converter/screens/json_converter_screen.dart';
+import 'package:bharattesting_utilities/features/json_converter/json_converter_screen.dart';
 import 'golden_test_config.dart';
 
 void main() {
