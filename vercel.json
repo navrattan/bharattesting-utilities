@@ -1,7 +1,6 @@
 {
-  "buildCommand": "cd app && flutter build web --release --web-renderer canvaskit --base-href /",
+  "buildCommand": "bash scripts/vercel-build.sh",
   "outputDirectory": "app/build/web",
-  "installCommand": "flutter pub get",
   "framework": null,
   "headers": [
     {
