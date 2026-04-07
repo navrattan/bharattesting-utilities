@@ -24,7 +24,7 @@ dependencies:
   go_router: ^14.3.0
 
   # UI Components
-  lucide_icons: ^0.454.0
+  lucide_icons: ^0.257.0
 
   # File Operations
   file_picker: ^8.1.2
