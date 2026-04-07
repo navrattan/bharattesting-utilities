@@ -2,8 +2,8 @@
 library btqa_footer;
 
 import 'package:flutter/material.dart';
-import '../../../theme/app_typography.dart';
-import '../../../theme/app_theme.dart';
+import '../../theme/app_typography.dart';
+import '../../theme/app_theme.dart';
 
 /// Footer widget that appears on every screen
 ///

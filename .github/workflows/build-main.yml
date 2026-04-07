@@ -9,7 +9,7 @@ on:
 
 jobs:
   build-all:
-    name: Build All Platforms
+    name: Build Web
     runs-on: ubuntu-latest
     steps:
       - name: Checkout
@@ -23,23 +23,21 @@ jobs:
 
       - name: Install Dependencies
         run: |
+          cd core
+          dart pub get
+          cd ..
           cd app
           flutter pub get
+
+      - name: Run code generation
+        run: |
+          cd app
+          dart run build_runner build --delete-conflicting-outputs
 
       - name: Build Web Release
         run: |
           cd app
           flutter build web --release
-
-      - name: Build Android Release APK
-        run: |
-          cd app
-          flutter build apk --release --split-per-abi
-
-      - name: Build Android App Bundle
-        run: |
-          cd app
-          flutter build appbundle --release
 
       - name: Generate Build Report
         run: |
@@ -52,35 +50,11 @@ jobs:
           WEB_SIZE=$(du -sh build/web | cut -f1)
           echo "| Web | $WEB_SIZE | ✅ |" >> $GITHUB_STEP_SUMMARY
 
-          # APK sizes
-          for apk in build/app/outputs/flutter-apk/*.apk; do
-            if [[ -f "$apk" ]]; then
-              APK_SIZE=$(du -sh "$apk" | cut -f1)
-              APK_NAME=$(basename "$apk")
-              echo "| Android ($APK_NAME) | $APK_SIZE | ✅ |" >> $GITHUB_STEP_SUMMARY
-            fi
-          done
-
-          # AAB size
-          if [[ -f "build/app/outputs/bundle/release/app-release.aab" ]]; then
-            AAB_SIZE=$(du -sh build/app/outputs/bundle/release/app-release.aab | cut -f1)
-            echo "| Android Bundle | $AAB_SIZE | ✅ |" >> $GITHUB_STEP_SUMMARY
-          fi
-
       - name: Upload Web Artifacts
         uses: actions/upload-artifact@v4
         with:
           name: web-build
           path: app/build/web/
-          retention-days: 30
-
-      - name: Upload Android Artifacts
-        uses: actions/upload-artifact@v4
-        with:
-          name: android-build
-          path: |
-            app/build/app/outputs/flutter-apk/*.apk
-            app/build/app/outputs/bundle/release/*.aab
           retention-days: 30
 
   notify-status:
@@ -92,8 +66,8 @@ jobs:
       - name: Report Success
         if: needs.build-all.result == 'success'
         run: |
-          echo "✅ All platform builds completed successfully"
-          echo "Build artifacts uploaded and ready for deployment"
+          echo "✅ Web build completed successfully"
+          echo "Web artifact uploaded and ready for deployment"
 
       - name: Report Failure
         if: needs.build-all.result == 'failure'

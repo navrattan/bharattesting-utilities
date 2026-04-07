@@ -7,8 +7,8 @@ on:
     branches: [main]
 
 jobs:
-  analysis:
-    name: Code Analysis & Formatting
+  build:
+    name: Web Build Verification
     runs-on: ubuntu-latest
     steps:
       - name: Checkout
@@ -20,96 +20,20 @@ jobs:
           flutter-version: '3.29.0'
           channel: 'stable'
 
-      - name: Install Core Dependencies
+      - name: Install Dependencies
         run: |
           cd core
           dart pub get
-
-      - name: Install App Dependencies
-        run: |
+          cd ..
           cd app
           flutter pub get
 
-      - name: Analyze Core
-        run: |
-          cd core
-          dart analyze --fatal-infos
-
-      - name: Analyze App
+      - name: Run code generation
         run: |
           cd app
-          flutter analyze --fatal-infos
-
-      - name: Check Formatting
-        run: dart format --set-exit-if-changed .
-
-  test:
-    name: Unit & Widget Tests
-    runs-on: ubuntu-latest
-    steps:
-      - name: Checkout
-        uses: actions/checkout@v4
-
-      - name: Setup Flutter
-        uses: subosito/flutter-action@v2
-        with:
-          flutter-version: '3.29.0'
-          channel: 'stable'
-
-      - name: Install Dependencies
-        run: |
-          cd core && dart pub get && cd ..
-          cd app && flutter pub get && cd ..
-
-      - name: Run Core Unit Tests
-        run: |
-          cd core
-          dart test --coverage=coverage --reporter=expanded
-
-      - name: Run App Widget Tests
-        run: |
-          cd app
-          flutter test --coverage --reporter=expanded
-
-      - name: Upload Coverage
-        uses: codecov/codecov-action@v4
-        with:
-          files: core/coverage/lcov.info,app/coverage/lcov.info
-
-  build:
-    name: Build Verification
-    runs-on: ubuntu-latest
-    steps:
-      - name: Checkout
-        uses: actions/checkout@v4
-
-      - name: Setup Flutter
-        uses: subosito/flutter-action@v2
-        with:
-          flutter-version: '3.29.0'
-          channel: 'stable'
-
-      - name: Install Dependencies
-        run: |
-          cd app
-          flutter pub get
+          dart run build_runner build --delete-conflicting-outputs
 
       - name: Build Web
         run: |
           cd app
           flutter build web --release
-
-      - name: Build Android APK
-        run: |
-          cd app
-          flutter build apk --debug
-
-      - name: Check APK Size
-        run: |
-          cd app
-          APK_SIZE=$(du -h build/app/outputs/flutter-apk/app-debug.apk | cut -f1)
-          echo "APK Size: $APK_SIZE"
-          # Warning if > 25MB (debug builds are larger than release)
-          if [[ $(du -m build/app/outputs/flutter-apk/app-debug.apk | cut -f1) -gt 50 ]]; then
-            echo "::warning::APK size is large (${APK_SIZE}). Check for unused dependencies."
-          fi

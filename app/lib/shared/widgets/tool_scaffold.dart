@@ -90,9 +90,9 @@ class _TabletLayout extends StatelessWidget {
             },
             labelType: NavigationRailLabelType.selected,
             destinations: AppRouter.destinations
-                .map((dest) => NavigationRailDestination(
+                    .map((dest) => NavigationRailDestination(
                       icon: dest.icon,
-                      selectedIcon: dest.selectedIcon,
+                      selectedIcon: dest.selectedIcon ?? dest.icon,
                       label: Text(dest.label),
                     ))
                 .toList(),
@@ -156,7 +156,7 @@ class _DesktopLayout extends StatelessWidget {
                           .map((entry) => _DesktopNavItem(
                                 label: entry.value.label,
                                 icon: entry.value.icon,
-                                selectedIcon: entry.value.selectedIcon,
+                                selectedIcon: entry.value.selectedIcon ?? entry.value.icon,
                                 isSelected: entry.key == currentIndex,
                                 onTap: () => AppRouter.navigateToIndex(
                                   context,

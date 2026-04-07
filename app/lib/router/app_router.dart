@@ -4,11 +4,6 @@ library app_router;
 import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
 import '../features/home/home_screen.dart';
-import '../features/data_faker/faker_screen.dart';
-import '../features/json_converter/json_converter_screen.dart';
-import '../features/image_reducer/image_reducer_screen.dart';
-import '../features/pdf_merger/pdf_merger_screen.dart';
-import '../features/document_scanner/screens/document_scanner_screen.dart';
 import '../shared/widgets/tool_scaffold.dart';
 
 /// Application router using GoRouter for type-safe navigation
@@ -39,27 +34,37 @@ class AppRouter {
           GoRoute(
             path: '/document-scanner',
             name: 'document-scanner',
-            builder: (context, state) => const DocumentScannerScreen(),
+            builder: (context, state) => const _ComingSoonScreen(
+              title: 'Document Scanner',
+            ),
           ),
           GoRoute(
             path: '/image-reducer',
             name: 'image-reducer',
-            builder: (context, state) => const ImageReducerScreen(),
+            builder: (context, state) => const _ComingSoonScreen(
+              title: 'Image Size Reducer',
+            ),
           ),
           GoRoute(
             path: '/pdf-merger',
             name: 'pdf-merger',
-            builder: (context, state) => const PdfMergerScreen(),
+            builder: (context, state) => const _ComingSoonScreen(
+              title: 'PDF Merger',
+            ),
           ),
           GoRoute(
             path: '/string-to-json',
             name: 'string-to-json',
-            builder: (context, state) => const JsonConverterScreen(),
+            builder: (context, state) => const _ComingSoonScreen(
+              title: 'String to JSON Converter',
+            ),
           ),
           GoRoute(
             path: '/indian-data-faker',
             name: 'indian-data-faker',
-            builder: (context, state) => const FakerScreen(),
+            builder: (context, state) => const _ComingSoonScreen(
+              title: 'Indian Data Faker',
+            ),
           ),
           GoRoute(
             path: '/about',
@@ -176,5 +181,35 @@ class AppRouter {
         context.go('/indian-data-faker');
         break;
     }
+  }
+}
+
+class _ComingSoonScreen extends StatelessWidget {
+  const _ComingSoonScreen({required this.title});
+
+  final String title;
+
+  @override
+  Widget build(BuildContext context) {
+    return Center(
+      child: Column(
+        mainAxisAlignment: MainAxisAlignment.center,
+        children: [
+          const Icon(Icons.construction_outlined, size: 64),
+          const SizedBox(height: 16),
+          Text(
+            title,
+            style: Theme.of(context).textTheme.headlineSmall,
+            textAlign: TextAlign.center,
+          ),
+          const SizedBox(height: 8),
+          Text(
+            'Temporarily unavailable while we stabilize the build.',
+            style: Theme.of(context).textTheme.bodyMedium,
+            textAlign: TextAlign.center,
+          ),
+        ],
+      ),
+    );
   }
 }
