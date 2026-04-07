@@ -31,7 +31,7 @@ COPY . .
 RUN cd core && flutter pub get && cd ..
 RUN cd app && flutter pub get
 RUN cd app && dart run build_runner build --delete-conflicting-outputs
-RUN cd app && flutter build web --release --web-renderer canvaskit --base-href /
+RUN cd app && flutter build web --release --base-href /
 
 # Output directory
 FROM scratch AS export-stage

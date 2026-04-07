@@ -16,7 +16,7 @@ This guide covers deploying BharatTesting Utilities to production across all pla
 
 # Or manual steps:
 cd app
-flutter build web --release --web-renderer canvaskit
+flutter build web --release
 cd ..
 vercel deploy --prod
 ```

@@ -298,7 +298,7 @@ Mark tasks done with `[x]` as you complete them.
 
 ### Task 6.5: Deploy Web
 - [x] Connect repo to Vercel
-- [x] Configure build command: `cd app && flutter build web --release --web-renderer canvaskit`
+- [x] Configure build command: `cd app && flutter build web --release`
 - [x] Set output directory: `app/build/web`
 - [x] Add custom domain: bharattesting.com
 - [x] Verify all routes work with direct URL access

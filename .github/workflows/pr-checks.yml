@@ -97,7 +97,7 @@ jobs:
       - name: Build Web
         run: |
           cd app
-          flutter build web --release --web-renderer canvaskit
+          flutter build web --release
 
       - name: Build Android APK
         run: |

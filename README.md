@@ -121,7 +121,7 @@ cd app && flutter test && cd ..
 cd app && patrol test integration_test/
 
 # Build for production
-cd app && flutter build web --release --web-renderer canvaskit
+cd app && flutter build web --release
 cd app && flutter build apk --release --split-per-abi
 ```
 

@@ -29,7 +29,7 @@ jobs:
       - name: Build Web Release
         run: |
           cd app
-          flutter build web --release --web-renderer canvaskit
+          flutter build web --release
 
       - name: Build Android Release APK
         run: |
