@@ -4,11 +4,11 @@ import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:camera/camera.dart';
 import 'package:lucide_icons/lucide_icons.dart';
-import 'package:bharattesting_core/core.dart';
 import '../../../shared/widgets/tool_scaffold.dart';
 import '../../../shared/widgets/responsive_layout.dart';
 import '../../../shared/widgets/btqa_footer.dart';
 import '../../../l10n/l10n.dart';
+import '../models/document_scanner_state.dart';
 import '../providers/document_scanner_provider.dart';
 import '../widgets/camera_preview_widget.dart';
 import '../widgets/document_overlay_widget.dart';
@@ -136,7 +136,7 @@ class _DocumentScannerScreenState extends ConsumerState<DocumentScannerScreen>
           ),
 
         // Footer
-        const BtqaFooter(),
+        const BTQAFooter(),
       ],
     );
   }
@@ -171,7 +171,7 @@ class _DocumentScannerScreenState extends ConsumerState<DocumentScannerScreen>
                   ],
                 ),
               ),
-              const BtqaFooter(),
+              const BTQAFooter(),
             ],
           ),
         ),
@@ -326,7 +326,7 @@ class _DocumentScannerScreenState extends ConsumerState<DocumentScannerScreen>
                   ],
                 ),
               ),
-              const BtqaFooter(),
+              const BTQAFooter(),
             ],
           ),
         ),

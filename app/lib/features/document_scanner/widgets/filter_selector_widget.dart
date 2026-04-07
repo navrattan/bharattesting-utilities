@@ -1,6 +1,8 @@
+import 'dart:typed_data';
+
 import 'package:flutter/material.dart';
 import 'package:lucide_icons/lucide_icons.dart';
-import 'package:bharattesting_core/core.dart';
+import 'package:bharattesting_core/src/document_scanner/image_enhancer.dart';
 
 /// Widget for selecting document image filters
 class FilterSelectorWidget extends StatelessWidget {
@@ -479,7 +481,14 @@ class AdvancedFilterOptions extends StatelessWidget {
                 1.0,
                 5.0,
                 (value) => onFilterOptionsChanged(
-                  filterOptions.copyWith(claheClipLimit: value),
+                  FilterOptions(
+                    claheClipLimit: value,
+                    claheTileSize: filterOptions.claheTileSize,
+                    adaptiveBlockSize: filterOptions.adaptiveBlockSize,
+                    adaptiveC: filterOptions.adaptiveC,
+                    colorSaturation: filterOptions.colorSaturation,
+                    colorContrast: filterOptions.colorContrast,
+                  ),
                 ),
               ),
             ],
@@ -492,7 +501,14 @@ class AdvancedFilterOptions extends StatelessWidget {
                 3.0,
                 31.0,
                 (value) => onFilterOptionsChanged(
-                  filterOptions.copyWith(adaptiveBlockSize: value.toInt()),
+                  FilterOptions(
+                    claheClipLimit: filterOptions.claheClipLimit,
+                    claheTileSize: filterOptions.claheTileSize,
+                    adaptiveBlockSize: value.toInt(),
+                    adaptiveC: filterOptions.adaptiveC,
+                    colorSaturation: filterOptions.colorSaturation,
+                    colorContrast: filterOptions.colorContrast,
+                  ),
                 ),
                 divisions: 14,
               ),
@@ -503,7 +519,14 @@ class AdvancedFilterOptions extends StatelessWidget {
                 0.0,
                 20.0,
                 (value) => onFilterOptionsChanged(
-                  filterOptions.copyWith(adaptiveC: value.toInt()),
+                  FilterOptions(
+                    claheClipLimit: filterOptions.claheClipLimit,
+                    claheTileSize: filterOptions.claheTileSize,
+                    adaptiveBlockSize: filterOptions.adaptiveBlockSize,
+                    adaptiveC: value.toInt(),
+                    colorSaturation: filterOptions.colorSaturation,
+                    colorContrast: filterOptions.colorContrast,
+                  ),
                 ),
                 divisions: 20,
               ),
@@ -514,7 +537,7 @@ class AdvancedFilterOptions extends StatelessWidget {
             Center(
               child: TextButton.icon(
                 onPressed: () => onFilterOptionsChanged(const FilterOptions()),
-                icon: const Icon(LucideIcons.rotateCounterClockwise),
+                icon: const Icon(Icons.restart_alt),
                 label: const Text('Reset to Defaults'),
               ),
             ),
@@ -604,7 +627,7 @@ class FilterComparisonWidget extends StatelessWidget {
                   children: [
                     if (originalImageData.isNotEmpty)
                       Image.memory(
-                        originalImageData as List<int>,
+                        Uint8List.fromList(originalImageData),
                         fit: BoxFit.cover,
                         width: double.infinity,
                         height: double.infinity,
@@ -647,7 +670,7 @@ class FilterComparisonWidget extends StatelessWidget {
                   children: [
                     if (filteredImageData.isNotEmpty)
                       Image.memory(
-                        filteredImageData as List<int>,
+                        Uint8List.fromList(filteredImageData),
                         fit: BoxFit.cover,
                         width: double.infinity,
                         height: double.infinity,

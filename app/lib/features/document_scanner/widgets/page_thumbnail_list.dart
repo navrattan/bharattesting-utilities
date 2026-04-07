@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
 import 'package:lucide_icons/lucide_icons.dart';
-import 'package:bharattesting_core/core.dart';
 import '../models/document_scanner_state.dart';
 
 /// Widget for displaying a list of scanned page thumbnails
@@ -308,7 +307,7 @@ class _PageThumbnailTile extends StatelessWidget {
                             ),
                           ),
                         Text(
-                          page.appliedFilter.displayName,
+                          page.appliedFilter.name,
                           style: Theme.of(context).textTheme.bodySmall?.copyWith(
                             color: Theme.of(context).colorScheme.secondary,
                           ),

@@ -7,7 +7,10 @@ import 'package:flutter/services.dart';
 import 'package:camera/camera.dart';
 import 'package:permission_handler/permission_handler.dart';
 import 'package:riverpod_annotation/riverpod_annotation.dart';
-import 'package:bharattesting_core/core.dart';
+import 'package:bharattesting_core/src/document_scanner/edge_detector.dart';
+import 'package:bharattesting_core/src/document_scanner/image_enhancer.dart';
+import 'package:bharattesting_core/src/document_scanner/ocr_processor.dart';
+import 'package:bharattesting_core/src/document_scanner/perspective_corrector.dart';
 import '../models/document_scanner_state.dart';
 
 part 'document_scanner_provider.g.dart';
@@ -147,7 +150,7 @@ class DocumentScannerNotifier extends _$DocumentScannerNotifier {
       });
 
       // Detect document edges
-      final quadrilateral = await compute(DocumentEdgeDetector.detectDocumentEdges, {
+      final quadrilateral = await compute(_detectDocumentEdges, {
         'imageData': rgbData,
         'width': width,
         'height': height,
@@ -177,9 +180,10 @@ class DocumentScannerNotifier extends _$DocumentScannerNotifier {
   /// Check if detected document is stable
   bool _checkStability(DocumentQuadrilateral? quad, DateTime now) {
     if (quad == null) return false;
+    if (state.lastDetectionTime == null) return false;
 
     // Check if detection has been stable for required duration
-    final timeSinceDetection = now.difference(state.lastDetectionTime);
+    final timeSinceDetection = now.difference(state.lastDetectionTime!);
     return timeSinceDetection.inMilliseconds >= (state.autoCaptureDuration * 1000);
   }
 
@@ -215,7 +219,7 @@ class DocumentScannerNotifier extends _$DocumentScannerNotifier {
       });
 
       // Detect edges on high-res image
-      final quadrilateral = await compute(DocumentEdgeDetector.detectDocumentEdges, {
+      final quadrilateral = await compute(_detectDocumentEdges, {
         'imageData': rgbData,
         'width': width,
         'height': height,
@@ -261,7 +265,7 @@ class DocumentScannerNotifier extends _$DocumentScannerNotifier {
       _updatePageStatus(pageId, PageStatus.processing);
 
       // Perspective correction
-      final corrected = await compute(DocumentPerspectiveCorrector.correctPerspective, {
+      final corrected = await compute(_correctPerspective, {
         'imageData': page.originalImageData,
         'width': page.imageWidth,
         'height': page.imageHeight,
@@ -269,7 +273,7 @@ class DocumentScannerNotifier extends _$DocumentScannerNotifier {
       });
 
       // Apply current filter
-      final filtered = await compute(DocumentImageEnhancer.applyFilter, {
+      final filtered = await compute(_applyDocumentFilter, {
         'imageData': corrected.imageData,
         'width': corrected.width,
         'height': corrected.height,
@@ -313,7 +317,7 @@ class DocumentScannerNotifier extends _$DocumentScannerNotifier {
     if (page.filteredImageData == null) return;
 
     try {
-      final ocrResult = await compute(DocumentOcrProcessor.extractText, {
+      final ocrResult = await compute(_extractDocumentText, {
         'imageData': page.filteredImageData!,
         'width': page.correctedWidth ?? page.imageWidth,
         'height': page.correctedHeight ?? page.imageHeight,
@@ -346,7 +350,7 @@ class DocumentScannerNotifier extends _$DocumentScannerNotifier {
       });
 
       // Detect edges
-      final quadrilateral = await compute(DocumentEdgeDetector.detectDocumentEdges, {
+      final quadrilateral = await compute(_detectDocumentEdges, {
         'imageData': rgbData,
         'width': width,
         'height': height,
@@ -400,7 +404,7 @@ class DocumentScannerNotifier extends _$DocumentScannerNotifier {
     if (page.correctedImageData == null) return;
 
     try {
-      final filtered = await compute(DocumentImageEnhancer.applyFilter, {
+      final filtered = await compute(_applyDocumentFilter, {
         'imageData': page.correctedImageData!,
         'width': page.correctedWidth ?? page.imageWidth,
         'height': page.correctedHeight ?? page.imageHeight,
@@ -652,6 +656,40 @@ class DocumentScannerNotifier extends _$DocumentScannerNotifier {
 }
 
 /// Compute functions for isolate processing
+
+Future<DocumentQuadrilateral?> _detectDocumentEdges(Map<String, dynamic> params) {
+  return DocumentEdgeDetector.detectDocumentEdges(
+    params['imageData'] as Uint8List,
+    params['width'] as int,
+    params['height'] as int,
+  );
+}
+
+Future<CorrectedDocument> _correctPerspective(Map<String, dynamic> params) {
+  return DocumentPerspectiveCorrector.correctPerspective(
+    params['imageData'] as Uint8List,
+    params['width'] as int,
+    params['height'] as int,
+    params['quadrilateral'] as DocumentQuadrilateral,
+  );
+}
+
+Future<Uint8List> _applyDocumentFilter(Map<String, dynamic> params) {
+  return DocumentImageEnhancer.applyFilter(
+    params['imageData'] as Uint8List,
+    params['width'] as int,
+    params['height'] as int,
+    params['filter'] as DocumentFilter,
+  );
+}
+
+Future<OcrResult> _extractDocumentText(Map<String, dynamic> params) {
+  return DocumentOcrProcessor.extractText(
+    params['imageData'] as Uint8List,
+    params['width'] as int,
+    params['height'] as int,
+  );
+}
 
 /// Convert image bytes to RGB format
 Future<Uint8List> _convertToRgb(Map<String, dynamic> params) async {
