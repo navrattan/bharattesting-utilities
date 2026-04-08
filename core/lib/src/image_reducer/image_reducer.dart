@@ -8,3 +8,6 @@ export 'compressor.dart';
 export 'resizer.dart';
 export 'format_converter.dart';
 export 'metadata_stripper.dart';
+
+// Main service
+export 'image_reducer_service.dart';

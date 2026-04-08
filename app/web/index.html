@@ -164,6 +164,7 @@
     <div class="loading-spinner"></div>
   </div>
 
+  <!-- Flutter Configuration -->
   <script>
     window.addEventListener('flutter-first-frame', function () {
       const loadingScreen = document.getElementById('loading-screen');
@@ -171,8 +172,34 @@
         loadingScreen.style.display = 'none';
       }
     });
-  </script>
 
-  {{flutter_bootstrap_js}}
+    // Flutter service worker configuration
+    if ('serviceWorker' in navigator) {
+      window.addEventListener('flutter-first-frame', function () {
+        navigator.serviceWorker.register('flutter_service_worker.js?v=1');
+      });
+    }
+
+    // Flutter loader configuration
+    _flutter = {};
+    _flutter.loader = {};
+    _flutter.loader.load = function() {
+      const serviceWorkerVersion = null;
+      const entrypoint = './main.dart.js';
+
+      if ('serviceWorker' in navigator) {
+        navigator.serviceWorker.register('flutter_service_worker.js?v=' + serviceWorkerVersion);
+      }
+
+      const script = document.createElement('script');
+      script.src = entrypoint;
+      document.head.appendChild(script);
+    };
+
+    // Start Flutter when page loads
+    window.addEventListener('load', function(ev) {
+      _flutter.loader.load();
+    });
+  </script>
 </body>
 </html>
