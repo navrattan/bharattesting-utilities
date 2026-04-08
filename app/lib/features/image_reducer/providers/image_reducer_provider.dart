@@ -237,18 +237,17 @@ class ImageReducer extends _$ImageReducer {
 
   // Helper methods
 
-  ImageReductionConfig _buildProcessingConfig() {
-    return ImageReductionConfig(
-      stripMetadata: state.stripMetadata,
-      resize: state.enableResize,
-      compress: true,
-      convertFormat: state.enableFormatConversion,
-      compressionQuality: state.quality,
-      resizeConfig: ResizeConfig.fromPreset(state.selectedPreset),
-      metadataConfig: MetadataStripConfig(privacyLevel: state.privacyLevel),
-      targetFormat: state.targetFormat,
-      conversionStrategy: state.strategy,
-    );
+  Map<String, dynamic> _buildProcessingConfig() {
+    return {
+      'stripMetadata': state.stripMetadata,
+      'enableResize': state.enableResize,
+      'enableFormatConversion': state.enableFormatConversion,
+      'quality': state.quality,
+      'selectedPreset': state.selectedPreset.name,
+      'targetFormat': state.targetFormat.name,
+      'strategy': state.strategy.name,
+      'privacyLevel': state.privacyLevel.name,
+    };
   }
 
   void _updateImage(ProcessedImage oldImage, ProcessedImage newImage) {

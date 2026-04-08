@@ -1,167 +1,18 @@
 import 'dart:typed_data';
+import 'package:bharattesting_core/core.dart';
 
-enum ResizePreset {
-  thumbnail,
-  small,
-  medium,
-  large,
-  ultraHd,
-  square512,
-  square1024,
-}
+/// App-specific processing status for UI state management
+enum ProcessingStatus {
+  pending('Pending'),
+  processing('Processing'),
+  completed('Completed'),
+  error('Error');
 
-extension ResizePresetExtension on ResizePreset {
-  String get displayName {
-    switch (this) {
-      case ResizePreset.thumbnail:
-        return 'Thumbnail';
-      case ResizePreset.small:
-        return 'Small';
-      case ResizePreset.medium:
-        return 'Medium';
-      case ResizePreset.large:
-        return 'Large';
-      case ResizePreset.ultraHd:
-        return 'Ultra HD';
-      case ResizePreset.square512:
-        return 'Square 512';
-      case ResizePreset.square1024:
-        return 'Square 1024';
-    }
-  }
-
-  int get width {
-    switch (this) {
-      case ResizePreset.thumbnail:
-        return 150;
-      case ResizePreset.small:
-        return 640;
-      case ResizePreset.medium:
-        return 1024;
-      case ResizePreset.large:
-        return 1920;
-      case ResizePreset.ultraHd:
-        return 3840;
-      case ResizePreset.square512:
-        return 512;
-      case ResizePreset.square1024:
-        return 1024;
-    }
-  }
-
-  int get height {
-    switch (this) {
-      case ResizePreset.thumbnail:
-        return 150;
-      case ResizePreset.small:
-        return 480;
-      case ResizePreset.medium:
-        return 768;
-      case ResizePreset.large:
-        return 1080;
-      case ResizePreset.ultraHd:
-        return 2160;
-      case ResizePreset.square512:
-        return 512;
-      case ResizePreset.square1024:
-        return 1024;
-    }
-  }
-
-  String get dimensions => '$width × $height';
-}
-
-enum ConvertibleFormat {
-  jpeg('JPEG', 'Photographs and complex images', ['.jpg', '.jpeg']),
-  png('PNG', 'Graphics and transparency', ['.png']),
-  webp('WebP', 'Modern web optimized format', ['.webp']),
-  bmp('BMP', 'Bitmap compatibility format', ['.bmp']),
-  gif('GIF', 'Simple animation and graphics', ['.gif']),
-  tiff('TIFF', 'High fidelity archival format', ['.tiff', '.tif']);
-
-  const ConvertibleFormat(this.displayName, this.bestFor, this.extensions);
+  const ProcessingStatus(this.displayName);
   final String displayName;
-  final String bestFor;
-  final List<String> extensions;
-
-  String get primaryExtension => extensions.first;
-  String get extension => primaryExtension.replaceFirst('.', '');
 }
 
-enum ConversionStrategy {
-  preserveQuality('Preserve Quality', 'Maintain maximum quality'),
-  balanceQualitySize('Balanced', 'Balance quality and file size'),
-  minimizeSize('Minimize Size', 'Smallest possible file'),
-  preserveAlpha('Preserve Alpha', 'Keep transparency when possible'),
-  stripMetadata('Strip Metadata', 'Prioritize privacy'),
-  webOptimized('Web Optimized', 'Fast loading for web');
-
-  const ConversionStrategy(this.displayName, this.description);
-  final String displayName;
-  final String description;
-}
-
-enum PrivacyLevel {
-  minimal('Minimal', 'Remove GPS and personal metadata'),
-  moderate('Moderate', 'Remove sensitive metadata'),
-  aggressive('Aggressive', 'Remove all metadata except basic technical info'),
-  complete('Complete', 'Remove all metadata');
-
-  const PrivacyLevel(this.displayName, this.description);
-  final String displayName;
-  final String description;
-}
-
-class ResizeConfig {
-  const ResizeConfig({
-    required this.width,
-    required this.height,
-  });
-
-  final int width;
-  final int height;
-
-  factory ResizeConfig.fromPreset(ResizePreset preset) {
-    return ResizeConfig(width: preset.width, height: preset.height);
-  }
-}
-
-class MetadataStripConfig {
-  const MetadataStripConfig({
-    required this.privacyLevel,
-    this.preserveOrientation = true,
-    this.preserveColorProfile = true,
-  });
-
-  final PrivacyLevel privacyLevel;
-  final bool preserveOrientation;
-  final bool preserveColorProfile;
-}
-
-class ImageReductionConfig {
-  const ImageReductionConfig({
-    required this.stripMetadata,
-    required this.resize,
-    required this.compress,
-    required this.convertFormat,
-    required this.compressionQuality,
-    required this.resizeConfig,
-    required this.metadataConfig,
-    this.targetFormat,
-    this.conversionStrategy = ConversionStrategy.balanceQualitySize,
-  });
-
-  final bool stripMetadata;
-  final bool resize;
-  final bool compress;
-  final bool convertFormat;
-  final int compressionQuality;
-  final ResizeConfig resizeConfig;
-  final MetadataStripConfig metadataConfig;
-  final ConvertibleFormat? targetFormat;
-  final ConversionStrategy conversionStrategy;
-}
-
+/// App-specific result class for processed images
 class ImageReductionResult {
   const ImageReductionResult({
     required this.processedData,
@@ -195,7 +46,7 @@ class ImageReducerState {
     this.images = const <ProcessedImage>[],
     this.isProcessing = false,
     this.quality = 80,
-    this.selectedPreset = ResizePreset.medium,
+    this.selectedPreset = ResizePreset.hd,
     this.targetFormat = ConvertibleFormat.jpeg,
     this.strategy = ConversionStrategy.balanceQualitySize,
     this.privacyLevel = PrivacyLevel.moderate,
@@ -379,16 +230,6 @@ class ProcessedImage {
 
   double get qualityScore => result?.efficiencyScore ?? 0.0;
   String get qualityGrade => result?.qualityGrade ?? 'Not processed';
-}
-
-enum ProcessingStatus {
-  pending('Pending'),
-  processing('Processing'),
-  completed('Completed'),
-  error('Error');
-
-  const ProcessingStatus(this.displayName);
-  final String displayName;
 }
 
 class ImageMetadata {
