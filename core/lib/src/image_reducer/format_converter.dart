@@ -372,10 +372,22 @@ class ImageFormatConverter {
 
     // Handle alpha channel based on target format and config
     if (!config.preserveAlpha && optimized.hasAlpha) {
-      optimized = img.copyConvert(optimized, numChannels: 3);
+      final rgbImage = img.Image(
+        width: optimized.width,
+        height: optimized.height,
+        numChannels: 3,
+      );
+      img.compositeImage(rgbImage, optimized);
+      optimized = rgbImage;
       optimizations.add('Removed alpha channel');
     } else if (optimized.hasAlpha && !config.targetFormat.supportsAlpha) {
-      optimized = img.copyConvert(optimized, numChannels: 3);
+      final rgbImage = img.Image(
+        width: optimized.width,
+        height: optimized.height,
+        numChannels: 3,
+      );
+      img.compositeImage(rgbImage, optimized);
+      optimized = rgbImage;
       warnings.add('Alpha channel removed - not supported by ${config.targetFormat.displayName}');
     }
 
@@ -384,7 +396,13 @@ class ImageFormatConverter {
       case ConvertibleFormat.jpeg:
         // JPEG works best in RGB color space
         if (optimized.hasAlpha) {
-          optimized = img.copyConvert(optimized, numChannels: 3);
+          final rgbImage = img.Image(
+            width: optimized.width,
+            height: optimized.height,
+            numChannels: 3,
+          );
+          img.compositeImage(rgbImage, optimized);
+          optimized = rgbImage;
           warnings.add('Alpha channel removed for JPEG compatibility');
         }
         break;

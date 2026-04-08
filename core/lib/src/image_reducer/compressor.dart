@@ -183,7 +183,13 @@ class ImageCompressor {
 
     // Convert to RGB if needed (JPEG doesn't support alpha)
     if (optimized.hasAlpha) {
-      optimized = img.copyConvert(optimized, numChannels: 3);
+      final rgbImage = img.Image(
+        width: optimized.width,
+        height: optimized.height,
+        numChannels: 3,
+      );
+      img.compositeImage(rgbImage, optimized);
+      optimized = rgbImage;
       optimizations.add('Removed alpha channel for JPEG');
     }
 
@@ -251,7 +257,13 @@ class ImageCompressor {
         }
 
         if (!hasTransparency) {
-          optimized = img.copyConvert(optimized, numChannels: 3);
+          final rgbImage = img.Image(
+            width: optimized.width,
+            height: optimized.height,
+            numChannels: 3,
+          );
+          img.compositeImage(rgbImage, optimized);
+          optimized = rgbImage;
           optimizations.add('Removed unused alpha channel');
         }
       }
