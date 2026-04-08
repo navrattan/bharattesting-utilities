@@ -52,15 +52,8 @@
   <meta name="msapplication-TileColor" content="#58A6FF">
   <meta name="msapplication-config" content="/browserconfig.xml">
 
-  <!-- Security Headers -->
-  <meta http-equiv="Content-Security-Policy" content="default-src 'self' data: blob: https://www.gstatic.com https://fonts.gstatic.com; script-src 'self' 'unsafe-inline' 'unsafe-eval' https://www.gstatic.com; style-src 'self' 'unsafe-inline' https://fonts.googleapis.com; img-src 'self' data: blob:; font-src 'self' data: https://fonts.gstatic.com; connect-src 'self' https://www.gstatic.com https://fonts.gstatic.com; media-src 'self' blob:; object-src 'none'; child-src 'self' blob:; worker-src 'self' blob:; frame-src 'none';">
-
   <!-- Canonical URL -->
   <link rel="canonical" href="https://bharattesting.com/">
-
-  <!-- Preload Critical Resources -->
-  <link rel="preload" href="/main.dart.js" as="script">
-  <link rel="preload" href="/flutter_service_worker.js" as="script">
 
   <!-- Schema.org Structured Data -->
   <script type="application/ld+json">
@@ -88,18 +81,6 @@
       "url": "https://github.com/navrattan"
     }
   }
-  </script>
-
-  <!-- Analytics & Performance (Privacy-First) -->
-  <!-- NO TRACKING - This app is privacy-first and offline -->
-
-  <!-- Flutter Service Worker Configuration -->
-  <script>
-    if ('serviceWorker' in navigator) {
-      window.addEventListener('flutter-first-frame', function () {
-        navigator.serviceWorker.register('flutter_service_worker.js?v={{flutter.version}}');
-      });
-    }
   </script>
 
   <style>
@@ -168,11 +149,6 @@
       0% { transform: rotate(0deg); }
       100% { transform: rotate(360deg); }
     }
-
-    /* Hide loading screen when Flutter is ready */
-    flt-glass-pane {
-      display: none;
-    }
   </style>
 </head>
 
@@ -185,39 +161,15 @@
     <div class="loading-spinner"></div>
   </div>
 
-  <!-- Flutter App Container -->
-  <div id="flutter-container"></div>
-
-  <!-- Flutter Configuration -->
   <script>
     window.addEventListener('flutter-first-frame', function () {
-      // Hide loading screen when Flutter is ready
       const loadingScreen = document.getElementById('loading-screen');
       if (loadingScreen) {
         loadingScreen.style.display = 'none';
       }
     });
-
-    // Configure Flutter
-    window.flutterConfiguration = {
-      canvasKitBaseUrl: "https://www.gstatic.com/flutter-canvaskit/"
-    };
   </script>
 
-  <!-- Flutter Bootstrap Script -->
-  <script src="flutter.js" defer></script>
-
-  <!-- Initialize Flutter -->
-  <script>
-    window.addEventListener('load', function(ev) {
-      _flutter.loader.load({
-        onEntrypointLoaded: function(engineInitializer) {
-          engineInitializer.initializeEngine().then(function(appRunner) {
-            appRunner.runApp();
-          });
-        }
-      });
-    });
-  </script>
+  {{flutter_bootstrap_js}}
 </body>
 </html>
