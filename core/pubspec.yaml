@@ -17,7 +17,7 @@ dependencies:
   archive: ^4.0.9
 
   # CSV handling
-  csv: ^6.0.0
+  csv: ^8.0.0
 
   # YAML parsing
   yaml: ^3.1.2
