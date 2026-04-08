@@ -4,9 +4,10 @@ library home_screen;
 import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
 
-/// Home screen displaying all 5 tools as cards
+/// Home screen displaying all 6 tools as cards
 ///
 /// Layout:
+/// - BT Logo
 /// - Welcome text
 /// - Grid of tool cards (responsive)
 /// - Each card shows icon, name, description
@@ -20,36 +21,72 @@ class HomeScreen extends StatelessWidget {
       body: Center(
         child: ConstrainedBox(
           constraints: const BoxConstraints(maxWidth: 1200),
-          child: Padding(
-            padding: const EdgeInsets.all(24),
-            child: Column(
-              children: [
-                const SizedBox(height: 24),
+          child: SingleChildScrollView(
+            child: Padding(
+              padding: const EdgeInsets.all(24),
+              child: Column(
+                children: [
+                  const SizedBox(height: 40),
 
-                // Welcome section
-                Text(
-                  'BharatTesting Utilities',
-                  style: Theme.of(context).textTheme.displaySmall?.copyWith(
-                        fontWeight: FontWeight.w600,
+                  // BT Logo
+                  Container(
+                    width: 100,
+                    height: 100,
+                    decoration: BoxDecoration(
+                      gradient: const LinearGradient(
+                        colors: [Color(0xFF58A6FF), Color(0xFF0969DA)],
+                        begin: Alignment.topLeft,
+                        end: Alignment.bottomRight,
                       ),
-                  textAlign: TextAlign.center,
-                ),
-                const SizedBox(height: 12),
-                Text(
-                  '5 free, privacy-first, offline developer tools',
-                  style: Theme.of(context).textTheme.titleLarge?.copyWith(
-                        color: Theme.of(context).colorScheme.onSurfaceVariant,
+                      borderRadius: BorderRadius.circular(20),
+                      boxShadow: [
+                        BoxShadow(
+                          color: const Color(0xFF58A6FF).withOpacity(0.3),
+                          blurRadius: 20,
+                          offset: const Offset(0, 10),
+                        ),
+                      ],
+                    ),
+                    child: const Center(
+                      child: Text(
+                        'BT',
+                        style: TextStyle(
+                          color: Colors.white,
+                          fontSize: 48,
+                          fontWeight: FontWeight.bold,
+                          letterSpacing: -2,
+                        ),
                       ),
-                  textAlign: TextAlign.center,
-                ),
+                    ),
+                  ),
 
-                const SizedBox(height: 32),
+                  const SizedBox(height: 24),
 
-                // Tool cards grid
-                Expanded(
-                  child: _ToolCardsGrid(),
-                ),
-              ],
+                  // Welcome section
+                  Text(
+                    'BharatTesting Utilities',
+                    style: Theme.of(context).textTheme.displaySmall?.copyWith(
+                          fontWeight: FontWeight.w600,
+                        ),
+                    textAlign: TextAlign.center,
+                  ),
+                  const SizedBox(height: 12),
+                  Text(
+                    'Free, privacy-first, 100% offline developer tools',
+                    style: Theme.of(context).textTheme.titleLarge?.copyWith(
+                          color: Theme.of(context).colorScheme.onSurfaceVariant,
+                        ),
+                    textAlign: TextAlign.center,
+                  ),
+
+                  const SizedBox(height: 40),
+
+                  // Tool cards grid
+                  _ToolCardsGrid(),
+
+                  const SizedBox(height: 40),
+                ],
+              ),
             ),
           ),
         ),
@@ -63,6 +100,8 @@ class _ToolCardsGrid extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return GridView.count(
+      shrinkWrap: true,
+      physics: const NeverScrollableScrollPhysics(),
       crossAxisCount: _getCrossAxisCount(context),
       crossAxisSpacing: 16,
       mainAxisSpacing: 16,
@@ -87,21 +126,28 @@ class _ToolCardsGrid extends StatelessWidget {
           description: 'Compress, resize, batch process',
           icon: Icons.photo_size_select_large,
           route: '/image-reducer',
-          status: 'Coming Soon',
+          status: 'Live',
         ),
         _ToolCard(
           title: 'PDF Merger',
           description: 'Merge, rotate, password-protect',
           icon: Icons.picture_as_pdf,
           route: '/pdf-merger',
-          status: 'Coming Soon',
+          status: 'Live',
         ),
         _ToolCard(
           title: 'Document Scanner',
           description: 'Camera + OCR → Searchable PDF',
           icon: Icons.document_scanner,
           route: '/document-scanner',
-          status: 'Coming Soon',
+          status: 'Live',
+        ),
+        _ToolCard(
+          title: 'About BharatTesting',
+          description: 'Project info, mission, and open source',
+          icon: Icons.info_outline,
+          route: '/about',
+          status: 'Live',
         ),
       ],
     );
@@ -133,64 +179,64 @@ class _ToolCard extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final isLive = status == 'Live';
-
     return Card(
+      elevation: 0,
+      shape: RoundedRectangleBorder(
+        borderRadius: BorderRadius.circular(16),
+        side: BorderSide(
+          color: Theme.of(context).colorScheme.outline.withOpacity(0.2),
+        ),
+      ),
       child: InkWell(
-        onTap: isLive ? () => context.go(route) : null,
-        borderRadius: BorderRadius.circular(12),
-        child: Opacity(
-          opacity: isLive ? 1.0 : 0.6,
-          child: Padding(
-            padding: const EdgeInsets.all(24),
-            child: Column(
-              mainAxisAlignment: MainAxisAlignment.center,
-              children: [
-                Icon(
-                  icon,
-                  size: 48,
-                  color: Theme.of(context).colorScheme.primary,
+        onTap: () => context.go(route),
+        borderRadius: BorderRadius.circular(16),
+        child: Padding(
+          padding: const EdgeInsets.all(24),
+          child: Column(
+            mainAxisAlignment: MainAxisAlignment.center,
+            children: [
+              Icon(
+                icon,
+                size: 40,
+                color: Theme.of(context).colorScheme.primary,
+              ),
+              const SizedBox(height: 16),
+              Text(
+                title,
+                style: Theme.of(context).textTheme.titleMedium?.copyWith(
+                      fontWeight: FontWeight.bold,
+                    ),
+                textAlign: TextAlign.center,
+              ),
+              const SizedBox(height: 8),
+              Text(
+                description,
+                style: Theme.of(context).textTheme.bodySmall?.copyWith(
+                      color: Theme.of(context).colorScheme.onSurfaceVariant,
+                    ),
+                textAlign: TextAlign.center,
+                maxLines: 2,
+                overflow: TextOverflow.ellipsis,
+              ),
+              const SizedBox(height: 16),
+              Container(
+                padding: const EdgeInsets.symmetric(
+                  horizontal: 10,
+                  vertical: 4,
                 ),
-                const SizedBox(height: 16),
-                Text(
-                  title,
-                  style: Theme.of(context).textTheme.titleLarge?.copyWith(
-                        fontWeight: FontWeight.w600,
+                decoration: BoxDecoration(
+                  color: Theme.of(context).colorScheme.primaryContainer,
+                  borderRadius: BorderRadius.circular(6),
+                ),
+                child: Text(
+                  status,
+                  style: Theme.of(context).textTheme.labelSmall?.copyWith(
+                        color: Theme.of(context).colorScheme.onPrimaryContainer,
+                        fontWeight: FontWeight.bold,
                       ),
-                  textAlign: TextAlign.center,
                 ),
-                const SizedBox(height: 8),
-                Text(
-                  description,
-                  style: Theme.of(context).textTheme.bodyMedium?.copyWith(
-                        color: Theme.of(context).colorScheme.onSurfaceVariant,
-                      ),
-                  textAlign: TextAlign.center,
-                ),
-                const SizedBox(height: 12),
-                Container(
-                  padding: const EdgeInsets.symmetric(
-                    horizontal: 12,
-                    vertical: 8,
-                  ),
-                  decoration: BoxDecoration(
-                    color: isLive
-                        ? Theme.of(context).colorScheme.secondaryContainer
-                        : Theme.of(context).colorScheme.surfaceVariant,
-                    borderRadius: BorderRadius.circular(8),
-                  ),
-                  child: Text(
-                    status,
-                    style: Theme.of(context).textTheme.labelMedium?.copyWith(
-                          color: isLive
-                              ? Theme.of(context).colorScheme.onSecondaryContainer
-                              : Theme.of(context).colorScheme.onSurfaceVariant,
-                          fontWeight: FontWeight.w500,
-                        ),
-                  ),
-                ),
-              ],
-            ),
+              ),
+            ],
           ),
         ),
       ),

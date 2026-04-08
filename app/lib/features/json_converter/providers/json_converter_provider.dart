@@ -2,7 +2,7 @@ import 'dart:async';
 import 'dart:convert';
 import 'package:flutter/services.dart';
 import 'package:riverpod_annotation/riverpod_annotation.dart';
-import 'package:bharattesting_core/src/json_converter/json_converter.dart';
+import 'package:bharattesting_core/core.dart';
 import '../models/json_converter_state.dart';
 
 part 'json_converter_provider.g.dart';

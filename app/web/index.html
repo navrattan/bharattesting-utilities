@@ -1,203 +1,71 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <!-- Basic Meta Tags -->
+  <base href="/">
+
   <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <meta http-equiv="X-UA-Compatible" content="IE=edge">
-  <base href="$FLUTTER_BASE_HREF">
+  <meta content="IE=Edge" http-equiv="X-UA-Compatible">
+  <meta name="description" content="BharatTesting Utilities - 5 free, privacy-first, offline developer tools.">
 
-  <!-- Primary Meta Tags -->
-  <title>BharatTesting Utilities - 5 Free Offline Developer Tools</title>
-  <meta name="title" content="BharatTesting Utilities - 5 Free Offline Developer Tools">
-  <meta name="description" content="Free, privacy-first, 100% offline developer tools: Document Scanner with OCR, Image Size Reducer, PDF Merger, JSON Converter, and Indian Data Faker. Built by BTQA Services.">
-  <meta name="keywords" content="developer tools, offline tools, document scanner, PDF merger, image compressor, JSON converter, Indian data faker, free tools, privacy-first, OCR, web app">
-  <meta name="author" content="BTQA Services Pvt Ltd">
-  <meta name="robots" content="index, follow">
-  <meta name="language" content="English">
-
-  <!-- Open Graph / Facebook -->
-  <meta property="og:type" content="website">
-  <meta property="og:url" content="https://bharattesting.com/">
-  <meta property="og:title" content="BharatTesting Utilities - 5 Free Offline Developer Tools">
-  <meta property="og:description" content="Free, privacy-first, 100% offline developer tools: Document Scanner with OCR, Image Size Reducer, PDF Merger, JSON Converter, and Indian Data Faker.">
-  <meta property="og:image" content="https://bharattesting.com/og-image.png">
-  <meta property="og:image:width" content="1200">
-  <meta property="og:image:height" content="630">
-  <meta property="og:site_name" content="BharatTesting Utilities">
-
-  <!-- Twitter -->
-  <meta property="twitter:card" content="summary_large_image">
-  <meta property="twitter:url" content="https://bharattesting.com/">
-  <meta property="twitter:title" content="BharatTesting Utilities - 5 Free Offline Developer Tools">
-  <meta property="twitter:description" content="Free, privacy-first, 100% offline developer tools for developers. Document Scanner, PDF Merger, Image Reducer, JSON Converter, Indian Data Faker.">
-  <meta property="twitter:image" content="https://bharattesting.com/og-image.png">
-
-  <!-- Favicon and Icons -->
-  <link rel="icon" type="image/svg+xml" href="/favicon.svg">
-  <link rel="icon" type="image/x-icon" href="/favicon.svg">
-  <link rel="apple-touch-icon" sizes="180x180" href="/favicon.svg">
-  <link rel="icon" type="image/png" sizes="192x192" href="/favicon.svg">
-  <link rel="icon" type="image/png" sizes="512x512" href="/favicon.svg">
-
-  <!-- PWA Manifest -->
-  <link rel="manifest" href="/manifest.json">
-  <meta name="theme-color" content="#58A6FF">
-  <meta name="background-color" content="#0D1117">
+  <!-- iOS meta tags & icons -->
   <meta name="apple-mobile-web-app-capable" content="yes">
-  <meta name="mobile-web-app-capable" content="yes">
-  <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+  <meta name="apple-mobile-web-app-status-bar-style" content="black">
   <meta name="apple-mobile-web-app-title" content="BharatTesting">
-  <meta name="msapplication-TileColor" content="#58A6FF">
-  <meta name="msapplication-config" content="/browserconfig.xml">
+  <link rel="apple-touch-icon" href="favicon.png">
 
-  <!-- Security Headers (Flutter Web Compatible) -->
-  <meta http-equiv="Content-Security-Policy" content="default-src 'self' data: blob: https:; script-src 'self' 'unsafe-inline' 'unsafe-eval' https: blob:; style-src 'self' 'unsafe-inline' https:; img-src 'self' data: blob: https:; font-src 'self' data: https:; connect-src 'self' https: wss: data: blob:; media-src 'self' blob: data: https:; object-src 'none'; child-src 'self' blob: data:; worker-src 'self' blob: data:; frame-src 'self'; base-uri 'self';"
+  <!-- Favicon -->
+  <link rel="icon" type="image/png" href="favicon.png"/>
 
-  <!-- Canonical URL -->
-  <link rel="canonical" href="https://bharattesting.com/">
-
-  <!-- Schema.org Structured Data -->
-  <script type="application/ld+json">
-  {
-    "@context": "https://schema.org",
-    "@type": "WebApplication",
-    "name": "BharatTesting Utilities",
-    "description": "Free, privacy-first, 100% offline developer tools: Document Scanner with OCR, Image Size Reducer, PDF Merger, JSON Converter, and Indian Data Faker",
-    "url": "https://bharattesting.com/",
-    "applicationCategory": "DeveloperApplication",
-    "operatingSystem": "Web, Android, iOS",
-    "offers": {
-      "@type": "Offer",
-      "price": "0",
-      "priceCurrency": "USD"
-    },
-    "creator": {
-      "@type": "Organization",
-      "name": "BTQA Services Pvt Ltd",
-      "url": "https://btqas.com"
-    },
-    "sourceOrganization": {
-      "@type": "Organization",
-      "name": "BTQA Services Pvt Ltd",
-      "url": "https://github.com/navrattan"
-    }
-  }
-  </script>
+  <title>BharatTesting Utilities</title>
+  <link rel="manifest" href="manifest.json">
 
   <style>
-    /* Loading Screen Styles */
-    .loading-container {
-      position: fixed;
-      top: 0;
-      left: 0;
-      width: 100%;
-      height: 100%;
-      background: #0D1117;
+    body {
+      background-color: #0D1117;
+      color: white;
       display: flex;
       flex-direction: column;
       justify-content: center;
       align-items: center;
-      z-index: 9999;
-      font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+      height: 100vh;
+      margin: 0;
+      font-family: sans-serif;
     }
-
-    .loading-logo {
-      width: 120px;
-      height: 120px;
-      margin-bottom: 24px;
-      background: linear-gradient(135deg, #58A6FF, #0969DA);
-      border-radius: 24px;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      color: white;
-      font-size: 48px;
-      font-weight: 700;
-      letter-spacing: -2px;
-      animation: pulse 2s infinite;
-    }
-
-    .loading-text {
-      color: #58A6FF;
-      font-size: 20px;
-      font-weight: 600;
-      margin-bottom: 8px;
-      text-align: center;
-    }
-
-    .loading-subtext {
-      color: #7D8590;
-      font-size: 14px;
-      text-align: center;
-      margin-bottom: 32px;
-    }
-
-    .loading-spinner {
-      width: 24px;
-      height: 24px;
-      border: 2px solid #30363D;
-      border-top: 2px solid #58A6FF;
+    .loading {
+      width: 40px;
+      height: 40px;
+      border: 3px solid rgba(255,255,255,.3);
       border-radius: 50%;
-      animation: spin 1s linear infinite;
+      border-top-color: #58A6FF;
+      animation: spin 1s ease-in-out infinite;
     }
-
-    @keyframes pulse {
-      0%, 100% { transform: scale(1); }
-      50% { transform: scale(1.05); }
-    }
-
     @keyframes spin {
-      0% { transform: rotate(0deg); }
-      100% { transform: rotate(360deg); }
+      to { transform: rotate(360deg); }
+    }
+    .text {
+      margin-top: 20px;
+      color: #58A6FF;
+      font-weight: bold;
     }
   </style>
 </head>
-
 <body>
-  <!-- Loading Screen (shown until Flutter loads) -->
-  <div id="loading-screen" class="loading-container">
-    <div class="loading-logo">BT</div>
-    <div class="loading-text">BharatTesting Utilities</div>
-    <div class="loading-subtext">5 free, offline developer tools</div>
-    <div class="loading-spinner"></div>
-  </div>
+  <div class="loading"></div>
+  <div class="text">BharatTesting is loading...</div>
 
-  <!-- Flutter Configuration -->
+  <script src="flutter.js" defer></script>
   <script>
-    window.addEventListener('flutter-first-frame', function () {
-      const loadingScreen = document.getElementById('loading-screen');
-      if (loadingScreen) {
-        loadingScreen.style.display = 'none';
-      }
-    });
-
-    // Flutter service worker configuration
-    if ('serviceWorker' in navigator) {
-      window.addEventListener('flutter-first-frame', function () {
-        navigator.serviceWorker.register('flutter_service_worker.js?v=1');
-      });
-    }
-
-    // Flutter loader configuration
-    _flutter = {};
-    _flutter.loader = {};
-    _flutter.loader.load = function() {
-      const serviceWorkerVersion = null;
-      const entrypoint = './main.dart.js';
-
-      if ('serviceWorker' in navigator) {
-        navigator.serviceWorker.register('flutter_service_worker.js?v=' + serviceWorkerVersion);
-      }
-
-      const script = document.createElement('script');
-      script.src = entrypoint;
-      document.head.appendChild(script);
-    };
-
-    // Start Flutter when page loads
     window.addEventListener('load', function(ev) {
-      _flutter.loader.load();
+      _flutter.loader.loadEntrypoint({
+        serviceWorker: {
+          serviceWorkerVersion: {{flutter_service_worker_version}},
+        },
+        onEntrypointLoaded: function(engineInitializer) {
+          engineInitializer.initializeEngine().then(function(appRunner) {
+            appRunner.runApp();
+          });
+        }
+      });
     });
   </script>
 </body>

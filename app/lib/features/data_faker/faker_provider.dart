@@ -2,13 +2,17 @@
 ///
 /// Manages state and business logic for data generation and export
 
+import 'dart:io';
 import 'dart:convert';
 import 'dart:math' as math;
 import 'dart:typed_data';
 
 import 'package:flutter/foundation.dart';
 import 'package:flutter/services.dart';
+import 'package:path_provider/path_provider.dart';
 import 'package:riverpod_annotation/riverpod_annotation.dart';
+import 'package:share_plus/share_plus.dart';
+import 'package:cross_file/cross_file.dart';
 import 'package:bharattesting_core/bharattesting_core.dart';
 
 import 'faker_state.dart';

@@ -3,7 +3,7 @@ import '../models/pdf_merger_state.dart';
 
 class PdfDocumentList extends StatelessWidget {
   final List<PdfDocument> documents;
-  final Function(String?) onDocumentSelected;
+  final Function(PdfDocument?) onDocumentSelected;
   final Function(String) onDocumentRemoved;
 
   const PdfDocumentList({
@@ -26,7 +26,7 @@ class PdfDocumentList extends StatelessWidget {
     return Card(
       margin: const EdgeInsets.only(bottom: 8),
       child: InkWell(
-        onTap: () => onDocumentSelected(document.id),
+        onTap: () => onDocumentSelected(document),
         borderRadius: BorderRadius.circular(12),
         child: Padding(
           padding: const EdgeInsets.all(12),

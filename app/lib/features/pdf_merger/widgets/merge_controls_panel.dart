@@ -50,6 +50,11 @@ class MergeControlsPanel extends StatelessWidget {
 
   Widget _buildEncryptionSection(ThemeData theme) {
     return Card(
+      elevation: 0,
+      shape: RoundedRectangleBorder(
+        borderRadius: BorderRadius.circular(12),
+        side: BorderSide(color: theme.colorScheme.outline.withOpacity(0.2)),
+      ),
       child: Padding(
         padding: const EdgeInsets.all(16),
         child: Column(
@@ -120,6 +125,11 @@ class MergeControlsPanel extends StatelessWidget {
 
   Widget _buildMergeOptionsSection(ThemeData theme) {
     return Card(
+      elevation: 0,
+      shape: RoundedRectangleBorder(
+        borderRadius: BorderRadius.circular(12),
+        side: BorderSide(color: theme.colorScheme.outline.withOpacity(0.2)),
+      ),
       child: Padding(
         padding: const EdgeInsets.all(16),
         child: Column(
@@ -148,6 +158,7 @@ class MergeControlsPanel extends StatelessWidget {
                 onMergeOptionsChanged(mergeOptions.copyWith(generateBookmarks: value));
               },
               dense: true,
+              contentPadding: EdgeInsets.zero,
             ),
 
             SwitchListTile(
@@ -158,6 +169,7 @@ class MergeControlsPanel extends StatelessWidget {
                 onMergeOptionsChanged(mergeOptions.copyWith(preserveMetadata: value));
               },
               dense: true,
+              contentPadding: EdgeInsets.zero,
             ),
 
             SwitchListTile(
@@ -168,6 +180,7 @@ class MergeControlsPanel extends StatelessWidget {
                 onMergeOptionsChanged(mergeOptions.copyWith(optimizeForSize: value));
               },
               dense: true,
+              contentPadding: EdgeInsets.zero,
             ),
           ],
         ),
@@ -177,7 +190,7 @@ class MergeControlsPanel extends StatelessWidget {
 
   Widget _buildPermissionTile(String title, bool value, ValueChanged<bool> onChanged) {
     return SwitchListTile(
-      title: Text(title),
+      title: Text(title, style: const TextStyle(fontSize: 13)),
       value: value,
       onChanged: onChanged,
       dense: true,

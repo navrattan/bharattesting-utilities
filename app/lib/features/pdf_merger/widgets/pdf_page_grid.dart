@@ -3,7 +3,7 @@ import '../models/pdf_merger_state.dart';
 
 class PdfPageGrid extends StatefulWidget {
   final List<PdfPageThumbnail> pages;
-  final Function(String?) onPageSelected;
+  final Function(PdfPageThumbnail?) onPageSelected;
   final Function(String, PageRotation) onPageRotated;
   final Function(String) onPageDuplicated;
   final Function(String) onPageRemoved;
@@ -64,7 +64,7 @@ class _PdfPageGridState extends State<PdfPageGrid> {
       margin: const EdgeInsets.all(4),
       elevation: page.isSelected ? 4 : 1,
       child: InkWell(
-        onTap: () => widget.onPageSelected(page.id),
+        onTap: () => widget.onPageSelected(page),
         borderRadius: BorderRadius.circular(12),
         child: Container(
           decoration: BoxDecoration(
@@ -102,7 +102,7 @@ class _PdfPageGridState extends State<PdfPageGrid> {
       decoration: BoxDecoration(
         color: page.isSelected
             ? theme.colorScheme.primaryContainer
-            : theme.colorScheme.surfaceVariant,
+            : theme.colorScheme.surfaceContainerHighest,
         borderRadius: const BorderRadius.only(
           topLeft: Radius.circular(12),
           topRight: Radius.circular(12),
