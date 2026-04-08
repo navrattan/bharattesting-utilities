@@ -51,14 +51,29 @@ export FLUTTER_ROOT="$FLUTTER_DIR"
 # Disable analytics and crash reporting
 export FLUTTER_ANALYTICS_DISABLED=true
 
-# Navigate to project directory
-cd $PWD
+# Navigate to project directory and debug
+echo "📁 Current directory: $(pwd)"
+echo "📋 Directory contents:"
+ls -la
+
+# Find the app directory
+if [ -d "app" ]; then
+    echo "✅ Found app directory"
+    cd app
+elif [ -d "./app" ]; then
+    echo "✅ Found app directory at ./app"
+    cd ./app
+else
+    echo "❌ App directory not found. Project structure:"
+    find . -maxdepth 2 -type d -name "*app*" || echo "No app directories found"
+    exit 1
+fi
 
 echo "🌐 Configuring Flutter for web..."
 flutter config --enable-web --no-analytics --suppress-analytics
 
 echo "📦 Installing app dependencies..."
-cd app
+echo "📁 Now in directory: $(pwd)"
 flutter pub get --offline
 
 echo "🏗️  Building Flutter web release..."
