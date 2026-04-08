@@ -1,0 +1,58 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Icon Generator</title>
+</head>
+<body>
+    <canvas id="canvas" width="180" height="180"></canvas>
+    <div>
+        <button onclick="downloadIcon('apple-touch-icon.png', 180)">Download Apple Touch Icon</button>
+        <button onclick="downloadIcon('favicon-32x32.png', 32)">Download 32x32 Favicon</button>
+        <button onclick="downloadIcon('favicon-96x96.png', 96)">Download 96x96 Favicon</button>
+        <button onclick="downloadIcon('android-chrome-192x192.png', 192)">Download Android 192</button>
+    </div>
+
+    <script>
+        function createIcon(size) {
+            const canvas = document.getElementById('canvas');
+            canvas.width = size;
+            canvas.height = size;
+            const ctx = canvas.getContext('2d');
+
+            // Create gradient background
+            const gradient = ctx.createLinearGradient(0, 0, size, size);
+            gradient.addColorStop(0, '#58A6FF');
+            gradient.addColorStop(1, '#0969DA');
+
+            // Draw rounded rectangle background
+            const radius = size * 0.2;
+            ctx.beginPath();
+            ctx.roundRect(0, 0, size, size, radius);
+            ctx.fillStyle = gradient;
+            ctx.fill();
+
+            // Draw "BT" text
+            ctx.fillStyle = 'white';
+            ctx.font = `bold ${size * 0.4}px -apple-system, BlinkMacSystemFont, sans-serif`;
+            ctx.textAlign = 'center';
+            ctx.textBaseline = 'middle';
+            ctx.fillText('BT', size / 2, size / 2);
+
+            return canvas.toDataURL('image/png');
+        }
+
+        function downloadIcon(filename, size) {
+            const dataURL = createIcon(size);
+            const link = document.createElement('a');
+            link.download = filename;
+            link.href = dataURL;
+            document.body.appendChild(link);
+            link.click();
+            document.body.removeChild(link);
+        }
+
+        // Create initial icon
+        createIcon(180);
+    </script>
+</body>
+</html>

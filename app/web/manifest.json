@@ -13,31 +13,10 @@
   "categories": ["productivity", "utilities", "developer"],
   "icons": [
     {
-      "src": "/android-chrome-192x192.png",
-      "sizes": "192x192",
-      "type": "image/png",
+      "src": "/favicon.svg",
+      "sizes": "any",
+      "type": "image/svg+xml",
       "purpose": "any maskable"
-    },
-    {
-      "src": "/android-chrome-512x512.png",
-      "sizes": "512x512",
-      "type": "image/png",
-      "purpose": "any maskable"
-    },
-    {
-      "src": "/favicon-16x16.png",
-      "sizes": "16x16",
-      "type": "image/png"
-    },
-    {
-      "src": "/favicon-32x32.png",
-      "sizes": "32x32",
-      "type": "image/png"
-    },
-    {
-      "src": "/apple-touch-icon.png",
-      "sizes": "180x180",
-      "type": "image/png"
     }
   ],
   "screenshots": [
@@ -62,21 +41,21 @@
       "short_name": "Scanner",
       "description": "Scan documents with OCR and export to PDF",
       "url": "/document-scanner",
-      "icons": [{ "src": "/favicon-96x96.png", "sizes": "96x96" }]
+      "icons": [{ "src": "/favicon.svg", "sizes": "any", "type": "image/svg+xml" }]
     },
     {
       "name": "Indian Data Faker",
       "short_name": "Data Faker",
       "description": "Generate synthetic Indian identity data",
       "url": "/indian-data-faker",
-      "icons": [{ "src": "/favicon-96x96.png", "sizes": "96x96" }]
+      "icons": [{ "src": "/favicon.svg", "sizes": "any", "type": "image/svg+xml" }]
     },
     {
       "name": "JSON Converter",
       "short_name": "JSON Tools",
       "description": "Convert and repair JSON, CSV, YAML",
       "url": "/string-to-json",
-      "icons": [{ "src": "/favicon-96x96.png", "sizes": "96x96" }]
+      "icons": [{ "src": "/favicon.svg", "sizes": "any", "type": "image/svg+xml" }]
     }
   ],
   "related_applications": [
