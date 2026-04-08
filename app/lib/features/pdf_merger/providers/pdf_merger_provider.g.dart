@@ -6,7 +6,7 @@ part of 'pdf_merger_provider.dart';
 // RiverpodGenerator
 // **************************************************************************
 
-String _$pdfMergerHash() => r'c982a09f4a126c2b466eb94bb92a80ba1bbdd8d0';
+String _$pdfMergerHash() => r'e73864758f292d9077f7551a0a97ba8e9ffc91c7';
 
 /// See also [PdfMerger].
 @ProviderFor(PdfMerger)

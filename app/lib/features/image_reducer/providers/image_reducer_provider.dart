@@ -50,7 +50,7 @@ class ImageReducer extends _$ImageReducer {
 
   /// Pick images using file picker
   Future<void> pickImages({bool allowMultiple = true}) async {
-    final result = await FilePicker.platform.pickFiles(
+    final result = await FilePicker.pickFiles(
       type: FileType.image,
       allowMultiple: allowMultiple,
       withData: true,

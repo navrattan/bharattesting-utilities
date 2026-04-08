@@ -4,7 +4,7 @@ import 'package:bharattesting_core/src/json_converter/json_converter.dart';
 part 'json_converter_state.freezed.dart';
 
 @freezed
-class JsonConverterState with _$JsonConverterState {
+abstract class JsonConverterState with _$JsonConverterState {
   const factory JsonConverterState({
     @Default('') String inputText,
     @Default('') String outputText,

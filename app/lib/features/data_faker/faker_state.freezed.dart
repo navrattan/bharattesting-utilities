@@ -1,5 +1,5 @@
-// coverage:ignore-file
 // GENERATED CODE - DO NOT MODIFY BY HAND
+// coverage:ignore-file
 // ignore_for_file: type=lint
 // ignore_for_file: unused_element, deprecated_member_use, deprecated_member_use_from_same_package, use_function_type_syntax_for_parameters, unnecessary_const, avoid_init_to_null, invalid_override_different_default_values_named, prefer_expression_function_bodies, annotate_overrides, invalid_annotation_target, unnecessary_question_mark
 
@@ -9,191 +9,114 @@ part of 'faker_state.dart';
 // FreezedGenerator
 // **************************************************************************
 
+// dart format off
 T _$identity<T>(T value) => value;
-
-final _privateConstructorUsedError = UnsupportedError(
-    'It seems like you constructed your class using `MyClass._()`. This constructor is only meant to be used by freezed and you are not supposed to need it nor use it.\nPlease check the documentation here for more information: https://github.com/rrousselGit/freezed#adding-getters-and-methods-to-our-models');
 
 /// @nodoc
 mixin _$FakerState {
 // Template selection
-  TemplateType get selectedTemplate =>
-      throw _privateConstructorUsedError; // Generation options
-  BulkSize get bulkSize => throw _privateConstructorUsedError;
-  bool get useRandomSeed => throw _privateConstructorUsedError;
-  int? get customSeed => throw _privateConstructorUsedError;
-  String? get preferredState =>
-      throw _privateConstructorUsedError; // Identifier toggles (for custom selection)
-  bool get includeAllIdentifiers => throw _privateConstructorUsedError;
-  Set<String> get selectedIdentifiers =>
-      throw _privateConstructorUsedError; // Generated data
-  List<Map<String, dynamic>> get generatedRecords =>
-      throw _privateConstructorUsedError;
-  DateTime? get lastGeneratedAt =>
-      throw _privateConstructorUsedError; // Export options
-  ExportFormat get selectedExportFormat => throw _privateConstructorUsedError;
-  bool get includeMetadata => throw _privateConstructorUsedError;
-  bool get prettifyOutput => throw _privateConstructorUsedError; // UI state
-  bool get isGenerating => throw _privateConstructorUsedError;
-  bool get isExporting => throw _privateConstructorUsedError;
-  String? get lastExportPath => throw _privateConstructorUsedError;
-  String? get errorMessage =>
-      throw _privateConstructorUsedError; // Performance metrics
-  int? get lastGenerationTimeMs => throw _privateConstructorUsedError;
-  int? get lastExportTimeMs => throw _privateConstructorUsedError;
+  TemplateType get selectedTemplate; // Generation options
+  BulkSize get bulkSize;
+  bool get useRandomSeed;
+  int? get customSeed;
+  String? get preferredState; // Identifier toggles (for custom selection)
+  bool get includeAllIdentifiers;
+  Set<String> get selectedIdentifiers; // Generated data
+  List<Map<String, dynamic>> get generatedRecords;
+  DateTime? get lastGeneratedAt; // Export options
+  ExportFormat get selectedExportFormat;
+  bool get includeMetadata;
+  bool get prettifyOutput; // UI state
+  bool get isGenerating;
+  bool get isExporting;
+  String? get lastExportPath;
+  String? get errorMessage; // Performance metrics
+  int? get lastGenerationTimeMs;
+  int? get lastExportTimeMs;
 
   /// Create a copy of FakerState
   /// with the given fields replaced by the non-null parameter values.
   @JsonKey(includeFromJson: false, includeToJson: false)
-  $FakerStateCopyWith<FakerState> get copyWith =>
-      throw _privateConstructorUsedError;
-}
-
-/// @nodoc
-abstract class $FakerStateCopyWith<$Res> {
-  factory $FakerStateCopyWith(
-          FakerState value, $Res Function(FakerState) then) =
-      _$FakerStateCopyWithImpl<$Res, FakerState>;
-  @useResult
-  $Res call(
-      {TemplateType selectedTemplate,
-      BulkSize bulkSize,
-      bool useRandomSeed,
-      int? customSeed,
-      String? preferredState,
-      bool includeAllIdentifiers,
-      Set<String> selectedIdentifiers,
-      List<Map<String, dynamic>> generatedRecords,
-      DateTime? lastGeneratedAt,
-      ExportFormat selectedExportFormat,
-      bool includeMetadata,
-      bool prettifyOutput,
-      bool isGenerating,
-      bool isExporting,
-      String? lastExportPath,
-      String? errorMessage,
-      int? lastGenerationTimeMs,
-      int? lastExportTimeMs});
-}
-
-/// @nodoc
-class _$FakerStateCopyWithImpl<$Res, $Val extends FakerState>
-    implements $FakerStateCopyWith<$Res> {
-  _$FakerStateCopyWithImpl(this._value, this._then);
-
-  // ignore: unused_field
-  final $Val _value;
-  // ignore: unused_field
-  final $Res Function($Val) _then;
-
-  /// Create a copy of FakerState
-  /// with the given fields replaced by the non-null parameter values.
   @pragma('vm:prefer-inline')
+  $FakerStateCopyWith<FakerState> get copyWith =>
+      _$FakerStateCopyWithImpl<FakerState>(this as FakerState, _$identity);
+
   @override
-  $Res call({
-    Object? selectedTemplate = null,
-    Object? bulkSize = null,
-    Object? useRandomSeed = null,
-    Object? customSeed = freezed,
-    Object? preferredState = freezed,
-    Object? includeAllIdentifiers = null,
-    Object? selectedIdentifiers = null,
-    Object? generatedRecords = null,
-    Object? lastGeneratedAt = freezed,
-    Object? selectedExportFormat = null,
-    Object? includeMetadata = null,
-    Object? prettifyOutput = null,
-    Object? isGenerating = null,
-    Object? isExporting = null,
-    Object? lastExportPath = freezed,
-    Object? errorMessage = freezed,
-    Object? lastGenerationTimeMs = freezed,
-    Object? lastExportTimeMs = freezed,
-  }) {
-    return _then(_value.copyWith(
-      selectedTemplate: null == selectedTemplate
-          ? _value.selectedTemplate
-          : selectedTemplate // ignore: cast_nullable_to_non_nullable
-              as TemplateType,
-      bulkSize: null == bulkSize
-          ? _value.bulkSize
-          : bulkSize // ignore: cast_nullable_to_non_nullable
-              as BulkSize,
-      useRandomSeed: null == useRandomSeed
-          ? _value.useRandomSeed
-          : useRandomSeed // ignore: cast_nullable_to_non_nullable
-              as bool,
-      customSeed: freezed == customSeed
-          ? _value.customSeed
-          : customSeed // ignore: cast_nullable_to_non_nullable
-              as int?,
-      preferredState: freezed == preferredState
-          ? _value.preferredState
-          : preferredState // ignore: cast_nullable_to_non_nullable
-              as String?,
-      includeAllIdentifiers: null == includeAllIdentifiers
-          ? _value.includeAllIdentifiers
-          : includeAllIdentifiers // ignore: cast_nullable_to_non_nullable
-              as bool,
-      selectedIdentifiers: null == selectedIdentifiers
-          ? _value.selectedIdentifiers
-          : selectedIdentifiers // ignore: cast_nullable_to_non_nullable
-              as Set<String>,
-      generatedRecords: null == generatedRecords
-          ? _value.generatedRecords
-          : generatedRecords // ignore: cast_nullable_to_non_nullable
-              as List<Map<String, dynamic>>,
-      lastGeneratedAt: freezed == lastGeneratedAt
-          ? _value.lastGeneratedAt
-          : lastGeneratedAt // ignore: cast_nullable_to_non_nullable
-              as DateTime?,
-      selectedExportFormat: null == selectedExportFormat
-          ? _value.selectedExportFormat
-          : selectedExportFormat // ignore: cast_nullable_to_non_nullable
-              as ExportFormat,
-      includeMetadata: null == includeMetadata
-          ? _value.includeMetadata
-          : includeMetadata // ignore: cast_nullable_to_non_nullable
-              as bool,
-      prettifyOutput: null == prettifyOutput
-          ? _value.prettifyOutput
-          : prettifyOutput // ignore: cast_nullable_to_non_nullable
-              as bool,
-      isGenerating: null == isGenerating
-          ? _value.isGenerating
-          : isGenerating // ignore: cast_nullable_to_non_nullable
-              as bool,
-      isExporting: null == isExporting
-          ? _value.isExporting
-          : isExporting // ignore: cast_nullable_to_non_nullable
-              as bool,
-      lastExportPath: freezed == lastExportPath
-          ? _value.lastExportPath
-          : lastExportPath // ignore: cast_nullable_to_non_nullable
-              as String?,
-      errorMessage: freezed == errorMessage
-          ? _value.errorMessage
-          : errorMessage // ignore: cast_nullable_to_non_nullable
-              as String?,
-      lastGenerationTimeMs: freezed == lastGenerationTimeMs
-          ? _value.lastGenerationTimeMs
-          : lastGenerationTimeMs // ignore: cast_nullable_to_non_nullable
-              as int?,
-      lastExportTimeMs: freezed == lastExportTimeMs
-          ? _value.lastExportTimeMs
-          : lastExportTimeMs // ignore: cast_nullable_to_non_nullable
-              as int?,
-    ) as $Val);
+  bool operator ==(Object other) {
+    return identical(this, other) ||
+        (other.runtimeType == runtimeType &&
+            other is FakerState &&
+            (identical(other.selectedTemplate, selectedTemplate) ||
+                other.selectedTemplate == selectedTemplate) &&
+            (identical(other.bulkSize, bulkSize) ||
+                other.bulkSize == bulkSize) &&
+            (identical(other.useRandomSeed, useRandomSeed) ||
+                other.useRandomSeed == useRandomSeed) &&
+            (identical(other.customSeed, customSeed) ||
+                other.customSeed == customSeed) &&
+            (identical(other.preferredState, preferredState) ||
+                other.preferredState == preferredState) &&
+            (identical(other.includeAllIdentifiers, includeAllIdentifiers) ||
+                other.includeAllIdentifiers == includeAllIdentifiers) &&
+            const DeepCollectionEquality()
+                .equals(other.selectedIdentifiers, selectedIdentifiers) &&
+            const DeepCollectionEquality()
+                .equals(other.generatedRecords, generatedRecords) &&
+            (identical(other.lastGeneratedAt, lastGeneratedAt) ||
+                other.lastGeneratedAt == lastGeneratedAt) &&
+            (identical(other.selectedExportFormat, selectedExportFormat) ||
+                other.selectedExportFormat == selectedExportFormat) &&
+            (identical(other.includeMetadata, includeMetadata) ||
+                other.includeMetadata == includeMetadata) &&
+            (identical(other.prettifyOutput, prettifyOutput) ||
+                other.prettifyOutput == prettifyOutput) &&
+            (identical(other.isGenerating, isGenerating) ||
+                other.isGenerating == isGenerating) &&
+            (identical(other.isExporting, isExporting) ||
+                other.isExporting == isExporting) &&
+            (identical(other.lastExportPath, lastExportPath) ||
+                other.lastExportPath == lastExportPath) &&
+            (identical(other.errorMessage, errorMessage) ||
+                other.errorMessage == errorMessage) &&
+            (identical(other.lastGenerationTimeMs, lastGenerationTimeMs) ||
+                other.lastGenerationTimeMs == lastGenerationTimeMs) &&
+            (identical(other.lastExportTimeMs, lastExportTimeMs) ||
+                other.lastExportTimeMs == lastExportTimeMs));
+  }
+
+  @override
+  int get hashCode => Object.hash(
+      runtimeType,
+      selectedTemplate,
+      bulkSize,
+      useRandomSeed,
+      customSeed,
+      preferredState,
+      includeAllIdentifiers,
+      const DeepCollectionEquality().hash(selectedIdentifiers),
+      const DeepCollectionEquality().hash(generatedRecords),
+      lastGeneratedAt,
+      selectedExportFormat,
+      includeMetadata,
+      prettifyOutput,
+      isGenerating,
+      isExporting,
+      lastExportPath,
+      errorMessage,
+      lastGenerationTimeMs,
+      lastExportTimeMs);
+
+  @override
+  String toString() {
+    return 'FakerState(selectedTemplate: $selectedTemplate, bulkSize: $bulkSize, useRandomSeed: $useRandomSeed, customSeed: $customSeed, preferredState: $preferredState, includeAllIdentifiers: $includeAllIdentifiers, selectedIdentifiers: $selectedIdentifiers, generatedRecords: $generatedRecords, lastGeneratedAt: $lastGeneratedAt, selectedExportFormat: $selectedExportFormat, includeMetadata: $includeMetadata, prettifyOutput: $prettifyOutput, isGenerating: $isGenerating, isExporting: $isExporting, lastExportPath: $lastExportPath, errorMessage: $errorMessage, lastGenerationTimeMs: $lastGenerationTimeMs, lastExportTimeMs: $lastExportTimeMs)';
   }
 }
 
 /// @nodoc
-abstract class _$$FakerStateImplCopyWith<$Res>
-    implements $FakerStateCopyWith<$Res> {
-  factory _$$FakerStateImplCopyWith(
-          _$FakerStateImpl value, $Res Function(_$FakerStateImpl) then) =
-      __$$FakerStateImplCopyWithImpl<$Res>;
-  @override
+abstract mixin class $FakerStateCopyWith<$Res> {
+  factory $FakerStateCopyWith(
+          FakerState value, $Res Function(FakerState) _then) =
+      _$FakerStateCopyWithImpl;
   @useResult
   $Res call(
       {TemplateType selectedTemplate,
@@ -217,12 +140,11 @@ abstract class _$$FakerStateImplCopyWith<$Res>
 }
 
 /// @nodoc
-class __$$FakerStateImplCopyWithImpl<$Res>
-    extends _$FakerStateCopyWithImpl<$Res, _$FakerStateImpl>
-    implements _$$FakerStateImplCopyWith<$Res> {
-  __$$FakerStateImplCopyWithImpl(
-      _$FakerStateImpl _value, $Res Function(_$FakerStateImpl) _then)
-      : super(_value, _then);
+class _$FakerStateCopyWithImpl<$Res> implements $FakerStateCopyWith<$Res> {
+  _$FakerStateCopyWithImpl(this._self, this._then);
+
+  final FakerState _self;
+  final $Res Function(FakerState) _then;
 
   /// Create a copy of FakerState
   /// with the given fields replaced by the non-null parameter values.
@@ -248,87 +170,355 @@ class __$$FakerStateImplCopyWithImpl<$Res>
     Object? lastGenerationTimeMs = freezed,
     Object? lastExportTimeMs = freezed,
   }) {
-    return _then(_$FakerStateImpl(
+    return _then(_self.copyWith(
       selectedTemplate: null == selectedTemplate
-          ? _value.selectedTemplate
+          ? _self.selectedTemplate
           : selectedTemplate // ignore: cast_nullable_to_non_nullable
               as TemplateType,
       bulkSize: null == bulkSize
-          ? _value.bulkSize
+          ? _self.bulkSize
           : bulkSize // ignore: cast_nullable_to_non_nullable
               as BulkSize,
       useRandomSeed: null == useRandomSeed
-          ? _value.useRandomSeed
+          ? _self.useRandomSeed
           : useRandomSeed // ignore: cast_nullable_to_non_nullable
               as bool,
       customSeed: freezed == customSeed
-          ? _value.customSeed
+          ? _self.customSeed
           : customSeed // ignore: cast_nullable_to_non_nullable
               as int?,
       preferredState: freezed == preferredState
-          ? _value.preferredState
+          ? _self.preferredState
           : preferredState // ignore: cast_nullable_to_non_nullable
               as String?,
       includeAllIdentifiers: null == includeAllIdentifiers
-          ? _value.includeAllIdentifiers
+          ? _self.includeAllIdentifiers
           : includeAllIdentifiers // ignore: cast_nullable_to_non_nullable
               as bool,
       selectedIdentifiers: null == selectedIdentifiers
-          ? _value._selectedIdentifiers
+          ? _self.selectedIdentifiers
           : selectedIdentifiers // ignore: cast_nullable_to_non_nullable
               as Set<String>,
       generatedRecords: null == generatedRecords
-          ? _value._generatedRecords
+          ? _self.generatedRecords
           : generatedRecords // ignore: cast_nullable_to_non_nullable
               as List<Map<String, dynamic>>,
       lastGeneratedAt: freezed == lastGeneratedAt
-          ? _value.lastGeneratedAt
+          ? _self.lastGeneratedAt
           : lastGeneratedAt // ignore: cast_nullable_to_non_nullable
               as DateTime?,
       selectedExportFormat: null == selectedExportFormat
-          ? _value.selectedExportFormat
+          ? _self.selectedExportFormat
           : selectedExportFormat // ignore: cast_nullable_to_non_nullable
               as ExportFormat,
       includeMetadata: null == includeMetadata
-          ? _value.includeMetadata
+          ? _self.includeMetadata
           : includeMetadata // ignore: cast_nullable_to_non_nullable
               as bool,
       prettifyOutput: null == prettifyOutput
-          ? _value.prettifyOutput
+          ? _self.prettifyOutput
           : prettifyOutput // ignore: cast_nullable_to_non_nullable
               as bool,
       isGenerating: null == isGenerating
-          ? _value.isGenerating
+          ? _self.isGenerating
           : isGenerating // ignore: cast_nullable_to_non_nullable
               as bool,
       isExporting: null == isExporting
-          ? _value.isExporting
+          ? _self.isExporting
           : isExporting // ignore: cast_nullable_to_non_nullable
               as bool,
       lastExportPath: freezed == lastExportPath
-          ? _value.lastExportPath
+          ? _self.lastExportPath
           : lastExportPath // ignore: cast_nullable_to_non_nullable
               as String?,
       errorMessage: freezed == errorMessage
-          ? _value.errorMessage
+          ? _self.errorMessage
           : errorMessage // ignore: cast_nullable_to_non_nullable
               as String?,
       lastGenerationTimeMs: freezed == lastGenerationTimeMs
-          ? _value.lastGenerationTimeMs
+          ? _self.lastGenerationTimeMs
           : lastGenerationTimeMs // ignore: cast_nullable_to_non_nullable
               as int?,
       lastExportTimeMs: freezed == lastExportTimeMs
-          ? _value.lastExportTimeMs
+          ? _self.lastExportTimeMs
           : lastExportTimeMs // ignore: cast_nullable_to_non_nullable
               as int?,
     ));
   }
 }
 
+/// Adds pattern-matching-related methods to [FakerState].
+extension FakerStatePatterns on FakerState {
+  /// A variant of `map` that fallback to returning `orElse`.
+  ///
+  /// It is equivalent to doing:
+  /// ```dart
+  /// switch (sealedClass) {
+  ///   case final Subclass value:
+  ///     return ...;
+  ///   case _:
+  ///     return orElse();
+  /// }
+  /// ```
+
+  @optionalTypeArgs
+  TResult maybeMap<TResult extends Object?>(
+    TResult Function(_FakerState value)? $default, {
+    required TResult orElse(),
+  }) {
+    final _that = this;
+    switch (_that) {
+      case _FakerState() when $default != null:
+        return $default(_that);
+      case _:
+        return orElse();
+    }
+  }
+
+  /// A `switch`-like method, using callbacks.
+  ///
+  /// Callbacks receives the raw object, upcasted.
+  /// It is equivalent to doing:
+  /// ```dart
+  /// switch (sealedClass) {
+  ///   case final Subclass value:
+  ///     return ...;
+  ///   case final Subclass2 value:
+  ///     return ...;
+  /// }
+  /// ```
+
+  @optionalTypeArgs
+  TResult map<TResult extends Object?>(
+    TResult Function(_FakerState value) $default,
+  ) {
+    final _that = this;
+    switch (_that) {
+      case _FakerState():
+        return $default(_that);
+      case _:
+        throw StateError('Unexpected subclass');
+    }
+  }
+
+  /// A variant of `map` that fallback to returning `null`.
+  ///
+  /// It is equivalent to doing:
+  /// ```dart
+  /// switch (sealedClass) {
+  ///   case final Subclass value:
+  ///     return ...;
+  ///   case _:
+  ///     return null;
+  /// }
+  /// ```
+
+  @optionalTypeArgs
+  TResult? mapOrNull<TResult extends Object?>(
+    TResult? Function(_FakerState value)? $default,
+  ) {
+    final _that = this;
+    switch (_that) {
+      case _FakerState() when $default != null:
+        return $default(_that);
+      case _:
+        return null;
+    }
+  }
+
+  /// A variant of `when` that fallback to an `orElse` callback.
+  ///
+  /// It is equivalent to doing:
+  /// ```dart
+  /// switch (sealedClass) {
+  ///   case Subclass(:final field):
+  ///     return ...;
+  ///   case _:
+  ///     return orElse();
+  /// }
+  /// ```
+
+  @optionalTypeArgs
+  TResult maybeWhen<TResult extends Object?>(
+    TResult Function(
+            TemplateType selectedTemplate,
+            BulkSize bulkSize,
+            bool useRandomSeed,
+            int? customSeed,
+            String? preferredState,
+            bool includeAllIdentifiers,
+            Set<String> selectedIdentifiers,
+            List<Map<String, dynamic>> generatedRecords,
+            DateTime? lastGeneratedAt,
+            ExportFormat selectedExportFormat,
+            bool includeMetadata,
+            bool prettifyOutput,
+            bool isGenerating,
+            bool isExporting,
+            String? lastExportPath,
+            String? errorMessage,
+            int? lastGenerationTimeMs,
+            int? lastExportTimeMs)?
+        $default, {
+    required TResult orElse(),
+  }) {
+    final _that = this;
+    switch (_that) {
+      case _FakerState() when $default != null:
+        return $default(
+            _that.selectedTemplate,
+            _that.bulkSize,
+            _that.useRandomSeed,
+            _that.customSeed,
+            _that.preferredState,
+            _that.includeAllIdentifiers,
+            _that.selectedIdentifiers,
+            _that.generatedRecords,
+            _that.lastGeneratedAt,
+            _that.selectedExportFormat,
+            _that.includeMetadata,
+            _that.prettifyOutput,
+            _that.isGenerating,
+            _that.isExporting,
+            _that.lastExportPath,
+            _that.errorMessage,
+            _that.lastGenerationTimeMs,
+            _that.lastExportTimeMs);
+      case _:
+        return orElse();
+    }
+  }
+
+  /// A `switch`-like method, using callbacks.
+  ///
+  /// As opposed to `map`, this offers destructuring.
+  /// It is equivalent to doing:
+  /// ```dart
+  /// switch (sealedClass) {
+  ///   case Subclass(:final field):
+  ///     return ...;
+  ///   case Subclass2(:final field2):
+  ///     return ...;
+  /// }
+  /// ```
+
+  @optionalTypeArgs
+  TResult when<TResult extends Object?>(
+    TResult Function(
+            TemplateType selectedTemplate,
+            BulkSize bulkSize,
+            bool useRandomSeed,
+            int? customSeed,
+            String? preferredState,
+            bool includeAllIdentifiers,
+            Set<String> selectedIdentifiers,
+            List<Map<String, dynamic>> generatedRecords,
+            DateTime? lastGeneratedAt,
+            ExportFormat selectedExportFormat,
+            bool includeMetadata,
+            bool prettifyOutput,
+            bool isGenerating,
+            bool isExporting,
+            String? lastExportPath,
+            String? errorMessage,
+            int? lastGenerationTimeMs,
+            int? lastExportTimeMs)
+        $default,
+  ) {
+    final _that = this;
+    switch (_that) {
+      case _FakerState():
+        return $default(
+            _that.selectedTemplate,
+            _that.bulkSize,
+            _that.useRandomSeed,
+            _that.customSeed,
+            _that.preferredState,
+            _that.includeAllIdentifiers,
+            _that.selectedIdentifiers,
+            _that.generatedRecords,
+            _that.lastGeneratedAt,
+            _that.selectedExportFormat,
+            _that.includeMetadata,
+            _that.prettifyOutput,
+            _that.isGenerating,
+            _that.isExporting,
+            _that.lastExportPath,
+            _that.errorMessage,
+            _that.lastGenerationTimeMs,
+            _that.lastExportTimeMs);
+      case _:
+        throw StateError('Unexpected subclass');
+    }
+  }
+
+  /// A variant of `when` that fallback to returning `null`
+  ///
+  /// It is equivalent to doing:
+  /// ```dart
+  /// switch (sealedClass) {
+  ///   case Subclass(:final field):
+  ///     return ...;
+  ///   case _:
+  ///     return null;
+  /// }
+  /// ```
+
+  @optionalTypeArgs
+  TResult? whenOrNull<TResult extends Object?>(
+    TResult? Function(
+            TemplateType selectedTemplate,
+            BulkSize bulkSize,
+            bool useRandomSeed,
+            int? customSeed,
+            String? preferredState,
+            bool includeAllIdentifiers,
+            Set<String> selectedIdentifiers,
+            List<Map<String, dynamic>> generatedRecords,
+            DateTime? lastGeneratedAt,
+            ExportFormat selectedExportFormat,
+            bool includeMetadata,
+            bool prettifyOutput,
+            bool isGenerating,
+            bool isExporting,
+            String? lastExportPath,
+            String? errorMessage,
+            int? lastGenerationTimeMs,
+            int? lastExportTimeMs)?
+        $default,
+  ) {
+    final _that = this;
+    switch (_that) {
+      case _FakerState() when $default != null:
+        return $default(
+            _that.selectedTemplate,
+            _that.bulkSize,
+            _that.useRandomSeed,
+            _that.customSeed,
+            _that.preferredState,
+            _that.includeAllIdentifiers,
+            _that.selectedIdentifiers,
+            _that.generatedRecords,
+            _that.lastGeneratedAt,
+            _that.selectedExportFormat,
+            _that.includeMetadata,
+            _that.prettifyOutput,
+            _that.isGenerating,
+            _that.isExporting,
+            _that.lastExportPath,
+            _that.errorMessage,
+            _that.lastGenerationTimeMs,
+            _that.lastExportTimeMs);
+      case _:
+        return null;
+    }
+  }
+}
+
 /// @nodoc
 
-class _$FakerStateImpl implements _FakerState {
-  const _$FakerStateImpl(
+class _FakerState implements FakerState {
+  const _FakerState(
       {this.selectedTemplate = TemplateType.individual,
       this.bulkSize = BulkSize.single,
       this.useRandomSeed = true,
@@ -427,16 +617,19 @@ class _$FakerStateImpl implements _FakerState {
   @JsonKey()
   final int? lastExportTimeMs;
 
+  /// Create a copy of FakerState
+  /// with the given fields replaced by the non-null parameter values.
   @override
-  String toString() {
-    return 'FakerState(selectedTemplate: $selectedTemplate, bulkSize: $bulkSize, useRandomSeed: $useRandomSeed, customSeed: $customSeed, preferredState: $preferredState, includeAllIdentifiers: $includeAllIdentifiers, selectedIdentifiers: $selectedIdentifiers, generatedRecords: $generatedRecords, lastGeneratedAt: $lastGeneratedAt, selectedExportFormat: $selectedExportFormat, includeMetadata: $includeMetadata, prettifyOutput: $prettifyOutput, isGenerating: $isGenerating, isExporting: $isExporting, lastExportPath: $lastExportPath, errorMessage: $errorMessage, lastGenerationTimeMs: $lastGenerationTimeMs, lastExportTimeMs: $lastExportTimeMs)';
-  }
+  @JsonKey(includeFromJson: false, includeToJson: false)
+  @pragma('vm:prefer-inline')
+  _$FakerStateCopyWith<_FakerState> get copyWith =>
+      __$FakerStateCopyWithImpl<_FakerState>(this, _$identity);
 
   @override
   bool operator ==(Object other) {
     return identical(this, other) ||
         (other.runtimeType == runtimeType &&
-            other is _$FakerStateImpl &&
+            other is _FakerState &&
             (identical(other.selectedTemplate, selectedTemplate) ||
                 other.selectedTemplate == selectedTemplate) &&
             (identical(other.bulkSize, bulkSize) ||
@@ -497,78 +690,147 @@ class _$FakerStateImpl implements _FakerState {
       lastGenerationTimeMs,
       lastExportTimeMs);
 
+  @override
+  String toString() {
+    return 'FakerState(selectedTemplate: $selectedTemplate, bulkSize: $bulkSize, useRandomSeed: $useRandomSeed, customSeed: $customSeed, preferredState: $preferredState, includeAllIdentifiers: $includeAllIdentifiers, selectedIdentifiers: $selectedIdentifiers, generatedRecords: $generatedRecords, lastGeneratedAt: $lastGeneratedAt, selectedExportFormat: $selectedExportFormat, includeMetadata: $includeMetadata, prettifyOutput: $prettifyOutput, isGenerating: $isGenerating, isExporting: $isExporting, lastExportPath: $lastExportPath, errorMessage: $errorMessage, lastGenerationTimeMs: $lastGenerationTimeMs, lastExportTimeMs: $lastExportTimeMs)';
+  }
+}
+
+/// @nodoc
+abstract mixin class _$FakerStateCopyWith<$Res>
+    implements $FakerStateCopyWith<$Res> {
+  factory _$FakerStateCopyWith(
+          _FakerState value, $Res Function(_FakerState) _then) =
+      __$FakerStateCopyWithImpl;
+  @override
+  @useResult
+  $Res call(
+      {TemplateType selectedTemplate,
+      BulkSize bulkSize,
+      bool useRandomSeed,
+      int? customSeed,
+      String? preferredState,
+      bool includeAllIdentifiers,
+      Set<String> selectedIdentifiers,
+      List<Map<String, dynamic>> generatedRecords,
+      DateTime? lastGeneratedAt,
+      ExportFormat selectedExportFormat,
+      bool includeMetadata,
+      bool prettifyOutput,
+      bool isGenerating,
+      bool isExporting,
+      String? lastExportPath,
+      String? errorMessage,
+      int? lastGenerationTimeMs,
+      int? lastExportTimeMs});
+}
+
+/// @nodoc
+class __$FakerStateCopyWithImpl<$Res> implements _$FakerStateCopyWith<$Res> {
+  __$FakerStateCopyWithImpl(this._self, this._then);
+
+  final _FakerState _self;
+  final $Res Function(_FakerState) _then;
+
   /// Create a copy of FakerState
   /// with the given fields replaced by the non-null parameter values.
-  @JsonKey(includeFromJson: false, includeToJson: false)
   @override
   @pragma('vm:prefer-inline')
-  _$$FakerStateImplCopyWith<_$FakerStateImpl> get copyWith =>
-      __$$FakerStateImplCopyWithImpl<_$FakerStateImpl>(this, _$identity);
+  $Res call({
+    Object? selectedTemplate = null,
+    Object? bulkSize = null,
+    Object? useRandomSeed = null,
+    Object? customSeed = freezed,
+    Object? preferredState = freezed,
+    Object? includeAllIdentifiers = null,
+    Object? selectedIdentifiers = null,
+    Object? generatedRecords = null,
+    Object? lastGeneratedAt = freezed,
+    Object? selectedExportFormat = null,
+    Object? includeMetadata = null,
+    Object? prettifyOutput = null,
+    Object? isGenerating = null,
+    Object? isExporting = null,
+    Object? lastExportPath = freezed,
+    Object? errorMessage = freezed,
+    Object? lastGenerationTimeMs = freezed,
+    Object? lastExportTimeMs = freezed,
+  }) {
+    return _then(_FakerState(
+      selectedTemplate: null == selectedTemplate
+          ? _self.selectedTemplate
+          : selectedTemplate // ignore: cast_nullable_to_non_nullable
+              as TemplateType,
+      bulkSize: null == bulkSize
+          ? _self.bulkSize
+          : bulkSize // ignore: cast_nullable_to_non_nullable
+              as BulkSize,
+      useRandomSeed: null == useRandomSeed
+          ? _self.useRandomSeed
+          : useRandomSeed // ignore: cast_nullable_to_non_nullable
+              as bool,
+      customSeed: freezed == customSeed
+          ? _self.customSeed
+          : customSeed // ignore: cast_nullable_to_non_nullable
+              as int?,
+      preferredState: freezed == preferredState
+          ? _self.preferredState
+          : preferredState // ignore: cast_nullable_to_non_nullable
+              as String?,
+      includeAllIdentifiers: null == includeAllIdentifiers
+          ? _self.includeAllIdentifiers
+          : includeAllIdentifiers // ignore: cast_nullable_to_non_nullable
+              as bool,
+      selectedIdentifiers: null == selectedIdentifiers
+          ? _self._selectedIdentifiers
+          : selectedIdentifiers // ignore: cast_nullable_to_non_nullable
+              as Set<String>,
+      generatedRecords: null == generatedRecords
+          ? _self._generatedRecords
+          : generatedRecords // ignore: cast_nullable_to_non_nullable
+              as List<Map<String, dynamic>>,
+      lastGeneratedAt: freezed == lastGeneratedAt
+          ? _self.lastGeneratedAt
+          : lastGeneratedAt // ignore: cast_nullable_to_non_nullable
+              as DateTime?,
+      selectedExportFormat: null == selectedExportFormat
+          ? _self.selectedExportFormat
+          : selectedExportFormat // ignore: cast_nullable_to_non_nullable
+              as ExportFormat,
+      includeMetadata: null == includeMetadata
+          ? _self.includeMetadata
+          : includeMetadata // ignore: cast_nullable_to_non_nullable
+              as bool,
+      prettifyOutput: null == prettifyOutput
+          ? _self.prettifyOutput
+          : prettifyOutput // ignore: cast_nullable_to_non_nullable
+              as bool,
+      isGenerating: null == isGenerating
+          ? _self.isGenerating
+          : isGenerating // ignore: cast_nullable_to_non_nullable
+              as bool,
+      isExporting: null == isExporting
+          ? _self.isExporting
+          : isExporting // ignore: cast_nullable_to_non_nullable
+              as bool,
+      lastExportPath: freezed == lastExportPath
+          ? _self.lastExportPath
+          : lastExportPath // ignore: cast_nullable_to_non_nullable
+              as String?,
+      errorMessage: freezed == errorMessage
+          ? _self.errorMessage
+          : errorMessage // ignore: cast_nullable_to_non_nullable
+              as String?,
+      lastGenerationTimeMs: freezed == lastGenerationTimeMs
+          ? _self.lastGenerationTimeMs
+          : lastGenerationTimeMs // ignore: cast_nullable_to_non_nullable
+              as int?,
+      lastExportTimeMs: freezed == lastExportTimeMs
+          ? _self.lastExportTimeMs
+          : lastExportTimeMs // ignore: cast_nullable_to_non_nullable
+              as int?,
+    ));
+  }
 }
 
-abstract class _FakerState implements FakerState {
-  const factory _FakerState(
-      {final TemplateType selectedTemplate,
-      final BulkSize bulkSize,
-      final bool useRandomSeed,
-      final int? customSeed,
-      final String? preferredState,
-      final bool includeAllIdentifiers,
-      final Set<String> selectedIdentifiers,
-      final List<Map<String, dynamic>> generatedRecords,
-      final DateTime? lastGeneratedAt,
-      final ExportFormat selectedExportFormat,
-      final bool includeMetadata,
-      final bool prettifyOutput,
-      final bool isGenerating,
-      final bool isExporting,
-      final String? lastExportPath,
-      final String? errorMessage,
-      final int? lastGenerationTimeMs,
-      final int? lastExportTimeMs}) = _$FakerStateImpl;
-
-// Template selection
-  @override
-  TemplateType get selectedTemplate; // Generation options
-  @override
-  BulkSize get bulkSize;
-  @override
-  bool get useRandomSeed;
-  @override
-  int? get customSeed;
-  @override
-  String? get preferredState; // Identifier toggles (for custom selection)
-  @override
-  bool get includeAllIdentifiers;
-  @override
-  Set<String> get selectedIdentifiers; // Generated data
-  @override
-  List<Map<String, dynamic>> get generatedRecords;
-  @override
-  DateTime? get lastGeneratedAt; // Export options
-  @override
-  ExportFormat get selectedExportFormat;
-  @override
-  bool get includeMetadata;
-  @override
-  bool get prettifyOutput; // UI state
-  @override
-  bool get isGenerating;
-  @override
-  bool get isExporting;
-  @override
-  String? get lastExportPath;
-  @override
-  String? get errorMessage; // Performance metrics
-  @override
-  int? get lastGenerationTimeMs;
-  @override
-  int? get lastExportTimeMs;
-
-  /// Create a copy of FakerState
-  /// with the given fields replaced by the non-null parameter values.
-  @override
-  @JsonKey(includeFromJson: false, includeToJson: false)
-  _$$FakerStateImplCopyWith<_$FakerStateImpl> get copyWith =>
-      throw _privateConstructorUsedError;
-}
+// dart format on

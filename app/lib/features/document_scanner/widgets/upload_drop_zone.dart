@@ -256,7 +256,7 @@ class _UploadDropZoneState extends State<UploadDropZone>
         _errorMessage = null;
       });
 
-      final result = await FilePicker.platform.pickFiles(
+      final result = await FilePicker.pickFiles(
         type: FileType.custom,
         allowedExtensions: widget.allowedExtensions,
         allowMultiple: widget.allowMultiple,
@@ -373,7 +373,7 @@ class _CompactUploadButtonState extends State<CompactUploadButton> {
     try {
       setState(() => _isUploading = true);
 
-      final result = await FilePicker.platform.pickFiles(
+      final result = await FilePicker.pickFiles(
         type: FileType.custom,
         allowedExtensions: widget.allowedExtensions,
         allowMultiple: false,
@@ -558,7 +558,7 @@ class _MultipleFileUploadWidgetState extends State<MultipleFileUploadWidget> {
     try {
       setState(() => _isUploading = true);
 
-      final result = await FilePicker.platform.pickFiles(
+      final result = await FilePicker.pickFiles(
         type: FileType.custom,
         allowedExtensions: widget.allowedExtensions,
         allowMultiple: true,

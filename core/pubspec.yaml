@@ -14,7 +14,7 @@ dependencies:
   pdf: ^3.11.1
 
   # Archive/ZIP
-  archive: ^3.6.1
+  archive: ^4.0.9
 
   # CSV handling
   csv: ^6.0.0
@@ -28,6 +28,6 @@ dependencies:
 dev_dependencies:
   test: ^1.25.8
   mocktail: ^1.0.4
-  very_good_analysis: ^6.0.0
+  very_good_analysis: ^8.0.0
 
 # Pure Dart package - no Flutter dependency

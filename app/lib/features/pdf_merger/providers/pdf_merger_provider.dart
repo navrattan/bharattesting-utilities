@@ -17,7 +17,7 @@ class PdfMerger extends _$PdfMerger {
 
   /// Add PDF documents from file picker
   Future<void> addDocumentsFromPicker() async {
-    final result = await FilePicker.platform.pickFiles(
+    final result = await FilePicker.pickFiles(
       type: FileType.custom,
       allowedExtensions: ['pdf'],
       allowMultiple: true,

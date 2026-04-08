@@ -101,14 +101,14 @@ class PdfDocumentList extends StatelessWidget {
           child: CircularProgressIndicator(strokeWidth: 2),
         );
 
-      case DocumentStatus.loaded:
-        return Icon(
+      case DocumentStatus.ready:
+        return const Icon(
           Icons.check_circle,
           size: 16,
           color: Colors.green,
         );
 
-      case DocumentStatus.processing:
+      case DocumentStatus.loading:
         return const SizedBox(
           width: 16,
           height: 16,

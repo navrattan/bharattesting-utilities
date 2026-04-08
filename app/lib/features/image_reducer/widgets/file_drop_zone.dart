@@ -252,7 +252,7 @@ class _FileDropZoneState extends State<FileDropZone>
 
   Future<void> _pickFiles() async {
     try {
-      final result = await FilePicker.platform.pickFiles(
+      final result = await FilePicker.pickFiles(
         type: FileType.custom,
         allowedExtensions: widget.allowedExtensions,
         allowMultiple: true,

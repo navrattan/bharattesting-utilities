@@ -48,7 +48,7 @@ enum BulkSize {
 
 /// State for Indian Data Faker
 @freezed
-class FakerState with _$FakerState {
+abstract class FakerState with _$FakerState {
   const factory FakerState({
     // Template selection
     @Default(TemplateType.individual) TemplateType selectedTemplate,

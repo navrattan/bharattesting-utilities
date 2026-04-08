@@ -1,5 +1,5 @@
-// coverage:ignore-file
 // GENERATED CODE - DO NOT MODIFY BY HAND
+// coverage:ignore-file
 // ignore_for_file: type=lint
 // ignore_for_file: unused_element, deprecated_member_use, deprecated_member_use_from_same_package, use_function_type_syntax_for_parameters, unnecessary_const, avoid_init_to_null, invalid_override_different_default_values_named, prefer_expression_function_bodies, annotate_overrides, invalid_annotation_target, unnecessary_question_mark
 
@@ -9,41 +9,100 @@ part of 'pdf_merger_state.dart';
 // FreezedGenerator
 // **************************************************************************
 
+// dart format off
 T _$identity<T>(T value) => value;
-
-final _privateConstructorUsedError = UnsupportedError(
-    'It seems like you constructed your class using `MyClass._()`. This constructor is only meant to be used by freezed and you are not supposed to need it nor use it.\nPlease check the documentation here for more information: https://github.com/rrousselGit/freezed#adding-getters-and-methods-to-our-models');
 
 /// @nodoc
 mixin _$PdfMergerState {
-  List<PdfDocument> get documents => throw _privateConstructorUsedError;
-  List<PdfPageThumbnail> get pages => throw _privateConstructorUsedError;
-  bool get isProcessing => throw _privateConstructorUsedError;
-  int get processingProgress => throw _privateConstructorUsedError;
-  List<String> get processingErrors => throw _privateConstructorUsedError;
-  PdfDocument? get selectedDocument => throw _privateConstructorUsedError;
-  PdfPageThumbnail? get selectedPage => throw _privateConstructorUsedError;
-  bool get showPasswordDialog => throw _privateConstructorUsedError;
-  bool get showAdvancedSettings => throw _privateConstructorUsedError;
-  bool get enableEncryption => throw _privateConstructorUsedError;
-  String get encryptionPassword => throw _privateConstructorUsedError;
-  PdfPermissions get permissions => throw _privateConstructorUsedError;
-  PdfMergeOptions get mergeOptions => throw _privateConstructorUsedError;
-  Uint8List? get mergedPdfData => throw _privateConstructorUsedError;
-  String get outputFileName => throw _privateConstructorUsedError;
+  List<PdfDocument> get documents;
+  List<PdfPageThumbnail> get pages;
+  bool get isProcessing;
+  int get processingProgress;
+  List<String> get processingErrors;
+  PdfDocument? get selectedDocument;
+  PdfPageThumbnail? get selectedPage;
+  bool get showPasswordDialog;
+  bool get showAdvancedSettings;
+  bool get enableEncryption;
+  String get encryptionPassword;
+  PdfPermissions get permissions;
+  PdfMergeOptions get mergeOptions;
+  Uint8List? get mergedPdfData;
+  String get outputFileName;
 
   /// Create a copy of PdfMergerState
   /// with the given fields replaced by the non-null parameter values.
   @JsonKey(includeFromJson: false, includeToJson: false)
+  @pragma('vm:prefer-inline')
   $PdfMergerStateCopyWith<PdfMergerState> get copyWith =>
-      throw _privateConstructorUsedError;
+      _$PdfMergerStateCopyWithImpl<PdfMergerState>(
+          this as PdfMergerState, _$identity);
+
+  @override
+  bool operator ==(Object other) {
+    return identical(this, other) ||
+        (other.runtimeType == runtimeType &&
+            other is PdfMergerState &&
+            const DeepCollectionEquality().equals(other.documents, documents) &&
+            const DeepCollectionEquality().equals(other.pages, pages) &&
+            (identical(other.isProcessing, isProcessing) ||
+                other.isProcessing == isProcessing) &&
+            (identical(other.processingProgress, processingProgress) ||
+                other.processingProgress == processingProgress) &&
+            const DeepCollectionEquality()
+                .equals(other.processingErrors, processingErrors) &&
+            (identical(other.selectedDocument, selectedDocument) ||
+                other.selectedDocument == selectedDocument) &&
+            (identical(other.selectedPage, selectedPage) ||
+                other.selectedPage == selectedPage) &&
+            (identical(other.showPasswordDialog, showPasswordDialog) ||
+                other.showPasswordDialog == showPasswordDialog) &&
+            (identical(other.showAdvancedSettings, showAdvancedSettings) ||
+                other.showAdvancedSettings == showAdvancedSettings) &&
+            (identical(other.enableEncryption, enableEncryption) ||
+                other.enableEncryption == enableEncryption) &&
+            (identical(other.encryptionPassword, encryptionPassword) ||
+                other.encryptionPassword == encryptionPassword) &&
+            (identical(other.permissions, permissions) ||
+                other.permissions == permissions) &&
+            (identical(other.mergeOptions, mergeOptions) ||
+                other.mergeOptions == mergeOptions) &&
+            const DeepCollectionEquality()
+                .equals(other.mergedPdfData, mergedPdfData) &&
+            (identical(other.outputFileName, outputFileName) ||
+                other.outputFileName == outputFileName));
+  }
+
+  @override
+  int get hashCode => Object.hash(
+      runtimeType,
+      const DeepCollectionEquality().hash(documents),
+      const DeepCollectionEquality().hash(pages),
+      isProcessing,
+      processingProgress,
+      const DeepCollectionEquality().hash(processingErrors),
+      selectedDocument,
+      selectedPage,
+      showPasswordDialog,
+      showAdvancedSettings,
+      enableEncryption,
+      encryptionPassword,
+      permissions,
+      mergeOptions,
+      const DeepCollectionEquality().hash(mergedPdfData),
+      outputFileName);
+
+  @override
+  String toString() {
+    return 'PdfMergerState(documents: $documents, pages: $pages, isProcessing: $isProcessing, processingProgress: $processingProgress, processingErrors: $processingErrors, selectedDocument: $selectedDocument, selectedPage: $selectedPage, showPasswordDialog: $showPasswordDialog, showAdvancedSettings: $showAdvancedSettings, enableEncryption: $enableEncryption, encryptionPassword: $encryptionPassword, permissions: $permissions, mergeOptions: $mergeOptions, mergedPdfData: $mergedPdfData, outputFileName: $outputFileName)';
+  }
 }
 
 /// @nodoc
-abstract class $PdfMergerStateCopyWith<$Res> {
+abstract mixin class $PdfMergerStateCopyWith<$Res> {
   factory $PdfMergerStateCopyWith(
-          PdfMergerState value, $Res Function(PdfMergerState) then) =
-      _$PdfMergerStateCopyWithImpl<$Res, PdfMergerState>;
+          PdfMergerState value, $Res Function(PdfMergerState) _then) =
+      _$PdfMergerStateCopyWithImpl;
   @useResult
   $Res call(
       {List<PdfDocument> documents,
@@ -67,14 +126,12 @@ abstract class $PdfMergerStateCopyWith<$Res> {
 }
 
 /// @nodoc
-class _$PdfMergerStateCopyWithImpl<$Res, $Val extends PdfMergerState>
+class _$PdfMergerStateCopyWithImpl<$Res>
     implements $PdfMergerStateCopyWith<$Res> {
-  _$PdfMergerStateCopyWithImpl(this._value, this._then);
+  _$PdfMergerStateCopyWithImpl(this._self, this._then);
 
-  // ignore: unused_field
-  final $Val _value;
-  // ignore: unused_field
-  final $Res Function($Val) _then;
+  final PdfMergerState _self;
+  final $Res Function(PdfMergerState) _then;
 
   /// Create a copy of PdfMergerState
   /// with the given fields replaced by the non-null parameter values.
@@ -97,68 +154,68 @@ class _$PdfMergerStateCopyWithImpl<$Res, $Val extends PdfMergerState>
     Object? mergedPdfData = freezed,
     Object? outputFileName = null,
   }) {
-    return _then(_value.copyWith(
+    return _then(_self.copyWith(
       documents: null == documents
-          ? _value.documents
+          ? _self.documents
           : documents // ignore: cast_nullable_to_non_nullable
               as List<PdfDocument>,
       pages: null == pages
-          ? _value.pages
+          ? _self.pages
           : pages // ignore: cast_nullable_to_non_nullable
               as List<PdfPageThumbnail>,
       isProcessing: null == isProcessing
-          ? _value.isProcessing
+          ? _self.isProcessing
           : isProcessing // ignore: cast_nullable_to_non_nullable
               as bool,
       processingProgress: null == processingProgress
-          ? _value.processingProgress
+          ? _self.processingProgress
           : processingProgress // ignore: cast_nullable_to_non_nullable
               as int,
       processingErrors: null == processingErrors
-          ? _value.processingErrors
+          ? _self.processingErrors
           : processingErrors // ignore: cast_nullable_to_non_nullable
               as List<String>,
       selectedDocument: freezed == selectedDocument
-          ? _value.selectedDocument
+          ? _self.selectedDocument
           : selectedDocument // ignore: cast_nullable_to_non_nullable
               as PdfDocument?,
       selectedPage: freezed == selectedPage
-          ? _value.selectedPage
+          ? _self.selectedPage
           : selectedPage // ignore: cast_nullable_to_non_nullable
               as PdfPageThumbnail?,
       showPasswordDialog: null == showPasswordDialog
-          ? _value.showPasswordDialog
+          ? _self.showPasswordDialog
           : showPasswordDialog // ignore: cast_nullable_to_non_nullable
               as bool,
       showAdvancedSettings: null == showAdvancedSettings
-          ? _value.showAdvancedSettings
+          ? _self.showAdvancedSettings
           : showAdvancedSettings // ignore: cast_nullable_to_non_nullable
               as bool,
       enableEncryption: null == enableEncryption
-          ? _value.enableEncryption
+          ? _self.enableEncryption
           : enableEncryption // ignore: cast_nullable_to_non_nullable
               as bool,
       encryptionPassword: null == encryptionPassword
-          ? _value.encryptionPassword
+          ? _self.encryptionPassword
           : encryptionPassword // ignore: cast_nullable_to_non_nullable
               as String,
       permissions: null == permissions
-          ? _value.permissions
+          ? _self.permissions
           : permissions // ignore: cast_nullable_to_non_nullable
               as PdfPermissions,
       mergeOptions: null == mergeOptions
-          ? _value.mergeOptions
+          ? _self.mergeOptions
           : mergeOptions // ignore: cast_nullable_to_non_nullable
               as PdfMergeOptions,
       mergedPdfData: freezed == mergedPdfData
-          ? _value.mergedPdfData
+          ? _self.mergedPdfData
           : mergedPdfData // ignore: cast_nullable_to_non_nullable
               as Uint8List?,
       outputFileName: null == outputFileName
-          ? _value.outputFileName
+          ? _self.outputFileName
           : outputFileName // ignore: cast_nullable_to_non_nullable
               as String,
-    ) as $Val);
+    ));
   }
 
   /// Create a copy of PdfMergerState
@@ -166,12 +223,12 @@ class _$PdfMergerStateCopyWithImpl<$Res, $Val extends PdfMergerState>
   @override
   @pragma('vm:prefer-inline')
   $PdfDocumentCopyWith<$Res>? get selectedDocument {
-    if (_value.selectedDocument == null) {
+    if (_self.selectedDocument == null) {
       return null;
     }
 
-    return $PdfDocumentCopyWith<$Res>(_value.selectedDocument!, (value) {
-      return _then(_value.copyWith(selectedDocument: value) as $Val);
+    return $PdfDocumentCopyWith<$Res>(_self.selectedDocument!, (value) {
+      return _then(_self.copyWith(selectedDocument: value));
     });
   }
 
@@ -180,145 +237,270 @@ class _$PdfMergerStateCopyWithImpl<$Res, $Val extends PdfMergerState>
   @override
   @pragma('vm:prefer-inline')
   $PdfPageThumbnailCopyWith<$Res>? get selectedPage {
-    if (_value.selectedPage == null) {
+    if (_self.selectedPage == null) {
       return null;
     }
 
-    return $PdfPageThumbnailCopyWith<$Res>(_value.selectedPage!, (value) {
-      return _then(_value.copyWith(selectedPage: value) as $Val);
+    return $PdfPageThumbnailCopyWith<$Res>(_self.selectedPage!, (value) {
+      return _then(_self.copyWith(selectedPage: value));
     });
   }
 }
 
-/// @nodoc
-abstract class _$$PdfMergerStateImplCopyWith<$Res>
-    implements $PdfMergerStateCopyWith<$Res> {
-  factory _$$PdfMergerStateImplCopyWith(_$PdfMergerStateImpl value,
-          $Res Function(_$PdfMergerStateImpl) then) =
-      __$$PdfMergerStateImplCopyWithImpl<$Res>;
-  @override
-  @useResult
-  $Res call(
-      {List<PdfDocument> documents,
-      List<PdfPageThumbnail> pages,
-      bool isProcessing,
-      int processingProgress,
-      List<String> processingErrors,
-      PdfDocument? selectedDocument,
-      PdfPageThumbnail? selectedPage,
-      bool showPasswordDialog,
-      bool showAdvancedSettings,
-      bool enableEncryption,
-      String encryptionPassword,
-      PdfPermissions permissions,
-      PdfMergeOptions mergeOptions,
-      Uint8List? mergedPdfData,
-      String outputFileName});
+/// Adds pattern-matching-related methods to [PdfMergerState].
+extension PdfMergerStatePatterns on PdfMergerState {
+  /// A variant of `map` that fallback to returning `orElse`.
+  ///
+  /// It is equivalent to doing:
+  /// ```dart
+  /// switch (sealedClass) {
+  ///   case final Subclass value:
+  ///     return ...;
+  ///   case _:
+  ///     return orElse();
+  /// }
+  /// ```
 
-  @override
-  $PdfDocumentCopyWith<$Res>? get selectedDocument;
-  @override
-  $PdfPageThumbnailCopyWith<$Res>? get selectedPage;
-}
-
-/// @nodoc
-class __$$PdfMergerStateImplCopyWithImpl<$Res>
-    extends _$PdfMergerStateCopyWithImpl<$Res, _$PdfMergerStateImpl>
-    implements _$$PdfMergerStateImplCopyWith<$Res> {
-  __$$PdfMergerStateImplCopyWithImpl(
-      _$PdfMergerStateImpl _value, $Res Function(_$PdfMergerStateImpl) _then)
-      : super(_value, _then);
-
-  /// Create a copy of PdfMergerState
-  /// with the given fields replaced by the non-null parameter values.
-  @pragma('vm:prefer-inline')
-  @override
-  $Res call({
-    Object? documents = null,
-    Object? pages = null,
-    Object? isProcessing = null,
-    Object? processingProgress = null,
-    Object? processingErrors = null,
-    Object? selectedDocument = freezed,
-    Object? selectedPage = freezed,
-    Object? showPasswordDialog = null,
-    Object? showAdvancedSettings = null,
-    Object? enableEncryption = null,
-    Object? encryptionPassword = null,
-    Object? permissions = null,
-    Object? mergeOptions = null,
-    Object? mergedPdfData = freezed,
-    Object? outputFileName = null,
+  @optionalTypeArgs
+  TResult maybeMap<TResult extends Object?>(
+    TResult Function(_PdfMergerState value)? $default, {
+    required TResult orElse(),
   }) {
-    return _then(_$PdfMergerStateImpl(
-      documents: null == documents
-          ? _value._documents
-          : documents // ignore: cast_nullable_to_non_nullable
-              as List<PdfDocument>,
-      pages: null == pages
-          ? _value._pages
-          : pages // ignore: cast_nullable_to_non_nullable
-              as List<PdfPageThumbnail>,
-      isProcessing: null == isProcessing
-          ? _value.isProcessing
-          : isProcessing // ignore: cast_nullable_to_non_nullable
-              as bool,
-      processingProgress: null == processingProgress
-          ? _value.processingProgress
-          : processingProgress // ignore: cast_nullable_to_non_nullable
-              as int,
-      processingErrors: null == processingErrors
-          ? _value._processingErrors
-          : processingErrors // ignore: cast_nullable_to_non_nullable
-              as List<String>,
-      selectedDocument: freezed == selectedDocument
-          ? _value.selectedDocument
-          : selectedDocument // ignore: cast_nullable_to_non_nullable
-              as PdfDocument?,
-      selectedPage: freezed == selectedPage
-          ? _value.selectedPage
-          : selectedPage // ignore: cast_nullable_to_non_nullable
-              as PdfPageThumbnail?,
-      showPasswordDialog: null == showPasswordDialog
-          ? _value.showPasswordDialog
-          : showPasswordDialog // ignore: cast_nullable_to_non_nullable
-              as bool,
-      showAdvancedSettings: null == showAdvancedSettings
-          ? _value.showAdvancedSettings
-          : showAdvancedSettings // ignore: cast_nullable_to_non_nullable
-              as bool,
-      enableEncryption: null == enableEncryption
-          ? _value.enableEncryption
-          : enableEncryption // ignore: cast_nullable_to_non_nullable
-              as bool,
-      encryptionPassword: null == encryptionPassword
-          ? _value.encryptionPassword
-          : encryptionPassword // ignore: cast_nullable_to_non_nullable
-              as String,
-      permissions: null == permissions
-          ? _value.permissions
-          : permissions // ignore: cast_nullable_to_non_nullable
-              as PdfPermissions,
-      mergeOptions: null == mergeOptions
-          ? _value.mergeOptions
-          : mergeOptions // ignore: cast_nullable_to_non_nullable
-              as PdfMergeOptions,
-      mergedPdfData: freezed == mergedPdfData
-          ? _value.mergedPdfData
-          : mergedPdfData // ignore: cast_nullable_to_non_nullable
-              as Uint8List?,
-      outputFileName: null == outputFileName
-          ? _value.outputFileName
-          : outputFileName // ignore: cast_nullable_to_non_nullable
-              as String,
-    ));
+    final _that = this;
+    switch (_that) {
+      case _PdfMergerState() when $default != null:
+        return $default(_that);
+      case _:
+        return orElse();
+    }
+  }
+
+  /// A `switch`-like method, using callbacks.
+  ///
+  /// Callbacks receives the raw object, upcasted.
+  /// It is equivalent to doing:
+  /// ```dart
+  /// switch (sealedClass) {
+  ///   case final Subclass value:
+  ///     return ...;
+  ///   case final Subclass2 value:
+  ///     return ...;
+  /// }
+  /// ```
+
+  @optionalTypeArgs
+  TResult map<TResult extends Object?>(
+    TResult Function(_PdfMergerState value) $default,
+  ) {
+    final _that = this;
+    switch (_that) {
+      case _PdfMergerState():
+        return $default(_that);
+      case _:
+        throw StateError('Unexpected subclass');
+    }
+  }
+
+  /// A variant of `map` that fallback to returning `null`.
+  ///
+  /// It is equivalent to doing:
+  /// ```dart
+  /// switch (sealedClass) {
+  ///   case final Subclass value:
+  ///     return ...;
+  ///   case _:
+  ///     return null;
+  /// }
+  /// ```
+
+  @optionalTypeArgs
+  TResult? mapOrNull<TResult extends Object?>(
+    TResult? Function(_PdfMergerState value)? $default,
+  ) {
+    final _that = this;
+    switch (_that) {
+      case _PdfMergerState() when $default != null:
+        return $default(_that);
+      case _:
+        return null;
+    }
+  }
+
+  /// A variant of `when` that fallback to an `orElse` callback.
+  ///
+  /// It is equivalent to doing:
+  /// ```dart
+  /// switch (sealedClass) {
+  ///   case Subclass(:final field):
+  ///     return ...;
+  ///   case _:
+  ///     return orElse();
+  /// }
+  /// ```
+
+  @optionalTypeArgs
+  TResult maybeWhen<TResult extends Object?>(
+    TResult Function(
+            List<PdfDocument> documents,
+            List<PdfPageThumbnail> pages,
+            bool isProcessing,
+            int processingProgress,
+            List<String> processingErrors,
+            PdfDocument? selectedDocument,
+            PdfPageThumbnail? selectedPage,
+            bool showPasswordDialog,
+            bool showAdvancedSettings,
+            bool enableEncryption,
+            String encryptionPassword,
+            PdfPermissions permissions,
+            PdfMergeOptions mergeOptions,
+            Uint8List? mergedPdfData,
+            String outputFileName)?
+        $default, {
+    required TResult orElse(),
+  }) {
+    final _that = this;
+    switch (_that) {
+      case _PdfMergerState() when $default != null:
+        return $default(
+            _that.documents,
+            _that.pages,
+            _that.isProcessing,
+            _that.processingProgress,
+            _that.processingErrors,
+            _that.selectedDocument,
+            _that.selectedPage,
+            _that.showPasswordDialog,
+            _that.showAdvancedSettings,
+            _that.enableEncryption,
+            _that.encryptionPassword,
+            _that.permissions,
+            _that.mergeOptions,
+            _that.mergedPdfData,
+            _that.outputFileName);
+      case _:
+        return orElse();
+    }
+  }
+
+  /// A `switch`-like method, using callbacks.
+  ///
+  /// As opposed to `map`, this offers destructuring.
+  /// It is equivalent to doing:
+  /// ```dart
+  /// switch (sealedClass) {
+  ///   case Subclass(:final field):
+  ///     return ...;
+  ///   case Subclass2(:final field2):
+  ///     return ...;
+  /// }
+  /// ```
+
+  @optionalTypeArgs
+  TResult when<TResult extends Object?>(
+    TResult Function(
+            List<PdfDocument> documents,
+            List<PdfPageThumbnail> pages,
+            bool isProcessing,
+            int processingProgress,
+            List<String> processingErrors,
+            PdfDocument? selectedDocument,
+            PdfPageThumbnail? selectedPage,
+            bool showPasswordDialog,
+            bool showAdvancedSettings,
+            bool enableEncryption,
+            String encryptionPassword,
+            PdfPermissions permissions,
+            PdfMergeOptions mergeOptions,
+            Uint8List? mergedPdfData,
+            String outputFileName)
+        $default,
+  ) {
+    final _that = this;
+    switch (_that) {
+      case _PdfMergerState():
+        return $default(
+            _that.documents,
+            _that.pages,
+            _that.isProcessing,
+            _that.processingProgress,
+            _that.processingErrors,
+            _that.selectedDocument,
+            _that.selectedPage,
+            _that.showPasswordDialog,
+            _that.showAdvancedSettings,
+            _that.enableEncryption,
+            _that.encryptionPassword,
+            _that.permissions,
+            _that.mergeOptions,
+            _that.mergedPdfData,
+            _that.outputFileName);
+      case _:
+        throw StateError('Unexpected subclass');
+    }
+  }
+
+  /// A variant of `when` that fallback to returning `null`
+  ///
+  /// It is equivalent to doing:
+  /// ```dart
+  /// switch (sealedClass) {
+  ///   case Subclass(:final field):
+  ///     return ...;
+  ///   case _:
+  ///     return null;
+  /// }
+  /// ```
+
+  @optionalTypeArgs
+  TResult? whenOrNull<TResult extends Object?>(
+    TResult? Function(
+            List<PdfDocument> documents,
+            List<PdfPageThumbnail> pages,
+            bool isProcessing,
+            int processingProgress,
+            List<String> processingErrors,
+            PdfDocument? selectedDocument,
+            PdfPageThumbnail? selectedPage,
+            bool showPasswordDialog,
+            bool showAdvancedSettings,
+            bool enableEncryption,
+            String encryptionPassword,
+            PdfPermissions permissions,
+            PdfMergeOptions mergeOptions,
+            Uint8List? mergedPdfData,
+            String outputFileName)?
+        $default,
+  ) {
+    final _that = this;
+    switch (_that) {
+      case _PdfMergerState() when $default != null:
+        return $default(
+            _that.documents,
+            _that.pages,
+            _that.isProcessing,
+            _that.processingProgress,
+            _that.processingErrors,
+            _that.selectedDocument,
+            _that.selectedPage,
+            _that.showPasswordDialog,
+            _that.showAdvancedSettings,
+            _that.enableEncryption,
+            _that.encryptionPassword,
+            _that.permissions,
+            _that.mergeOptions,
+            _that.mergedPdfData,
+            _that.outputFileName);
+      case _:
+        return null;
+    }
   }
 }
 
 /// @nodoc
 
-class _$PdfMergerStateImpl implements _PdfMergerState {
-  const _$PdfMergerStateImpl(
+class _PdfMergerState implements PdfMergerState {
+  const _PdfMergerState(
       {final List<PdfDocument> documents = const [],
       final List<PdfPageThumbnail> pages = const [],
       this.isProcessing = false,
@@ -333,7 +515,7 @@ class _$PdfMergerStateImpl implements _PdfMergerState {
       this.permissions = const PdfPermissions(),
       this.mergeOptions = const PdfMergeOptions(),
       this.mergedPdfData,
-      this.outputFileName = ''})
+      this.outputFileName = 'merged_document.pdf'})
       : _documents = documents,
         _pages = pages,
         _processingErrors = processingErrors;
@@ -400,16 +582,19 @@ class _$PdfMergerStateImpl implements _PdfMergerState {
   @JsonKey()
   final String outputFileName;
 
+  /// Create a copy of PdfMergerState
+  /// with the given fields replaced by the non-null parameter values.
   @override
-  String toString() {
-    return 'PdfMergerState(documents: $documents, pages: $pages, isProcessing: $isProcessing, processingProgress: $processingProgress, processingErrors: $processingErrors, selectedDocument: $selectedDocument, selectedPage: $selectedPage, showPasswordDialog: $showPasswordDialog, showAdvancedSettings: $showAdvancedSettings, enableEncryption: $enableEncryption, encryptionPassword: $encryptionPassword, permissions: $permissions, mergeOptions: $mergeOptions, mergedPdfData: $mergedPdfData, outputFileName: $outputFileName)';
-  }
+  @JsonKey(includeFromJson: false, includeToJson: false)
+  @pragma('vm:prefer-inline')
+  _$PdfMergerStateCopyWith<_PdfMergerState> get copyWith =>
+      __$PdfMergerStateCopyWithImpl<_PdfMergerState>(this, _$identity);
 
   @override
   bool operator ==(Object other) {
     return identical(this, other) ||
         (other.runtimeType == runtimeType &&
-            other is _$PdfMergerStateImpl &&
+            other is _PdfMergerState &&
             const DeepCollectionEquality()
                 .equals(other._documents, _documents) &&
             const DeepCollectionEquality().equals(other._pages, _pages) &&
@@ -460,204 +645,221 @@ class _$PdfMergerStateImpl implements _PdfMergerState {
       const DeepCollectionEquality().hash(mergedPdfData),
       outputFileName);
 
-  /// Create a copy of PdfMergerState
-  /// with the given fields replaced by the non-null parameter values.
-  @JsonKey(includeFromJson: false, includeToJson: false)
   @override
-  @pragma('vm:prefer-inline')
-  _$$PdfMergerStateImplCopyWith<_$PdfMergerStateImpl> get copyWith =>
-      __$$PdfMergerStateImplCopyWithImpl<_$PdfMergerStateImpl>(
-          this, _$identity);
+  String toString() {
+    return 'PdfMergerState(documents: $documents, pages: $pages, isProcessing: $isProcessing, processingProgress: $processingProgress, processingErrors: $processingErrors, selectedDocument: $selectedDocument, selectedPage: $selectedPage, showPasswordDialog: $showPasswordDialog, showAdvancedSettings: $showAdvancedSettings, enableEncryption: $enableEncryption, encryptionPassword: $encryptionPassword, permissions: $permissions, mergeOptions: $mergeOptions, mergedPdfData: $mergedPdfData, outputFileName: $outputFileName)';
+  }
 }
 
-abstract class _PdfMergerState implements PdfMergerState {
-  const factory _PdfMergerState(
-      {final List<PdfDocument> documents,
-      final List<PdfPageThumbnail> pages,
-      final bool isProcessing,
-      final int processingProgress,
-      final List<String> processingErrors,
-      final PdfDocument? selectedDocument,
-      final PdfPageThumbnail? selectedPage,
-      final bool showPasswordDialog,
-      final bool showAdvancedSettings,
-      final bool enableEncryption,
-      final String encryptionPassword,
-      final PdfPermissions permissions,
-      final PdfMergeOptions mergeOptions,
-      final Uint8List? mergedPdfData,
-      final String outputFileName}) = _$PdfMergerStateImpl;
+/// @nodoc
+abstract mixin class _$PdfMergerStateCopyWith<$Res>
+    implements $PdfMergerStateCopyWith<$Res> {
+  factory _$PdfMergerStateCopyWith(
+          _PdfMergerState value, $Res Function(_PdfMergerState) _then) =
+      __$PdfMergerStateCopyWithImpl;
+  @override
+  @useResult
+  $Res call(
+      {List<PdfDocument> documents,
+      List<PdfPageThumbnail> pages,
+      bool isProcessing,
+      int processingProgress,
+      List<String> processingErrors,
+      PdfDocument? selectedDocument,
+      PdfPageThumbnail? selectedPage,
+      bool showPasswordDialog,
+      bool showAdvancedSettings,
+      bool enableEncryption,
+      String encryptionPassword,
+      PdfPermissions permissions,
+      PdfMergeOptions mergeOptions,
+      Uint8List? mergedPdfData,
+      String outputFileName});
 
   @override
-  List<PdfDocument> get documents;
+  $PdfDocumentCopyWith<$Res>? get selectedDocument;
   @override
-  List<PdfPageThumbnail> get pages;
-  @override
-  bool get isProcessing;
-  @override
-  int get processingProgress;
-  @override
-  List<String> get processingErrors;
-  @override
-  PdfDocument? get selectedDocument;
-  @override
-  PdfPageThumbnail? get selectedPage;
-  @override
-  bool get showPasswordDialog;
-  @override
-  bool get showAdvancedSettings;
-  @override
-  bool get enableEncryption;
-  @override
-  String get encryptionPassword;
-  @override
-  PdfPermissions get permissions;
-  @override
-  PdfMergeOptions get mergeOptions;
-  @override
-  Uint8List? get mergedPdfData;
-  @override
-  String get outputFileName;
+  $PdfPageThumbnailCopyWith<$Res>? get selectedPage;
+}
+
+/// @nodoc
+class __$PdfMergerStateCopyWithImpl<$Res>
+    implements _$PdfMergerStateCopyWith<$Res> {
+  __$PdfMergerStateCopyWithImpl(this._self, this._then);
+
+  final _PdfMergerState _self;
+  final $Res Function(_PdfMergerState) _then;
 
   /// Create a copy of PdfMergerState
   /// with the given fields replaced by the non-null parameter values.
   @override
-  @JsonKey(includeFromJson: false, includeToJson: false)
-  _$$PdfMergerStateImplCopyWith<_$PdfMergerStateImpl> get copyWith =>
-      throw _privateConstructorUsedError;
+  @pragma('vm:prefer-inline')
+  $Res call({
+    Object? documents = null,
+    Object? pages = null,
+    Object? isProcessing = null,
+    Object? processingProgress = null,
+    Object? processingErrors = null,
+    Object? selectedDocument = freezed,
+    Object? selectedPage = freezed,
+    Object? showPasswordDialog = null,
+    Object? showAdvancedSettings = null,
+    Object? enableEncryption = null,
+    Object? encryptionPassword = null,
+    Object? permissions = null,
+    Object? mergeOptions = null,
+    Object? mergedPdfData = freezed,
+    Object? outputFileName = null,
+  }) {
+    return _then(_PdfMergerState(
+      documents: null == documents
+          ? _self._documents
+          : documents // ignore: cast_nullable_to_non_nullable
+              as List<PdfDocument>,
+      pages: null == pages
+          ? _self._pages
+          : pages // ignore: cast_nullable_to_non_nullable
+              as List<PdfPageThumbnail>,
+      isProcessing: null == isProcessing
+          ? _self.isProcessing
+          : isProcessing // ignore: cast_nullable_to_non_nullable
+              as bool,
+      processingProgress: null == processingProgress
+          ? _self.processingProgress
+          : processingProgress // ignore: cast_nullable_to_non_nullable
+              as int,
+      processingErrors: null == processingErrors
+          ? _self._processingErrors
+          : processingErrors // ignore: cast_nullable_to_non_nullable
+              as List<String>,
+      selectedDocument: freezed == selectedDocument
+          ? _self.selectedDocument
+          : selectedDocument // ignore: cast_nullable_to_non_nullable
+              as PdfDocument?,
+      selectedPage: freezed == selectedPage
+          ? _self.selectedPage
+          : selectedPage // ignore: cast_nullable_to_non_nullable
+              as PdfPageThumbnail?,
+      showPasswordDialog: null == showPasswordDialog
+          ? _self.showPasswordDialog
+          : showPasswordDialog // ignore: cast_nullable_to_non_nullable
+              as bool,
+      showAdvancedSettings: null == showAdvancedSettings
+          ? _self.showAdvancedSettings
+          : showAdvancedSettings // ignore: cast_nullable_to_non_nullable
+              as bool,
+      enableEncryption: null == enableEncryption
+          ? _self.enableEncryption
+          : enableEncryption // ignore: cast_nullable_to_non_nullable
+              as bool,
+      encryptionPassword: null == encryptionPassword
+          ? _self.encryptionPassword
+          : encryptionPassword // ignore: cast_nullable_to_non_nullable
+              as String,
+      permissions: null == permissions
+          ? _self.permissions
+          : permissions // ignore: cast_nullable_to_non_nullable
+              as PdfPermissions,
+      mergeOptions: null == mergeOptions
+          ? _self.mergeOptions
+          : mergeOptions // ignore: cast_nullable_to_non_nullable
+              as PdfMergeOptions,
+      mergedPdfData: freezed == mergedPdfData
+          ? _self.mergedPdfData
+          : mergedPdfData // ignore: cast_nullable_to_non_nullable
+              as Uint8List?,
+      outputFileName: null == outputFileName
+          ? _self.outputFileName
+          : outputFileName // ignore: cast_nullable_to_non_nullable
+              as String,
+    ));
+  }
+
+  /// Create a copy of PdfMergerState
+  /// with the given fields replaced by the non-null parameter values.
+  @override
+  @pragma('vm:prefer-inline')
+  $PdfDocumentCopyWith<$Res>? get selectedDocument {
+    if (_self.selectedDocument == null) {
+      return null;
+    }
+
+    return $PdfDocumentCopyWith<$Res>(_self.selectedDocument!, (value) {
+      return _then(_self.copyWith(selectedDocument: value));
+    });
+  }
+
+  /// Create a copy of PdfMergerState
+  /// with the given fields replaced by the non-null parameter values.
+  @override
+  @pragma('vm:prefer-inline')
+  $PdfPageThumbnailCopyWith<$Res>? get selectedPage {
+    if (_self.selectedPage == null) {
+      return null;
+    }
+
+    return $PdfPageThumbnailCopyWith<$Res>(_self.selectedPage!, (value) {
+      return _then(_self.copyWith(selectedPage: value));
+    });
+  }
 }
 
 /// @nodoc
 mixin _$PdfDocument {
-  String get id => throw _privateConstructorUsedError;
-  String get fileName => throw _privateConstructorUsedError;
-  Uint8List get data => throw _privateConstructorUsedError;
-  int get fileSize => throw _privateConstructorUsedError;
-  int get pageCount => throw _privateConstructorUsedError;
-  List<PdfPageThumbnail> get pages => throw _privateConstructorUsedError;
-  DocumentStatus get status => throw _privateConstructorUsedError;
-  String get error => throw _privateConstructorUsedError;
-  String? get password => throw _privateConstructorUsedError;
-  bool get isEncrypted => throw _privateConstructorUsedError;
-  DateTime? get lastModified => throw _privateConstructorUsedError;
-  Map<String, dynamic>? get metadata => throw _privateConstructorUsedError;
+  String get id;
+  String get fileName;
+  Uint8List get data;
+  int get fileSize;
+  int get pageCount;
+  DocumentStatus get status;
+  String? get error;
 
   /// Create a copy of PdfDocument
   /// with the given fields replaced by the non-null parameter values.
   @JsonKey(includeFromJson: false, includeToJson: false)
-  $PdfDocumentCopyWith<PdfDocument> get copyWith =>
-      throw _privateConstructorUsedError;
-}
-
-/// @nodoc
-abstract class $PdfDocumentCopyWith<$Res> {
-  factory $PdfDocumentCopyWith(
-          PdfDocument value, $Res Function(PdfDocument) then) =
-      _$PdfDocumentCopyWithImpl<$Res, PdfDocument>;
-  @useResult
-  $Res call(
-      {String id,
-      String fileName,
-      Uint8List data,
-      int fileSize,
-      int pageCount,
-      List<PdfPageThumbnail> pages,
-      DocumentStatus status,
-      String error,
-      String? password,
-      bool isEncrypted,
-      DateTime? lastModified,
-      Map<String, dynamic>? metadata});
-}
-
-/// @nodoc
-class _$PdfDocumentCopyWithImpl<$Res, $Val extends PdfDocument>
-    implements $PdfDocumentCopyWith<$Res> {
-  _$PdfDocumentCopyWithImpl(this._value, this._then);
-
-  // ignore: unused_field
-  final $Val _value;
-  // ignore: unused_field
-  final $Res Function($Val) _then;
-
-  /// Create a copy of PdfDocument
-  /// with the given fields replaced by the non-null parameter values.
   @pragma('vm:prefer-inline')
+  $PdfDocumentCopyWith<PdfDocument> get copyWith =>
+      _$PdfDocumentCopyWithImpl<PdfDocument>(this as PdfDocument, _$identity);
+
   @override
-  $Res call({
-    Object? id = null,
-    Object? fileName = null,
-    Object? data = null,
-    Object? fileSize = null,
-    Object? pageCount = null,
-    Object? pages = null,
-    Object? status = null,
-    Object? error = null,
-    Object? password = freezed,
-    Object? isEncrypted = null,
-    Object? lastModified = freezed,
-    Object? metadata = freezed,
-  }) {
-    return _then(_value.copyWith(
-      id: null == id
-          ? _value.id
-          : id // ignore: cast_nullable_to_non_nullable
-              as String,
-      fileName: null == fileName
-          ? _value.fileName
-          : fileName // ignore: cast_nullable_to_non_nullable
-              as String,
-      data: null == data
-          ? _value.data
-          : data // ignore: cast_nullable_to_non_nullable
-              as Uint8List,
-      fileSize: null == fileSize
-          ? _value.fileSize
-          : fileSize // ignore: cast_nullable_to_non_nullable
-              as int,
-      pageCount: null == pageCount
-          ? _value.pageCount
-          : pageCount // ignore: cast_nullable_to_non_nullable
-              as int,
-      pages: null == pages
-          ? _value.pages
-          : pages // ignore: cast_nullable_to_non_nullable
-              as List<PdfPageThumbnail>,
-      status: null == status
-          ? _value.status
-          : status // ignore: cast_nullable_to_non_nullable
-              as DocumentStatus,
-      error: null == error
-          ? _value.error
-          : error // ignore: cast_nullable_to_non_nullable
-              as String,
-      password: freezed == password
-          ? _value.password
-          : password // ignore: cast_nullable_to_non_nullable
-              as String?,
-      isEncrypted: null == isEncrypted
-          ? _value.isEncrypted
-          : isEncrypted // ignore: cast_nullable_to_non_nullable
-              as bool,
-      lastModified: freezed == lastModified
-          ? _value.lastModified
-          : lastModified // ignore: cast_nullable_to_non_nullable
-              as DateTime?,
-      metadata: freezed == metadata
-          ? _value.metadata
-          : metadata // ignore: cast_nullable_to_non_nullable
-              as Map<String, dynamic>?,
-    ) as $Val);
+  bool operator ==(Object other) {
+    return identical(this, other) ||
+        (other.runtimeType == runtimeType &&
+            other is PdfDocument &&
+            (identical(other.id, id) || other.id == id) &&
+            (identical(other.fileName, fileName) ||
+                other.fileName == fileName) &&
+            const DeepCollectionEquality().equals(other.data, data) &&
+            (identical(other.fileSize, fileSize) ||
+                other.fileSize == fileSize) &&
+            (identical(other.pageCount, pageCount) ||
+                other.pageCount == pageCount) &&
+            (identical(other.status, status) || other.status == status) &&
+            (identical(other.error, error) || other.error == error));
+  }
+
+  @override
+  int get hashCode => Object.hash(
+      runtimeType,
+      id,
+      fileName,
+      const DeepCollectionEquality().hash(data),
+      fileSize,
+      pageCount,
+      status,
+      error);
+
+  @override
+  String toString() {
+    return 'PdfDocument(id: $id, fileName: $fileName, data: $data, fileSize: $fileSize, pageCount: $pageCount, status: $status, error: $error)';
   }
 }
 
 /// @nodoc
-abstract class _$$PdfDocumentImplCopyWith<$Res>
-    implements $PdfDocumentCopyWith<$Res> {
-  factory _$$PdfDocumentImplCopyWith(
-          _$PdfDocumentImpl value, $Res Function(_$PdfDocumentImpl) then) =
-      __$$PdfDocumentImplCopyWithImpl<$Res>;
-  @override
+abstract mixin class $PdfDocumentCopyWith<$Res> {
+  factory $PdfDocumentCopyWith(
+          PdfDocument value, $Res Function(PdfDocument) _then) =
+      _$PdfDocumentCopyWithImpl;
   @useResult
   $Res call(
       {String id,
@@ -665,22 +867,16 @@ abstract class _$$PdfDocumentImplCopyWith<$Res>
       Uint8List data,
       int fileSize,
       int pageCount,
-      List<PdfPageThumbnail> pages,
       DocumentStatus status,
-      String error,
-      String? password,
-      bool isEncrypted,
-      DateTime? lastModified,
-      Map<String, dynamic>? metadata});
+      String? error});
 }
 
 /// @nodoc
-class __$$PdfDocumentImplCopyWithImpl<$Res>
-    extends _$PdfDocumentCopyWithImpl<$Res, _$PdfDocumentImpl>
-    implements _$$PdfDocumentImplCopyWith<$Res> {
-  __$$PdfDocumentImplCopyWithImpl(
-      _$PdfDocumentImpl _value, $Res Function(_$PdfDocumentImpl) _then)
-      : super(_value, _then);
+class _$PdfDocumentCopyWithImpl<$Res> implements $PdfDocumentCopyWith<$Res> {
+  _$PdfDocumentCopyWithImpl(this._self, this._then);
+
+  final PdfDocument _self;
+  final $Res Function(PdfDocument) _then;
 
   /// Create a copy of PdfDocument
   /// with the given fields replaced by the non-null parameter values.
@@ -692,86 +888,220 @@ class __$$PdfDocumentImplCopyWithImpl<$Res>
     Object? data = null,
     Object? fileSize = null,
     Object? pageCount = null,
-    Object? pages = null,
     Object? status = null,
-    Object? error = null,
-    Object? password = freezed,
-    Object? isEncrypted = null,
-    Object? lastModified = freezed,
-    Object? metadata = freezed,
+    Object? error = freezed,
   }) {
-    return _then(_$PdfDocumentImpl(
+    return _then(_self.copyWith(
       id: null == id
-          ? _value.id
+          ? _self.id
           : id // ignore: cast_nullable_to_non_nullable
               as String,
       fileName: null == fileName
-          ? _value.fileName
+          ? _self.fileName
           : fileName // ignore: cast_nullable_to_non_nullable
               as String,
       data: null == data
-          ? _value.data
+          ? _self.data
           : data // ignore: cast_nullable_to_non_nullable
               as Uint8List,
       fileSize: null == fileSize
-          ? _value.fileSize
+          ? _self.fileSize
           : fileSize // ignore: cast_nullable_to_non_nullable
               as int,
       pageCount: null == pageCount
-          ? _value.pageCount
+          ? _self.pageCount
           : pageCount // ignore: cast_nullable_to_non_nullable
               as int,
-      pages: null == pages
-          ? _value._pages
-          : pages // ignore: cast_nullable_to_non_nullable
-              as List<PdfPageThumbnail>,
       status: null == status
-          ? _value.status
+          ? _self.status
           : status // ignore: cast_nullable_to_non_nullable
               as DocumentStatus,
-      error: null == error
-          ? _value.error
+      error: freezed == error
+          ? _self.error
           : error // ignore: cast_nullable_to_non_nullable
-              as String,
-      password: freezed == password
-          ? _value.password
-          : password // ignore: cast_nullable_to_non_nullable
               as String?,
-      isEncrypted: null == isEncrypted
-          ? _value.isEncrypted
-          : isEncrypted // ignore: cast_nullable_to_non_nullable
-              as bool,
-      lastModified: freezed == lastModified
-          ? _value.lastModified
-          : lastModified // ignore: cast_nullable_to_non_nullable
-              as DateTime?,
-      metadata: freezed == metadata
-          ? _value._metadata
-          : metadata // ignore: cast_nullable_to_non_nullable
-              as Map<String, dynamic>?,
     ));
   }
 }
 
+/// Adds pattern-matching-related methods to [PdfDocument].
+extension PdfDocumentPatterns on PdfDocument {
+  /// A variant of `map` that fallback to returning `orElse`.
+  ///
+  /// It is equivalent to doing:
+  /// ```dart
+  /// switch (sealedClass) {
+  ///   case final Subclass value:
+  ///     return ...;
+  ///   case _:
+  ///     return orElse();
+  /// }
+  /// ```
+
+  @optionalTypeArgs
+  TResult maybeMap<TResult extends Object?>(
+    TResult Function(_PdfDocument value)? $default, {
+    required TResult orElse(),
+  }) {
+    final _that = this;
+    switch (_that) {
+      case _PdfDocument() when $default != null:
+        return $default(_that);
+      case _:
+        return orElse();
+    }
+  }
+
+  /// A `switch`-like method, using callbacks.
+  ///
+  /// Callbacks receives the raw object, upcasted.
+  /// It is equivalent to doing:
+  /// ```dart
+  /// switch (sealedClass) {
+  ///   case final Subclass value:
+  ///     return ...;
+  ///   case final Subclass2 value:
+  ///     return ...;
+  /// }
+  /// ```
+
+  @optionalTypeArgs
+  TResult map<TResult extends Object?>(
+    TResult Function(_PdfDocument value) $default,
+  ) {
+    final _that = this;
+    switch (_that) {
+      case _PdfDocument():
+        return $default(_that);
+      case _:
+        throw StateError('Unexpected subclass');
+    }
+  }
+
+  /// A variant of `map` that fallback to returning `null`.
+  ///
+  /// It is equivalent to doing:
+  /// ```dart
+  /// switch (sealedClass) {
+  ///   case final Subclass value:
+  ///     return ...;
+  ///   case _:
+  ///     return null;
+  /// }
+  /// ```
+
+  @optionalTypeArgs
+  TResult? mapOrNull<TResult extends Object?>(
+    TResult? Function(_PdfDocument value)? $default,
+  ) {
+    final _that = this;
+    switch (_that) {
+      case _PdfDocument() when $default != null:
+        return $default(_that);
+      case _:
+        return null;
+    }
+  }
+
+  /// A variant of `when` that fallback to an `orElse` callback.
+  ///
+  /// It is equivalent to doing:
+  /// ```dart
+  /// switch (sealedClass) {
+  ///   case Subclass(:final field):
+  ///     return ...;
+  ///   case _:
+  ///     return orElse();
+  /// }
+  /// ```
+
+  @optionalTypeArgs
+  TResult maybeWhen<TResult extends Object?>(
+    TResult Function(String id, String fileName, Uint8List data, int fileSize,
+            int pageCount, DocumentStatus status, String? error)?
+        $default, {
+    required TResult orElse(),
+  }) {
+    final _that = this;
+    switch (_that) {
+      case _PdfDocument() when $default != null:
+        return $default(_that.id, _that.fileName, _that.data, _that.fileSize,
+            _that.pageCount, _that.status, _that.error);
+      case _:
+        return orElse();
+    }
+  }
+
+  /// A `switch`-like method, using callbacks.
+  ///
+  /// As opposed to `map`, this offers destructuring.
+  /// It is equivalent to doing:
+  /// ```dart
+  /// switch (sealedClass) {
+  ///   case Subclass(:final field):
+  ///     return ...;
+  ///   case Subclass2(:final field2):
+  ///     return ...;
+  /// }
+  /// ```
+
+  @optionalTypeArgs
+  TResult when<TResult extends Object?>(
+    TResult Function(String id, String fileName, Uint8List data, int fileSize,
+            int pageCount, DocumentStatus status, String? error)
+        $default,
+  ) {
+    final _that = this;
+    switch (_that) {
+      case _PdfDocument():
+        return $default(_that.id, _that.fileName, _that.data, _that.fileSize,
+            _that.pageCount, _that.status, _that.error);
+      case _:
+        throw StateError('Unexpected subclass');
+    }
+  }
+
+  /// A variant of `when` that fallback to returning `null`
+  ///
+  /// It is equivalent to doing:
+  /// ```dart
+  /// switch (sealedClass) {
+  ///   case Subclass(:final field):
+  ///     return ...;
+  ///   case _:
+  ///     return null;
+  /// }
+  /// ```
+
+  @optionalTypeArgs
+  TResult? whenOrNull<TResult extends Object?>(
+    TResult? Function(String id, String fileName, Uint8List data, int fileSize,
+            int pageCount, DocumentStatus status, String? error)?
+        $default,
+  ) {
+    final _that = this;
+    switch (_that) {
+      case _PdfDocument() when $default != null:
+        return $default(_that.id, _that.fileName, _that.data, _that.fileSize,
+            _that.pageCount, _that.status, _that.error);
+      case _:
+        return null;
+    }
+  }
+}
+
 /// @nodoc
 
-class _$PdfDocumentImpl extends _PdfDocument {
-  const _$PdfDocumentImpl(
+class _PdfDocument extends PdfDocument {
+  const _PdfDocument(
       {required this.id,
       required this.fileName,
       required this.data,
       required this.fileSize,
       required this.pageCount,
-      final List<PdfPageThumbnail> pages = const [],
-      this.status = DocumentStatus.loaded,
-      this.error = '',
-      this.password,
-      this.isEncrypted = false,
-      this.lastModified,
-      final Map<String, dynamic>? metadata})
-      : _pages = pages,
-        _metadata = metadata,
-        super._();
+      this.status = DocumentStatus.ready,
+      this.error})
+      : super._();
 
   @override
   final String id;
@@ -783,48 +1113,25 @@ class _$PdfDocumentImpl extends _PdfDocument {
   final int fileSize;
   @override
   final int pageCount;
-  final List<PdfPageThumbnail> _pages;
-  @override
-  @JsonKey()
-  List<PdfPageThumbnail> get pages {
-    if (_pages is EqualUnmodifiableListView) return _pages;
-    // ignore: implicit_dynamic_type
-    return EqualUnmodifiableListView(_pages);
-  }
-
   @override
   @JsonKey()
   final DocumentStatus status;
   @override
-  @JsonKey()
-  final String error;
-  @override
-  final String? password;
-  @override
-  @JsonKey()
-  final bool isEncrypted;
-  @override
-  final DateTime? lastModified;
-  final Map<String, dynamic>? _metadata;
-  @override
-  Map<String, dynamic>? get metadata {
-    final value = _metadata;
-    if (value == null) return null;
-    if (_metadata is EqualUnmodifiableMapView) return _metadata;
-    // ignore: implicit_dynamic_type
-    return EqualUnmodifiableMapView(value);
-  }
+  final String? error;
 
+  /// Create a copy of PdfDocument
+  /// with the given fields replaced by the non-null parameter values.
   @override
-  String toString() {
-    return 'PdfDocument(id: $id, fileName: $fileName, data: $data, fileSize: $fileSize, pageCount: $pageCount, pages: $pages, status: $status, error: $error, password: $password, isEncrypted: $isEncrypted, lastModified: $lastModified, metadata: $metadata)';
-  }
+  @JsonKey(includeFromJson: false, includeToJson: false)
+  @pragma('vm:prefer-inline')
+  _$PdfDocumentCopyWith<_PdfDocument> get copyWith =>
+      __$PdfDocumentCopyWithImpl<_PdfDocument>(this, _$identity);
 
   @override
   bool operator ==(Object other) {
     return identical(this, other) ||
         (other.runtimeType == runtimeType &&
-            other is _$PdfDocumentImpl &&
+            other is _PdfDocument &&
             (identical(other.id, id) || other.id == id) &&
             (identical(other.fileName, fileName) ||
                 other.fileName == fileName) &&
@@ -833,16 +1140,8 @@ class _$PdfDocumentImpl extends _PdfDocument {
                 other.fileSize == fileSize) &&
             (identical(other.pageCount, pageCount) ||
                 other.pageCount == pageCount) &&
-            const DeepCollectionEquality().equals(other._pages, _pages) &&
             (identical(other.status, status) || other.status == status) &&
-            (identical(other.error, error) || other.error == error) &&
-            (identical(other.password, password) ||
-                other.password == password) &&
-            (identical(other.isEncrypted, isEncrypted) ||
-                other.isEncrypted == isEncrypted) &&
-            (identical(other.lastModified, lastModified) ||
-                other.lastModified == lastModified) &&
-            const DeepCollectionEquality().equals(other._metadata, _metadata));
+            (identical(other.error, error) || other.error == error));
   }
 
   @override
@@ -853,342 +1152,113 @@ class _$PdfDocumentImpl extends _PdfDocument {
       const DeepCollectionEquality().hash(data),
       fileSize,
       pageCount,
-      const DeepCollectionEquality().hash(_pages),
       status,
-      error,
-      password,
-      isEncrypted,
-      lastModified,
-      const DeepCollectionEquality().hash(_metadata));
-
-  /// Create a copy of PdfDocument
-  /// with the given fields replaced by the non-null parameter values.
-  @JsonKey(includeFromJson: false, includeToJson: false)
-  @override
-  @pragma('vm:prefer-inline')
-  _$$PdfDocumentImplCopyWith<_$PdfDocumentImpl> get copyWith =>
-      __$$PdfDocumentImplCopyWithImpl<_$PdfDocumentImpl>(this, _$identity);
-}
-
-abstract class _PdfDocument extends PdfDocument {
-  const factory _PdfDocument(
-      {required final String id,
-      required final String fileName,
-      required final Uint8List data,
-      required final int fileSize,
-      required final int pageCount,
-      final List<PdfPageThumbnail> pages,
-      final DocumentStatus status,
-      final String error,
-      final String? password,
-      final bool isEncrypted,
-      final DateTime? lastModified,
-      final Map<String, dynamic>? metadata}) = _$PdfDocumentImpl;
-  const _PdfDocument._() : super._();
+      error);
 
   @override
-  String get id;
-  @override
-  String get fileName;
-  @override
-  Uint8List get data;
-  @override
-  int get fileSize;
-  @override
-  int get pageCount;
-  @override
-  List<PdfPageThumbnail> get pages;
-  @override
-  DocumentStatus get status;
-  @override
-  String get error;
-  @override
-  String? get password;
-  @override
-  bool get isEncrypted;
-  @override
-  DateTime? get lastModified;
-  @override
-  Map<String, dynamic>? get metadata;
-
-  /// Create a copy of PdfDocument
-  /// with the given fields replaced by the non-null parameter values.
-  @override
-  @JsonKey(includeFromJson: false, includeToJson: false)
-  _$$PdfDocumentImplCopyWith<_$PdfDocumentImpl> get copyWith =>
-      throw _privateConstructorUsedError;
-}
-
-/// @nodoc
-mixin _$PdfPageThumbnail {
-  String get id => throw _privateConstructorUsedError;
-  String get documentId => throw _privateConstructorUsedError;
-  int get pageNumber => throw _privateConstructorUsedError;
-  int get globalIndex =>
-      throw _privateConstructorUsedError; // Index in merged document
-  PageDimensions get dimensions => throw _privateConstructorUsedError;
-  PageRotation get rotation => throw _privateConstructorUsedError;
-  Uint8List? get thumbnailData => throw _privateConstructorUsedError;
-  bool get isSelected => throw _privateConstructorUsedError;
-  bool get isDuplicate => throw _privateConstructorUsedError;
-  bool get isBlank => throw _privateConstructorUsedError;
-  ThumbnailStatus get status => throw _privateConstructorUsedError;
-
-  /// Create a copy of PdfPageThumbnail
-  /// with the given fields replaced by the non-null parameter values.
-  @JsonKey(includeFromJson: false, includeToJson: false)
-  $PdfPageThumbnailCopyWith<PdfPageThumbnail> get copyWith =>
-      throw _privateConstructorUsedError;
-}
-
-/// @nodoc
-abstract class $PdfPageThumbnailCopyWith<$Res> {
-  factory $PdfPageThumbnailCopyWith(
-          PdfPageThumbnail value, $Res Function(PdfPageThumbnail) then) =
-      _$PdfPageThumbnailCopyWithImpl<$Res, PdfPageThumbnail>;
-  @useResult
-  $Res call(
-      {String id,
-      String documentId,
-      int pageNumber,
-      int globalIndex,
-      PageDimensions dimensions,
-      PageRotation rotation,
-      Uint8List? thumbnailData,
-      bool isSelected,
-      bool isDuplicate,
-      bool isBlank,
-      ThumbnailStatus status});
-}
-
-/// @nodoc
-class _$PdfPageThumbnailCopyWithImpl<$Res, $Val extends PdfPageThumbnail>
-    implements $PdfPageThumbnailCopyWith<$Res> {
-  _$PdfPageThumbnailCopyWithImpl(this._value, this._then);
-
-  // ignore: unused_field
-  final $Val _value;
-  // ignore: unused_field
-  final $Res Function($Val) _then;
-
-  /// Create a copy of PdfPageThumbnail
-  /// with the given fields replaced by the non-null parameter values.
-  @pragma('vm:prefer-inline')
-  @override
-  $Res call({
-    Object? id = null,
-    Object? documentId = null,
-    Object? pageNumber = null,
-    Object? globalIndex = null,
-    Object? dimensions = null,
-    Object? rotation = null,
-    Object? thumbnailData = freezed,
-    Object? isSelected = null,
-    Object? isDuplicate = null,
-    Object? isBlank = null,
-    Object? status = null,
-  }) {
-    return _then(_value.copyWith(
-      id: null == id
-          ? _value.id
-          : id // ignore: cast_nullable_to_non_nullable
-              as String,
-      documentId: null == documentId
-          ? _value.documentId
-          : documentId // ignore: cast_nullable_to_non_nullable
-              as String,
-      pageNumber: null == pageNumber
-          ? _value.pageNumber
-          : pageNumber // ignore: cast_nullable_to_non_nullable
-              as int,
-      globalIndex: null == globalIndex
-          ? _value.globalIndex
-          : globalIndex // ignore: cast_nullable_to_non_nullable
-              as int,
-      dimensions: null == dimensions
-          ? _value.dimensions
-          : dimensions // ignore: cast_nullable_to_non_nullable
-              as PageDimensions,
-      rotation: null == rotation
-          ? _value.rotation
-          : rotation // ignore: cast_nullable_to_non_nullable
-              as PageRotation,
-      thumbnailData: freezed == thumbnailData
-          ? _value.thumbnailData
-          : thumbnailData // ignore: cast_nullable_to_non_nullable
-              as Uint8List?,
-      isSelected: null == isSelected
-          ? _value.isSelected
-          : isSelected // ignore: cast_nullable_to_non_nullable
-              as bool,
-      isDuplicate: null == isDuplicate
-          ? _value.isDuplicate
-          : isDuplicate // ignore: cast_nullable_to_non_nullable
-              as bool,
-      isBlank: null == isBlank
-          ? _value.isBlank
-          : isBlank // ignore: cast_nullable_to_non_nullable
-              as bool,
-      status: null == status
-          ? _value.status
-          : status // ignore: cast_nullable_to_non_nullable
-              as ThumbnailStatus,
-    ) as $Val);
+  String toString() {
+    return 'PdfDocument(id: $id, fileName: $fileName, data: $data, fileSize: $fileSize, pageCount: $pageCount, status: $status, error: $error)';
   }
 }
 
 /// @nodoc
-abstract class _$$PdfPageThumbnailImplCopyWith<$Res>
-    implements $PdfPageThumbnailCopyWith<$Res> {
-  factory _$$PdfPageThumbnailImplCopyWith(_$PdfPageThumbnailImpl value,
-          $Res Function(_$PdfPageThumbnailImpl) then) =
-      __$$PdfPageThumbnailImplCopyWithImpl<$Res>;
+abstract mixin class _$PdfDocumentCopyWith<$Res>
+    implements $PdfDocumentCopyWith<$Res> {
+  factory _$PdfDocumentCopyWith(
+          _PdfDocument value, $Res Function(_PdfDocument) _then) =
+      __$PdfDocumentCopyWithImpl;
   @override
   @useResult
   $Res call(
       {String id,
-      String documentId,
-      int pageNumber,
-      int globalIndex,
-      PageDimensions dimensions,
-      PageRotation rotation,
-      Uint8List? thumbnailData,
-      bool isSelected,
-      bool isDuplicate,
-      bool isBlank,
-      ThumbnailStatus status});
+      String fileName,
+      Uint8List data,
+      int fileSize,
+      int pageCount,
+      DocumentStatus status,
+      String? error});
 }
 
 /// @nodoc
-class __$$PdfPageThumbnailImplCopyWithImpl<$Res>
-    extends _$PdfPageThumbnailCopyWithImpl<$Res, _$PdfPageThumbnailImpl>
-    implements _$$PdfPageThumbnailImplCopyWith<$Res> {
-  __$$PdfPageThumbnailImplCopyWithImpl(_$PdfPageThumbnailImpl _value,
-      $Res Function(_$PdfPageThumbnailImpl) _then)
-      : super(_value, _then);
+class __$PdfDocumentCopyWithImpl<$Res> implements _$PdfDocumentCopyWith<$Res> {
+  __$PdfDocumentCopyWithImpl(this._self, this._then);
 
-  /// Create a copy of PdfPageThumbnail
+  final _PdfDocument _self;
+  final $Res Function(_PdfDocument) _then;
+
+  /// Create a copy of PdfDocument
   /// with the given fields replaced by the non-null parameter values.
-  @pragma('vm:prefer-inline')
   @override
+  @pragma('vm:prefer-inline')
   $Res call({
     Object? id = null,
-    Object? documentId = null,
-    Object? pageNumber = null,
-    Object? globalIndex = null,
-    Object? dimensions = null,
-    Object? rotation = null,
-    Object? thumbnailData = freezed,
-    Object? isSelected = null,
-    Object? isDuplicate = null,
-    Object? isBlank = null,
+    Object? fileName = null,
+    Object? data = null,
+    Object? fileSize = null,
+    Object? pageCount = null,
     Object? status = null,
+    Object? error = freezed,
   }) {
-    return _then(_$PdfPageThumbnailImpl(
+    return _then(_PdfDocument(
       id: null == id
-          ? _value.id
+          ? _self.id
           : id // ignore: cast_nullable_to_non_nullable
               as String,
-      documentId: null == documentId
-          ? _value.documentId
-          : documentId // ignore: cast_nullable_to_non_nullable
+      fileName: null == fileName
+          ? _self.fileName
+          : fileName // ignore: cast_nullable_to_non_nullable
               as String,
-      pageNumber: null == pageNumber
-          ? _value.pageNumber
-          : pageNumber // ignore: cast_nullable_to_non_nullable
+      data: null == data
+          ? _self.data
+          : data // ignore: cast_nullable_to_non_nullable
+              as Uint8List,
+      fileSize: null == fileSize
+          ? _self.fileSize
+          : fileSize // ignore: cast_nullable_to_non_nullable
               as int,
-      globalIndex: null == globalIndex
-          ? _value.globalIndex
-          : globalIndex // ignore: cast_nullable_to_non_nullable
+      pageCount: null == pageCount
+          ? _self.pageCount
+          : pageCount // ignore: cast_nullable_to_non_nullable
               as int,
-      dimensions: null == dimensions
-          ? _value.dimensions
-          : dimensions // ignore: cast_nullable_to_non_nullable
-              as PageDimensions,
-      rotation: null == rotation
-          ? _value.rotation
-          : rotation // ignore: cast_nullable_to_non_nullable
-              as PageRotation,
-      thumbnailData: freezed == thumbnailData
-          ? _value.thumbnailData
-          : thumbnailData // ignore: cast_nullable_to_non_nullable
-              as Uint8List?,
-      isSelected: null == isSelected
-          ? _value.isSelected
-          : isSelected // ignore: cast_nullable_to_non_nullable
-              as bool,
-      isDuplicate: null == isDuplicate
-          ? _value.isDuplicate
-          : isDuplicate // ignore: cast_nullable_to_non_nullable
-              as bool,
-      isBlank: null == isBlank
-          ? _value.isBlank
-          : isBlank // ignore: cast_nullable_to_non_nullable
-              as bool,
       status: null == status
-          ? _value.status
+          ? _self.status
           : status // ignore: cast_nullable_to_non_nullable
-              as ThumbnailStatus,
+              as DocumentStatus,
+      error: freezed == error
+          ? _self.error
+          : error // ignore: cast_nullable_to_non_nullable
+              as String?,
     ));
   }
 }
 
 /// @nodoc
+mixin _$PdfPageThumbnail {
+  String get id;
+  String get documentId;
+  int get pageNumber;
+  int get globalIndex;
+  PageDimensions get dimensions;
+  PageRotation get rotation;
+  Uint8List? get thumbnailData;
+  bool get isSelected;
+  bool get isDuplicate;
+  bool get isBlank;
+  ThumbnailStatus get status;
 
-class _$PdfPageThumbnailImpl extends _PdfPageThumbnail {
-  const _$PdfPageThumbnailImpl(
-      {required this.id,
-      required this.documentId,
-      required this.pageNumber,
-      required this.globalIndex,
-      required this.dimensions,
-      this.rotation = PageRotation.none,
-      this.thumbnailData,
-      this.isSelected = false,
-      this.isDuplicate = false,
-      this.isBlank = false,
-      this.status = ThumbnailStatus.loading})
-      : super._();
-
-  @override
-  final String id;
-  @override
-  final String documentId;
-  @override
-  final int pageNumber;
-  @override
-  final int globalIndex;
-// Index in merged document
-  @override
-  final PageDimensions dimensions;
-  @override
-  @JsonKey()
-  final PageRotation rotation;
-  @override
-  final Uint8List? thumbnailData;
-  @override
-  @JsonKey()
-  final bool isSelected;
-  @override
-  @JsonKey()
-  final bool isDuplicate;
-  @override
-  @JsonKey()
-  final bool isBlank;
-  @override
-  @JsonKey()
-  final ThumbnailStatus status;
-
-  @override
-  String toString() {
-    return 'PdfPageThumbnail(id: $id, documentId: $documentId, pageNumber: $pageNumber, globalIndex: $globalIndex, dimensions: $dimensions, rotation: $rotation, thumbnailData: $thumbnailData, isSelected: $isSelected, isDuplicate: $isDuplicate, isBlank: $isBlank, status: $status)';
-  }
+  /// Create a copy of PdfPageThumbnail
+  /// with the given fields replaced by the non-null parameter values.
+  @JsonKey(includeFromJson: false, includeToJson: false)
+  @pragma('vm:prefer-inline')
+  $PdfPageThumbnailCopyWith<PdfPageThumbnail> get copyWith =>
+      _$PdfPageThumbnailCopyWithImpl<PdfPageThumbnail>(
+          this as PdfPageThumbnail, _$identity);
 
   @override
   bool operator ==(Object other) {
     return identical(this, other) ||
         (other.runtimeType == runtimeType &&
-            other is _$PdfPageThumbnailImpl &&
+            other is PdfPageThumbnail &&
             (identical(other.id, id) || other.id == id) &&
             (identical(other.documentId, documentId) ||
                 other.documentId == documentId) &&
@@ -1225,594 +1295,981 @@ class _$PdfPageThumbnailImpl extends _PdfPageThumbnail {
       isBlank,
       status);
 
-  /// Create a copy of PdfPageThumbnail
-  /// with the given fields replaced by the non-null parameter values.
-  @JsonKey(includeFromJson: false, includeToJson: false)
   @override
-  @pragma('vm:prefer-inline')
-  _$$PdfPageThumbnailImplCopyWith<_$PdfPageThumbnailImpl> get copyWith =>
-      __$$PdfPageThumbnailImplCopyWithImpl<_$PdfPageThumbnailImpl>(
-          this, _$identity);
-}
-
-abstract class _PdfPageThumbnail extends PdfPageThumbnail {
-  const factory _PdfPageThumbnail(
-      {required final String id,
-      required final String documentId,
-      required final int pageNumber,
-      required final int globalIndex,
-      required final PageDimensions dimensions,
-      final PageRotation rotation,
-      final Uint8List? thumbnailData,
-      final bool isSelected,
-      final bool isDuplicate,
-      final bool isBlank,
-      final ThumbnailStatus status}) = _$PdfPageThumbnailImpl;
-  const _PdfPageThumbnail._() : super._();
-
-  @override
-  String get id;
-  @override
-  String get documentId;
-  @override
-  int get pageNumber;
-  @override
-  int get globalIndex; // Index in merged document
-  @override
-  PageDimensions get dimensions;
-  @override
-  PageRotation get rotation;
-  @override
-  Uint8List? get thumbnailData;
-  @override
-  bool get isSelected;
-  @override
-  bool get isDuplicate;
-  @override
-  bool get isBlank;
-  @override
-  ThumbnailStatus get status;
-
-  /// Create a copy of PdfPageThumbnail
-  /// with the given fields replaced by the non-null parameter values.
-  @override
-  @JsonKey(includeFromJson: false, includeToJson: false)
-  _$$PdfPageThumbnailImplCopyWith<_$PdfPageThumbnailImpl> get copyWith =>
-      throw _privateConstructorUsedError;
-}
-
-/// @nodoc
-mixin _$PdfMergerOperation {
-  String get id => throw _privateConstructorUsedError;
-  OperationStatus get status => throw _privateConstructorUsedError;
-  int get progress => throw _privateConstructorUsedError;
-  String get message => throw _privateConstructorUsedError;
-  String get error => throw _privateConstructorUsedError;
-  DateTime? get startTime => throw _privateConstructorUsedError;
-  DateTime? get endTime => throw _privateConstructorUsedError;
-  Map<String, dynamic>? get result => throw _privateConstructorUsedError;
-
-  /// Create a copy of PdfMergerOperation
-  /// with the given fields replaced by the non-null parameter values.
-  @JsonKey(includeFromJson: false, includeToJson: false)
-  $PdfMergerOperationCopyWith<PdfMergerOperation> get copyWith =>
-      throw _privateConstructorUsedError;
-}
-
-/// @nodoc
-abstract class $PdfMergerOperationCopyWith<$Res> {
-  factory $PdfMergerOperationCopyWith(
-          PdfMergerOperation value, $Res Function(PdfMergerOperation) then) =
-      _$PdfMergerOperationCopyWithImpl<$Res, PdfMergerOperation>;
-  @useResult
-  $Res call(
-      {String id,
-      OperationStatus status,
-      int progress,
-      String message,
-      String error,
-      DateTime? startTime,
-      DateTime? endTime,
-      Map<String, dynamic>? result});
-}
-
-/// @nodoc
-class _$PdfMergerOperationCopyWithImpl<$Res, $Val extends PdfMergerOperation>
-    implements $PdfMergerOperationCopyWith<$Res> {
-  _$PdfMergerOperationCopyWithImpl(this._value, this._then);
-
-  // ignore: unused_field
-  final $Val _value;
-  // ignore: unused_field
-  final $Res Function($Val) _then;
-
-  /// Create a copy of PdfMergerOperation
-  /// with the given fields replaced by the non-null parameter values.
-  @pragma('vm:prefer-inline')
-  @override
-  $Res call({
-    Object? id = null,
-    Object? status = null,
-    Object? progress = null,
-    Object? message = null,
-    Object? error = null,
-    Object? startTime = freezed,
-    Object? endTime = freezed,
-    Object? result = freezed,
-  }) {
-    return _then(_value.copyWith(
-      id: null == id
-          ? _value.id
-          : id // ignore: cast_nullable_to_non_nullable
-              as String,
-      status: null == status
-          ? _value.status
-          : status // ignore: cast_nullable_to_non_nullable
-              as OperationStatus,
-      progress: null == progress
-          ? _value.progress
-          : progress // ignore: cast_nullable_to_non_nullable
-              as int,
-      message: null == message
-          ? _value.message
-          : message // ignore: cast_nullable_to_non_nullable
-              as String,
-      error: null == error
-          ? _value.error
-          : error // ignore: cast_nullable_to_non_nullable
-              as String,
-      startTime: freezed == startTime
-          ? _value.startTime
-          : startTime // ignore: cast_nullable_to_non_nullable
-              as DateTime?,
-      endTime: freezed == endTime
-          ? _value.endTime
-          : endTime // ignore: cast_nullable_to_non_nullable
-              as DateTime?,
-      result: freezed == result
-          ? _value.result
-          : result // ignore: cast_nullable_to_non_nullable
-              as Map<String, dynamic>?,
-    ) as $Val);
+  String toString() {
+    return 'PdfPageThumbnail(id: $id, documentId: $documentId, pageNumber: $pageNumber, globalIndex: $globalIndex, dimensions: $dimensions, rotation: $rotation, thumbnailData: $thumbnailData, isSelected: $isSelected, isDuplicate: $isDuplicate, isBlank: $isBlank, status: $status)';
   }
 }
 
 /// @nodoc
-abstract class _$$PdfMergerOperationImplCopyWith<$Res>
-    implements $PdfMergerOperationCopyWith<$Res> {
-  factory _$$PdfMergerOperationImplCopyWith(_$PdfMergerOperationImpl value,
-          $Res Function(_$PdfMergerOperationImpl) then) =
-      __$$PdfMergerOperationImplCopyWithImpl<$Res>;
-  @override
+abstract mixin class $PdfPageThumbnailCopyWith<$Res> {
+  factory $PdfPageThumbnailCopyWith(
+          PdfPageThumbnail value, $Res Function(PdfPageThumbnail) _then) =
+      _$PdfPageThumbnailCopyWithImpl;
   @useResult
   $Res call(
       {String id,
-      OperationStatus status,
-      int progress,
-      String message,
-      String error,
-      DateTime? startTime,
-      DateTime? endTime,
-      Map<String, dynamic>? result});
+      String documentId,
+      int pageNumber,
+      int globalIndex,
+      PageDimensions dimensions,
+      PageRotation rotation,
+      Uint8List? thumbnailData,
+      bool isSelected,
+      bool isDuplicate,
+      bool isBlank,
+      ThumbnailStatus status});
 }
 
 /// @nodoc
-class __$$PdfMergerOperationImplCopyWithImpl<$Res>
-    extends _$PdfMergerOperationCopyWithImpl<$Res, _$PdfMergerOperationImpl>
-    implements _$$PdfMergerOperationImplCopyWith<$Res> {
-  __$$PdfMergerOperationImplCopyWithImpl(_$PdfMergerOperationImpl _value,
-      $Res Function(_$PdfMergerOperationImpl) _then)
-      : super(_value, _then);
+class _$PdfPageThumbnailCopyWithImpl<$Res>
+    implements $PdfPageThumbnailCopyWith<$Res> {
+  _$PdfPageThumbnailCopyWithImpl(this._self, this._then);
 
-  /// Create a copy of PdfMergerOperation
+  final PdfPageThumbnail _self;
+  final $Res Function(PdfPageThumbnail) _then;
+
+  /// Create a copy of PdfPageThumbnail
   /// with the given fields replaced by the non-null parameter values.
   @pragma('vm:prefer-inline')
   @override
   $Res call({
     Object? id = null,
+    Object? documentId = null,
+    Object? pageNumber = null,
+    Object? globalIndex = null,
+    Object? dimensions = null,
+    Object? rotation = null,
+    Object? thumbnailData = freezed,
+    Object? isSelected = null,
+    Object? isDuplicate = null,
+    Object? isBlank = null,
     Object? status = null,
-    Object? progress = null,
-    Object? message = null,
-    Object? error = null,
-    Object? startTime = freezed,
-    Object? endTime = freezed,
-    Object? result = freezed,
   }) {
-    return _then(_$PdfMergerOperationImpl(
+    return _then(_self.copyWith(
       id: null == id
-          ? _value.id
+          ? _self.id
           : id // ignore: cast_nullable_to_non_nullable
               as String,
-      status: null == status
-          ? _value.status
-          : status // ignore: cast_nullable_to_non_nullable
-              as OperationStatus,
-      progress: null == progress
-          ? _value.progress
-          : progress // ignore: cast_nullable_to_non_nullable
+      documentId: null == documentId
+          ? _self.documentId
+          : documentId // ignore: cast_nullable_to_non_nullable
+              as String,
+      pageNumber: null == pageNumber
+          ? _self.pageNumber
+          : pageNumber // ignore: cast_nullable_to_non_nullable
               as int,
-      message: null == message
-          ? _value.message
-          : message // ignore: cast_nullable_to_non_nullable
-              as String,
-      error: null == error
-          ? _value.error
-          : error // ignore: cast_nullable_to_non_nullable
-              as String,
-      startTime: freezed == startTime
-          ? _value.startTime
-          : startTime // ignore: cast_nullable_to_non_nullable
-              as DateTime?,
-      endTime: freezed == endTime
-          ? _value.endTime
-          : endTime // ignore: cast_nullable_to_non_nullable
-              as DateTime?,
-      result: freezed == result
-          ? _value._result
-          : result // ignore: cast_nullable_to_non_nullable
-              as Map<String, dynamic>?,
+      globalIndex: null == globalIndex
+          ? _self.globalIndex
+          : globalIndex // ignore: cast_nullable_to_non_nullable
+              as int,
+      dimensions: null == dimensions
+          ? _self.dimensions
+          : dimensions // ignore: cast_nullable_to_non_nullable
+              as PageDimensions,
+      rotation: null == rotation
+          ? _self.rotation
+          : rotation // ignore: cast_nullable_to_non_nullable
+              as PageRotation,
+      thumbnailData: freezed == thumbnailData
+          ? _self.thumbnailData
+          : thumbnailData // ignore: cast_nullable_to_non_nullable
+              as Uint8List?,
+      isSelected: null == isSelected
+          ? _self.isSelected
+          : isSelected // ignore: cast_nullable_to_non_nullable
+              as bool,
+      isDuplicate: null == isDuplicate
+          ? _self.isDuplicate
+          : isDuplicate // ignore: cast_nullable_to_non_nullable
+              as bool,
+      isBlank: null == isBlank
+          ? _self.isBlank
+          : isBlank // ignore: cast_nullable_to_non_nullable
+              as bool,
+      status: null == status
+          ? _self.status
+          : status // ignore: cast_nullable_to_non_nullable
+              as ThumbnailStatus,
     ));
   }
 }
 
+/// Adds pattern-matching-related methods to [PdfPageThumbnail].
+extension PdfPageThumbnailPatterns on PdfPageThumbnail {
+  /// A variant of `map` that fallback to returning `orElse`.
+  ///
+  /// It is equivalent to doing:
+  /// ```dart
+  /// switch (sealedClass) {
+  ///   case final Subclass value:
+  ///     return ...;
+  ///   case _:
+  ///     return orElse();
+  /// }
+  /// ```
+
+  @optionalTypeArgs
+  TResult maybeMap<TResult extends Object?>(
+    TResult Function(_PdfPageThumbnail value)? $default, {
+    required TResult orElse(),
+  }) {
+    final _that = this;
+    switch (_that) {
+      case _PdfPageThumbnail() when $default != null:
+        return $default(_that);
+      case _:
+        return orElse();
+    }
+  }
+
+  /// A `switch`-like method, using callbacks.
+  ///
+  /// Callbacks receives the raw object, upcasted.
+  /// It is equivalent to doing:
+  /// ```dart
+  /// switch (sealedClass) {
+  ///   case final Subclass value:
+  ///     return ...;
+  ///   case final Subclass2 value:
+  ///     return ...;
+  /// }
+  /// ```
+
+  @optionalTypeArgs
+  TResult map<TResult extends Object?>(
+    TResult Function(_PdfPageThumbnail value) $default,
+  ) {
+    final _that = this;
+    switch (_that) {
+      case _PdfPageThumbnail():
+        return $default(_that);
+      case _:
+        throw StateError('Unexpected subclass');
+    }
+  }
+
+  /// A variant of `map` that fallback to returning `null`.
+  ///
+  /// It is equivalent to doing:
+  /// ```dart
+  /// switch (sealedClass) {
+  ///   case final Subclass value:
+  ///     return ...;
+  ///   case _:
+  ///     return null;
+  /// }
+  /// ```
+
+  @optionalTypeArgs
+  TResult? mapOrNull<TResult extends Object?>(
+    TResult? Function(_PdfPageThumbnail value)? $default,
+  ) {
+    final _that = this;
+    switch (_that) {
+      case _PdfPageThumbnail() when $default != null:
+        return $default(_that);
+      case _:
+        return null;
+    }
+  }
+
+  /// A variant of `when` that fallback to an `orElse` callback.
+  ///
+  /// It is equivalent to doing:
+  /// ```dart
+  /// switch (sealedClass) {
+  ///   case Subclass(:final field):
+  ///     return ...;
+  ///   case _:
+  ///     return orElse();
+  /// }
+  /// ```
+
+  @optionalTypeArgs
+  TResult maybeWhen<TResult extends Object?>(
+    TResult Function(
+            String id,
+            String documentId,
+            int pageNumber,
+            int globalIndex,
+            PageDimensions dimensions,
+            PageRotation rotation,
+            Uint8List? thumbnailData,
+            bool isSelected,
+            bool isDuplicate,
+            bool isBlank,
+            ThumbnailStatus status)?
+        $default, {
+    required TResult orElse(),
+  }) {
+    final _that = this;
+    switch (_that) {
+      case _PdfPageThumbnail() when $default != null:
+        return $default(
+            _that.id,
+            _that.documentId,
+            _that.pageNumber,
+            _that.globalIndex,
+            _that.dimensions,
+            _that.rotation,
+            _that.thumbnailData,
+            _that.isSelected,
+            _that.isDuplicate,
+            _that.isBlank,
+            _that.status);
+      case _:
+        return orElse();
+    }
+  }
+
+  /// A `switch`-like method, using callbacks.
+  ///
+  /// As opposed to `map`, this offers destructuring.
+  /// It is equivalent to doing:
+  /// ```dart
+  /// switch (sealedClass) {
+  ///   case Subclass(:final field):
+  ///     return ...;
+  ///   case Subclass2(:final field2):
+  ///     return ...;
+  /// }
+  /// ```
+
+  @optionalTypeArgs
+  TResult when<TResult extends Object?>(
+    TResult Function(
+            String id,
+            String documentId,
+            int pageNumber,
+            int globalIndex,
+            PageDimensions dimensions,
+            PageRotation rotation,
+            Uint8List? thumbnailData,
+            bool isSelected,
+            bool isDuplicate,
+            bool isBlank,
+            ThumbnailStatus status)
+        $default,
+  ) {
+    final _that = this;
+    switch (_that) {
+      case _PdfPageThumbnail():
+        return $default(
+            _that.id,
+            _that.documentId,
+            _that.pageNumber,
+            _that.globalIndex,
+            _that.dimensions,
+            _that.rotation,
+            _that.thumbnailData,
+            _that.isSelected,
+            _that.isDuplicate,
+            _that.isBlank,
+            _that.status);
+      case _:
+        throw StateError('Unexpected subclass');
+    }
+  }
+
+  /// A variant of `when` that fallback to returning `null`
+  ///
+  /// It is equivalent to doing:
+  /// ```dart
+  /// switch (sealedClass) {
+  ///   case Subclass(:final field):
+  ///     return ...;
+  ///   case _:
+  ///     return null;
+  /// }
+  /// ```
+
+  @optionalTypeArgs
+  TResult? whenOrNull<TResult extends Object?>(
+    TResult? Function(
+            String id,
+            String documentId,
+            int pageNumber,
+            int globalIndex,
+            PageDimensions dimensions,
+            PageRotation rotation,
+            Uint8List? thumbnailData,
+            bool isSelected,
+            bool isDuplicate,
+            bool isBlank,
+            ThumbnailStatus status)?
+        $default,
+  ) {
+    final _that = this;
+    switch (_that) {
+      case _PdfPageThumbnail() when $default != null:
+        return $default(
+            _that.id,
+            _that.documentId,
+            _that.pageNumber,
+            _that.globalIndex,
+            _that.dimensions,
+            _that.rotation,
+            _that.thumbnailData,
+            _that.isSelected,
+            _that.isDuplicate,
+            _that.isBlank,
+            _that.status);
+      case _:
+        return null;
+    }
+  }
+}
+
 /// @nodoc
 
-class _$PdfMergerOperationImpl extends _PdfMergerOperation {
-  const _$PdfMergerOperationImpl(
+class _PdfPageThumbnail extends PdfPageThumbnail {
+  const _PdfPageThumbnail(
       {required this.id,
-      this.status = OperationStatus.pending,
-      this.progress = 0,
-      this.message = '',
-      this.error = '',
-      this.startTime,
-      this.endTime,
-      final Map<String, dynamic>? result})
-      : _result = result,
-        super._();
+      required this.documentId,
+      required this.pageNumber,
+      required this.globalIndex,
+      required this.dimensions,
+      this.rotation = PageRotation.none,
+      this.thumbnailData,
+      this.isSelected = false,
+      this.isDuplicate = false,
+      this.isBlank = false,
+      this.status = ThumbnailStatus.loading})
+      : super._();
 
   @override
   final String id;
   @override
-  @JsonKey()
-  final OperationStatus status;
+  final String documentId;
+  @override
+  final int pageNumber;
+  @override
+  final int globalIndex;
+  @override
+  final PageDimensions dimensions;
   @override
   @JsonKey()
-  final int progress;
+  final PageRotation rotation;
+  @override
+  final Uint8List? thumbnailData;
   @override
   @JsonKey()
-  final String message;
+  final bool isSelected;
   @override
   @JsonKey()
-  final String error;
+  final bool isDuplicate;
   @override
-  final DateTime? startTime;
+  @JsonKey()
+  final bool isBlank;
   @override
-  final DateTime? endTime;
-  final Map<String, dynamic>? _result;
-  @override
-  Map<String, dynamic>? get result {
-    final value = _result;
-    if (value == null) return null;
-    if (_result is EqualUnmodifiableMapView) return _result;
-    // ignore: implicit_dynamic_type
-    return EqualUnmodifiableMapView(value);
-  }
+  @JsonKey()
+  final ThumbnailStatus status;
 
+  /// Create a copy of PdfPageThumbnail
+  /// with the given fields replaced by the non-null parameter values.
   @override
-  String toString() {
-    return 'PdfMergerOperation(id: $id, status: $status, progress: $progress, message: $message, error: $error, startTime: $startTime, endTime: $endTime, result: $result)';
-  }
+  @JsonKey(includeFromJson: false, includeToJson: false)
+  @pragma('vm:prefer-inline')
+  _$PdfPageThumbnailCopyWith<_PdfPageThumbnail> get copyWith =>
+      __$PdfPageThumbnailCopyWithImpl<_PdfPageThumbnail>(this, _$identity);
 
   @override
   bool operator ==(Object other) {
     return identical(this, other) ||
         (other.runtimeType == runtimeType &&
-            other is _$PdfMergerOperationImpl &&
+            other is _PdfPageThumbnail &&
             (identical(other.id, id) || other.id == id) &&
-            (identical(other.status, status) || other.status == status) &&
-            (identical(other.progress, progress) ||
-                other.progress == progress) &&
-            (identical(other.message, message) || other.message == message) &&
-            (identical(other.error, error) || other.error == error) &&
-            (identical(other.startTime, startTime) ||
-                other.startTime == startTime) &&
-            (identical(other.endTime, endTime) || other.endTime == endTime) &&
-            const DeepCollectionEquality().equals(other._result, _result));
+            (identical(other.documentId, documentId) ||
+                other.documentId == documentId) &&
+            (identical(other.pageNumber, pageNumber) ||
+                other.pageNumber == pageNumber) &&
+            (identical(other.globalIndex, globalIndex) ||
+                other.globalIndex == globalIndex) &&
+            (identical(other.dimensions, dimensions) ||
+                other.dimensions == dimensions) &&
+            (identical(other.rotation, rotation) ||
+                other.rotation == rotation) &&
+            const DeepCollectionEquality()
+                .equals(other.thumbnailData, thumbnailData) &&
+            (identical(other.isSelected, isSelected) ||
+                other.isSelected == isSelected) &&
+            (identical(other.isDuplicate, isDuplicate) ||
+                other.isDuplicate == isDuplicate) &&
+            (identical(other.isBlank, isBlank) || other.isBlank == isBlank) &&
+            (identical(other.status, status) || other.status == status));
   }
 
   @override
-  int get hashCode => Object.hash(runtimeType, id, status, progress, message,
-      error, startTime, endTime, const DeepCollectionEquality().hash(_result));
-
-  /// Create a copy of PdfMergerOperation
-  /// with the given fields replaced by the non-null parameter values.
-  @JsonKey(includeFromJson: false, includeToJson: false)
-  @override
-  @pragma('vm:prefer-inline')
-  _$$PdfMergerOperationImplCopyWith<_$PdfMergerOperationImpl> get copyWith =>
-      __$$PdfMergerOperationImplCopyWithImpl<_$PdfMergerOperationImpl>(
-          this, _$identity);
-}
-
-abstract class _PdfMergerOperation extends PdfMergerOperation {
-  const factory _PdfMergerOperation(
-      {required final String id,
-      final OperationStatus status,
-      final int progress,
-      final String message,
-      final String error,
-      final DateTime? startTime,
-      final DateTime? endTime,
-      final Map<String, dynamic>? result}) = _$PdfMergerOperationImpl;
-  const _PdfMergerOperation._() : super._();
+  int get hashCode => Object.hash(
+      runtimeType,
+      id,
+      documentId,
+      pageNumber,
+      globalIndex,
+      dimensions,
+      rotation,
+      const DeepCollectionEquality().hash(thumbnailData),
+      isSelected,
+      isDuplicate,
+      isBlank,
+      status);
 
   @override
-  String get id;
-  @override
-  OperationStatus get status;
-  @override
-  int get progress;
-  @override
-  String get message;
-  @override
-  String get error;
-  @override
-  DateTime? get startTime;
-  @override
-  DateTime? get endTime;
-  @override
-  Map<String, dynamic>? get result;
-
-  /// Create a copy of PdfMergerOperation
-  /// with the given fields replaced by the non-null parameter values.
-  @override
-  @JsonKey(includeFromJson: false, includeToJson: false)
-  _$$PdfMergerOperationImplCopyWith<_$PdfMergerOperationImpl> get copyWith =>
-      throw _privateConstructorUsedError;
-}
-
-/// @nodoc
-mixin _$MergeStatistics {
-  int get totalDocuments => throw _privateConstructorUsedError;
-  int get totalPages => throw _privateConstructorUsedError;
-  int get totalSize => throw _privateConstructorUsedError;
-  int get estimatedOutputSize => throw _privateConstructorUsedError;
-  double get compressionRatio => throw _privateConstructorUsedError;
-  Duration get estimatedTime => throw _privateConstructorUsedError;
-  Map<String, int>? get pageSizeDistribution =>
-      throw _privateConstructorUsedError;
-  Map<PageOrientation, int>? get orientationCounts =>
-      throw _privateConstructorUsedError;
-
-  /// Create a copy of MergeStatistics
-  /// with the given fields replaced by the non-null parameter values.
-  @JsonKey(includeFromJson: false, includeToJson: false)
-  $MergeStatisticsCopyWith<MergeStatistics> get copyWith =>
-      throw _privateConstructorUsedError;
-}
-
-/// @nodoc
-abstract class $MergeStatisticsCopyWith<$Res> {
-  factory $MergeStatisticsCopyWith(
-          MergeStatistics value, $Res Function(MergeStatistics) then) =
-      _$MergeStatisticsCopyWithImpl<$Res, MergeStatistics>;
-  @useResult
-  $Res call(
-      {int totalDocuments,
-      int totalPages,
-      int totalSize,
-      int estimatedOutputSize,
-      double compressionRatio,
-      Duration estimatedTime,
-      Map<String, int>? pageSizeDistribution,
-      Map<PageOrientation, int>? orientationCounts});
-}
-
-/// @nodoc
-class _$MergeStatisticsCopyWithImpl<$Res, $Val extends MergeStatistics>
-    implements $MergeStatisticsCopyWith<$Res> {
-  _$MergeStatisticsCopyWithImpl(this._value, this._then);
-
-  // ignore: unused_field
-  final $Val _value;
-  // ignore: unused_field
-  final $Res Function($Val) _then;
-
-  /// Create a copy of MergeStatistics
-  /// with the given fields replaced by the non-null parameter values.
-  @pragma('vm:prefer-inline')
-  @override
-  $Res call({
-    Object? totalDocuments = null,
-    Object? totalPages = null,
-    Object? totalSize = null,
-    Object? estimatedOutputSize = null,
-    Object? compressionRatio = null,
-    Object? estimatedTime = null,
-    Object? pageSizeDistribution = freezed,
-    Object? orientationCounts = freezed,
-  }) {
-    return _then(_value.copyWith(
-      totalDocuments: null == totalDocuments
-          ? _value.totalDocuments
-          : totalDocuments // ignore: cast_nullable_to_non_nullable
-              as int,
-      totalPages: null == totalPages
-          ? _value.totalPages
-          : totalPages // ignore: cast_nullable_to_non_nullable
-              as int,
-      totalSize: null == totalSize
-          ? _value.totalSize
-          : totalSize // ignore: cast_nullable_to_non_nullable
-              as int,
-      estimatedOutputSize: null == estimatedOutputSize
-          ? _value.estimatedOutputSize
-          : estimatedOutputSize // ignore: cast_nullable_to_non_nullable
-              as int,
-      compressionRatio: null == compressionRatio
-          ? _value.compressionRatio
-          : compressionRatio // ignore: cast_nullable_to_non_nullable
-              as double,
-      estimatedTime: null == estimatedTime
-          ? _value.estimatedTime
-          : estimatedTime // ignore: cast_nullable_to_non_nullable
-              as Duration,
-      pageSizeDistribution: freezed == pageSizeDistribution
-          ? _value.pageSizeDistribution
-          : pageSizeDistribution // ignore: cast_nullable_to_non_nullable
-              as Map<String, int>?,
-      orientationCounts: freezed == orientationCounts
-          ? _value.orientationCounts
-          : orientationCounts // ignore: cast_nullable_to_non_nullable
-              as Map<PageOrientation, int>?,
-    ) as $Val);
+  String toString() {
+    return 'PdfPageThumbnail(id: $id, documentId: $documentId, pageNumber: $pageNumber, globalIndex: $globalIndex, dimensions: $dimensions, rotation: $rotation, thumbnailData: $thumbnailData, isSelected: $isSelected, isDuplicate: $isDuplicate, isBlank: $isBlank, status: $status)';
   }
 }
 
 /// @nodoc
-abstract class _$$MergeStatisticsImplCopyWith<$Res>
-    implements $MergeStatisticsCopyWith<$Res> {
-  factory _$$MergeStatisticsImplCopyWith(_$MergeStatisticsImpl value,
-          $Res Function(_$MergeStatisticsImpl) then) =
-      __$$MergeStatisticsImplCopyWithImpl<$Res>;
+abstract mixin class _$PdfPageThumbnailCopyWith<$Res>
+    implements $PdfPageThumbnailCopyWith<$Res> {
+  factory _$PdfPageThumbnailCopyWith(
+          _PdfPageThumbnail value, $Res Function(_PdfPageThumbnail) _then) =
+      __$PdfPageThumbnailCopyWithImpl;
   @override
   @useResult
   $Res call(
-      {int totalDocuments,
-      int totalPages,
-      int totalSize,
-      int estimatedOutputSize,
-      double compressionRatio,
-      Duration estimatedTime,
-      Map<String, int>? pageSizeDistribution,
-      Map<PageOrientation, int>? orientationCounts});
+      {String id,
+      String documentId,
+      int pageNumber,
+      int globalIndex,
+      PageDimensions dimensions,
+      PageRotation rotation,
+      Uint8List? thumbnailData,
+      bool isSelected,
+      bool isDuplicate,
+      bool isBlank,
+      ThumbnailStatus status});
 }
 
 /// @nodoc
-class __$$MergeStatisticsImplCopyWithImpl<$Res>
-    extends _$MergeStatisticsCopyWithImpl<$Res, _$MergeStatisticsImpl>
-    implements _$$MergeStatisticsImplCopyWith<$Res> {
-  __$$MergeStatisticsImplCopyWithImpl(
-      _$MergeStatisticsImpl _value, $Res Function(_$MergeStatisticsImpl) _then)
-      : super(_value, _then);
+class __$PdfPageThumbnailCopyWithImpl<$Res>
+    implements _$PdfPageThumbnailCopyWith<$Res> {
+  __$PdfPageThumbnailCopyWithImpl(this._self, this._then);
 
-  /// Create a copy of MergeStatistics
+  final _PdfPageThumbnail _self;
+  final $Res Function(_PdfPageThumbnail) _then;
+
+  /// Create a copy of PdfPageThumbnail
   /// with the given fields replaced by the non-null parameter values.
-  @pragma('vm:prefer-inline')
   @override
+  @pragma('vm:prefer-inline')
   $Res call({
-    Object? totalDocuments = null,
-    Object? totalPages = null,
-    Object? totalSize = null,
-    Object? estimatedOutputSize = null,
-    Object? compressionRatio = null,
-    Object? estimatedTime = null,
-    Object? pageSizeDistribution = freezed,
-    Object? orientationCounts = freezed,
+    Object? id = null,
+    Object? documentId = null,
+    Object? pageNumber = null,
+    Object? globalIndex = null,
+    Object? dimensions = null,
+    Object? rotation = null,
+    Object? thumbnailData = freezed,
+    Object? isSelected = null,
+    Object? isDuplicate = null,
+    Object? isBlank = null,
+    Object? status = null,
   }) {
-    return _then(_$MergeStatisticsImpl(
-      totalDocuments: null == totalDocuments
-          ? _value.totalDocuments
-          : totalDocuments // ignore: cast_nullable_to_non_nullable
+    return _then(_PdfPageThumbnail(
+      id: null == id
+          ? _self.id
+          : id // ignore: cast_nullable_to_non_nullable
+              as String,
+      documentId: null == documentId
+          ? _self.documentId
+          : documentId // ignore: cast_nullable_to_non_nullable
+              as String,
+      pageNumber: null == pageNumber
+          ? _self.pageNumber
+          : pageNumber // ignore: cast_nullable_to_non_nullable
               as int,
-      totalPages: null == totalPages
-          ? _value.totalPages
-          : totalPages // ignore: cast_nullable_to_non_nullable
+      globalIndex: null == globalIndex
+          ? _self.globalIndex
+          : globalIndex // ignore: cast_nullable_to_non_nullable
               as int,
-      totalSize: null == totalSize
-          ? _value.totalSize
-          : totalSize // ignore: cast_nullable_to_non_nullable
-              as int,
-      estimatedOutputSize: null == estimatedOutputSize
-          ? _value.estimatedOutputSize
-          : estimatedOutputSize // ignore: cast_nullable_to_non_nullable
-              as int,
-      compressionRatio: null == compressionRatio
-          ? _value.compressionRatio
-          : compressionRatio // ignore: cast_nullable_to_non_nullable
-              as double,
-      estimatedTime: null == estimatedTime
-          ? _value.estimatedTime
-          : estimatedTime // ignore: cast_nullable_to_non_nullable
-              as Duration,
-      pageSizeDistribution: freezed == pageSizeDistribution
-          ? _value._pageSizeDistribution
-          : pageSizeDistribution // ignore: cast_nullable_to_non_nullable
-              as Map<String, int>?,
-      orientationCounts: freezed == orientationCounts
-          ? _value._orientationCounts
-          : orientationCounts // ignore: cast_nullable_to_non_nullable
-              as Map<PageOrientation, int>?,
+      dimensions: null == dimensions
+          ? _self.dimensions
+          : dimensions // ignore: cast_nullable_to_non_nullable
+              as PageDimensions,
+      rotation: null == rotation
+          ? _self.rotation
+          : rotation // ignore: cast_nullable_to_non_nullable
+              as PageRotation,
+      thumbnailData: freezed == thumbnailData
+          ? _self.thumbnailData
+          : thumbnailData // ignore: cast_nullable_to_non_nullable
+              as Uint8List?,
+      isSelected: null == isSelected
+          ? _self.isSelected
+          : isSelected // ignore: cast_nullable_to_non_nullable
+              as bool,
+      isDuplicate: null == isDuplicate
+          ? _self.isDuplicate
+          : isDuplicate // ignore: cast_nullable_to_non_nullable
+              as bool,
+      isBlank: null == isBlank
+          ? _self.isBlank
+          : isBlank // ignore: cast_nullable_to_non_nullable
+              as bool,
+      status: null == status
+          ? _self.status
+          : status // ignore: cast_nullable_to_non_nullable
+              as ThumbnailStatus,
     ));
   }
 }
 
 /// @nodoc
+mixin _$PdfMergerOperation {
+  String get id;
+  String get message;
+  DateTime get startTime;
+  DateTime? get endTime;
+  double get progress;
+  bool get isCompleted;
+  String? get error;
 
-class _$MergeStatisticsImpl extends _MergeStatistics {
-  const _$MergeStatisticsImpl(
-      {this.totalDocuments = 0,
-      this.totalPages = 0,
-      this.totalSize = 0,
-      this.estimatedOutputSize = 0,
-      this.compressionRatio = 0.0,
-      this.estimatedTime = const Duration(seconds: 0),
-      final Map<String, int>? pageSizeDistribution,
-      final Map<PageOrientation, int>? orientationCounts})
-      : _pageSizeDistribution = pageSizeDistribution,
-        _orientationCounts = orientationCounts,
-        super._();
-
-  @override
-  @JsonKey()
-  final int totalDocuments;
-  @override
-  @JsonKey()
-  final int totalPages;
-  @override
-  @JsonKey()
-  final int totalSize;
-  @override
-  @JsonKey()
-  final int estimatedOutputSize;
-  @override
-  @JsonKey()
-  final double compressionRatio;
-  @override
-  @JsonKey()
-  final Duration estimatedTime;
-  final Map<String, int>? _pageSizeDistribution;
-  @override
-  Map<String, int>? get pageSizeDistribution {
-    final value = _pageSizeDistribution;
-    if (value == null) return null;
-    if (_pageSizeDistribution is EqualUnmodifiableMapView)
-      return _pageSizeDistribution;
-    // ignore: implicit_dynamic_type
-    return EqualUnmodifiableMapView(value);
-  }
-
-  final Map<PageOrientation, int>? _orientationCounts;
-  @override
-  Map<PageOrientation, int>? get orientationCounts {
-    final value = _orientationCounts;
-    if (value == null) return null;
-    if (_orientationCounts is EqualUnmodifiableMapView)
-      return _orientationCounts;
-    // ignore: implicit_dynamic_type
-    return EqualUnmodifiableMapView(value);
-  }
-
-  @override
-  String toString() {
-    return 'MergeStatistics(totalDocuments: $totalDocuments, totalPages: $totalPages, totalSize: $totalSize, estimatedOutputSize: $estimatedOutputSize, compressionRatio: $compressionRatio, estimatedTime: $estimatedTime, pageSizeDistribution: $pageSizeDistribution, orientationCounts: $orientationCounts)';
-  }
+  /// Create a copy of PdfMergerOperation
+  /// with the given fields replaced by the non-null parameter values.
+  @JsonKey(includeFromJson: false, includeToJson: false)
+  @pragma('vm:prefer-inline')
+  $PdfMergerOperationCopyWith<PdfMergerOperation> get copyWith =>
+      _$PdfMergerOperationCopyWithImpl<PdfMergerOperation>(
+          this as PdfMergerOperation, _$identity);
 
   @override
   bool operator ==(Object other) {
     return identical(this, other) ||
         (other.runtimeType == runtimeType &&
-            other is _$MergeStatisticsImpl &&
+            other is PdfMergerOperation &&
+            (identical(other.id, id) || other.id == id) &&
+            (identical(other.message, message) || other.message == message) &&
+            (identical(other.startTime, startTime) ||
+                other.startTime == startTime) &&
+            (identical(other.endTime, endTime) || other.endTime == endTime) &&
+            (identical(other.progress, progress) ||
+                other.progress == progress) &&
+            (identical(other.isCompleted, isCompleted) ||
+                other.isCompleted == isCompleted) &&
+            (identical(other.error, error) || other.error == error));
+  }
+
+  @override
+  int get hashCode => Object.hash(runtimeType, id, message, startTime, endTime,
+      progress, isCompleted, error);
+
+  @override
+  String toString() {
+    return 'PdfMergerOperation(id: $id, message: $message, startTime: $startTime, endTime: $endTime, progress: $progress, isCompleted: $isCompleted, error: $error)';
+  }
+}
+
+/// @nodoc
+abstract mixin class $PdfMergerOperationCopyWith<$Res> {
+  factory $PdfMergerOperationCopyWith(
+          PdfMergerOperation value, $Res Function(PdfMergerOperation) _then) =
+      _$PdfMergerOperationCopyWithImpl;
+  @useResult
+  $Res call(
+      {String id,
+      String message,
+      DateTime startTime,
+      DateTime? endTime,
+      double progress,
+      bool isCompleted,
+      String? error});
+}
+
+/// @nodoc
+class _$PdfMergerOperationCopyWithImpl<$Res>
+    implements $PdfMergerOperationCopyWith<$Res> {
+  _$PdfMergerOperationCopyWithImpl(this._self, this._then);
+
+  final PdfMergerOperation _self;
+  final $Res Function(PdfMergerOperation) _then;
+
+  /// Create a copy of PdfMergerOperation
+  /// with the given fields replaced by the non-null parameter values.
+  @pragma('vm:prefer-inline')
+  @override
+  $Res call({
+    Object? id = null,
+    Object? message = null,
+    Object? startTime = null,
+    Object? endTime = freezed,
+    Object? progress = null,
+    Object? isCompleted = null,
+    Object? error = freezed,
+  }) {
+    return _then(_self.copyWith(
+      id: null == id
+          ? _self.id
+          : id // ignore: cast_nullable_to_non_nullable
+              as String,
+      message: null == message
+          ? _self.message
+          : message // ignore: cast_nullable_to_non_nullable
+              as String,
+      startTime: null == startTime
+          ? _self.startTime
+          : startTime // ignore: cast_nullable_to_non_nullable
+              as DateTime,
+      endTime: freezed == endTime
+          ? _self.endTime
+          : endTime // ignore: cast_nullable_to_non_nullable
+              as DateTime?,
+      progress: null == progress
+          ? _self.progress
+          : progress // ignore: cast_nullable_to_non_nullable
+              as double,
+      isCompleted: null == isCompleted
+          ? _self.isCompleted
+          : isCompleted // ignore: cast_nullable_to_non_nullable
+              as bool,
+      error: freezed == error
+          ? _self.error
+          : error // ignore: cast_nullable_to_non_nullable
+              as String?,
+    ));
+  }
+}
+
+/// Adds pattern-matching-related methods to [PdfMergerOperation].
+extension PdfMergerOperationPatterns on PdfMergerOperation {
+  /// A variant of `map` that fallback to returning `orElse`.
+  ///
+  /// It is equivalent to doing:
+  /// ```dart
+  /// switch (sealedClass) {
+  ///   case final Subclass value:
+  ///     return ...;
+  ///   case _:
+  ///     return orElse();
+  /// }
+  /// ```
+
+  @optionalTypeArgs
+  TResult maybeMap<TResult extends Object?>(
+    TResult Function(_PdfMergerOperation value)? $default, {
+    required TResult orElse(),
+  }) {
+    final _that = this;
+    switch (_that) {
+      case _PdfMergerOperation() when $default != null:
+        return $default(_that);
+      case _:
+        return orElse();
+    }
+  }
+
+  /// A `switch`-like method, using callbacks.
+  ///
+  /// Callbacks receives the raw object, upcasted.
+  /// It is equivalent to doing:
+  /// ```dart
+  /// switch (sealedClass) {
+  ///   case final Subclass value:
+  ///     return ...;
+  ///   case final Subclass2 value:
+  ///     return ...;
+  /// }
+  /// ```
+
+  @optionalTypeArgs
+  TResult map<TResult extends Object?>(
+    TResult Function(_PdfMergerOperation value) $default,
+  ) {
+    final _that = this;
+    switch (_that) {
+      case _PdfMergerOperation():
+        return $default(_that);
+      case _:
+        throw StateError('Unexpected subclass');
+    }
+  }
+
+  /// A variant of `map` that fallback to returning `null`.
+  ///
+  /// It is equivalent to doing:
+  /// ```dart
+  /// switch (sealedClass) {
+  ///   case final Subclass value:
+  ///     return ...;
+  ///   case _:
+  ///     return null;
+  /// }
+  /// ```
+
+  @optionalTypeArgs
+  TResult? mapOrNull<TResult extends Object?>(
+    TResult? Function(_PdfMergerOperation value)? $default,
+  ) {
+    final _that = this;
+    switch (_that) {
+      case _PdfMergerOperation() when $default != null:
+        return $default(_that);
+      case _:
+        return null;
+    }
+  }
+
+  /// A variant of `when` that fallback to an `orElse` callback.
+  ///
+  /// It is equivalent to doing:
+  /// ```dart
+  /// switch (sealedClass) {
+  ///   case Subclass(:final field):
+  ///     return ...;
+  ///   case _:
+  ///     return orElse();
+  /// }
+  /// ```
+
+  @optionalTypeArgs
+  TResult maybeWhen<TResult extends Object?>(
+    TResult Function(
+            String id,
+            String message,
+            DateTime startTime,
+            DateTime? endTime,
+            double progress,
+            bool isCompleted,
+            String? error)?
+        $default, {
+    required TResult orElse(),
+  }) {
+    final _that = this;
+    switch (_that) {
+      case _PdfMergerOperation() when $default != null:
+        return $default(_that.id, _that.message, _that.startTime, _that.endTime,
+            _that.progress, _that.isCompleted, _that.error);
+      case _:
+        return orElse();
+    }
+  }
+
+  /// A `switch`-like method, using callbacks.
+  ///
+  /// As opposed to `map`, this offers destructuring.
+  /// It is equivalent to doing:
+  /// ```dart
+  /// switch (sealedClass) {
+  ///   case Subclass(:final field):
+  ///     return ...;
+  ///   case Subclass2(:final field2):
+  ///     return ...;
+  /// }
+  /// ```
+
+  @optionalTypeArgs
+  TResult when<TResult extends Object?>(
+    TResult Function(String id, String message, DateTime startTime,
+            DateTime? endTime, double progress, bool isCompleted, String? error)
+        $default,
+  ) {
+    final _that = this;
+    switch (_that) {
+      case _PdfMergerOperation():
+        return $default(_that.id, _that.message, _that.startTime, _that.endTime,
+            _that.progress, _that.isCompleted, _that.error);
+      case _:
+        throw StateError('Unexpected subclass');
+    }
+  }
+
+  /// A variant of `when` that fallback to returning `null`
+  ///
+  /// It is equivalent to doing:
+  /// ```dart
+  /// switch (sealedClass) {
+  ///   case Subclass(:final field):
+  ///     return ...;
+  ///   case _:
+  ///     return null;
+  /// }
+  /// ```
+
+  @optionalTypeArgs
+  TResult? whenOrNull<TResult extends Object?>(
+    TResult? Function(
+            String id,
+            String message,
+            DateTime startTime,
+            DateTime? endTime,
+            double progress,
+            bool isCompleted,
+            String? error)?
+        $default,
+  ) {
+    final _that = this;
+    switch (_that) {
+      case _PdfMergerOperation() when $default != null:
+        return $default(_that.id, _that.message, _that.startTime, _that.endTime,
+            _that.progress, _that.isCompleted, _that.error);
+      case _:
+        return null;
+    }
+  }
+}
+
+/// @nodoc
+
+class _PdfMergerOperation implements PdfMergerOperation {
+  const _PdfMergerOperation(
+      {required this.id,
+      required this.message,
+      required this.startTime,
+      this.endTime,
+      this.progress = 0.0,
+      this.isCompleted = false,
+      this.error});
+
+  @override
+  final String id;
+  @override
+  final String message;
+  @override
+  final DateTime startTime;
+  @override
+  final DateTime? endTime;
+  @override
+  @JsonKey()
+  final double progress;
+  @override
+  @JsonKey()
+  final bool isCompleted;
+  @override
+  final String? error;
+
+  /// Create a copy of PdfMergerOperation
+  /// with the given fields replaced by the non-null parameter values.
+  @override
+  @JsonKey(includeFromJson: false, includeToJson: false)
+  @pragma('vm:prefer-inline')
+  _$PdfMergerOperationCopyWith<_PdfMergerOperation> get copyWith =>
+      __$PdfMergerOperationCopyWithImpl<_PdfMergerOperation>(this, _$identity);
+
+  @override
+  bool operator ==(Object other) {
+    return identical(this, other) ||
+        (other.runtimeType == runtimeType &&
+            other is _PdfMergerOperation &&
+            (identical(other.id, id) || other.id == id) &&
+            (identical(other.message, message) || other.message == message) &&
+            (identical(other.startTime, startTime) ||
+                other.startTime == startTime) &&
+            (identical(other.endTime, endTime) || other.endTime == endTime) &&
+            (identical(other.progress, progress) ||
+                other.progress == progress) &&
+            (identical(other.isCompleted, isCompleted) ||
+                other.isCompleted == isCompleted) &&
+            (identical(other.error, error) || other.error == error));
+  }
+
+  @override
+  int get hashCode => Object.hash(runtimeType, id, message, startTime, endTime,
+      progress, isCompleted, error);
+
+  @override
+  String toString() {
+    return 'PdfMergerOperation(id: $id, message: $message, startTime: $startTime, endTime: $endTime, progress: $progress, isCompleted: $isCompleted, error: $error)';
+  }
+}
+
+/// @nodoc
+abstract mixin class _$PdfMergerOperationCopyWith<$Res>
+    implements $PdfMergerOperationCopyWith<$Res> {
+  factory _$PdfMergerOperationCopyWith(
+          _PdfMergerOperation value, $Res Function(_PdfMergerOperation) _then) =
+      __$PdfMergerOperationCopyWithImpl;
+  @override
+  @useResult
+  $Res call(
+      {String id,
+      String message,
+      DateTime startTime,
+      DateTime? endTime,
+      double progress,
+      bool isCompleted,
+      String? error});
+}
+
+/// @nodoc
+class __$PdfMergerOperationCopyWithImpl<$Res>
+    implements _$PdfMergerOperationCopyWith<$Res> {
+  __$PdfMergerOperationCopyWithImpl(this._self, this._then);
+
+  final _PdfMergerOperation _self;
+  final $Res Function(_PdfMergerOperation) _then;
+
+  /// Create a copy of PdfMergerOperation
+  /// with the given fields replaced by the non-null parameter values.
+  @override
+  @pragma('vm:prefer-inline')
+  $Res call({
+    Object? id = null,
+    Object? message = null,
+    Object? startTime = null,
+    Object? endTime = freezed,
+    Object? progress = null,
+    Object? isCompleted = null,
+    Object? error = freezed,
+  }) {
+    return _then(_PdfMergerOperation(
+      id: null == id
+          ? _self.id
+          : id // ignore: cast_nullable_to_non_nullable
+              as String,
+      message: null == message
+          ? _self.message
+          : message // ignore: cast_nullable_to_non_nullable
+              as String,
+      startTime: null == startTime
+          ? _self.startTime
+          : startTime // ignore: cast_nullable_to_non_nullable
+              as DateTime,
+      endTime: freezed == endTime
+          ? _self.endTime
+          : endTime // ignore: cast_nullable_to_non_nullable
+              as DateTime?,
+      progress: null == progress
+          ? _self.progress
+          : progress // ignore: cast_nullable_to_non_nullable
+              as double,
+      isCompleted: null == isCompleted
+          ? _self.isCompleted
+          : isCompleted // ignore: cast_nullable_to_non_nullable
+              as bool,
+      error: freezed == error
+          ? _self.error
+          : error // ignore: cast_nullable_to_non_nullable
+              as String?,
+    ));
+  }
+}
+
+/// @nodoc
+mixin _$MergeStatistics {
+  int get totalDocuments;
+  int get totalPages;
+  int get totalSize;
+  int get estimatedOutputSize;
+  double get compressionRatio;
+  Duration get estimatedTime;
+  Map<String, int> get orientationCounts;
+  int get duplicateCount;
+
+  /// Create a copy of MergeStatistics
+  /// with the given fields replaced by the non-null parameter values.
+  @JsonKey(includeFromJson: false, includeToJson: false)
+  @pragma('vm:prefer-inline')
+  $MergeStatisticsCopyWith<MergeStatistics> get copyWith =>
+      _$MergeStatisticsCopyWithImpl<MergeStatistics>(
+          this as MergeStatistics, _$identity);
+
+  @override
+  bool operator ==(Object other) {
+    return identical(this, other) ||
+        (other.runtimeType == runtimeType &&
+            other is MergeStatistics &&
             (identical(other.totalDocuments, totalDocuments) ||
                 other.totalDocuments == totalDocuments) &&
             (identical(other.totalPages, totalPages) ||
@@ -1826,9 +2283,9 @@ class _$MergeStatisticsImpl extends _MergeStatistics {
             (identical(other.estimatedTime, estimatedTime) ||
                 other.estimatedTime == estimatedTime) &&
             const DeepCollectionEquality()
-                .equals(other._pageSizeDistribution, _pageSizeDistribution) &&
-            const DeepCollectionEquality()
-                .equals(other._orientationCounts, _orientationCounts));
+                .equals(other.orientationCounts, orientationCounts) &&
+            (identical(other.duplicateCount, duplicateCount) ||
+                other.duplicateCount == duplicateCount));
   }
 
   @override
@@ -1840,194 +2297,738 @@ class _$MergeStatisticsImpl extends _MergeStatistics {
       estimatedOutputSize,
       compressionRatio,
       estimatedTime,
-      const DeepCollectionEquality().hash(_pageSizeDistribution),
-      const DeepCollectionEquality().hash(_orientationCounts));
-
-  /// Create a copy of MergeStatistics
-  /// with the given fields replaced by the non-null parameter values.
-  @JsonKey(includeFromJson: false, includeToJson: false)
-  @override
-  @pragma('vm:prefer-inline')
-  _$$MergeStatisticsImplCopyWith<_$MergeStatisticsImpl> get copyWith =>
-      __$$MergeStatisticsImplCopyWithImpl<_$MergeStatisticsImpl>(
-          this, _$identity);
-}
-
-abstract class _MergeStatistics extends MergeStatistics {
-  const factory _MergeStatistics(
-          {final int totalDocuments,
-          final int totalPages,
-          final int totalSize,
-          final int estimatedOutputSize,
-          final double compressionRatio,
-          final Duration estimatedTime,
-          final Map<String, int>? pageSizeDistribution,
-          final Map<PageOrientation, int>? orientationCounts}) =
-      _$MergeStatisticsImpl;
-  const _MergeStatistics._() : super._();
+      const DeepCollectionEquality().hash(orientationCounts),
+      duplicateCount);
 
   @override
-  int get totalDocuments;
-  @override
-  int get totalPages;
-  @override
-  int get totalSize;
-  @override
-  int get estimatedOutputSize;
-  @override
-  double get compressionRatio;
-  @override
-  Duration get estimatedTime;
-  @override
-  Map<String, int>? get pageSizeDistribution;
-  @override
-  Map<PageOrientation, int>? get orientationCounts;
-
-  /// Create a copy of MergeStatistics
-  /// with the given fields replaced by the non-null parameter values.
-  @override
-  @JsonKey(includeFromJson: false, includeToJson: false)
-  _$$MergeStatisticsImplCopyWith<_$MergeStatisticsImpl> get copyWith =>
-      throw _privateConstructorUsedError;
-}
-
-/// @nodoc
-mixin _$PageReorderOperation {
-  String get pageId => throw _privateConstructorUsedError;
-  int get fromIndex => throw _privateConstructorUsedError;
-  int get toIndex => throw _privateConstructorUsedError;
-  bool get isActive => throw _privateConstructorUsedError;
-  bool get isValid => throw _privateConstructorUsedError;
-
-  /// Create a copy of PageReorderOperation
-  /// with the given fields replaced by the non-null parameter values.
-  @JsonKey(includeFromJson: false, includeToJson: false)
-  $PageReorderOperationCopyWith<PageReorderOperation> get copyWith =>
-      throw _privateConstructorUsedError;
-}
-
-/// @nodoc
-abstract class $PageReorderOperationCopyWith<$Res> {
-  factory $PageReorderOperationCopyWith(PageReorderOperation value,
-          $Res Function(PageReorderOperation) then) =
-      _$PageReorderOperationCopyWithImpl<$Res, PageReorderOperation>;
-  @useResult
-  $Res call(
-      {String pageId, int fromIndex, int toIndex, bool isActive, bool isValid});
-}
-
-/// @nodoc
-class _$PageReorderOperationCopyWithImpl<$Res,
-        $Val extends PageReorderOperation>
-    implements $PageReorderOperationCopyWith<$Res> {
-  _$PageReorderOperationCopyWithImpl(this._value, this._then);
-
-  // ignore: unused_field
-  final $Val _value;
-  // ignore: unused_field
-  final $Res Function($Val) _then;
-
-  /// Create a copy of PageReorderOperation
-  /// with the given fields replaced by the non-null parameter values.
-  @pragma('vm:prefer-inline')
-  @override
-  $Res call({
-    Object? pageId = null,
-    Object? fromIndex = null,
-    Object? toIndex = null,
-    Object? isActive = null,
-    Object? isValid = null,
-  }) {
-    return _then(_value.copyWith(
-      pageId: null == pageId
-          ? _value.pageId
-          : pageId // ignore: cast_nullable_to_non_nullable
-              as String,
-      fromIndex: null == fromIndex
-          ? _value.fromIndex
-          : fromIndex // ignore: cast_nullable_to_non_nullable
-              as int,
-      toIndex: null == toIndex
-          ? _value.toIndex
-          : toIndex // ignore: cast_nullable_to_non_nullable
-              as int,
-      isActive: null == isActive
-          ? _value.isActive
-          : isActive // ignore: cast_nullable_to_non_nullable
-              as bool,
-      isValid: null == isValid
-          ? _value.isValid
-          : isValid // ignore: cast_nullable_to_non_nullable
-              as bool,
-    ) as $Val);
+  String toString() {
+    return 'MergeStatistics(totalDocuments: $totalDocuments, totalPages: $totalPages, totalSize: $totalSize, estimatedOutputSize: $estimatedOutputSize, compressionRatio: $compressionRatio, estimatedTime: $estimatedTime, orientationCounts: $orientationCounts, duplicateCount: $duplicateCount)';
   }
 }
 
 /// @nodoc
-abstract class _$$PageReorderOperationImplCopyWith<$Res>
-    implements $PageReorderOperationCopyWith<$Res> {
-  factory _$$PageReorderOperationImplCopyWith(_$PageReorderOperationImpl value,
-          $Res Function(_$PageReorderOperationImpl) then) =
-      __$$PageReorderOperationImplCopyWithImpl<$Res>;
-  @override
+abstract mixin class $MergeStatisticsCopyWith<$Res> {
+  factory $MergeStatisticsCopyWith(
+          MergeStatistics value, $Res Function(MergeStatistics) _then) =
+      _$MergeStatisticsCopyWithImpl;
   @useResult
   $Res call(
-      {String pageId, int fromIndex, int toIndex, bool isActive, bool isValid});
+      {int totalDocuments,
+      int totalPages,
+      int totalSize,
+      int estimatedOutputSize,
+      double compressionRatio,
+      Duration estimatedTime,
+      Map<String, int> orientationCounts,
+      int duplicateCount});
 }
 
 /// @nodoc
-class __$$PageReorderOperationImplCopyWithImpl<$Res>
-    extends _$PageReorderOperationCopyWithImpl<$Res, _$PageReorderOperationImpl>
-    implements _$$PageReorderOperationImplCopyWith<$Res> {
-  __$$PageReorderOperationImplCopyWithImpl(_$PageReorderOperationImpl _value,
-      $Res Function(_$PageReorderOperationImpl) _then)
-      : super(_value, _then);
+class _$MergeStatisticsCopyWithImpl<$Res>
+    implements $MergeStatisticsCopyWith<$Res> {
+  _$MergeStatisticsCopyWithImpl(this._self, this._then);
 
-  /// Create a copy of PageReorderOperation
+  final MergeStatistics _self;
+  final $Res Function(MergeStatistics) _then;
+
+  /// Create a copy of MergeStatistics
   /// with the given fields replaced by the non-null parameter values.
   @pragma('vm:prefer-inline')
   @override
   $Res call({
-    Object? pageId = null,
-    Object? fromIndex = null,
-    Object? toIndex = null,
-    Object? isActive = null,
-    Object? isValid = null,
+    Object? totalDocuments = null,
+    Object? totalPages = null,
+    Object? totalSize = null,
+    Object? estimatedOutputSize = null,
+    Object? compressionRatio = null,
+    Object? estimatedTime = null,
+    Object? orientationCounts = null,
+    Object? duplicateCount = null,
   }) {
-    return _then(_$PageReorderOperationImpl(
-      pageId: null == pageId
-          ? _value.pageId
-          : pageId // ignore: cast_nullable_to_non_nullable
-              as String,
-      fromIndex: null == fromIndex
-          ? _value.fromIndex
-          : fromIndex // ignore: cast_nullable_to_non_nullable
+    return _then(_self.copyWith(
+      totalDocuments: null == totalDocuments
+          ? _self.totalDocuments
+          : totalDocuments // ignore: cast_nullable_to_non_nullable
               as int,
-      toIndex: null == toIndex
-          ? _value.toIndex
-          : toIndex // ignore: cast_nullable_to_non_nullable
+      totalPages: null == totalPages
+          ? _self.totalPages
+          : totalPages // ignore: cast_nullable_to_non_nullable
               as int,
-      isActive: null == isActive
-          ? _value.isActive
-          : isActive // ignore: cast_nullable_to_non_nullable
-              as bool,
-      isValid: null == isValid
-          ? _value.isValid
-          : isValid // ignore: cast_nullable_to_non_nullable
-              as bool,
+      totalSize: null == totalSize
+          ? _self.totalSize
+          : totalSize // ignore: cast_nullable_to_non_nullable
+              as int,
+      estimatedOutputSize: null == estimatedOutputSize
+          ? _self.estimatedOutputSize
+          : estimatedOutputSize // ignore: cast_nullable_to_non_nullable
+              as int,
+      compressionRatio: null == compressionRatio
+          ? _self.compressionRatio
+          : compressionRatio // ignore: cast_nullable_to_non_nullable
+              as double,
+      estimatedTime: null == estimatedTime
+          ? _self.estimatedTime
+          : estimatedTime // ignore: cast_nullable_to_non_nullable
+              as Duration,
+      orientationCounts: null == orientationCounts
+          ? _self.orientationCounts
+          : orientationCounts // ignore: cast_nullable_to_non_nullable
+              as Map<String, int>,
+      duplicateCount: null == duplicateCount
+          ? _self.duplicateCount
+          : duplicateCount // ignore: cast_nullable_to_non_nullable
+              as int,
+    ));
+  }
+}
+
+/// Adds pattern-matching-related methods to [MergeStatistics].
+extension MergeStatisticsPatterns on MergeStatistics {
+  /// A variant of `map` that fallback to returning `orElse`.
+  ///
+  /// It is equivalent to doing:
+  /// ```dart
+  /// switch (sealedClass) {
+  ///   case final Subclass value:
+  ///     return ...;
+  ///   case _:
+  ///     return orElse();
+  /// }
+  /// ```
+
+  @optionalTypeArgs
+  TResult maybeMap<TResult extends Object?>(
+    TResult Function(_MergeStatistics value)? $default, {
+    required TResult orElse(),
+  }) {
+    final _that = this;
+    switch (_that) {
+      case _MergeStatistics() when $default != null:
+        return $default(_that);
+      case _:
+        return orElse();
+    }
+  }
+
+  /// A `switch`-like method, using callbacks.
+  ///
+  /// Callbacks receives the raw object, upcasted.
+  /// It is equivalent to doing:
+  /// ```dart
+  /// switch (sealedClass) {
+  ///   case final Subclass value:
+  ///     return ...;
+  ///   case final Subclass2 value:
+  ///     return ...;
+  /// }
+  /// ```
+
+  @optionalTypeArgs
+  TResult map<TResult extends Object?>(
+    TResult Function(_MergeStatistics value) $default,
+  ) {
+    final _that = this;
+    switch (_that) {
+      case _MergeStatistics():
+        return $default(_that);
+      case _:
+        throw StateError('Unexpected subclass');
+    }
+  }
+
+  /// A variant of `map` that fallback to returning `null`.
+  ///
+  /// It is equivalent to doing:
+  /// ```dart
+  /// switch (sealedClass) {
+  ///   case final Subclass value:
+  ///     return ...;
+  ///   case _:
+  ///     return null;
+  /// }
+  /// ```
+
+  @optionalTypeArgs
+  TResult? mapOrNull<TResult extends Object?>(
+    TResult? Function(_MergeStatistics value)? $default,
+  ) {
+    final _that = this;
+    switch (_that) {
+      case _MergeStatistics() when $default != null:
+        return $default(_that);
+      case _:
+        return null;
+    }
+  }
+
+  /// A variant of `when` that fallback to an `orElse` callback.
+  ///
+  /// It is equivalent to doing:
+  /// ```dart
+  /// switch (sealedClass) {
+  ///   case Subclass(:final field):
+  ///     return ...;
+  ///   case _:
+  ///     return orElse();
+  /// }
+  /// ```
+
+  @optionalTypeArgs
+  TResult maybeWhen<TResult extends Object?>(
+    TResult Function(
+            int totalDocuments,
+            int totalPages,
+            int totalSize,
+            int estimatedOutputSize,
+            double compressionRatio,
+            Duration estimatedTime,
+            Map<String, int> orientationCounts,
+            int duplicateCount)?
+        $default, {
+    required TResult orElse(),
+  }) {
+    final _that = this;
+    switch (_that) {
+      case _MergeStatistics() when $default != null:
+        return $default(
+            _that.totalDocuments,
+            _that.totalPages,
+            _that.totalSize,
+            _that.estimatedOutputSize,
+            _that.compressionRatio,
+            _that.estimatedTime,
+            _that.orientationCounts,
+            _that.duplicateCount);
+      case _:
+        return orElse();
+    }
+  }
+
+  /// A `switch`-like method, using callbacks.
+  ///
+  /// As opposed to `map`, this offers destructuring.
+  /// It is equivalent to doing:
+  /// ```dart
+  /// switch (sealedClass) {
+  ///   case Subclass(:final field):
+  ///     return ...;
+  ///   case Subclass2(:final field2):
+  ///     return ...;
+  /// }
+  /// ```
+
+  @optionalTypeArgs
+  TResult when<TResult extends Object?>(
+    TResult Function(
+            int totalDocuments,
+            int totalPages,
+            int totalSize,
+            int estimatedOutputSize,
+            double compressionRatio,
+            Duration estimatedTime,
+            Map<String, int> orientationCounts,
+            int duplicateCount)
+        $default,
+  ) {
+    final _that = this;
+    switch (_that) {
+      case _MergeStatistics():
+        return $default(
+            _that.totalDocuments,
+            _that.totalPages,
+            _that.totalSize,
+            _that.estimatedOutputSize,
+            _that.compressionRatio,
+            _that.estimatedTime,
+            _that.orientationCounts,
+            _that.duplicateCount);
+      case _:
+        throw StateError('Unexpected subclass');
+    }
+  }
+
+  /// A variant of `when` that fallback to returning `null`
+  ///
+  /// It is equivalent to doing:
+  /// ```dart
+  /// switch (sealedClass) {
+  ///   case Subclass(:final field):
+  ///     return ...;
+  ///   case _:
+  ///     return null;
+  /// }
+  /// ```
+
+  @optionalTypeArgs
+  TResult? whenOrNull<TResult extends Object?>(
+    TResult? Function(
+            int totalDocuments,
+            int totalPages,
+            int totalSize,
+            int estimatedOutputSize,
+            double compressionRatio,
+            Duration estimatedTime,
+            Map<String, int> orientationCounts,
+            int duplicateCount)?
+        $default,
+  ) {
+    final _that = this;
+    switch (_that) {
+      case _MergeStatistics() when $default != null:
+        return $default(
+            _that.totalDocuments,
+            _that.totalPages,
+            _that.totalSize,
+            _that.estimatedOutputSize,
+            _that.compressionRatio,
+            _that.estimatedTime,
+            _that.orientationCounts,
+            _that.duplicateCount);
+      case _:
+        return null;
+    }
+  }
+}
+
+/// @nodoc
+
+class _MergeStatistics extends MergeStatistics {
+  const _MergeStatistics(
+      {required this.totalDocuments,
+      required this.totalPages,
+      required this.totalSize,
+      required this.estimatedOutputSize,
+      this.compressionRatio = 0.0,
+      this.estimatedTime = Duration.zero,
+      final Map<String, int> orientationCounts = const {},
+      this.duplicateCount = 0})
+      : _orientationCounts = orientationCounts,
+        super._();
+
+  @override
+  final int totalDocuments;
+  @override
+  final int totalPages;
+  @override
+  final int totalSize;
+  @override
+  final int estimatedOutputSize;
+  @override
+  @JsonKey()
+  final double compressionRatio;
+  @override
+  @JsonKey()
+  final Duration estimatedTime;
+  final Map<String, int> _orientationCounts;
+  @override
+  @JsonKey()
+  Map<String, int> get orientationCounts {
+    if (_orientationCounts is EqualUnmodifiableMapView)
+      return _orientationCounts;
+    // ignore: implicit_dynamic_type
+    return EqualUnmodifiableMapView(_orientationCounts);
+  }
+
+  @override
+  @JsonKey()
+  final int duplicateCount;
+
+  /// Create a copy of MergeStatistics
+  /// with the given fields replaced by the non-null parameter values.
+  @override
+  @JsonKey(includeFromJson: false, includeToJson: false)
+  @pragma('vm:prefer-inline')
+  _$MergeStatisticsCopyWith<_MergeStatistics> get copyWith =>
+      __$MergeStatisticsCopyWithImpl<_MergeStatistics>(this, _$identity);
+
+  @override
+  bool operator ==(Object other) {
+    return identical(this, other) ||
+        (other.runtimeType == runtimeType &&
+            other is _MergeStatistics &&
+            (identical(other.totalDocuments, totalDocuments) ||
+                other.totalDocuments == totalDocuments) &&
+            (identical(other.totalPages, totalPages) ||
+                other.totalPages == totalPages) &&
+            (identical(other.totalSize, totalSize) ||
+                other.totalSize == totalSize) &&
+            (identical(other.estimatedOutputSize, estimatedOutputSize) ||
+                other.estimatedOutputSize == estimatedOutputSize) &&
+            (identical(other.compressionRatio, compressionRatio) ||
+                other.compressionRatio == compressionRatio) &&
+            (identical(other.estimatedTime, estimatedTime) ||
+                other.estimatedTime == estimatedTime) &&
+            const DeepCollectionEquality()
+                .equals(other._orientationCounts, _orientationCounts) &&
+            (identical(other.duplicateCount, duplicateCount) ||
+                other.duplicateCount == duplicateCount));
+  }
+
+  @override
+  int get hashCode => Object.hash(
+      runtimeType,
+      totalDocuments,
+      totalPages,
+      totalSize,
+      estimatedOutputSize,
+      compressionRatio,
+      estimatedTime,
+      const DeepCollectionEquality().hash(_orientationCounts),
+      duplicateCount);
+
+  @override
+  String toString() {
+    return 'MergeStatistics(totalDocuments: $totalDocuments, totalPages: $totalPages, totalSize: $totalSize, estimatedOutputSize: $estimatedOutputSize, compressionRatio: $compressionRatio, estimatedTime: $estimatedTime, orientationCounts: $orientationCounts, duplicateCount: $duplicateCount)';
+  }
+}
+
+/// @nodoc
+abstract mixin class _$MergeStatisticsCopyWith<$Res>
+    implements $MergeStatisticsCopyWith<$Res> {
+  factory _$MergeStatisticsCopyWith(
+          _MergeStatistics value, $Res Function(_MergeStatistics) _then) =
+      __$MergeStatisticsCopyWithImpl;
+  @override
+  @useResult
+  $Res call(
+      {int totalDocuments,
+      int totalPages,
+      int totalSize,
+      int estimatedOutputSize,
+      double compressionRatio,
+      Duration estimatedTime,
+      Map<String, int> orientationCounts,
+      int duplicateCount});
+}
+
+/// @nodoc
+class __$MergeStatisticsCopyWithImpl<$Res>
+    implements _$MergeStatisticsCopyWith<$Res> {
+  __$MergeStatisticsCopyWithImpl(this._self, this._then);
+
+  final _MergeStatistics _self;
+  final $Res Function(_MergeStatistics) _then;
+
+  /// Create a copy of MergeStatistics
+  /// with the given fields replaced by the non-null parameter values.
+  @override
+  @pragma('vm:prefer-inline')
+  $Res call({
+    Object? totalDocuments = null,
+    Object? totalPages = null,
+    Object? totalSize = null,
+    Object? estimatedOutputSize = null,
+    Object? compressionRatio = null,
+    Object? estimatedTime = null,
+    Object? orientationCounts = null,
+    Object? duplicateCount = null,
+  }) {
+    return _then(_MergeStatistics(
+      totalDocuments: null == totalDocuments
+          ? _self.totalDocuments
+          : totalDocuments // ignore: cast_nullable_to_non_nullable
+              as int,
+      totalPages: null == totalPages
+          ? _self.totalPages
+          : totalPages // ignore: cast_nullable_to_non_nullable
+              as int,
+      totalSize: null == totalSize
+          ? _self.totalSize
+          : totalSize // ignore: cast_nullable_to_non_nullable
+              as int,
+      estimatedOutputSize: null == estimatedOutputSize
+          ? _self.estimatedOutputSize
+          : estimatedOutputSize // ignore: cast_nullable_to_non_nullable
+              as int,
+      compressionRatio: null == compressionRatio
+          ? _self.compressionRatio
+          : compressionRatio // ignore: cast_nullable_to_non_nullable
+              as double,
+      estimatedTime: null == estimatedTime
+          ? _self.estimatedTime
+          : estimatedTime // ignore: cast_nullable_to_non_nullable
+              as Duration,
+      orientationCounts: null == orientationCounts
+          ? _self._orientationCounts
+          : orientationCounts // ignore: cast_nullable_to_non_nullable
+              as Map<String, int>,
+      duplicateCount: null == duplicateCount
+          ? _self.duplicateCount
+          : duplicateCount // ignore: cast_nullable_to_non_nullable
+              as int,
     ));
   }
 }
 
 /// @nodoc
+mixin _$PageReorderOperation {
+  String get pageId;
+  int get fromIndex;
+  int get toIndex;
+  bool get isValid;
+  bool get isActive;
 
-class _$PageReorderOperationImpl implements _PageReorderOperation {
-  const _$PageReorderOperationImpl(
+  /// Create a copy of PageReorderOperation
+  /// with the given fields replaced by the non-null parameter values.
+  @JsonKey(includeFromJson: false, includeToJson: false)
+  @pragma('vm:prefer-inline')
+  $PageReorderOperationCopyWith<PageReorderOperation> get copyWith =>
+      _$PageReorderOperationCopyWithImpl<PageReorderOperation>(
+          this as PageReorderOperation, _$identity);
+
+  @override
+  bool operator ==(Object other) {
+    return identical(this, other) ||
+        (other.runtimeType == runtimeType &&
+            other is PageReorderOperation &&
+            (identical(other.pageId, pageId) || other.pageId == pageId) &&
+            (identical(other.fromIndex, fromIndex) ||
+                other.fromIndex == fromIndex) &&
+            (identical(other.toIndex, toIndex) || other.toIndex == toIndex) &&
+            (identical(other.isValid, isValid) || other.isValid == isValid) &&
+            (identical(other.isActive, isActive) ||
+                other.isActive == isActive));
+  }
+
+  @override
+  int get hashCode =>
+      Object.hash(runtimeType, pageId, fromIndex, toIndex, isValid, isActive);
+
+  @override
+  String toString() {
+    return 'PageReorderOperation(pageId: $pageId, fromIndex: $fromIndex, toIndex: $toIndex, isValid: $isValid, isActive: $isActive)';
+  }
+}
+
+/// @nodoc
+abstract mixin class $PageReorderOperationCopyWith<$Res> {
+  factory $PageReorderOperationCopyWith(PageReorderOperation value,
+          $Res Function(PageReorderOperation) _then) =
+      _$PageReorderOperationCopyWithImpl;
+  @useResult
+  $Res call(
+      {String pageId, int fromIndex, int toIndex, bool isValid, bool isActive});
+}
+
+/// @nodoc
+class _$PageReorderOperationCopyWithImpl<$Res>
+    implements $PageReorderOperationCopyWith<$Res> {
+  _$PageReorderOperationCopyWithImpl(this._self, this._then);
+
+  final PageReorderOperation _self;
+  final $Res Function(PageReorderOperation) _then;
+
+  /// Create a copy of PageReorderOperation
+  /// with the given fields replaced by the non-null parameter values.
+  @pragma('vm:prefer-inline')
+  @override
+  $Res call({
+    Object? pageId = null,
+    Object? fromIndex = null,
+    Object? toIndex = null,
+    Object? isValid = null,
+    Object? isActive = null,
+  }) {
+    return _then(_self.copyWith(
+      pageId: null == pageId
+          ? _self.pageId
+          : pageId // ignore: cast_nullable_to_non_nullable
+              as String,
+      fromIndex: null == fromIndex
+          ? _self.fromIndex
+          : fromIndex // ignore: cast_nullable_to_non_nullable
+              as int,
+      toIndex: null == toIndex
+          ? _self.toIndex
+          : toIndex // ignore: cast_nullable_to_non_nullable
+              as int,
+      isValid: null == isValid
+          ? _self.isValid
+          : isValid // ignore: cast_nullable_to_non_nullable
+              as bool,
+      isActive: null == isActive
+          ? _self.isActive
+          : isActive // ignore: cast_nullable_to_non_nullable
+              as bool,
+    ));
+  }
+}
+
+/// Adds pattern-matching-related methods to [PageReorderOperation].
+extension PageReorderOperationPatterns on PageReorderOperation {
+  /// A variant of `map` that fallback to returning `orElse`.
+  ///
+  /// It is equivalent to doing:
+  /// ```dart
+  /// switch (sealedClass) {
+  ///   case final Subclass value:
+  ///     return ...;
+  ///   case _:
+  ///     return orElse();
+  /// }
+  /// ```
+
+  @optionalTypeArgs
+  TResult maybeMap<TResult extends Object?>(
+    TResult Function(_PageReorderOperation value)? $default, {
+    required TResult orElse(),
+  }) {
+    final _that = this;
+    switch (_that) {
+      case _PageReorderOperation() when $default != null:
+        return $default(_that);
+      case _:
+        return orElse();
+    }
+  }
+
+  /// A `switch`-like method, using callbacks.
+  ///
+  /// Callbacks receives the raw object, upcasted.
+  /// It is equivalent to doing:
+  /// ```dart
+  /// switch (sealedClass) {
+  ///   case final Subclass value:
+  ///     return ...;
+  ///   case final Subclass2 value:
+  ///     return ...;
+  /// }
+  /// ```
+
+  @optionalTypeArgs
+  TResult map<TResult extends Object?>(
+    TResult Function(_PageReorderOperation value) $default,
+  ) {
+    final _that = this;
+    switch (_that) {
+      case _PageReorderOperation():
+        return $default(_that);
+      case _:
+        throw StateError('Unexpected subclass');
+    }
+  }
+
+  /// A variant of `map` that fallback to returning `null`.
+  ///
+  /// It is equivalent to doing:
+  /// ```dart
+  /// switch (sealedClass) {
+  ///   case final Subclass value:
+  ///     return ...;
+  ///   case _:
+  ///     return null;
+  /// }
+  /// ```
+
+  @optionalTypeArgs
+  TResult? mapOrNull<TResult extends Object?>(
+    TResult? Function(_PageReorderOperation value)? $default,
+  ) {
+    final _that = this;
+    switch (_that) {
+      case _PageReorderOperation() when $default != null:
+        return $default(_that);
+      case _:
+        return null;
+    }
+  }
+
+  /// A variant of `when` that fallback to an `orElse` callback.
+  ///
+  /// It is equivalent to doing:
+  /// ```dart
+  /// switch (sealedClass) {
+  ///   case Subclass(:final field):
+  ///     return ...;
+  ///   case _:
+  ///     return orElse();
+  /// }
+  /// ```
+
+  @optionalTypeArgs
+  TResult maybeWhen<TResult extends Object?>(
+    TResult Function(String pageId, int fromIndex, int toIndex, bool isValid,
+            bool isActive)?
+        $default, {
+    required TResult orElse(),
+  }) {
+    final _that = this;
+    switch (_that) {
+      case _PageReorderOperation() when $default != null:
+        return $default(_that.pageId, _that.fromIndex, _that.toIndex,
+            _that.isValid, _that.isActive);
+      case _:
+        return orElse();
+    }
+  }
+
+  /// A `switch`-like method, using callbacks.
+  ///
+  /// As opposed to `map`, this offers destructuring.
+  /// It is equivalent to doing:
+  /// ```dart
+  /// switch (sealedClass) {
+  ///   case Subclass(:final field):
+  ///     return ...;
+  ///   case Subclass2(:final field2):
+  ///     return ...;
+  /// }
+  /// ```
+
+  @optionalTypeArgs
+  TResult when<TResult extends Object?>(
+    TResult Function(String pageId, int fromIndex, int toIndex, bool isValid,
+            bool isActive)
+        $default,
+  ) {
+    final _that = this;
+    switch (_that) {
+      case _PageReorderOperation():
+        return $default(_that.pageId, _that.fromIndex, _that.toIndex,
+            _that.isValid, _that.isActive);
+      case _:
+        throw StateError('Unexpected subclass');
+    }
+  }
+
+  /// A variant of `when` that fallback to returning `null`
+  ///
+  /// It is equivalent to doing:
+  /// ```dart
+  /// switch (sealedClass) {
+  ///   case Subclass(:final field):
+  ///     return ...;
+  ///   case _:
+  ///     return null;
+  /// }
+  /// ```
+
+  @optionalTypeArgs
+  TResult? whenOrNull<TResult extends Object?>(
+    TResult? Function(String pageId, int fromIndex, int toIndex, bool isValid,
+            bool isActive)?
+        $default,
+  ) {
+    final _that = this;
+    switch (_that) {
+      case _PageReorderOperation() when $default != null:
+        return $default(_that.pageId, _that.fromIndex, _that.toIndex,
+            _that.isValid, _that.isActive);
+      case _:
+        return null;
+    }
+  }
+}
+
+/// @nodoc
+
+class _PageReorderOperation implements PageReorderOperation {
+  const _PageReorderOperation(
       {required this.pageId,
       required this.fromIndex,
       required this.toIndex,
-      this.isActive = false,
-      this.isValid = false});
+      this.isValid = true,
+      this.isActive = false});
 
   @override
   final String pageId;
@@ -2037,221 +3038,391 @@ class _$PageReorderOperationImpl implements _PageReorderOperation {
   final int toIndex;
   @override
   @JsonKey()
-  final bool isActive;
+  final bool isValid;
   @override
   @JsonKey()
-  final bool isValid;
+  final bool isActive;
 
+  /// Create a copy of PageReorderOperation
+  /// with the given fields replaced by the non-null parameter values.
   @override
-  String toString() {
-    return 'PageReorderOperation(pageId: $pageId, fromIndex: $fromIndex, toIndex: $toIndex, isActive: $isActive, isValid: $isValid)';
-  }
+  @JsonKey(includeFromJson: false, includeToJson: false)
+  @pragma('vm:prefer-inline')
+  _$PageReorderOperationCopyWith<_PageReorderOperation> get copyWith =>
+      __$PageReorderOperationCopyWithImpl<_PageReorderOperation>(
+          this, _$identity);
 
   @override
   bool operator ==(Object other) {
     return identical(this, other) ||
         (other.runtimeType == runtimeType &&
-            other is _$PageReorderOperationImpl &&
+            other is _PageReorderOperation &&
             (identical(other.pageId, pageId) || other.pageId == pageId) &&
             (identical(other.fromIndex, fromIndex) ||
                 other.fromIndex == fromIndex) &&
             (identical(other.toIndex, toIndex) || other.toIndex == toIndex) &&
+            (identical(other.isValid, isValid) || other.isValid == isValid) &&
             (identical(other.isActive, isActive) ||
-                other.isActive == isActive) &&
-            (identical(other.isValid, isValid) || other.isValid == isValid));
+                other.isActive == isActive));
   }
 
   @override
   int get hashCode =>
-      Object.hash(runtimeType, pageId, fromIndex, toIndex, isActive, isValid);
-
-  /// Create a copy of PageReorderOperation
-  /// with the given fields replaced by the non-null parameter values.
-  @JsonKey(includeFromJson: false, includeToJson: false)
-  @override
-  @pragma('vm:prefer-inline')
-  _$$PageReorderOperationImplCopyWith<_$PageReorderOperationImpl>
-      get copyWith =>
-          __$$PageReorderOperationImplCopyWithImpl<_$PageReorderOperationImpl>(
-              this, _$identity);
-}
-
-abstract class _PageReorderOperation implements PageReorderOperation {
-  const factory _PageReorderOperation(
-      {required final String pageId,
-      required final int fromIndex,
-      required final int toIndex,
-      final bool isActive,
-      final bool isValid}) = _$PageReorderOperationImpl;
+      Object.hash(runtimeType, pageId, fromIndex, toIndex, isValid, isActive);
 
   @override
-  String get pageId;
-  @override
-  int get fromIndex;
-  @override
-  int get toIndex;
-  @override
-  bool get isActive;
-  @override
-  bool get isValid;
-
-  /// Create a copy of PageReorderOperation
-  /// with the given fields replaced by the non-null parameter values.
-  @override
-  @JsonKey(includeFromJson: false, includeToJson: false)
-  _$$PageReorderOperationImplCopyWith<_$PageReorderOperationImpl>
-      get copyWith => throw _privateConstructorUsedError;
-}
-
-/// @nodoc
-mixin _$BatchPageOperation {
-  BatchOperationType get type => throw _privateConstructorUsedError;
-  List<String> get pageIds => throw _privateConstructorUsedError;
-  bool get isProcessing => throw _privateConstructorUsedError;
-  int get progress => throw _privateConstructorUsedError;
-  Map<String, dynamic>? get parameters => throw _privateConstructorUsedError;
-
-  /// Create a copy of BatchPageOperation
-  /// with the given fields replaced by the non-null parameter values.
-  @JsonKey(includeFromJson: false, includeToJson: false)
-  $BatchPageOperationCopyWith<BatchPageOperation> get copyWith =>
-      throw _privateConstructorUsedError;
-}
-
-/// @nodoc
-abstract class $BatchPageOperationCopyWith<$Res> {
-  factory $BatchPageOperationCopyWith(
-          BatchPageOperation value, $Res Function(BatchPageOperation) then) =
-      _$BatchPageOperationCopyWithImpl<$Res, BatchPageOperation>;
-  @useResult
-  $Res call(
-      {BatchOperationType type,
-      List<String> pageIds,
-      bool isProcessing,
-      int progress,
-      Map<String, dynamic>? parameters});
-}
-
-/// @nodoc
-class _$BatchPageOperationCopyWithImpl<$Res, $Val extends BatchPageOperation>
-    implements $BatchPageOperationCopyWith<$Res> {
-  _$BatchPageOperationCopyWithImpl(this._value, this._then);
-
-  // ignore: unused_field
-  final $Val _value;
-  // ignore: unused_field
-  final $Res Function($Val) _then;
-
-  /// Create a copy of BatchPageOperation
-  /// with the given fields replaced by the non-null parameter values.
-  @pragma('vm:prefer-inline')
-  @override
-  $Res call({
-    Object? type = null,
-    Object? pageIds = null,
-    Object? isProcessing = null,
-    Object? progress = null,
-    Object? parameters = freezed,
-  }) {
-    return _then(_value.copyWith(
-      type: null == type
-          ? _value.type
-          : type // ignore: cast_nullable_to_non_nullable
-              as BatchOperationType,
-      pageIds: null == pageIds
-          ? _value.pageIds
-          : pageIds // ignore: cast_nullable_to_non_nullable
-              as List<String>,
-      isProcessing: null == isProcessing
-          ? _value.isProcessing
-          : isProcessing // ignore: cast_nullable_to_non_nullable
-              as bool,
-      progress: null == progress
-          ? _value.progress
-          : progress // ignore: cast_nullable_to_non_nullable
-              as int,
-      parameters: freezed == parameters
-          ? _value.parameters
-          : parameters // ignore: cast_nullable_to_non_nullable
-              as Map<String, dynamic>?,
-    ) as $Val);
+  String toString() {
+    return 'PageReorderOperation(pageId: $pageId, fromIndex: $fromIndex, toIndex: $toIndex, isValid: $isValid, isActive: $isActive)';
   }
 }
 
 /// @nodoc
-abstract class _$$BatchPageOperationImplCopyWith<$Res>
-    implements $BatchPageOperationCopyWith<$Res> {
-  factory _$$BatchPageOperationImplCopyWith(_$BatchPageOperationImpl value,
-          $Res Function(_$BatchPageOperationImpl) then) =
-      __$$BatchPageOperationImplCopyWithImpl<$Res>;
+abstract mixin class _$PageReorderOperationCopyWith<$Res>
+    implements $PageReorderOperationCopyWith<$Res> {
+  factory _$PageReorderOperationCopyWith(_PageReorderOperation value,
+          $Res Function(_PageReorderOperation) _then) =
+      __$PageReorderOperationCopyWithImpl;
   @override
   @useResult
   $Res call(
-      {BatchOperationType type,
-      List<String> pageIds,
-      bool isProcessing,
-      int progress,
-      Map<String, dynamic>? parameters});
+      {String pageId, int fromIndex, int toIndex, bool isValid, bool isActive});
 }
 
 /// @nodoc
-class __$$BatchPageOperationImplCopyWithImpl<$Res>
-    extends _$BatchPageOperationCopyWithImpl<$Res, _$BatchPageOperationImpl>
-    implements _$$BatchPageOperationImplCopyWith<$Res> {
-  __$$BatchPageOperationImplCopyWithImpl(_$BatchPageOperationImpl _value,
-      $Res Function(_$BatchPageOperationImpl) _then)
-      : super(_value, _then);
+class __$PageReorderOperationCopyWithImpl<$Res>
+    implements _$PageReorderOperationCopyWith<$Res> {
+  __$PageReorderOperationCopyWithImpl(this._self, this._then);
 
-  /// Create a copy of BatchPageOperation
+  final _PageReorderOperation _self;
+  final $Res Function(_PageReorderOperation) _then;
+
+  /// Create a copy of PageReorderOperation
   /// with the given fields replaced by the non-null parameter values.
-  @pragma('vm:prefer-inline')
   @override
+  @pragma('vm:prefer-inline')
   $Res call({
-    Object? type = null,
-    Object? pageIds = null,
-    Object? isProcessing = null,
-    Object? progress = null,
-    Object? parameters = freezed,
+    Object? pageId = null,
+    Object? fromIndex = null,
+    Object? toIndex = null,
+    Object? isValid = null,
+    Object? isActive = null,
   }) {
-    return _then(_$BatchPageOperationImpl(
-      type: null == type
-          ? _value.type
-          : type // ignore: cast_nullable_to_non_nullable
-              as BatchOperationType,
-      pageIds: null == pageIds
-          ? _value._pageIds
-          : pageIds // ignore: cast_nullable_to_non_nullable
-              as List<String>,
-      isProcessing: null == isProcessing
-          ? _value.isProcessing
-          : isProcessing // ignore: cast_nullable_to_non_nullable
-              as bool,
-      progress: null == progress
-          ? _value.progress
-          : progress // ignore: cast_nullable_to_non_nullable
+    return _then(_PageReorderOperation(
+      pageId: null == pageId
+          ? _self.pageId
+          : pageId // ignore: cast_nullable_to_non_nullable
+              as String,
+      fromIndex: null == fromIndex
+          ? _self.fromIndex
+          : fromIndex // ignore: cast_nullable_to_non_nullable
               as int,
-      parameters: freezed == parameters
-          ? _value._parameters
-          : parameters // ignore: cast_nullable_to_non_nullable
-              as Map<String, dynamic>?,
+      toIndex: null == toIndex
+          ? _self.toIndex
+          : toIndex // ignore: cast_nullable_to_non_nullable
+              as int,
+      isValid: null == isValid
+          ? _self.isValid
+          : isValid // ignore: cast_nullable_to_non_nullable
+              as bool,
+      isActive: null == isActive
+          ? _self.isActive
+          : isActive // ignore: cast_nullable_to_non_nullable
+              as bool,
     ));
   }
 }
 
 /// @nodoc
+mixin _$BatchPageOperation {
+  List<String> get pageIds;
+  String get operationType;
+  Map<String, dynamic> get parameters;
+  double get progress;
+  bool get isProcessing;
 
-class _$BatchPageOperationImpl implements _BatchPageOperation {
-  const _$BatchPageOperationImpl(
-      {required this.type,
-      required final List<String> pageIds,
-      this.isProcessing = false,
-      this.progress = 0,
-      final Map<String, dynamic>? parameters})
+  /// Create a copy of BatchPageOperation
+  /// with the given fields replaced by the non-null parameter values.
+  @JsonKey(includeFromJson: false, includeToJson: false)
+  @pragma('vm:prefer-inline')
+  $BatchPageOperationCopyWith<BatchPageOperation> get copyWith =>
+      _$BatchPageOperationCopyWithImpl<BatchPageOperation>(
+          this as BatchPageOperation, _$identity);
+
+  @override
+  bool operator ==(Object other) {
+    return identical(this, other) ||
+        (other.runtimeType == runtimeType &&
+            other is BatchPageOperation &&
+            const DeepCollectionEquality().equals(other.pageIds, pageIds) &&
+            (identical(other.operationType, operationType) ||
+                other.operationType == operationType) &&
+            const DeepCollectionEquality()
+                .equals(other.parameters, parameters) &&
+            (identical(other.progress, progress) ||
+                other.progress == progress) &&
+            (identical(other.isProcessing, isProcessing) ||
+                other.isProcessing == isProcessing));
+  }
+
+  @override
+  int get hashCode => Object.hash(
+      runtimeType,
+      const DeepCollectionEquality().hash(pageIds),
+      operationType,
+      const DeepCollectionEquality().hash(parameters),
+      progress,
+      isProcessing);
+
+  @override
+  String toString() {
+    return 'BatchPageOperation(pageIds: $pageIds, operationType: $operationType, parameters: $parameters, progress: $progress, isProcessing: $isProcessing)';
+  }
+}
+
+/// @nodoc
+abstract mixin class $BatchPageOperationCopyWith<$Res> {
+  factory $BatchPageOperationCopyWith(
+          BatchPageOperation value, $Res Function(BatchPageOperation) _then) =
+      _$BatchPageOperationCopyWithImpl;
+  @useResult
+  $Res call(
+      {List<String> pageIds,
+      String operationType,
+      Map<String, dynamic> parameters,
+      double progress,
+      bool isProcessing});
+}
+
+/// @nodoc
+class _$BatchPageOperationCopyWithImpl<$Res>
+    implements $BatchPageOperationCopyWith<$Res> {
+  _$BatchPageOperationCopyWithImpl(this._self, this._then);
+
+  final BatchPageOperation _self;
+  final $Res Function(BatchPageOperation) _then;
+
+  /// Create a copy of BatchPageOperation
+  /// with the given fields replaced by the non-null parameter values.
+  @pragma('vm:prefer-inline')
+  @override
+  $Res call({
+    Object? pageIds = null,
+    Object? operationType = null,
+    Object? parameters = null,
+    Object? progress = null,
+    Object? isProcessing = null,
+  }) {
+    return _then(_self.copyWith(
+      pageIds: null == pageIds
+          ? _self.pageIds
+          : pageIds // ignore: cast_nullable_to_non_nullable
+              as List<String>,
+      operationType: null == operationType
+          ? _self.operationType
+          : operationType // ignore: cast_nullable_to_non_nullable
+              as String,
+      parameters: null == parameters
+          ? _self.parameters
+          : parameters // ignore: cast_nullable_to_non_nullable
+              as Map<String, dynamic>,
+      progress: null == progress
+          ? _self.progress
+          : progress // ignore: cast_nullable_to_non_nullable
+              as double,
+      isProcessing: null == isProcessing
+          ? _self.isProcessing
+          : isProcessing // ignore: cast_nullable_to_non_nullable
+              as bool,
+    ));
+  }
+}
+
+/// Adds pattern-matching-related methods to [BatchPageOperation].
+extension BatchPageOperationPatterns on BatchPageOperation {
+  /// A variant of `map` that fallback to returning `orElse`.
+  ///
+  /// It is equivalent to doing:
+  /// ```dart
+  /// switch (sealedClass) {
+  ///   case final Subclass value:
+  ///     return ...;
+  ///   case _:
+  ///     return orElse();
+  /// }
+  /// ```
+
+  @optionalTypeArgs
+  TResult maybeMap<TResult extends Object?>(
+    TResult Function(_BatchPageOperation value)? $default, {
+    required TResult orElse(),
+  }) {
+    final _that = this;
+    switch (_that) {
+      case _BatchPageOperation() when $default != null:
+        return $default(_that);
+      case _:
+        return orElse();
+    }
+  }
+
+  /// A `switch`-like method, using callbacks.
+  ///
+  /// Callbacks receives the raw object, upcasted.
+  /// It is equivalent to doing:
+  /// ```dart
+  /// switch (sealedClass) {
+  ///   case final Subclass value:
+  ///     return ...;
+  ///   case final Subclass2 value:
+  ///     return ...;
+  /// }
+  /// ```
+
+  @optionalTypeArgs
+  TResult map<TResult extends Object?>(
+    TResult Function(_BatchPageOperation value) $default,
+  ) {
+    final _that = this;
+    switch (_that) {
+      case _BatchPageOperation():
+        return $default(_that);
+      case _:
+        throw StateError('Unexpected subclass');
+    }
+  }
+
+  /// A variant of `map` that fallback to returning `null`.
+  ///
+  /// It is equivalent to doing:
+  /// ```dart
+  /// switch (sealedClass) {
+  ///   case final Subclass value:
+  ///     return ...;
+  ///   case _:
+  ///     return null;
+  /// }
+  /// ```
+
+  @optionalTypeArgs
+  TResult? mapOrNull<TResult extends Object?>(
+    TResult? Function(_BatchPageOperation value)? $default,
+  ) {
+    final _that = this;
+    switch (_that) {
+      case _BatchPageOperation() when $default != null:
+        return $default(_that);
+      case _:
+        return null;
+    }
+  }
+
+  /// A variant of `when` that fallback to an `orElse` callback.
+  ///
+  /// It is equivalent to doing:
+  /// ```dart
+  /// switch (sealedClass) {
+  ///   case Subclass(:final field):
+  ///     return ...;
+  ///   case _:
+  ///     return orElse();
+  /// }
+  /// ```
+
+  @optionalTypeArgs
+  TResult maybeWhen<TResult extends Object?>(
+    TResult Function(
+            List<String> pageIds,
+            String operationType,
+            Map<String, dynamic> parameters,
+            double progress,
+            bool isProcessing)?
+        $default, {
+    required TResult orElse(),
+  }) {
+    final _that = this;
+    switch (_that) {
+      case _BatchPageOperation() when $default != null:
+        return $default(_that.pageIds, _that.operationType, _that.parameters,
+            _that.progress, _that.isProcessing);
+      case _:
+        return orElse();
+    }
+  }
+
+  /// A `switch`-like method, using callbacks.
+  ///
+  /// As opposed to `map`, this offers destructuring.
+  /// It is equivalent to doing:
+  /// ```dart
+  /// switch (sealedClass) {
+  ///   case Subclass(:final field):
+  ///     return ...;
+  ///   case Subclass2(:final field2):
+  ///     return ...;
+  /// }
+  /// ```
+
+  @optionalTypeArgs
+  TResult when<TResult extends Object?>(
+    TResult Function(List<String> pageIds, String operationType,
+            Map<String, dynamic> parameters, double progress, bool isProcessing)
+        $default,
+  ) {
+    final _that = this;
+    switch (_that) {
+      case _BatchPageOperation():
+        return $default(_that.pageIds, _that.operationType, _that.parameters,
+            _that.progress, _that.isProcessing);
+      case _:
+        throw StateError('Unexpected subclass');
+    }
+  }
+
+  /// A variant of `when` that fallback to returning `null`
+  ///
+  /// It is equivalent to doing:
+  /// ```dart
+  /// switch (sealedClass) {
+  ///   case Subclass(:final field):
+  ///     return ...;
+  ///   case _:
+  ///     return null;
+  /// }
+  /// ```
+
+  @optionalTypeArgs
+  TResult? whenOrNull<TResult extends Object?>(
+    TResult? Function(
+            List<String> pageIds,
+            String operationType,
+            Map<String, dynamic> parameters,
+            double progress,
+            bool isProcessing)?
+        $default,
+  ) {
+    final _that = this;
+    switch (_that) {
+      case _BatchPageOperation() when $default != null:
+        return $default(_that.pageIds, _that.operationType, _that.parameters,
+            _that.progress, _that.isProcessing);
+      case _:
+        return null;
+    }
+  }
+}
+
+/// @nodoc
+
+class _BatchPageOperation implements BatchPageOperation {
+  const _BatchPageOperation(
+      {required final List<String> pageIds,
+      required this.operationType,
+      final Map<String, dynamic> parameters = const {},
+      this.progress = 0.0,
+      this.isProcessing = false})
       : _pageIds = pageIds,
         _parameters = parameters;
 
-  @override
-  final BatchOperationType type;
   final List<String> _pageIds;
   @override
   List<String> get pageIds {
@@ -2261,83 +3432,120 @@ class _$BatchPageOperationImpl implements _BatchPageOperation {
   }
 
   @override
-  @JsonKey()
-  final bool isProcessing;
+  final String operationType;
+  final Map<String, dynamic> _parameters;
   @override
   @JsonKey()
-  final int progress;
-  final Map<String, dynamic>? _parameters;
-  @override
-  Map<String, dynamic>? get parameters {
-    final value = _parameters;
-    if (value == null) return null;
+  Map<String, dynamic> get parameters {
     if (_parameters is EqualUnmodifiableMapView) return _parameters;
     // ignore: implicit_dynamic_type
-    return EqualUnmodifiableMapView(value);
+    return EqualUnmodifiableMapView(_parameters);
   }
 
   @override
-  String toString() {
-    return 'BatchPageOperation(type: $type, pageIds: $pageIds, isProcessing: $isProcessing, progress: $progress, parameters: $parameters)';
-  }
+  @JsonKey()
+  final double progress;
+  @override
+  @JsonKey()
+  final bool isProcessing;
+
+  /// Create a copy of BatchPageOperation
+  /// with the given fields replaced by the non-null parameter values.
+  @override
+  @JsonKey(includeFromJson: false, includeToJson: false)
+  @pragma('vm:prefer-inline')
+  _$BatchPageOperationCopyWith<_BatchPageOperation> get copyWith =>
+      __$BatchPageOperationCopyWithImpl<_BatchPageOperation>(this, _$identity);
 
   @override
   bool operator ==(Object other) {
     return identical(this, other) ||
         (other.runtimeType == runtimeType &&
-            other is _$BatchPageOperationImpl &&
-            (identical(other.type, type) || other.type == type) &&
+            other is _BatchPageOperation &&
             const DeepCollectionEquality().equals(other._pageIds, _pageIds) &&
-            (identical(other.isProcessing, isProcessing) ||
-                other.isProcessing == isProcessing) &&
+            (identical(other.operationType, operationType) ||
+                other.operationType == operationType) &&
+            const DeepCollectionEquality()
+                .equals(other._parameters, _parameters) &&
             (identical(other.progress, progress) ||
                 other.progress == progress) &&
-            const DeepCollectionEquality()
-                .equals(other._parameters, _parameters));
+            (identical(other.isProcessing, isProcessing) ||
+                other.isProcessing == isProcessing));
   }
 
   @override
   int get hashCode => Object.hash(
       runtimeType,
-      type,
       const DeepCollectionEquality().hash(_pageIds),
-      isProcessing,
+      operationType,
+      const DeepCollectionEquality().hash(_parameters),
       progress,
-      const DeepCollectionEquality().hash(_parameters));
+      isProcessing);
+
+  @override
+  String toString() {
+    return 'BatchPageOperation(pageIds: $pageIds, operationType: $operationType, parameters: $parameters, progress: $progress, isProcessing: $isProcessing)';
+  }
+}
+
+/// @nodoc
+abstract mixin class _$BatchPageOperationCopyWith<$Res>
+    implements $BatchPageOperationCopyWith<$Res> {
+  factory _$BatchPageOperationCopyWith(
+          _BatchPageOperation value, $Res Function(_BatchPageOperation) _then) =
+      __$BatchPageOperationCopyWithImpl;
+  @override
+  @useResult
+  $Res call(
+      {List<String> pageIds,
+      String operationType,
+      Map<String, dynamic> parameters,
+      double progress,
+      bool isProcessing});
+}
+
+/// @nodoc
+class __$BatchPageOperationCopyWithImpl<$Res>
+    implements _$BatchPageOperationCopyWith<$Res> {
+  __$BatchPageOperationCopyWithImpl(this._self, this._then);
+
+  final _BatchPageOperation _self;
+  final $Res Function(_BatchPageOperation) _then;
 
   /// Create a copy of BatchPageOperation
   /// with the given fields replaced by the non-null parameter values.
-  @JsonKey(includeFromJson: false, includeToJson: false)
   @override
   @pragma('vm:prefer-inline')
-  _$$BatchPageOperationImplCopyWith<_$BatchPageOperationImpl> get copyWith =>
-      __$$BatchPageOperationImplCopyWithImpl<_$BatchPageOperationImpl>(
-          this, _$identity);
+  $Res call({
+    Object? pageIds = null,
+    Object? operationType = null,
+    Object? parameters = null,
+    Object? progress = null,
+    Object? isProcessing = null,
+  }) {
+    return _then(_BatchPageOperation(
+      pageIds: null == pageIds
+          ? _self._pageIds
+          : pageIds // ignore: cast_nullable_to_non_nullable
+              as List<String>,
+      operationType: null == operationType
+          ? _self.operationType
+          : operationType // ignore: cast_nullable_to_non_nullable
+              as String,
+      parameters: null == parameters
+          ? _self._parameters
+          : parameters // ignore: cast_nullable_to_non_nullable
+              as Map<String, dynamic>,
+      progress: null == progress
+          ? _self.progress
+          : progress // ignore: cast_nullable_to_non_nullable
+              as double,
+      isProcessing: null == isProcessing
+          ? _self.isProcessing
+          : isProcessing // ignore: cast_nullable_to_non_nullable
+              as bool,
+    ));
+  }
 }
 
-abstract class _BatchPageOperation implements BatchPageOperation {
-  const factory _BatchPageOperation(
-      {required final BatchOperationType type,
-      required final List<String> pageIds,
-      final bool isProcessing,
-      final int progress,
-      final Map<String, dynamic>? parameters}) = _$BatchPageOperationImpl;
-
-  @override
-  BatchOperationType get type;
-  @override
-  List<String> get pageIds;
-  @override
-  bool get isProcessing;
-  @override
-  int get progress;
-  @override
-  Map<String, dynamic>? get parameters;
-
-  /// Create a copy of BatchPageOperation
-  /// with the given fields replaced by the non-null parameter values.
-  @override
-  @JsonKey(includeFromJson: false, includeToJson: false)
-  _$$BatchPageOperationImplCopyWith<_$BatchPageOperationImpl> get copyWith =>
-      throw _privateConstructorUsedError;
-}
+// dart format on

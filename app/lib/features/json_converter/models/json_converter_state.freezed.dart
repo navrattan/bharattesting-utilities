@@ -1,5 +1,5 @@
-// coverage:ignore-file
 // GENERATED CODE - DO NOT MODIFY BY HAND
+// coverage:ignore-file
 // ignore_for_file: type=lint
 // ignore_for_file: unused_element, deprecated_member_use, deprecated_member_use_from_same_package, use_function_type_syntax_for_parameters, unnecessary_const, avoid_init_to_null, invalid_override_different_default_values_named, prefer_expression_function_bodies, annotate_overrides, invalid_annotation_target, unnecessary_question_mark
 
@@ -9,156 +9,95 @@ part of 'json_converter_state.dart';
 // FreezedGenerator
 // **************************************************************************
 
+// dart format off
 T _$identity<T>(T value) => value;
-
-final _privateConstructorUsedError = UnsupportedError(
-    'It seems like you constructed your class using `MyClass._()`. This constructor is only meant to be used by freezed and you are not supposed to need it nor use it.\nPlease check the documentation here for more information: https://github.com/rrousselGit/freezed#adding-getters-and-methods-to-our-models');
 
 /// @nodoc
 mixin _$JsonConverterState {
-  String get inputText => throw _privateConstructorUsedError;
-  String get outputText => throw _privateConstructorUsedError;
-  bool get isProcessing => throw _privateConstructorUsedError;
-  bool get autoRepairEnabled => throw _privateConstructorUsedError;
-  bool get prettifyOutput => throw _privateConstructorUsedError;
-  InputFormat get detectedFormat => throw _privateConstructorUsedError;
-  double get formatConfidence => throw _privateConstructorUsedError;
-  List<RepairRule> get appliedRepairs => throw _privateConstructorUsedError;
-  List<String> get errors => throw _privateConstructorUsedError;
-  List<String> get warnings => throw _privateConstructorUsedError;
-  int? get errorLineNumber => throw _privateConstructorUsedError;
-  int? get errorColumnNumber => throw _privateConstructorUsedError;
-  String? get errorMessage => throw _privateConstructorUsedError;
-  Map<String, dynamic>? get metadata => throw _privateConstructorUsedError;
+  String get inputText;
+  String get outputText;
+  bool get isProcessing;
+  bool get autoRepairEnabled;
+  bool get prettifyOutput;
+  InputFormat get detectedFormat;
+  double get formatConfidence;
+  List<RepairRule> get appliedRepairs;
+  List<String> get errors;
+  List<String> get warnings;
+  int? get errorLineNumber;
+  int? get errorColumnNumber;
+  String? get errorMessage;
+  Map<String, dynamic>? get metadata;
 
   /// Create a copy of JsonConverterState
   /// with the given fields replaced by the non-null parameter values.
   @JsonKey(includeFromJson: false, includeToJson: false)
-  $JsonConverterStateCopyWith<JsonConverterState> get copyWith =>
-      throw _privateConstructorUsedError;
-}
-
-/// @nodoc
-abstract class $JsonConverterStateCopyWith<$Res> {
-  factory $JsonConverterStateCopyWith(
-          JsonConverterState value, $Res Function(JsonConverterState) then) =
-      _$JsonConverterStateCopyWithImpl<$Res, JsonConverterState>;
-  @useResult
-  $Res call(
-      {String inputText,
-      String outputText,
-      bool isProcessing,
-      bool autoRepairEnabled,
-      bool prettifyOutput,
-      InputFormat detectedFormat,
-      double formatConfidence,
-      List<RepairRule> appliedRepairs,
-      List<String> errors,
-      List<String> warnings,
-      int? errorLineNumber,
-      int? errorColumnNumber,
-      String? errorMessage,
-      Map<String, dynamic>? metadata});
-}
-
-/// @nodoc
-class _$JsonConverterStateCopyWithImpl<$Res, $Val extends JsonConverterState>
-    implements $JsonConverterStateCopyWith<$Res> {
-  _$JsonConverterStateCopyWithImpl(this._value, this._then);
-
-  // ignore: unused_field
-  final $Val _value;
-  // ignore: unused_field
-  final $Res Function($Val) _then;
-
-  /// Create a copy of JsonConverterState
-  /// with the given fields replaced by the non-null parameter values.
   @pragma('vm:prefer-inline')
+  $JsonConverterStateCopyWith<JsonConverterState> get copyWith =>
+      _$JsonConverterStateCopyWithImpl<JsonConverterState>(
+          this as JsonConverterState, _$identity);
+
   @override
-  $Res call({
-    Object? inputText = null,
-    Object? outputText = null,
-    Object? isProcessing = null,
-    Object? autoRepairEnabled = null,
-    Object? prettifyOutput = null,
-    Object? detectedFormat = null,
-    Object? formatConfidence = null,
-    Object? appliedRepairs = null,
-    Object? errors = null,
-    Object? warnings = null,
-    Object? errorLineNumber = freezed,
-    Object? errorColumnNumber = freezed,
-    Object? errorMessage = freezed,
-    Object? metadata = freezed,
-  }) {
-    return _then(_value.copyWith(
-      inputText: null == inputText
-          ? _value.inputText
-          : inputText // ignore: cast_nullable_to_non_nullable
-              as String,
-      outputText: null == outputText
-          ? _value.outputText
-          : outputText // ignore: cast_nullable_to_non_nullable
-              as String,
-      isProcessing: null == isProcessing
-          ? _value.isProcessing
-          : isProcessing // ignore: cast_nullable_to_non_nullable
-              as bool,
-      autoRepairEnabled: null == autoRepairEnabled
-          ? _value.autoRepairEnabled
-          : autoRepairEnabled // ignore: cast_nullable_to_non_nullable
-              as bool,
-      prettifyOutput: null == prettifyOutput
-          ? _value.prettifyOutput
-          : prettifyOutput // ignore: cast_nullable_to_non_nullable
-              as bool,
-      detectedFormat: null == detectedFormat
-          ? _value.detectedFormat
-          : detectedFormat // ignore: cast_nullable_to_non_nullable
-              as InputFormat,
-      formatConfidence: null == formatConfidence
-          ? _value.formatConfidence
-          : formatConfidence // ignore: cast_nullable_to_non_nullable
-              as double,
-      appliedRepairs: null == appliedRepairs
-          ? _value.appliedRepairs
-          : appliedRepairs // ignore: cast_nullable_to_non_nullable
-              as List<RepairRule>,
-      errors: null == errors
-          ? _value.errors
-          : errors // ignore: cast_nullable_to_non_nullable
-              as List<String>,
-      warnings: null == warnings
-          ? _value.warnings
-          : warnings // ignore: cast_nullable_to_non_nullable
-              as List<String>,
-      errorLineNumber: freezed == errorLineNumber
-          ? _value.errorLineNumber
-          : errorLineNumber // ignore: cast_nullable_to_non_nullable
-              as int?,
-      errorColumnNumber: freezed == errorColumnNumber
-          ? _value.errorColumnNumber
-          : errorColumnNumber // ignore: cast_nullable_to_non_nullable
-              as int?,
-      errorMessage: freezed == errorMessage
-          ? _value.errorMessage
-          : errorMessage // ignore: cast_nullable_to_non_nullable
-              as String?,
-      metadata: freezed == metadata
-          ? _value.metadata
-          : metadata // ignore: cast_nullable_to_non_nullable
-              as Map<String, dynamic>?,
-    ) as $Val);
+  bool operator ==(Object other) {
+    return identical(this, other) ||
+        (other.runtimeType == runtimeType &&
+            other is JsonConverterState &&
+            (identical(other.inputText, inputText) ||
+                other.inputText == inputText) &&
+            (identical(other.outputText, outputText) ||
+                other.outputText == outputText) &&
+            (identical(other.isProcessing, isProcessing) ||
+                other.isProcessing == isProcessing) &&
+            (identical(other.autoRepairEnabled, autoRepairEnabled) ||
+                other.autoRepairEnabled == autoRepairEnabled) &&
+            (identical(other.prettifyOutput, prettifyOutput) ||
+                other.prettifyOutput == prettifyOutput) &&
+            (identical(other.detectedFormat, detectedFormat) ||
+                other.detectedFormat == detectedFormat) &&
+            (identical(other.formatConfidence, formatConfidence) ||
+                other.formatConfidence == formatConfidence) &&
+            const DeepCollectionEquality()
+                .equals(other.appliedRepairs, appliedRepairs) &&
+            const DeepCollectionEquality().equals(other.errors, errors) &&
+            const DeepCollectionEquality().equals(other.warnings, warnings) &&
+            (identical(other.errorLineNumber, errorLineNumber) ||
+                other.errorLineNumber == errorLineNumber) &&
+            (identical(other.errorColumnNumber, errorColumnNumber) ||
+                other.errorColumnNumber == errorColumnNumber) &&
+            (identical(other.errorMessage, errorMessage) ||
+                other.errorMessage == errorMessage) &&
+            const DeepCollectionEquality().equals(other.metadata, metadata));
+  }
+
+  @override
+  int get hashCode => Object.hash(
+      runtimeType,
+      inputText,
+      outputText,
+      isProcessing,
+      autoRepairEnabled,
+      prettifyOutput,
+      detectedFormat,
+      formatConfidence,
+      const DeepCollectionEquality().hash(appliedRepairs),
+      const DeepCollectionEquality().hash(errors),
+      const DeepCollectionEquality().hash(warnings),
+      errorLineNumber,
+      errorColumnNumber,
+      errorMessage,
+      const DeepCollectionEquality().hash(metadata));
+
+  @override
+  String toString() {
+    return 'JsonConverterState(inputText: $inputText, outputText: $outputText, isProcessing: $isProcessing, autoRepairEnabled: $autoRepairEnabled, prettifyOutput: $prettifyOutput, detectedFormat: $detectedFormat, formatConfidence: $formatConfidence, appliedRepairs: $appliedRepairs, errors: $errors, warnings: $warnings, errorLineNumber: $errorLineNumber, errorColumnNumber: $errorColumnNumber, errorMessage: $errorMessage, metadata: $metadata)';
   }
 }
 
 /// @nodoc
-abstract class _$$JsonConverterStateImplCopyWith<$Res>
-    implements $JsonConverterStateCopyWith<$Res> {
-  factory _$$JsonConverterStateImplCopyWith(_$JsonConverterStateImpl value,
-          $Res Function(_$JsonConverterStateImpl) then) =
-      __$$JsonConverterStateImplCopyWithImpl<$Res>;
-  @override
+abstract mixin class $JsonConverterStateCopyWith<$Res> {
+  factory $JsonConverterStateCopyWith(
+          JsonConverterState value, $Res Function(JsonConverterState) _then) =
+      _$JsonConverterStateCopyWithImpl;
   @useResult
   $Res call(
       {String inputText,
@@ -178,12 +117,12 @@ abstract class _$$JsonConverterStateImplCopyWith<$Res>
 }
 
 /// @nodoc
-class __$$JsonConverterStateImplCopyWithImpl<$Res>
-    extends _$JsonConverterStateCopyWithImpl<$Res, _$JsonConverterStateImpl>
-    implements _$$JsonConverterStateImplCopyWith<$Res> {
-  __$$JsonConverterStateImplCopyWithImpl(_$JsonConverterStateImpl _value,
-      $Res Function(_$JsonConverterStateImpl) _then)
-      : super(_value, _then);
+class _$JsonConverterStateCopyWithImpl<$Res>
+    implements $JsonConverterStateCopyWith<$Res> {
+  _$JsonConverterStateCopyWithImpl(this._self, this._then);
+
+  final JsonConverterState _self;
+  final $Res Function(JsonConverterState) _then;
 
   /// Create a copy of JsonConverterState
   /// with the given fields replaced by the non-null parameter values.
@@ -205,71 +144,315 @@ class __$$JsonConverterStateImplCopyWithImpl<$Res>
     Object? errorMessage = freezed,
     Object? metadata = freezed,
   }) {
-    return _then(_$JsonConverterStateImpl(
+    return _then(_self.copyWith(
       inputText: null == inputText
-          ? _value.inputText
+          ? _self.inputText
           : inputText // ignore: cast_nullable_to_non_nullable
               as String,
       outputText: null == outputText
-          ? _value.outputText
+          ? _self.outputText
           : outputText // ignore: cast_nullable_to_non_nullable
               as String,
       isProcessing: null == isProcessing
-          ? _value.isProcessing
+          ? _self.isProcessing
           : isProcessing // ignore: cast_nullable_to_non_nullable
               as bool,
       autoRepairEnabled: null == autoRepairEnabled
-          ? _value.autoRepairEnabled
+          ? _self.autoRepairEnabled
           : autoRepairEnabled // ignore: cast_nullable_to_non_nullable
               as bool,
       prettifyOutput: null == prettifyOutput
-          ? _value.prettifyOutput
+          ? _self.prettifyOutput
           : prettifyOutput // ignore: cast_nullable_to_non_nullable
               as bool,
       detectedFormat: null == detectedFormat
-          ? _value.detectedFormat
+          ? _self.detectedFormat
           : detectedFormat // ignore: cast_nullable_to_non_nullable
               as InputFormat,
       formatConfidence: null == formatConfidence
-          ? _value.formatConfidence
+          ? _self.formatConfidence
           : formatConfidence // ignore: cast_nullable_to_non_nullable
               as double,
       appliedRepairs: null == appliedRepairs
-          ? _value._appliedRepairs
+          ? _self.appliedRepairs
           : appliedRepairs // ignore: cast_nullable_to_non_nullable
               as List<RepairRule>,
       errors: null == errors
-          ? _value._errors
+          ? _self.errors
           : errors // ignore: cast_nullable_to_non_nullable
               as List<String>,
       warnings: null == warnings
-          ? _value._warnings
+          ? _self.warnings
           : warnings // ignore: cast_nullable_to_non_nullable
               as List<String>,
       errorLineNumber: freezed == errorLineNumber
-          ? _value.errorLineNumber
+          ? _self.errorLineNumber
           : errorLineNumber // ignore: cast_nullable_to_non_nullable
               as int?,
       errorColumnNumber: freezed == errorColumnNumber
-          ? _value.errorColumnNumber
+          ? _self.errorColumnNumber
           : errorColumnNumber // ignore: cast_nullable_to_non_nullable
               as int?,
       errorMessage: freezed == errorMessage
-          ? _value.errorMessage
+          ? _self.errorMessage
           : errorMessage // ignore: cast_nullable_to_non_nullable
               as String?,
       metadata: freezed == metadata
-          ? _value._metadata
+          ? _self.metadata
           : metadata // ignore: cast_nullable_to_non_nullable
               as Map<String, dynamic>?,
     ));
   }
 }
 
+/// Adds pattern-matching-related methods to [JsonConverterState].
+extension JsonConverterStatePatterns on JsonConverterState {
+  /// A variant of `map` that fallback to returning `orElse`.
+  ///
+  /// It is equivalent to doing:
+  /// ```dart
+  /// switch (sealedClass) {
+  ///   case final Subclass value:
+  ///     return ...;
+  ///   case _:
+  ///     return orElse();
+  /// }
+  /// ```
+
+  @optionalTypeArgs
+  TResult maybeMap<TResult extends Object?>(
+    TResult Function(_JsonConverterState value)? $default, {
+    required TResult orElse(),
+  }) {
+    final _that = this;
+    switch (_that) {
+      case _JsonConverterState() when $default != null:
+        return $default(_that);
+      case _:
+        return orElse();
+    }
+  }
+
+  /// A `switch`-like method, using callbacks.
+  ///
+  /// Callbacks receives the raw object, upcasted.
+  /// It is equivalent to doing:
+  /// ```dart
+  /// switch (sealedClass) {
+  ///   case final Subclass value:
+  ///     return ...;
+  ///   case final Subclass2 value:
+  ///     return ...;
+  /// }
+  /// ```
+
+  @optionalTypeArgs
+  TResult map<TResult extends Object?>(
+    TResult Function(_JsonConverterState value) $default,
+  ) {
+    final _that = this;
+    switch (_that) {
+      case _JsonConverterState():
+        return $default(_that);
+      case _:
+        throw StateError('Unexpected subclass');
+    }
+  }
+
+  /// A variant of `map` that fallback to returning `null`.
+  ///
+  /// It is equivalent to doing:
+  /// ```dart
+  /// switch (sealedClass) {
+  ///   case final Subclass value:
+  ///     return ...;
+  ///   case _:
+  ///     return null;
+  /// }
+  /// ```
+
+  @optionalTypeArgs
+  TResult? mapOrNull<TResult extends Object?>(
+    TResult? Function(_JsonConverterState value)? $default,
+  ) {
+    final _that = this;
+    switch (_that) {
+      case _JsonConverterState() when $default != null:
+        return $default(_that);
+      case _:
+        return null;
+    }
+  }
+
+  /// A variant of `when` that fallback to an `orElse` callback.
+  ///
+  /// It is equivalent to doing:
+  /// ```dart
+  /// switch (sealedClass) {
+  ///   case Subclass(:final field):
+  ///     return ...;
+  ///   case _:
+  ///     return orElse();
+  /// }
+  /// ```
+
+  @optionalTypeArgs
+  TResult maybeWhen<TResult extends Object?>(
+    TResult Function(
+            String inputText,
+            String outputText,
+            bool isProcessing,
+            bool autoRepairEnabled,
+            bool prettifyOutput,
+            InputFormat detectedFormat,
+            double formatConfidence,
+            List<RepairRule> appliedRepairs,
+            List<String> errors,
+            List<String> warnings,
+            int? errorLineNumber,
+            int? errorColumnNumber,
+            String? errorMessage,
+            Map<String, dynamic>? metadata)?
+        $default, {
+    required TResult orElse(),
+  }) {
+    final _that = this;
+    switch (_that) {
+      case _JsonConverterState() when $default != null:
+        return $default(
+            _that.inputText,
+            _that.outputText,
+            _that.isProcessing,
+            _that.autoRepairEnabled,
+            _that.prettifyOutput,
+            _that.detectedFormat,
+            _that.formatConfidence,
+            _that.appliedRepairs,
+            _that.errors,
+            _that.warnings,
+            _that.errorLineNumber,
+            _that.errorColumnNumber,
+            _that.errorMessage,
+            _that.metadata);
+      case _:
+        return orElse();
+    }
+  }
+
+  /// A `switch`-like method, using callbacks.
+  ///
+  /// As opposed to `map`, this offers destructuring.
+  /// It is equivalent to doing:
+  /// ```dart
+  /// switch (sealedClass) {
+  ///   case Subclass(:final field):
+  ///     return ...;
+  ///   case Subclass2(:final field2):
+  ///     return ...;
+  /// }
+  /// ```
+
+  @optionalTypeArgs
+  TResult when<TResult extends Object?>(
+    TResult Function(
+            String inputText,
+            String outputText,
+            bool isProcessing,
+            bool autoRepairEnabled,
+            bool prettifyOutput,
+            InputFormat detectedFormat,
+            double formatConfidence,
+            List<RepairRule> appliedRepairs,
+            List<String> errors,
+            List<String> warnings,
+            int? errorLineNumber,
+            int? errorColumnNumber,
+            String? errorMessage,
+            Map<String, dynamic>? metadata)
+        $default,
+  ) {
+    final _that = this;
+    switch (_that) {
+      case _JsonConverterState():
+        return $default(
+            _that.inputText,
+            _that.outputText,
+            _that.isProcessing,
+            _that.autoRepairEnabled,
+            _that.prettifyOutput,
+            _that.detectedFormat,
+            _that.formatConfidence,
+            _that.appliedRepairs,
+            _that.errors,
+            _that.warnings,
+            _that.errorLineNumber,
+            _that.errorColumnNumber,
+            _that.errorMessage,
+            _that.metadata);
+      case _:
+        throw StateError('Unexpected subclass');
+    }
+  }
+
+  /// A variant of `when` that fallback to returning `null`
+  ///
+  /// It is equivalent to doing:
+  /// ```dart
+  /// switch (sealedClass) {
+  ///   case Subclass(:final field):
+  ///     return ...;
+  ///   case _:
+  ///     return null;
+  /// }
+  /// ```
+
+  @optionalTypeArgs
+  TResult? whenOrNull<TResult extends Object?>(
+    TResult? Function(
+            String inputText,
+            String outputText,
+            bool isProcessing,
+            bool autoRepairEnabled,
+            bool prettifyOutput,
+            InputFormat detectedFormat,
+            double formatConfidence,
+            List<RepairRule> appliedRepairs,
+            List<String> errors,
+            List<String> warnings,
+            int? errorLineNumber,
+            int? errorColumnNumber,
+            String? errorMessage,
+            Map<String, dynamic>? metadata)?
+        $default,
+  ) {
+    final _that = this;
+    switch (_that) {
+      case _JsonConverterState() when $default != null:
+        return $default(
+            _that.inputText,
+            _that.outputText,
+            _that.isProcessing,
+            _that.autoRepairEnabled,
+            _that.prettifyOutput,
+            _that.detectedFormat,
+            _that.formatConfidence,
+            _that.appliedRepairs,
+            _that.errors,
+            _that.warnings,
+            _that.errorLineNumber,
+            _that.errorColumnNumber,
+            _that.errorMessage,
+            _that.metadata);
+      case _:
+        return null;
+    }
+  }
+}
+
 /// @nodoc
 
-class _$JsonConverterStateImpl extends _JsonConverterState {
-  const _$JsonConverterStateImpl(
+class _JsonConverterState extends JsonConverterState {
+  const _JsonConverterState(
       {this.inputText = '',
       this.outputText = '',
       this.isProcessing = false,
@@ -354,16 +537,19 @@ class _$JsonConverterStateImpl extends _JsonConverterState {
     return EqualUnmodifiableMapView(value);
   }
 
+  /// Create a copy of JsonConverterState
+  /// with the given fields replaced by the non-null parameter values.
   @override
-  String toString() {
-    return 'JsonConverterState(inputText: $inputText, outputText: $outputText, isProcessing: $isProcessing, autoRepairEnabled: $autoRepairEnabled, prettifyOutput: $prettifyOutput, detectedFormat: $detectedFormat, formatConfidence: $formatConfidence, appliedRepairs: $appliedRepairs, errors: $errors, warnings: $warnings, errorLineNumber: $errorLineNumber, errorColumnNumber: $errorColumnNumber, errorMessage: $errorMessage, metadata: $metadata)';
-  }
+  @JsonKey(includeFromJson: false, includeToJson: false)
+  @pragma('vm:prefer-inline')
+  _$JsonConverterStateCopyWith<_JsonConverterState> get copyWith =>
+      __$JsonConverterStateCopyWithImpl<_JsonConverterState>(this, _$identity);
 
   @override
   bool operator ==(Object other) {
     return identical(this, other) ||
         (other.runtimeType == runtimeType &&
-            other is _$JsonConverterStateImpl &&
+            other is _JsonConverterState &&
             (identical(other.inputText, inputText) ||
                 other.inputText == inputText) &&
             (identical(other.outputText, outputText) ||
@@ -409,67 +595,124 @@ class _$JsonConverterStateImpl extends _JsonConverterState {
       errorMessage,
       const DeepCollectionEquality().hash(_metadata));
 
+  @override
+  String toString() {
+    return 'JsonConverterState(inputText: $inputText, outputText: $outputText, isProcessing: $isProcessing, autoRepairEnabled: $autoRepairEnabled, prettifyOutput: $prettifyOutput, detectedFormat: $detectedFormat, formatConfidence: $formatConfidence, appliedRepairs: $appliedRepairs, errors: $errors, warnings: $warnings, errorLineNumber: $errorLineNumber, errorColumnNumber: $errorColumnNumber, errorMessage: $errorMessage, metadata: $metadata)';
+  }
+}
+
+/// @nodoc
+abstract mixin class _$JsonConverterStateCopyWith<$Res>
+    implements $JsonConverterStateCopyWith<$Res> {
+  factory _$JsonConverterStateCopyWith(
+          _JsonConverterState value, $Res Function(_JsonConverterState) _then) =
+      __$JsonConverterStateCopyWithImpl;
+  @override
+  @useResult
+  $Res call(
+      {String inputText,
+      String outputText,
+      bool isProcessing,
+      bool autoRepairEnabled,
+      bool prettifyOutput,
+      InputFormat detectedFormat,
+      double formatConfidence,
+      List<RepairRule> appliedRepairs,
+      List<String> errors,
+      List<String> warnings,
+      int? errorLineNumber,
+      int? errorColumnNumber,
+      String? errorMessage,
+      Map<String, dynamic>? metadata});
+}
+
+/// @nodoc
+class __$JsonConverterStateCopyWithImpl<$Res>
+    implements _$JsonConverterStateCopyWith<$Res> {
+  __$JsonConverterStateCopyWithImpl(this._self, this._then);
+
+  final _JsonConverterState _self;
+  final $Res Function(_JsonConverterState) _then;
+
   /// Create a copy of JsonConverterState
   /// with the given fields replaced by the non-null parameter values.
-  @JsonKey(includeFromJson: false, includeToJson: false)
   @override
   @pragma('vm:prefer-inline')
-  _$$JsonConverterStateImplCopyWith<_$JsonConverterStateImpl> get copyWith =>
-      __$$JsonConverterStateImplCopyWithImpl<_$JsonConverterStateImpl>(
-          this, _$identity);
+  $Res call({
+    Object? inputText = null,
+    Object? outputText = null,
+    Object? isProcessing = null,
+    Object? autoRepairEnabled = null,
+    Object? prettifyOutput = null,
+    Object? detectedFormat = null,
+    Object? formatConfidence = null,
+    Object? appliedRepairs = null,
+    Object? errors = null,
+    Object? warnings = null,
+    Object? errorLineNumber = freezed,
+    Object? errorColumnNumber = freezed,
+    Object? errorMessage = freezed,
+    Object? metadata = freezed,
+  }) {
+    return _then(_JsonConverterState(
+      inputText: null == inputText
+          ? _self.inputText
+          : inputText // ignore: cast_nullable_to_non_nullable
+              as String,
+      outputText: null == outputText
+          ? _self.outputText
+          : outputText // ignore: cast_nullable_to_non_nullable
+              as String,
+      isProcessing: null == isProcessing
+          ? _self.isProcessing
+          : isProcessing // ignore: cast_nullable_to_non_nullable
+              as bool,
+      autoRepairEnabled: null == autoRepairEnabled
+          ? _self.autoRepairEnabled
+          : autoRepairEnabled // ignore: cast_nullable_to_non_nullable
+              as bool,
+      prettifyOutput: null == prettifyOutput
+          ? _self.prettifyOutput
+          : prettifyOutput // ignore: cast_nullable_to_non_nullable
+              as bool,
+      detectedFormat: null == detectedFormat
+          ? _self.detectedFormat
+          : detectedFormat // ignore: cast_nullable_to_non_nullable
+              as InputFormat,
+      formatConfidence: null == formatConfidence
+          ? _self.formatConfidence
+          : formatConfidence // ignore: cast_nullable_to_non_nullable
+              as double,
+      appliedRepairs: null == appliedRepairs
+          ? _self._appliedRepairs
+          : appliedRepairs // ignore: cast_nullable_to_non_nullable
+              as List<RepairRule>,
+      errors: null == errors
+          ? _self._errors
+          : errors // ignore: cast_nullable_to_non_nullable
+              as List<String>,
+      warnings: null == warnings
+          ? _self._warnings
+          : warnings // ignore: cast_nullable_to_non_nullable
+              as List<String>,
+      errorLineNumber: freezed == errorLineNumber
+          ? _self.errorLineNumber
+          : errorLineNumber // ignore: cast_nullable_to_non_nullable
+              as int?,
+      errorColumnNumber: freezed == errorColumnNumber
+          ? _self.errorColumnNumber
+          : errorColumnNumber // ignore: cast_nullable_to_non_nullable
+              as int?,
+      errorMessage: freezed == errorMessage
+          ? _self.errorMessage
+          : errorMessage // ignore: cast_nullable_to_non_nullable
+              as String?,
+      metadata: freezed == metadata
+          ? _self._metadata
+          : metadata // ignore: cast_nullable_to_non_nullable
+              as Map<String, dynamic>?,
+    ));
+  }
 }
 
-abstract class _JsonConverterState extends JsonConverterState {
-  const factory _JsonConverterState(
-      {final String inputText,
-      final String outputText,
-      final bool isProcessing,
-      final bool autoRepairEnabled,
-      final bool prettifyOutput,
-      final InputFormat detectedFormat,
-      final double formatConfidence,
-      final List<RepairRule> appliedRepairs,
-      final List<String> errors,
-      final List<String> warnings,
-      final int? errorLineNumber,
-      final int? errorColumnNumber,
-      final String? errorMessage,
-      final Map<String, dynamic>? metadata}) = _$JsonConverterStateImpl;
-  const _JsonConverterState._() : super._();
-
-  @override
-  String get inputText;
-  @override
-  String get outputText;
-  @override
-  bool get isProcessing;
-  @override
-  bool get autoRepairEnabled;
-  @override
-  bool get prettifyOutput;
-  @override
-  InputFormat get detectedFormat;
-  @override
-  double get formatConfidence;
-  @override
-  List<RepairRule> get appliedRepairs;
-  @override
-  List<String> get errors;
-  @override
-  List<String> get warnings;
-  @override
-  int? get errorLineNumber;
-  @override
-  int? get errorColumnNumber;
-  @override
-  String? get errorMessage;
-  @override
-  Map<String, dynamic>? get metadata;
-
-  /// Create a copy of JsonConverterState
-  /// with the given fields replaced by the non-null parameter values.
-  @override
-  @JsonKey(includeFromJson: false, includeToJson: false)
-  _$$JsonConverterStateImplCopyWith<_$JsonConverterStateImpl> get copyWith =>
-      throw _privateConstructorUsedError;
-}
+// dart format on

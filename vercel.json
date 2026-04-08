@@ -2,6 +2,7 @@
   "buildCommand": "bash scripts/vercel-build.sh",
   "outputDirectory": "app/build/web",
   "framework": null,
+  "alias": "bharattesting.com",
   "rewrites": [
     {
       "source": "/((?!.*\\.).*)",

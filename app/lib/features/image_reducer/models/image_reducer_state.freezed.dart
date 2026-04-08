@@ -1,5 +1,5 @@
-// coverage:ignore-file
 // GENERATED CODE - DO NOT MODIFY BY HAND
+// coverage:ignore-file
 // ignore_for_file: type=lint
 // ignore_for_file: unused_element, deprecated_member_use, deprecated_member_use_from_same_package, use_function_type_syntax_for_parameters, unnecessary_const, avoid_init_to_null, invalid_override_different_default_values_named, prefer_expression_function_bodies, annotate_overrides, invalid_annotation_target, unnecessary_question_mark
 
@@ -9,41 +9,100 @@ part of 'image_reducer_state.dart';
 // FreezedGenerator
 // **************************************************************************
 
+// dart format off
 T _$identity<T>(T value) => value;
-
-final _privateConstructorUsedError = UnsupportedError(
-    'It seems like you constructed your class using `MyClass._()`. This constructor is only meant to be used by freezed and you are not supposed to need it nor use it.\nPlease check the documentation here for more information: https://github.com/rrousselGit/freezed#adding-getters-and-methods-to-our-models');
 
 /// @nodoc
 mixin _$ImageReducerState {
-  List<ProcessedImage> get images => throw _privateConstructorUsedError;
-  bool get isProcessing => throw _privateConstructorUsedError;
-  int get quality => throw _privateConstructorUsedError;
-  ResizePreset get selectedPreset => throw _privateConstructorUsedError;
-  ConvertibleFormat get targetFormat => throw _privateConstructorUsedError;
-  ConversionStrategy get strategy => throw _privateConstructorUsedError;
-  PrivacyLevel get privacyLevel => throw _privateConstructorUsedError;
-  bool get stripMetadata => throw _privateConstructorUsedError;
-  bool get enableResize => throw _privateConstructorUsedError;
-  bool get enableFormatConversion => throw _privateConstructorUsedError;
-  int get processingProgress => throw _privateConstructorUsedError;
-  List<String> get processingErrors => throw _privateConstructorUsedError;
-  ProcessedImage? get selectedImage => throw _privateConstructorUsedError;
-  bool get showAdvancedSettings => throw _privateConstructorUsedError;
-  bool get showBatchMode => throw _privateConstructorUsedError;
+  List<ProcessedImage> get images;
+  bool get isProcessing;
+  int get quality;
+  ResizePreset get selectedPreset;
+  ConvertibleFormat get targetFormat;
+  ConversionStrategy get strategy;
+  PrivacyLevel get privacyLevel;
+  bool get stripMetadata;
+  bool get enableResize;
+  bool get enableFormatConversion;
+  int get processingProgress;
+  List<String> get processingErrors;
+  ProcessedImage? get selectedImage;
+  bool get showAdvancedSettings;
+  bool get showBatchMode;
 
   /// Create a copy of ImageReducerState
   /// with the given fields replaced by the non-null parameter values.
   @JsonKey(includeFromJson: false, includeToJson: false)
+  @pragma('vm:prefer-inline')
   $ImageReducerStateCopyWith<ImageReducerState> get copyWith =>
-      throw _privateConstructorUsedError;
+      _$ImageReducerStateCopyWithImpl<ImageReducerState>(
+          this as ImageReducerState, _$identity);
+
+  @override
+  bool operator ==(Object other) {
+    return identical(this, other) ||
+        (other.runtimeType == runtimeType &&
+            other is ImageReducerState &&
+            const DeepCollectionEquality().equals(other.images, images) &&
+            (identical(other.isProcessing, isProcessing) ||
+                other.isProcessing == isProcessing) &&
+            (identical(other.quality, quality) || other.quality == quality) &&
+            (identical(other.selectedPreset, selectedPreset) ||
+                other.selectedPreset == selectedPreset) &&
+            (identical(other.targetFormat, targetFormat) ||
+                other.targetFormat == targetFormat) &&
+            (identical(other.strategy, strategy) ||
+                other.strategy == strategy) &&
+            (identical(other.privacyLevel, privacyLevel) ||
+                other.privacyLevel == privacyLevel) &&
+            (identical(other.stripMetadata, stripMetadata) ||
+                other.stripMetadata == stripMetadata) &&
+            (identical(other.enableResize, enableResize) ||
+                other.enableResize == enableResize) &&
+            (identical(other.enableFormatConversion, enableFormatConversion) ||
+                other.enableFormatConversion == enableFormatConversion) &&
+            (identical(other.processingProgress, processingProgress) ||
+                other.processingProgress == processingProgress) &&
+            const DeepCollectionEquality()
+                .equals(other.processingErrors, processingErrors) &&
+            (identical(other.selectedImage, selectedImage) ||
+                other.selectedImage == selectedImage) &&
+            (identical(other.showAdvancedSettings, showAdvancedSettings) ||
+                other.showAdvancedSettings == showAdvancedSettings) &&
+            (identical(other.showBatchMode, showBatchMode) ||
+                other.showBatchMode == showBatchMode));
+  }
+
+  @override
+  int get hashCode => Object.hash(
+      runtimeType,
+      const DeepCollectionEquality().hash(images),
+      isProcessing,
+      quality,
+      selectedPreset,
+      targetFormat,
+      strategy,
+      privacyLevel,
+      stripMetadata,
+      enableResize,
+      enableFormatConversion,
+      processingProgress,
+      const DeepCollectionEquality().hash(processingErrors),
+      selectedImage,
+      showAdvancedSettings,
+      showBatchMode);
+
+  @override
+  String toString() {
+    return 'ImageReducerState(images: $images, isProcessing: $isProcessing, quality: $quality, selectedPreset: $selectedPreset, targetFormat: $targetFormat, strategy: $strategy, privacyLevel: $privacyLevel, stripMetadata: $stripMetadata, enableResize: $enableResize, enableFormatConversion: $enableFormatConversion, processingProgress: $processingProgress, processingErrors: $processingErrors, selectedImage: $selectedImage, showAdvancedSettings: $showAdvancedSettings, showBatchMode: $showBatchMode)';
+  }
 }
 
 /// @nodoc
-abstract class $ImageReducerStateCopyWith<$Res> {
+abstract mixin class $ImageReducerStateCopyWith<$Res> {
   factory $ImageReducerStateCopyWith(
-          ImageReducerState value, $Res Function(ImageReducerState) then) =
-      _$ImageReducerStateCopyWithImpl<$Res, ImageReducerState>;
+          ImageReducerState value, $Res Function(ImageReducerState) _then) =
+      _$ImageReducerStateCopyWithImpl;
   @useResult
   $Res call(
       {List<ProcessedImage> images,
@@ -66,14 +125,12 @@ abstract class $ImageReducerStateCopyWith<$Res> {
 }
 
 /// @nodoc
-class _$ImageReducerStateCopyWithImpl<$Res, $Val extends ImageReducerState>
+class _$ImageReducerStateCopyWithImpl<$Res>
     implements $ImageReducerStateCopyWith<$Res> {
-  _$ImageReducerStateCopyWithImpl(this._value, this._then);
+  _$ImageReducerStateCopyWithImpl(this._self, this._then);
 
-  // ignore: unused_field
-  final $Val _value;
-  // ignore: unused_field
-  final $Res Function($Val) _then;
+  final ImageReducerState _self;
+  final $Res Function(ImageReducerState) _then;
 
   /// Create a copy of ImageReducerState
   /// with the given fields replaced by the non-null parameter values.
@@ -96,68 +153,68 @@ class _$ImageReducerStateCopyWithImpl<$Res, $Val extends ImageReducerState>
     Object? showAdvancedSettings = null,
     Object? showBatchMode = null,
   }) {
-    return _then(_value.copyWith(
+    return _then(_self.copyWith(
       images: null == images
-          ? _value.images
+          ? _self.images
           : images // ignore: cast_nullable_to_non_nullable
               as List<ProcessedImage>,
       isProcessing: null == isProcessing
-          ? _value.isProcessing
+          ? _self.isProcessing
           : isProcessing // ignore: cast_nullable_to_non_nullable
               as bool,
       quality: null == quality
-          ? _value.quality
+          ? _self.quality
           : quality // ignore: cast_nullable_to_non_nullable
               as int,
       selectedPreset: null == selectedPreset
-          ? _value.selectedPreset
+          ? _self.selectedPreset
           : selectedPreset // ignore: cast_nullable_to_non_nullable
               as ResizePreset,
       targetFormat: null == targetFormat
-          ? _value.targetFormat
+          ? _self.targetFormat
           : targetFormat // ignore: cast_nullable_to_non_nullable
               as ConvertibleFormat,
       strategy: null == strategy
-          ? _value.strategy
+          ? _self.strategy
           : strategy // ignore: cast_nullable_to_non_nullable
               as ConversionStrategy,
       privacyLevel: null == privacyLevel
-          ? _value.privacyLevel
+          ? _self.privacyLevel
           : privacyLevel // ignore: cast_nullable_to_non_nullable
               as PrivacyLevel,
       stripMetadata: null == stripMetadata
-          ? _value.stripMetadata
+          ? _self.stripMetadata
           : stripMetadata // ignore: cast_nullable_to_non_nullable
               as bool,
       enableResize: null == enableResize
-          ? _value.enableResize
+          ? _self.enableResize
           : enableResize // ignore: cast_nullable_to_non_nullable
               as bool,
       enableFormatConversion: null == enableFormatConversion
-          ? _value.enableFormatConversion
+          ? _self.enableFormatConversion
           : enableFormatConversion // ignore: cast_nullable_to_non_nullable
               as bool,
       processingProgress: null == processingProgress
-          ? _value.processingProgress
+          ? _self.processingProgress
           : processingProgress // ignore: cast_nullable_to_non_nullable
               as int,
       processingErrors: null == processingErrors
-          ? _value.processingErrors
+          ? _self.processingErrors
           : processingErrors // ignore: cast_nullable_to_non_nullable
               as List<String>,
       selectedImage: freezed == selectedImage
-          ? _value.selectedImage
+          ? _self.selectedImage
           : selectedImage // ignore: cast_nullable_to_non_nullable
               as ProcessedImage?,
       showAdvancedSettings: null == showAdvancedSettings
-          ? _value.showAdvancedSettings
+          ? _self.showAdvancedSettings
           : showAdvancedSettings // ignore: cast_nullable_to_non_nullable
               as bool,
       showBatchMode: null == showBatchMode
-          ? _value.showBatchMode
+          ? _self.showBatchMode
           : showBatchMode // ignore: cast_nullable_to_non_nullable
               as bool,
-    ) as $Val);
+    ));
   }
 
   /// Create a copy of ImageReducerState
@@ -165,143 +222,270 @@ class _$ImageReducerStateCopyWithImpl<$Res, $Val extends ImageReducerState>
   @override
   @pragma('vm:prefer-inline')
   $ProcessedImageCopyWith<$Res>? get selectedImage {
-    if (_value.selectedImage == null) {
+    if (_self.selectedImage == null) {
       return null;
     }
 
-    return $ProcessedImageCopyWith<$Res>(_value.selectedImage!, (value) {
-      return _then(_value.copyWith(selectedImage: value) as $Val);
+    return $ProcessedImageCopyWith<$Res>(_self.selectedImage!, (value) {
+      return _then(_self.copyWith(selectedImage: value));
     });
   }
 }
 
-/// @nodoc
-abstract class _$$ImageReducerStateImplCopyWith<$Res>
-    implements $ImageReducerStateCopyWith<$Res> {
-  factory _$$ImageReducerStateImplCopyWith(_$ImageReducerStateImpl value,
-          $Res Function(_$ImageReducerStateImpl) then) =
-      __$$ImageReducerStateImplCopyWithImpl<$Res>;
-  @override
-  @useResult
-  $Res call(
-      {List<ProcessedImage> images,
-      bool isProcessing,
-      int quality,
-      ResizePreset selectedPreset,
-      ConvertibleFormat targetFormat,
-      ConversionStrategy strategy,
-      PrivacyLevel privacyLevel,
-      bool stripMetadata,
-      bool enableResize,
-      bool enableFormatConversion,
-      int processingProgress,
-      List<String> processingErrors,
-      ProcessedImage? selectedImage,
-      bool showAdvancedSettings,
-      bool showBatchMode});
+/// Adds pattern-matching-related methods to [ImageReducerState].
+extension ImageReducerStatePatterns on ImageReducerState {
+  /// A variant of `map` that fallback to returning `orElse`.
+  ///
+  /// It is equivalent to doing:
+  /// ```dart
+  /// switch (sealedClass) {
+  ///   case final Subclass value:
+  ///     return ...;
+  ///   case _:
+  ///     return orElse();
+  /// }
+  /// ```
 
-  @override
-  $ProcessedImageCopyWith<$Res>? get selectedImage;
-}
-
-/// @nodoc
-class __$$ImageReducerStateImplCopyWithImpl<$Res>
-    extends _$ImageReducerStateCopyWithImpl<$Res, _$ImageReducerStateImpl>
-    implements _$$ImageReducerStateImplCopyWith<$Res> {
-  __$$ImageReducerStateImplCopyWithImpl(_$ImageReducerStateImpl _value,
-      $Res Function(_$ImageReducerStateImpl) _then)
-      : super(_value, _then);
-
-  /// Create a copy of ImageReducerState
-  /// with the given fields replaced by the non-null parameter values.
-  @pragma('vm:prefer-inline')
-  @override
-  $Res call({
-    Object? images = null,
-    Object? isProcessing = null,
-    Object? quality = null,
-    Object? selectedPreset = null,
-    Object? targetFormat = null,
-    Object? strategy = null,
-    Object? privacyLevel = null,
-    Object? stripMetadata = null,
-    Object? enableResize = null,
-    Object? enableFormatConversion = null,
-    Object? processingProgress = null,
-    Object? processingErrors = null,
-    Object? selectedImage = freezed,
-    Object? showAdvancedSettings = null,
-    Object? showBatchMode = null,
+  @optionalTypeArgs
+  TResult maybeMap<TResult extends Object?>(
+    TResult Function(_ImageReducerState value)? $default, {
+    required TResult orElse(),
   }) {
-    return _then(_$ImageReducerStateImpl(
-      images: null == images
-          ? _value._images
-          : images // ignore: cast_nullable_to_non_nullable
-              as List<ProcessedImage>,
-      isProcessing: null == isProcessing
-          ? _value.isProcessing
-          : isProcessing // ignore: cast_nullable_to_non_nullable
-              as bool,
-      quality: null == quality
-          ? _value.quality
-          : quality // ignore: cast_nullable_to_non_nullable
-              as int,
-      selectedPreset: null == selectedPreset
-          ? _value.selectedPreset
-          : selectedPreset // ignore: cast_nullable_to_non_nullable
-              as ResizePreset,
-      targetFormat: null == targetFormat
-          ? _value.targetFormat
-          : targetFormat // ignore: cast_nullable_to_non_nullable
-              as ConvertibleFormat,
-      strategy: null == strategy
-          ? _value.strategy
-          : strategy // ignore: cast_nullable_to_non_nullable
-              as ConversionStrategy,
-      privacyLevel: null == privacyLevel
-          ? _value.privacyLevel
-          : privacyLevel // ignore: cast_nullable_to_non_nullable
-              as PrivacyLevel,
-      stripMetadata: null == stripMetadata
-          ? _value.stripMetadata
-          : stripMetadata // ignore: cast_nullable_to_non_nullable
-              as bool,
-      enableResize: null == enableResize
-          ? _value.enableResize
-          : enableResize // ignore: cast_nullable_to_non_nullable
-              as bool,
-      enableFormatConversion: null == enableFormatConversion
-          ? _value.enableFormatConversion
-          : enableFormatConversion // ignore: cast_nullable_to_non_nullable
-              as bool,
-      processingProgress: null == processingProgress
-          ? _value.processingProgress
-          : processingProgress // ignore: cast_nullable_to_non_nullable
-              as int,
-      processingErrors: null == processingErrors
-          ? _value._processingErrors
-          : processingErrors // ignore: cast_nullable_to_non_nullable
-              as List<String>,
-      selectedImage: freezed == selectedImage
-          ? _value.selectedImage
-          : selectedImage // ignore: cast_nullable_to_non_nullable
-              as ProcessedImage?,
-      showAdvancedSettings: null == showAdvancedSettings
-          ? _value.showAdvancedSettings
-          : showAdvancedSettings // ignore: cast_nullable_to_non_nullable
-              as bool,
-      showBatchMode: null == showBatchMode
-          ? _value.showBatchMode
-          : showBatchMode // ignore: cast_nullable_to_non_nullable
-              as bool,
-    ));
+    final _that = this;
+    switch (_that) {
+      case _ImageReducerState() when $default != null:
+        return $default(_that);
+      case _:
+        return orElse();
+    }
+  }
+
+  /// A `switch`-like method, using callbacks.
+  ///
+  /// Callbacks receives the raw object, upcasted.
+  /// It is equivalent to doing:
+  /// ```dart
+  /// switch (sealedClass) {
+  ///   case final Subclass value:
+  ///     return ...;
+  ///   case final Subclass2 value:
+  ///     return ...;
+  /// }
+  /// ```
+
+  @optionalTypeArgs
+  TResult map<TResult extends Object?>(
+    TResult Function(_ImageReducerState value) $default,
+  ) {
+    final _that = this;
+    switch (_that) {
+      case _ImageReducerState():
+        return $default(_that);
+      case _:
+        throw StateError('Unexpected subclass');
+    }
+  }
+
+  /// A variant of `map` that fallback to returning `null`.
+  ///
+  /// It is equivalent to doing:
+  /// ```dart
+  /// switch (sealedClass) {
+  ///   case final Subclass value:
+  ///     return ...;
+  ///   case _:
+  ///     return null;
+  /// }
+  /// ```
+
+  @optionalTypeArgs
+  TResult? mapOrNull<TResult extends Object?>(
+    TResult? Function(_ImageReducerState value)? $default,
+  ) {
+    final _that = this;
+    switch (_that) {
+      case _ImageReducerState() when $default != null:
+        return $default(_that);
+      case _:
+        return null;
+    }
+  }
+
+  /// A variant of `when` that fallback to an `orElse` callback.
+  ///
+  /// It is equivalent to doing:
+  /// ```dart
+  /// switch (sealedClass) {
+  ///   case Subclass(:final field):
+  ///     return ...;
+  ///   case _:
+  ///     return orElse();
+  /// }
+  /// ```
+
+  @optionalTypeArgs
+  TResult maybeWhen<TResult extends Object?>(
+    TResult Function(
+            List<ProcessedImage> images,
+            bool isProcessing,
+            int quality,
+            ResizePreset selectedPreset,
+            ConvertibleFormat targetFormat,
+            ConversionStrategy strategy,
+            PrivacyLevel privacyLevel,
+            bool stripMetadata,
+            bool enableResize,
+            bool enableFormatConversion,
+            int processingProgress,
+            List<String> processingErrors,
+            ProcessedImage? selectedImage,
+            bool showAdvancedSettings,
+            bool showBatchMode)?
+        $default, {
+    required TResult orElse(),
+  }) {
+    final _that = this;
+    switch (_that) {
+      case _ImageReducerState() when $default != null:
+        return $default(
+            _that.images,
+            _that.isProcessing,
+            _that.quality,
+            _that.selectedPreset,
+            _that.targetFormat,
+            _that.strategy,
+            _that.privacyLevel,
+            _that.stripMetadata,
+            _that.enableResize,
+            _that.enableFormatConversion,
+            _that.processingProgress,
+            _that.processingErrors,
+            _that.selectedImage,
+            _that.showAdvancedSettings,
+            _that.showBatchMode);
+      case _:
+        return orElse();
+    }
+  }
+
+  /// A `switch`-like method, using callbacks.
+  ///
+  /// As opposed to `map`, this offers destructuring.
+  /// It is equivalent to doing:
+  /// ```dart
+  /// switch (sealedClass) {
+  ///   case Subclass(:final field):
+  ///     return ...;
+  ///   case Subclass2(:final field2):
+  ///     return ...;
+  /// }
+  /// ```
+
+  @optionalTypeArgs
+  TResult when<TResult extends Object?>(
+    TResult Function(
+            List<ProcessedImage> images,
+            bool isProcessing,
+            int quality,
+            ResizePreset selectedPreset,
+            ConvertibleFormat targetFormat,
+            ConversionStrategy strategy,
+            PrivacyLevel privacyLevel,
+            bool stripMetadata,
+            bool enableResize,
+            bool enableFormatConversion,
+            int processingProgress,
+            List<String> processingErrors,
+            ProcessedImage? selectedImage,
+            bool showAdvancedSettings,
+            bool showBatchMode)
+        $default,
+  ) {
+    final _that = this;
+    switch (_that) {
+      case _ImageReducerState():
+        return $default(
+            _that.images,
+            _that.isProcessing,
+            _that.quality,
+            _that.selectedPreset,
+            _that.targetFormat,
+            _that.strategy,
+            _that.privacyLevel,
+            _that.stripMetadata,
+            _that.enableResize,
+            _that.enableFormatConversion,
+            _that.processingProgress,
+            _that.processingErrors,
+            _that.selectedImage,
+            _that.showAdvancedSettings,
+            _that.showBatchMode);
+      case _:
+        throw StateError('Unexpected subclass');
+    }
+  }
+
+  /// A variant of `when` that fallback to returning `null`
+  ///
+  /// It is equivalent to doing:
+  /// ```dart
+  /// switch (sealedClass) {
+  ///   case Subclass(:final field):
+  ///     return ...;
+  ///   case _:
+  ///     return null;
+  /// }
+  /// ```
+
+  @optionalTypeArgs
+  TResult? whenOrNull<TResult extends Object?>(
+    TResult? Function(
+            List<ProcessedImage> images,
+            bool isProcessing,
+            int quality,
+            ResizePreset selectedPreset,
+            ConvertibleFormat targetFormat,
+            ConversionStrategy strategy,
+            PrivacyLevel privacyLevel,
+            bool stripMetadata,
+            bool enableResize,
+            bool enableFormatConversion,
+            int processingProgress,
+            List<String> processingErrors,
+            ProcessedImage? selectedImage,
+            bool showAdvancedSettings,
+            bool showBatchMode)?
+        $default,
+  ) {
+    final _that = this;
+    switch (_that) {
+      case _ImageReducerState() when $default != null:
+        return $default(
+            _that.images,
+            _that.isProcessing,
+            _that.quality,
+            _that.selectedPreset,
+            _that.targetFormat,
+            _that.strategy,
+            _that.privacyLevel,
+            _that.stripMetadata,
+            _that.enableResize,
+            _that.enableFormatConversion,
+            _that.processingProgress,
+            _that.processingErrors,
+            _that.selectedImage,
+            _that.showAdvancedSettings,
+            _that.showBatchMode);
+      case _:
+        return null;
+    }
   }
 }
 
 /// @nodoc
 
-class _$ImageReducerStateImpl extends _ImageReducerState {
-  const _$ImageReducerStateImpl(
+class _ImageReducerState extends ImageReducerState {
+  const _ImageReducerState(
       {final List<ProcessedImage> images = const <ProcessedImage>[],
       this.isProcessing = false,
       this.quality = 80,
@@ -379,16 +563,19 @@ class _$ImageReducerStateImpl extends _ImageReducerState {
   @JsonKey()
   final bool showBatchMode;
 
+  /// Create a copy of ImageReducerState
+  /// with the given fields replaced by the non-null parameter values.
   @override
-  String toString() {
-    return 'ImageReducerState(images: $images, isProcessing: $isProcessing, quality: $quality, selectedPreset: $selectedPreset, targetFormat: $targetFormat, strategy: $strategy, privacyLevel: $privacyLevel, stripMetadata: $stripMetadata, enableResize: $enableResize, enableFormatConversion: $enableFormatConversion, processingProgress: $processingProgress, processingErrors: $processingErrors, selectedImage: $selectedImage, showAdvancedSettings: $showAdvancedSettings, showBatchMode: $showBatchMode)';
-  }
+  @JsonKey(includeFromJson: false, includeToJson: false)
+  @pragma('vm:prefer-inline')
+  _$ImageReducerStateCopyWith<_ImageReducerState> get copyWith =>
+      __$ImageReducerStateCopyWithImpl<_ImageReducerState>(this, _$identity);
 
   @override
   bool operator ==(Object other) {
     return identical(this, other) ||
         (other.runtimeType == runtimeType &&
-            other is _$ImageReducerStateImpl &&
+            other is _ImageReducerState &&
             const DeepCollectionEquality().equals(other._images, _images) &&
             (identical(other.isProcessing, isProcessing) ||
                 other.isProcessing == isProcessing) &&
@@ -438,98 +625,215 @@ class _$ImageReducerStateImpl extends _ImageReducerState {
       showAdvancedSettings,
       showBatchMode);
 
-  /// Create a copy of ImageReducerState
-  /// with the given fields replaced by the non-null parameter values.
-  @JsonKey(includeFromJson: false, includeToJson: false)
   @override
-  @pragma('vm:prefer-inline')
-  _$$ImageReducerStateImplCopyWith<_$ImageReducerStateImpl> get copyWith =>
-      __$$ImageReducerStateImplCopyWithImpl<_$ImageReducerStateImpl>(
-          this, _$identity);
+  String toString() {
+    return 'ImageReducerState(images: $images, isProcessing: $isProcessing, quality: $quality, selectedPreset: $selectedPreset, targetFormat: $targetFormat, strategy: $strategy, privacyLevel: $privacyLevel, stripMetadata: $stripMetadata, enableResize: $enableResize, enableFormatConversion: $enableFormatConversion, processingProgress: $processingProgress, processingErrors: $processingErrors, selectedImage: $selectedImage, showAdvancedSettings: $showAdvancedSettings, showBatchMode: $showBatchMode)';
+  }
 }
 
-abstract class _ImageReducerState extends ImageReducerState {
-  const factory _ImageReducerState(
-      {final List<ProcessedImage> images,
-      final bool isProcessing,
-      final int quality,
-      final ResizePreset selectedPreset,
-      final ConvertibleFormat targetFormat,
-      final ConversionStrategy strategy,
-      final PrivacyLevel privacyLevel,
-      final bool stripMetadata,
-      final bool enableResize,
-      final bool enableFormatConversion,
-      final int processingProgress,
-      final List<String> processingErrors,
-      final ProcessedImage? selectedImage,
-      final bool showAdvancedSettings,
-      final bool showBatchMode}) = _$ImageReducerStateImpl;
-  const _ImageReducerState._() : super._();
+/// @nodoc
+abstract mixin class _$ImageReducerStateCopyWith<$Res>
+    implements $ImageReducerStateCopyWith<$Res> {
+  factory _$ImageReducerStateCopyWith(
+          _ImageReducerState value, $Res Function(_ImageReducerState) _then) =
+      __$ImageReducerStateCopyWithImpl;
+  @override
+  @useResult
+  $Res call(
+      {List<ProcessedImage> images,
+      bool isProcessing,
+      int quality,
+      ResizePreset selectedPreset,
+      ConvertibleFormat targetFormat,
+      ConversionStrategy strategy,
+      PrivacyLevel privacyLevel,
+      bool stripMetadata,
+      bool enableResize,
+      bool enableFormatConversion,
+      int processingProgress,
+      List<String> processingErrors,
+      ProcessedImage? selectedImage,
+      bool showAdvancedSettings,
+      bool showBatchMode});
 
   @override
-  List<ProcessedImage> get images;
-  @override
-  bool get isProcessing;
-  @override
-  int get quality;
-  @override
-  ResizePreset get selectedPreset;
-  @override
-  ConvertibleFormat get targetFormat;
-  @override
-  ConversionStrategy get strategy;
-  @override
-  PrivacyLevel get privacyLevel;
-  @override
-  bool get stripMetadata;
-  @override
-  bool get enableResize;
-  @override
-  bool get enableFormatConversion;
-  @override
-  int get processingProgress;
-  @override
-  List<String> get processingErrors;
-  @override
-  ProcessedImage? get selectedImage;
-  @override
-  bool get showAdvancedSettings;
-  @override
-  bool get showBatchMode;
+  $ProcessedImageCopyWith<$Res>? get selectedImage;
+}
+
+/// @nodoc
+class __$ImageReducerStateCopyWithImpl<$Res>
+    implements _$ImageReducerStateCopyWith<$Res> {
+  __$ImageReducerStateCopyWithImpl(this._self, this._then);
+
+  final _ImageReducerState _self;
+  final $Res Function(_ImageReducerState) _then;
 
   /// Create a copy of ImageReducerState
   /// with the given fields replaced by the non-null parameter values.
   @override
-  @JsonKey(includeFromJson: false, includeToJson: false)
-  _$$ImageReducerStateImplCopyWith<_$ImageReducerStateImpl> get copyWith =>
-      throw _privateConstructorUsedError;
+  @pragma('vm:prefer-inline')
+  $Res call({
+    Object? images = null,
+    Object? isProcessing = null,
+    Object? quality = null,
+    Object? selectedPreset = null,
+    Object? targetFormat = null,
+    Object? strategy = null,
+    Object? privacyLevel = null,
+    Object? stripMetadata = null,
+    Object? enableResize = null,
+    Object? enableFormatConversion = null,
+    Object? processingProgress = null,
+    Object? processingErrors = null,
+    Object? selectedImage = freezed,
+    Object? showAdvancedSettings = null,
+    Object? showBatchMode = null,
+  }) {
+    return _then(_ImageReducerState(
+      images: null == images
+          ? _self._images
+          : images // ignore: cast_nullable_to_non_nullable
+              as List<ProcessedImage>,
+      isProcessing: null == isProcessing
+          ? _self.isProcessing
+          : isProcessing // ignore: cast_nullable_to_non_nullable
+              as bool,
+      quality: null == quality
+          ? _self.quality
+          : quality // ignore: cast_nullable_to_non_nullable
+              as int,
+      selectedPreset: null == selectedPreset
+          ? _self.selectedPreset
+          : selectedPreset // ignore: cast_nullable_to_non_nullable
+              as ResizePreset,
+      targetFormat: null == targetFormat
+          ? _self.targetFormat
+          : targetFormat // ignore: cast_nullable_to_non_nullable
+              as ConvertibleFormat,
+      strategy: null == strategy
+          ? _self.strategy
+          : strategy // ignore: cast_nullable_to_non_nullable
+              as ConversionStrategy,
+      privacyLevel: null == privacyLevel
+          ? _self.privacyLevel
+          : privacyLevel // ignore: cast_nullable_to_non_nullable
+              as PrivacyLevel,
+      stripMetadata: null == stripMetadata
+          ? _self.stripMetadata
+          : stripMetadata // ignore: cast_nullable_to_non_nullable
+              as bool,
+      enableResize: null == enableResize
+          ? _self.enableResize
+          : enableResize // ignore: cast_nullable_to_non_nullable
+              as bool,
+      enableFormatConversion: null == enableFormatConversion
+          ? _self.enableFormatConversion
+          : enableFormatConversion // ignore: cast_nullable_to_non_nullable
+              as bool,
+      processingProgress: null == processingProgress
+          ? _self.processingProgress
+          : processingProgress // ignore: cast_nullable_to_non_nullable
+              as int,
+      processingErrors: null == processingErrors
+          ? _self._processingErrors
+          : processingErrors // ignore: cast_nullable_to_non_nullable
+              as List<String>,
+      selectedImage: freezed == selectedImage
+          ? _self.selectedImage
+          : selectedImage // ignore: cast_nullable_to_non_nullable
+              as ProcessedImage?,
+      showAdvancedSettings: null == showAdvancedSettings
+          ? _self.showAdvancedSettings
+          : showAdvancedSettings // ignore: cast_nullable_to_non_nullable
+              as bool,
+      showBatchMode: null == showBatchMode
+          ? _self.showBatchMode
+          : showBatchMode // ignore: cast_nullable_to_non_nullable
+              as bool,
+    ));
+  }
+
+  /// Create a copy of ImageReducerState
+  /// with the given fields replaced by the non-null parameter values.
+  @override
+  @pragma('vm:prefer-inline')
+  $ProcessedImageCopyWith<$Res>? get selectedImage {
+    if (_self.selectedImage == null) {
+      return null;
+    }
+
+    return $ProcessedImageCopyWith<$Res>(_self.selectedImage!, (value) {
+      return _then(_self.copyWith(selectedImage: value));
+    });
+  }
 }
 
 /// @nodoc
 mixin _$ProcessedImage {
-  String get fileName => throw _privateConstructorUsedError;
-  Uint8List get originalData => throw _privateConstructorUsedError;
-  Uint8List? get processedData => throw _privateConstructorUsedError;
-  ImageReductionResult? get result => throw _privateConstructorUsedError;
-  ProcessingStatus get status => throw _privateConstructorUsedError;
-  String get error => throw _privateConstructorUsedError;
-  int get estimatedSize => throw _privateConstructorUsedError;
-  ConvertibleFormat? get detectedFormat => throw _privateConstructorUsedError;
-  ImageMetadata? get metadata => throw _privateConstructorUsedError;
+  String get fileName;
+  Uint8List get originalData;
+  Uint8List? get processedData;
+  ImageReductionResult? get result;
+  ProcessingStatus get status;
+  String get error;
+  int get estimatedSize;
+  ConvertibleFormat? get detectedFormat;
+  ImageMetadata? get metadata;
 
   /// Create a copy of ProcessedImage
   /// with the given fields replaced by the non-null parameter values.
   @JsonKey(includeFromJson: false, includeToJson: false)
+  @pragma('vm:prefer-inline')
   $ProcessedImageCopyWith<ProcessedImage> get copyWith =>
-      throw _privateConstructorUsedError;
+      _$ProcessedImageCopyWithImpl<ProcessedImage>(
+          this as ProcessedImage, _$identity);
+
+  @override
+  bool operator ==(Object other) {
+    return identical(this, other) ||
+        (other.runtimeType == runtimeType &&
+            other is ProcessedImage &&
+            (identical(other.fileName, fileName) ||
+                other.fileName == fileName) &&
+            const DeepCollectionEquality()
+                .equals(other.originalData, originalData) &&
+            const DeepCollectionEquality()
+                .equals(other.processedData, processedData) &&
+            (identical(other.result, result) || other.result == result) &&
+            (identical(other.status, status) || other.status == status) &&
+            (identical(other.error, error) || other.error == error) &&
+            (identical(other.estimatedSize, estimatedSize) ||
+                other.estimatedSize == estimatedSize) &&
+            (identical(other.detectedFormat, detectedFormat) ||
+                other.detectedFormat == detectedFormat) &&
+            (identical(other.metadata, metadata) ||
+                other.metadata == metadata));
+  }
+
+  @override
+  int get hashCode => Object.hash(
+      runtimeType,
+      fileName,
+      const DeepCollectionEquality().hash(originalData),
+      const DeepCollectionEquality().hash(processedData),
+      result,
+      status,
+      error,
+      estimatedSize,
+      detectedFormat,
+      metadata);
+
+  @override
+  String toString() {
+    return 'ProcessedImage(fileName: $fileName, originalData: $originalData, processedData: $processedData, result: $result, status: $status, error: $error, estimatedSize: $estimatedSize, detectedFormat: $detectedFormat, metadata: $metadata)';
+  }
 }
 
 /// @nodoc
-abstract class $ProcessedImageCopyWith<$Res> {
+abstract mixin class $ProcessedImageCopyWith<$Res> {
   factory $ProcessedImageCopyWith(
-          ProcessedImage value, $Res Function(ProcessedImage) then) =
-      _$ProcessedImageCopyWithImpl<$Res, ProcessedImage>;
+          ProcessedImage value, $Res Function(ProcessedImage) _then) =
+      _$ProcessedImageCopyWithImpl;
   @useResult
   $Res call(
       {String fileName,
@@ -546,14 +850,12 @@ abstract class $ProcessedImageCopyWith<$Res> {
 }
 
 /// @nodoc
-class _$ProcessedImageCopyWithImpl<$Res, $Val extends ProcessedImage>
+class _$ProcessedImageCopyWithImpl<$Res>
     implements $ProcessedImageCopyWith<$Res> {
-  _$ProcessedImageCopyWithImpl(this._value, this._then);
+  _$ProcessedImageCopyWithImpl(this._self, this._then);
 
-  // ignore: unused_field
-  final $Val _value;
-  // ignore: unused_field
-  final $Res Function($Val) _then;
+  final ProcessedImage _self;
+  final $Res Function(ProcessedImage) _then;
 
   /// Create a copy of ProcessedImage
   /// with the given fields replaced by the non-null parameter values.
@@ -570,44 +872,44 @@ class _$ProcessedImageCopyWithImpl<$Res, $Val extends ProcessedImage>
     Object? detectedFormat = freezed,
     Object? metadata = freezed,
   }) {
-    return _then(_value.copyWith(
+    return _then(_self.copyWith(
       fileName: null == fileName
-          ? _value.fileName
+          ? _self.fileName
           : fileName // ignore: cast_nullable_to_non_nullable
               as String,
       originalData: null == originalData
-          ? _value.originalData
+          ? _self.originalData
           : originalData // ignore: cast_nullable_to_non_nullable
               as Uint8List,
       processedData: freezed == processedData
-          ? _value.processedData
+          ? _self.processedData
           : processedData // ignore: cast_nullable_to_non_nullable
               as Uint8List?,
       result: freezed == result
-          ? _value.result
+          ? _self.result
           : result // ignore: cast_nullable_to_non_nullable
               as ImageReductionResult?,
       status: null == status
-          ? _value.status
+          ? _self.status
           : status // ignore: cast_nullable_to_non_nullable
               as ProcessingStatus,
       error: null == error
-          ? _value.error
+          ? _self.error
           : error // ignore: cast_nullable_to_non_nullable
               as String,
       estimatedSize: null == estimatedSize
-          ? _value.estimatedSize
+          ? _self.estimatedSize
           : estimatedSize // ignore: cast_nullable_to_non_nullable
               as int,
       detectedFormat: freezed == detectedFormat
-          ? _value.detectedFormat
+          ? _self.detectedFormat
           : detectedFormat // ignore: cast_nullable_to_non_nullable
               as ConvertibleFormat?,
       metadata: freezed == metadata
-          ? _value.metadata
+          ? _self.metadata
           : metadata // ignore: cast_nullable_to_non_nullable
               as ImageMetadata?,
-    ) as $Val);
+    ));
   }
 
   /// Create a copy of ProcessedImage
@@ -615,107 +917,234 @@ class _$ProcessedImageCopyWithImpl<$Res, $Val extends ProcessedImage>
   @override
   @pragma('vm:prefer-inline')
   $ImageMetadataCopyWith<$Res>? get metadata {
-    if (_value.metadata == null) {
+    if (_self.metadata == null) {
       return null;
     }
 
-    return $ImageMetadataCopyWith<$Res>(_value.metadata!, (value) {
-      return _then(_value.copyWith(metadata: value) as $Val);
+    return $ImageMetadataCopyWith<$Res>(_self.metadata!, (value) {
+      return _then(_self.copyWith(metadata: value));
     });
   }
 }
 
-/// @nodoc
-abstract class _$$ProcessedImageImplCopyWith<$Res>
-    implements $ProcessedImageCopyWith<$Res> {
-  factory _$$ProcessedImageImplCopyWith(_$ProcessedImageImpl value,
-          $Res Function(_$ProcessedImageImpl) then) =
-      __$$ProcessedImageImplCopyWithImpl<$Res>;
-  @override
-  @useResult
-  $Res call(
-      {String fileName,
-      Uint8List originalData,
-      Uint8List? processedData,
-      ImageReductionResult? result,
-      ProcessingStatus status,
-      String error,
-      int estimatedSize,
-      ConvertibleFormat? detectedFormat,
-      ImageMetadata? metadata});
+/// Adds pattern-matching-related methods to [ProcessedImage].
+extension ProcessedImagePatterns on ProcessedImage {
+  /// A variant of `map` that fallback to returning `orElse`.
+  ///
+  /// It is equivalent to doing:
+  /// ```dart
+  /// switch (sealedClass) {
+  ///   case final Subclass value:
+  ///     return ...;
+  ///   case _:
+  ///     return orElse();
+  /// }
+  /// ```
 
-  @override
-  $ImageMetadataCopyWith<$Res>? get metadata;
-}
-
-/// @nodoc
-class __$$ProcessedImageImplCopyWithImpl<$Res>
-    extends _$ProcessedImageCopyWithImpl<$Res, _$ProcessedImageImpl>
-    implements _$$ProcessedImageImplCopyWith<$Res> {
-  __$$ProcessedImageImplCopyWithImpl(
-      _$ProcessedImageImpl _value, $Res Function(_$ProcessedImageImpl) _then)
-      : super(_value, _then);
-
-  /// Create a copy of ProcessedImage
-  /// with the given fields replaced by the non-null parameter values.
-  @pragma('vm:prefer-inline')
-  @override
-  $Res call({
-    Object? fileName = null,
-    Object? originalData = null,
-    Object? processedData = freezed,
-    Object? result = freezed,
-    Object? status = null,
-    Object? error = null,
-    Object? estimatedSize = null,
-    Object? detectedFormat = freezed,
-    Object? metadata = freezed,
+  @optionalTypeArgs
+  TResult maybeMap<TResult extends Object?>(
+    TResult Function(_ProcessedImage value)? $default, {
+    required TResult orElse(),
   }) {
-    return _then(_$ProcessedImageImpl(
-      fileName: null == fileName
-          ? _value.fileName
-          : fileName // ignore: cast_nullable_to_non_nullable
-              as String,
-      originalData: null == originalData
-          ? _value.originalData
-          : originalData // ignore: cast_nullable_to_non_nullable
-              as Uint8List,
-      processedData: freezed == processedData
-          ? _value.processedData
-          : processedData // ignore: cast_nullable_to_non_nullable
-              as Uint8List?,
-      result: freezed == result
-          ? _value.result
-          : result // ignore: cast_nullable_to_non_nullable
-              as ImageReductionResult?,
-      status: null == status
-          ? _value.status
-          : status // ignore: cast_nullable_to_non_nullable
-              as ProcessingStatus,
-      error: null == error
-          ? _value.error
-          : error // ignore: cast_nullable_to_non_nullable
-              as String,
-      estimatedSize: null == estimatedSize
-          ? _value.estimatedSize
-          : estimatedSize // ignore: cast_nullable_to_non_nullable
-              as int,
-      detectedFormat: freezed == detectedFormat
-          ? _value.detectedFormat
-          : detectedFormat // ignore: cast_nullable_to_non_nullable
-              as ConvertibleFormat?,
-      metadata: freezed == metadata
-          ? _value.metadata
-          : metadata // ignore: cast_nullable_to_non_nullable
-              as ImageMetadata?,
-    ));
+    final _that = this;
+    switch (_that) {
+      case _ProcessedImage() when $default != null:
+        return $default(_that);
+      case _:
+        return orElse();
+    }
+  }
+
+  /// A `switch`-like method, using callbacks.
+  ///
+  /// Callbacks receives the raw object, upcasted.
+  /// It is equivalent to doing:
+  /// ```dart
+  /// switch (sealedClass) {
+  ///   case final Subclass value:
+  ///     return ...;
+  ///   case final Subclass2 value:
+  ///     return ...;
+  /// }
+  /// ```
+
+  @optionalTypeArgs
+  TResult map<TResult extends Object?>(
+    TResult Function(_ProcessedImage value) $default,
+  ) {
+    final _that = this;
+    switch (_that) {
+      case _ProcessedImage():
+        return $default(_that);
+      case _:
+        throw StateError('Unexpected subclass');
+    }
+  }
+
+  /// A variant of `map` that fallback to returning `null`.
+  ///
+  /// It is equivalent to doing:
+  /// ```dart
+  /// switch (sealedClass) {
+  ///   case final Subclass value:
+  ///     return ...;
+  ///   case _:
+  ///     return null;
+  /// }
+  /// ```
+
+  @optionalTypeArgs
+  TResult? mapOrNull<TResult extends Object?>(
+    TResult? Function(_ProcessedImage value)? $default,
+  ) {
+    final _that = this;
+    switch (_that) {
+      case _ProcessedImage() when $default != null:
+        return $default(_that);
+      case _:
+        return null;
+    }
+  }
+
+  /// A variant of `when` that fallback to an `orElse` callback.
+  ///
+  /// It is equivalent to doing:
+  /// ```dart
+  /// switch (sealedClass) {
+  ///   case Subclass(:final field):
+  ///     return ...;
+  ///   case _:
+  ///     return orElse();
+  /// }
+  /// ```
+
+  @optionalTypeArgs
+  TResult maybeWhen<TResult extends Object?>(
+    TResult Function(
+            String fileName,
+            Uint8List originalData,
+            Uint8List? processedData,
+            ImageReductionResult? result,
+            ProcessingStatus status,
+            String error,
+            int estimatedSize,
+            ConvertibleFormat? detectedFormat,
+            ImageMetadata? metadata)?
+        $default, {
+    required TResult orElse(),
+  }) {
+    final _that = this;
+    switch (_that) {
+      case _ProcessedImage() when $default != null:
+        return $default(
+            _that.fileName,
+            _that.originalData,
+            _that.processedData,
+            _that.result,
+            _that.status,
+            _that.error,
+            _that.estimatedSize,
+            _that.detectedFormat,
+            _that.metadata);
+      case _:
+        return orElse();
+    }
+  }
+
+  /// A `switch`-like method, using callbacks.
+  ///
+  /// As opposed to `map`, this offers destructuring.
+  /// It is equivalent to doing:
+  /// ```dart
+  /// switch (sealedClass) {
+  ///   case Subclass(:final field):
+  ///     return ...;
+  ///   case Subclass2(:final field2):
+  ///     return ...;
+  /// }
+  /// ```
+
+  @optionalTypeArgs
+  TResult when<TResult extends Object?>(
+    TResult Function(
+            String fileName,
+            Uint8List originalData,
+            Uint8List? processedData,
+            ImageReductionResult? result,
+            ProcessingStatus status,
+            String error,
+            int estimatedSize,
+            ConvertibleFormat? detectedFormat,
+            ImageMetadata? metadata)
+        $default,
+  ) {
+    final _that = this;
+    switch (_that) {
+      case _ProcessedImage():
+        return $default(
+            _that.fileName,
+            _that.originalData,
+            _that.processedData,
+            _that.result,
+            _that.status,
+            _that.error,
+            _that.estimatedSize,
+            _that.detectedFormat,
+            _that.metadata);
+      case _:
+        throw StateError('Unexpected subclass');
+    }
+  }
+
+  /// A variant of `when` that fallback to returning `null`
+  ///
+  /// It is equivalent to doing:
+  /// ```dart
+  /// switch (sealedClass) {
+  ///   case Subclass(:final field):
+  ///     return ...;
+  ///   case _:
+  ///     return null;
+  /// }
+  /// ```
+
+  @optionalTypeArgs
+  TResult? whenOrNull<TResult extends Object?>(
+    TResult? Function(
+            String fileName,
+            Uint8List originalData,
+            Uint8List? processedData,
+            ImageReductionResult? result,
+            ProcessingStatus status,
+            String error,
+            int estimatedSize,
+            ConvertibleFormat? detectedFormat,
+            ImageMetadata? metadata)?
+        $default,
+  ) {
+    final _that = this;
+    switch (_that) {
+      case _ProcessedImage() when $default != null:
+        return $default(
+            _that.fileName,
+            _that.originalData,
+            _that.processedData,
+            _that.result,
+            _that.status,
+            _that.error,
+            _that.estimatedSize,
+            _that.detectedFormat,
+            _that.metadata);
+      case _:
+        return null;
+    }
   }
 }
 
 /// @nodoc
 
-class _$ProcessedImageImpl extends _ProcessedImage {
-  const _$ProcessedImageImpl(
+class _ProcessedImage extends ProcessedImage {
+  const _ProcessedImage(
       {required this.fileName,
       required this.originalData,
       this.processedData,
@@ -749,16 +1178,19 @@ class _$ProcessedImageImpl extends _ProcessedImage {
   @override
   final ImageMetadata? metadata;
 
+  /// Create a copy of ProcessedImage
+  /// with the given fields replaced by the non-null parameter values.
   @override
-  String toString() {
-    return 'ProcessedImage(fileName: $fileName, originalData: $originalData, processedData: $processedData, result: $result, status: $status, error: $error, estimatedSize: $estimatedSize, detectedFormat: $detectedFormat, metadata: $metadata)';
-  }
+  @JsonKey(includeFromJson: false, includeToJson: false)
+  @pragma('vm:prefer-inline')
+  _$ProcessedImageCopyWith<_ProcessedImage> get copyWith =>
+      __$ProcessedImageCopyWithImpl<_ProcessedImage>(this, _$identity);
 
   @override
   bool operator ==(Object other) {
     return identical(this, other) ||
         (other.runtimeType == runtimeType &&
-            other is _$ProcessedImageImpl &&
+            other is _ProcessedImage &&
             (identical(other.fileName, fileName) ||
                 other.fileName == fileName) &&
             const DeepCollectionEquality()
@@ -789,159 +1221,175 @@ class _$ProcessedImageImpl extends _ProcessedImage {
       detectedFormat,
       metadata);
 
-  /// Create a copy of ProcessedImage
-  /// with the given fields replaced by the non-null parameter values.
-  @JsonKey(includeFromJson: false, includeToJson: false)
   @override
-  @pragma('vm:prefer-inline')
-  _$$ProcessedImageImplCopyWith<_$ProcessedImageImpl> get copyWith =>
-      __$$ProcessedImageImplCopyWithImpl<_$ProcessedImageImpl>(
-          this, _$identity);
-}
-
-abstract class _ProcessedImage extends ProcessedImage {
-  const factory _ProcessedImage(
-      {required final String fileName,
-      required final Uint8List originalData,
-      final Uint8List? processedData,
-      final ImageReductionResult? result,
-      final ProcessingStatus status,
-      final String error,
-      final int estimatedSize,
-      final ConvertibleFormat? detectedFormat,
-      final ImageMetadata? metadata}) = _$ProcessedImageImpl;
-  const _ProcessedImage._() : super._();
-
-  @override
-  String get fileName;
-  @override
-  Uint8List get originalData;
-  @override
-  Uint8List? get processedData;
-  @override
-  ImageReductionResult? get result;
-  @override
-  ProcessingStatus get status;
-  @override
-  String get error;
-  @override
-  int get estimatedSize;
-  @override
-  ConvertibleFormat? get detectedFormat;
-  @override
-  ImageMetadata? get metadata;
-
-  /// Create a copy of ProcessedImage
-  /// with the given fields replaced by the non-null parameter values.
-  @override
-  @JsonKey(includeFromJson: false, includeToJson: false)
-  _$$ProcessedImageImplCopyWith<_$ProcessedImageImpl> get copyWith =>
-      throw _privateConstructorUsedError;
-}
-
-/// @nodoc
-mixin _$ImageMetadata {
-  int get width => throw _privateConstructorUsedError;
-  int get height => throw _privateConstructorUsedError;
-  String get format => throw _privateConstructorUsedError;
-  bool get hasAlpha => throw _privateConstructorUsedError;
-  int get colorChannels => throw _privateConstructorUsedError;
-  bool get hasMetadata => throw _privateConstructorUsedError;
-  bool get hasGpsData => throw _privateConstructorUsedError;
-  List<String> get metadataTypes => throw _privateConstructorUsedError;
-
-  /// Create a copy of ImageMetadata
-  /// with the given fields replaced by the non-null parameter values.
-  @JsonKey(includeFromJson: false, includeToJson: false)
-  $ImageMetadataCopyWith<ImageMetadata> get copyWith =>
-      throw _privateConstructorUsedError;
-}
-
-/// @nodoc
-abstract class $ImageMetadataCopyWith<$Res> {
-  factory $ImageMetadataCopyWith(
-          ImageMetadata value, $Res Function(ImageMetadata) then) =
-      _$ImageMetadataCopyWithImpl<$Res, ImageMetadata>;
-  @useResult
-  $Res call(
-      {int width,
-      int height,
-      String format,
-      bool hasAlpha,
-      int colorChannels,
-      bool hasMetadata,
-      bool hasGpsData,
-      List<String> metadataTypes});
-}
-
-/// @nodoc
-class _$ImageMetadataCopyWithImpl<$Res, $Val extends ImageMetadata>
-    implements $ImageMetadataCopyWith<$Res> {
-  _$ImageMetadataCopyWithImpl(this._value, this._then);
-
-  // ignore: unused_field
-  final $Val _value;
-  // ignore: unused_field
-  final $Res Function($Val) _then;
-
-  /// Create a copy of ImageMetadata
-  /// with the given fields replaced by the non-null parameter values.
-  @pragma('vm:prefer-inline')
-  @override
-  $Res call({
-    Object? width = null,
-    Object? height = null,
-    Object? format = null,
-    Object? hasAlpha = null,
-    Object? colorChannels = null,
-    Object? hasMetadata = null,
-    Object? hasGpsData = null,
-    Object? metadataTypes = null,
-  }) {
-    return _then(_value.copyWith(
-      width: null == width
-          ? _value.width
-          : width // ignore: cast_nullable_to_non_nullable
-              as int,
-      height: null == height
-          ? _value.height
-          : height // ignore: cast_nullable_to_non_nullable
-              as int,
-      format: null == format
-          ? _value.format
-          : format // ignore: cast_nullable_to_non_nullable
-              as String,
-      hasAlpha: null == hasAlpha
-          ? _value.hasAlpha
-          : hasAlpha // ignore: cast_nullable_to_non_nullable
-              as bool,
-      colorChannels: null == colorChannels
-          ? _value.colorChannels
-          : colorChannels // ignore: cast_nullable_to_non_nullable
-              as int,
-      hasMetadata: null == hasMetadata
-          ? _value.hasMetadata
-          : hasMetadata // ignore: cast_nullable_to_non_nullable
-              as bool,
-      hasGpsData: null == hasGpsData
-          ? _value.hasGpsData
-          : hasGpsData // ignore: cast_nullable_to_non_nullable
-              as bool,
-      metadataTypes: null == metadataTypes
-          ? _value.metadataTypes
-          : metadataTypes // ignore: cast_nullable_to_non_nullable
-              as List<String>,
-    ) as $Val);
+  String toString() {
+    return 'ProcessedImage(fileName: $fileName, originalData: $originalData, processedData: $processedData, result: $result, status: $status, error: $error, estimatedSize: $estimatedSize, detectedFormat: $detectedFormat, metadata: $metadata)';
   }
 }
 
 /// @nodoc
-abstract class _$$ImageMetadataImplCopyWith<$Res>
-    implements $ImageMetadataCopyWith<$Res> {
-  factory _$$ImageMetadataImplCopyWith(
-          _$ImageMetadataImpl value, $Res Function(_$ImageMetadataImpl) then) =
-      __$$ImageMetadataImplCopyWithImpl<$Res>;
+abstract mixin class _$ProcessedImageCopyWith<$Res>
+    implements $ProcessedImageCopyWith<$Res> {
+  factory _$ProcessedImageCopyWith(
+          _ProcessedImage value, $Res Function(_ProcessedImage) _then) =
+      __$ProcessedImageCopyWithImpl;
   @override
+  @useResult
+  $Res call(
+      {String fileName,
+      Uint8List originalData,
+      Uint8List? processedData,
+      ImageReductionResult? result,
+      ProcessingStatus status,
+      String error,
+      int estimatedSize,
+      ConvertibleFormat? detectedFormat,
+      ImageMetadata? metadata});
+
+  @override
+  $ImageMetadataCopyWith<$Res>? get metadata;
+}
+
+/// @nodoc
+class __$ProcessedImageCopyWithImpl<$Res>
+    implements _$ProcessedImageCopyWith<$Res> {
+  __$ProcessedImageCopyWithImpl(this._self, this._then);
+
+  final _ProcessedImage _self;
+  final $Res Function(_ProcessedImage) _then;
+
+  /// Create a copy of ProcessedImage
+  /// with the given fields replaced by the non-null parameter values.
+  @override
+  @pragma('vm:prefer-inline')
+  $Res call({
+    Object? fileName = null,
+    Object? originalData = null,
+    Object? processedData = freezed,
+    Object? result = freezed,
+    Object? status = null,
+    Object? error = null,
+    Object? estimatedSize = null,
+    Object? detectedFormat = freezed,
+    Object? metadata = freezed,
+  }) {
+    return _then(_ProcessedImage(
+      fileName: null == fileName
+          ? _self.fileName
+          : fileName // ignore: cast_nullable_to_non_nullable
+              as String,
+      originalData: null == originalData
+          ? _self.originalData
+          : originalData // ignore: cast_nullable_to_non_nullable
+              as Uint8List,
+      processedData: freezed == processedData
+          ? _self.processedData
+          : processedData // ignore: cast_nullable_to_non_nullable
+              as Uint8List?,
+      result: freezed == result
+          ? _self.result
+          : result // ignore: cast_nullable_to_non_nullable
+              as ImageReductionResult?,
+      status: null == status
+          ? _self.status
+          : status // ignore: cast_nullable_to_non_nullable
+              as ProcessingStatus,
+      error: null == error
+          ? _self.error
+          : error // ignore: cast_nullable_to_non_nullable
+              as String,
+      estimatedSize: null == estimatedSize
+          ? _self.estimatedSize
+          : estimatedSize // ignore: cast_nullable_to_non_nullable
+              as int,
+      detectedFormat: freezed == detectedFormat
+          ? _self.detectedFormat
+          : detectedFormat // ignore: cast_nullable_to_non_nullable
+              as ConvertibleFormat?,
+      metadata: freezed == metadata
+          ? _self.metadata
+          : metadata // ignore: cast_nullable_to_non_nullable
+              as ImageMetadata?,
+    ));
+  }
+
+  /// Create a copy of ProcessedImage
+  /// with the given fields replaced by the non-null parameter values.
+  @override
+  @pragma('vm:prefer-inline')
+  $ImageMetadataCopyWith<$Res>? get metadata {
+    if (_self.metadata == null) {
+      return null;
+    }
+
+    return $ImageMetadataCopyWith<$Res>(_self.metadata!, (value) {
+      return _then(_self.copyWith(metadata: value));
+    });
+  }
+}
+
+/// @nodoc
+mixin _$ImageMetadata {
+  int get width;
+  int get height;
+  String get format;
+  bool get hasAlpha;
+  int get colorChannels;
+  bool get hasMetadata;
+  bool get hasGpsData;
+  List<String> get metadataTypes;
+
+  /// Create a copy of ImageMetadata
+  /// with the given fields replaced by the non-null parameter values.
+  @JsonKey(includeFromJson: false, includeToJson: false)
+  @pragma('vm:prefer-inline')
+  $ImageMetadataCopyWith<ImageMetadata> get copyWith =>
+      _$ImageMetadataCopyWithImpl<ImageMetadata>(
+          this as ImageMetadata, _$identity);
+
+  @override
+  bool operator ==(Object other) {
+    return identical(this, other) ||
+        (other.runtimeType == runtimeType &&
+            other is ImageMetadata &&
+            (identical(other.width, width) || other.width == width) &&
+            (identical(other.height, height) || other.height == height) &&
+            (identical(other.format, format) || other.format == format) &&
+            (identical(other.hasAlpha, hasAlpha) ||
+                other.hasAlpha == hasAlpha) &&
+            (identical(other.colorChannels, colorChannels) ||
+                other.colorChannels == colorChannels) &&
+            (identical(other.hasMetadata, hasMetadata) ||
+                other.hasMetadata == hasMetadata) &&
+            (identical(other.hasGpsData, hasGpsData) ||
+                other.hasGpsData == hasGpsData) &&
+            const DeepCollectionEquality()
+                .equals(other.metadataTypes, metadataTypes));
+  }
+
+  @override
+  int get hashCode => Object.hash(
+      runtimeType,
+      width,
+      height,
+      format,
+      hasAlpha,
+      colorChannels,
+      hasMetadata,
+      hasGpsData,
+      const DeepCollectionEquality().hash(metadataTypes));
+
+  @override
+  String toString() {
+    return 'ImageMetadata(width: $width, height: $height, format: $format, hasAlpha: $hasAlpha, colorChannels: $colorChannels, hasMetadata: $hasMetadata, hasGpsData: $hasGpsData, metadataTypes: $metadataTypes)';
+  }
+}
+
+/// @nodoc
+abstract mixin class $ImageMetadataCopyWith<$Res> {
+  factory $ImageMetadataCopyWith(
+          ImageMetadata value, $Res Function(ImageMetadata) _then) =
+      _$ImageMetadataCopyWithImpl;
   @useResult
   $Res call(
       {int width,
@@ -955,12 +1403,12 @@ abstract class _$$ImageMetadataImplCopyWith<$Res>
 }
 
 /// @nodoc
-class __$$ImageMetadataImplCopyWithImpl<$Res>
-    extends _$ImageMetadataCopyWithImpl<$Res, _$ImageMetadataImpl>
-    implements _$$ImageMetadataImplCopyWith<$Res> {
-  __$$ImageMetadataImplCopyWithImpl(
-      _$ImageMetadataImpl _value, $Res Function(_$ImageMetadataImpl) _then)
-      : super(_value, _then);
+class _$ImageMetadataCopyWithImpl<$Res>
+    implements $ImageMetadataCopyWith<$Res> {
+  _$ImageMetadataCopyWithImpl(this._self, this._then);
+
+  final ImageMetadata _self;
+  final $Res Function(ImageMetadata) _then;
 
   /// Create a copy of ImageMetadata
   /// with the given fields replaced by the non-null parameter values.
@@ -976,47 +1424,255 @@ class __$$ImageMetadataImplCopyWithImpl<$Res>
     Object? hasGpsData = null,
     Object? metadataTypes = null,
   }) {
-    return _then(_$ImageMetadataImpl(
+    return _then(_self.copyWith(
       width: null == width
-          ? _value.width
+          ? _self.width
           : width // ignore: cast_nullable_to_non_nullable
               as int,
       height: null == height
-          ? _value.height
+          ? _self.height
           : height // ignore: cast_nullable_to_non_nullable
               as int,
       format: null == format
-          ? _value.format
+          ? _self.format
           : format // ignore: cast_nullable_to_non_nullable
               as String,
       hasAlpha: null == hasAlpha
-          ? _value.hasAlpha
+          ? _self.hasAlpha
           : hasAlpha // ignore: cast_nullable_to_non_nullable
               as bool,
       colorChannels: null == colorChannels
-          ? _value.colorChannels
+          ? _self.colorChannels
           : colorChannels // ignore: cast_nullable_to_non_nullable
               as int,
       hasMetadata: null == hasMetadata
-          ? _value.hasMetadata
+          ? _self.hasMetadata
           : hasMetadata // ignore: cast_nullable_to_non_nullable
               as bool,
       hasGpsData: null == hasGpsData
-          ? _value.hasGpsData
+          ? _self.hasGpsData
           : hasGpsData // ignore: cast_nullable_to_non_nullable
               as bool,
       metadataTypes: null == metadataTypes
-          ? _value._metadataTypes
+          ? _self.metadataTypes
           : metadataTypes // ignore: cast_nullable_to_non_nullable
               as List<String>,
     ));
   }
 }
 
+/// Adds pattern-matching-related methods to [ImageMetadata].
+extension ImageMetadataPatterns on ImageMetadata {
+  /// A variant of `map` that fallback to returning `orElse`.
+  ///
+  /// It is equivalent to doing:
+  /// ```dart
+  /// switch (sealedClass) {
+  ///   case final Subclass value:
+  ///     return ...;
+  ///   case _:
+  ///     return orElse();
+  /// }
+  /// ```
+
+  @optionalTypeArgs
+  TResult maybeMap<TResult extends Object?>(
+    TResult Function(_ImageMetadata value)? $default, {
+    required TResult orElse(),
+  }) {
+    final _that = this;
+    switch (_that) {
+      case _ImageMetadata() when $default != null:
+        return $default(_that);
+      case _:
+        return orElse();
+    }
+  }
+
+  /// A `switch`-like method, using callbacks.
+  ///
+  /// Callbacks receives the raw object, upcasted.
+  /// It is equivalent to doing:
+  /// ```dart
+  /// switch (sealedClass) {
+  ///   case final Subclass value:
+  ///     return ...;
+  ///   case final Subclass2 value:
+  ///     return ...;
+  /// }
+  /// ```
+
+  @optionalTypeArgs
+  TResult map<TResult extends Object?>(
+    TResult Function(_ImageMetadata value) $default,
+  ) {
+    final _that = this;
+    switch (_that) {
+      case _ImageMetadata():
+        return $default(_that);
+      case _:
+        throw StateError('Unexpected subclass');
+    }
+  }
+
+  /// A variant of `map` that fallback to returning `null`.
+  ///
+  /// It is equivalent to doing:
+  /// ```dart
+  /// switch (sealedClass) {
+  ///   case final Subclass value:
+  ///     return ...;
+  ///   case _:
+  ///     return null;
+  /// }
+  /// ```
+
+  @optionalTypeArgs
+  TResult? mapOrNull<TResult extends Object?>(
+    TResult? Function(_ImageMetadata value)? $default,
+  ) {
+    final _that = this;
+    switch (_that) {
+      case _ImageMetadata() when $default != null:
+        return $default(_that);
+      case _:
+        return null;
+    }
+  }
+
+  /// A variant of `when` that fallback to an `orElse` callback.
+  ///
+  /// It is equivalent to doing:
+  /// ```dart
+  /// switch (sealedClass) {
+  ///   case Subclass(:final field):
+  ///     return ...;
+  ///   case _:
+  ///     return orElse();
+  /// }
+  /// ```
+
+  @optionalTypeArgs
+  TResult maybeWhen<TResult extends Object?>(
+    TResult Function(
+            int width,
+            int height,
+            String format,
+            bool hasAlpha,
+            int colorChannels,
+            bool hasMetadata,
+            bool hasGpsData,
+            List<String> metadataTypes)?
+        $default, {
+    required TResult orElse(),
+  }) {
+    final _that = this;
+    switch (_that) {
+      case _ImageMetadata() when $default != null:
+        return $default(
+            _that.width,
+            _that.height,
+            _that.format,
+            _that.hasAlpha,
+            _that.colorChannels,
+            _that.hasMetadata,
+            _that.hasGpsData,
+            _that.metadataTypes);
+      case _:
+        return orElse();
+    }
+  }
+
+  /// A `switch`-like method, using callbacks.
+  ///
+  /// As opposed to `map`, this offers destructuring.
+  /// It is equivalent to doing:
+  /// ```dart
+  /// switch (sealedClass) {
+  ///   case Subclass(:final field):
+  ///     return ...;
+  ///   case Subclass2(:final field2):
+  ///     return ...;
+  /// }
+  /// ```
+
+  @optionalTypeArgs
+  TResult when<TResult extends Object?>(
+    TResult Function(
+            int width,
+            int height,
+            String format,
+            bool hasAlpha,
+            int colorChannels,
+            bool hasMetadata,
+            bool hasGpsData,
+            List<String> metadataTypes)
+        $default,
+  ) {
+    final _that = this;
+    switch (_that) {
+      case _ImageMetadata():
+        return $default(
+            _that.width,
+            _that.height,
+            _that.format,
+            _that.hasAlpha,
+            _that.colorChannels,
+            _that.hasMetadata,
+            _that.hasGpsData,
+            _that.metadataTypes);
+      case _:
+        throw StateError('Unexpected subclass');
+    }
+  }
+
+  /// A variant of `when` that fallback to returning `null`
+  ///
+  /// It is equivalent to doing:
+  /// ```dart
+  /// switch (sealedClass) {
+  ///   case Subclass(:final field):
+  ///     return ...;
+  ///   case _:
+  ///     return null;
+  /// }
+  /// ```
+
+  @optionalTypeArgs
+  TResult? whenOrNull<TResult extends Object?>(
+    TResult? Function(
+            int width,
+            int height,
+            String format,
+            bool hasAlpha,
+            int colorChannels,
+            bool hasMetadata,
+            bool hasGpsData,
+            List<String> metadataTypes)?
+        $default,
+  ) {
+    final _that = this;
+    switch (_that) {
+      case _ImageMetadata() when $default != null:
+        return $default(
+            _that.width,
+            _that.height,
+            _that.format,
+            _that.hasAlpha,
+            _that.colorChannels,
+            _that.hasMetadata,
+            _that.hasGpsData,
+            _that.metadataTypes);
+      case _:
+        return null;
+    }
+  }
+}
+
 /// @nodoc
 
-class _$ImageMetadataImpl extends _ImageMetadata {
-  const _$ImageMetadataImpl(
+class _ImageMetadata extends ImageMetadata {
+  const _ImageMetadata(
       {required this.width,
       required this.height,
       required this.format,
@@ -1055,16 +1711,19 @@ class _$ImageMetadataImpl extends _ImageMetadata {
     return EqualUnmodifiableListView(_metadataTypes);
   }
 
+  /// Create a copy of ImageMetadata
+  /// with the given fields replaced by the non-null parameter values.
   @override
-  String toString() {
-    return 'ImageMetadata(width: $width, height: $height, format: $format, hasAlpha: $hasAlpha, colorChannels: $colorChannels, hasMetadata: $hasMetadata, hasGpsData: $hasGpsData, metadataTypes: $metadataTypes)';
-  }
+  @JsonKey(includeFromJson: false, includeToJson: false)
+  @pragma('vm:prefer-inline')
+  _$ImageMetadataCopyWith<_ImageMetadata> get copyWith =>
+      __$ImageMetadataCopyWithImpl<_ImageMetadata>(this, _$identity);
 
   @override
   bool operator ==(Object other) {
     return identical(this, other) ||
         (other.runtimeType == runtimeType &&
-            other is _$ImageMetadataImpl &&
+            other is _ImageMetadata &&
             (identical(other.width, width) || other.width == width) &&
             (identical(other.height, height) || other.height == height) &&
             (identical(other.format, format) || other.format == format) &&
@@ -1092,48 +1751,88 @@ class _$ImageMetadataImpl extends _ImageMetadata {
       hasGpsData,
       const DeepCollectionEquality().hash(_metadataTypes));
 
+  @override
+  String toString() {
+    return 'ImageMetadata(width: $width, height: $height, format: $format, hasAlpha: $hasAlpha, colorChannels: $colorChannels, hasMetadata: $hasMetadata, hasGpsData: $hasGpsData, metadataTypes: $metadataTypes)';
+  }
+}
+
+/// @nodoc
+abstract mixin class _$ImageMetadataCopyWith<$Res>
+    implements $ImageMetadataCopyWith<$Res> {
+  factory _$ImageMetadataCopyWith(
+          _ImageMetadata value, $Res Function(_ImageMetadata) _then) =
+      __$ImageMetadataCopyWithImpl;
+  @override
+  @useResult
+  $Res call(
+      {int width,
+      int height,
+      String format,
+      bool hasAlpha,
+      int colorChannels,
+      bool hasMetadata,
+      bool hasGpsData,
+      List<String> metadataTypes});
+}
+
+/// @nodoc
+class __$ImageMetadataCopyWithImpl<$Res>
+    implements _$ImageMetadataCopyWith<$Res> {
+  __$ImageMetadataCopyWithImpl(this._self, this._then);
+
+  final _ImageMetadata _self;
+  final $Res Function(_ImageMetadata) _then;
+
   /// Create a copy of ImageMetadata
   /// with the given fields replaced by the non-null parameter values.
-  @JsonKey(includeFromJson: false, includeToJson: false)
   @override
   @pragma('vm:prefer-inline')
-  _$$ImageMetadataImplCopyWith<_$ImageMetadataImpl> get copyWith =>
-      __$$ImageMetadataImplCopyWithImpl<_$ImageMetadataImpl>(this, _$identity);
+  $Res call({
+    Object? width = null,
+    Object? height = null,
+    Object? format = null,
+    Object? hasAlpha = null,
+    Object? colorChannels = null,
+    Object? hasMetadata = null,
+    Object? hasGpsData = null,
+    Object? metadataTypes = null,
+  }) {
+    return _then(_ImageMetadata(
+      width: null == width
+          ? _self.width
+          : width // ignore: cast_nullable_to_non_nullable
+              as int,
+      height: null == height
+          ? _self.height
+          : height // ignore: cast_nullable_to_non_nullable
+              as int,
+      format: null == format
+          ? _self.format
+          : format // ignore: cast_nullable_to_non_nullable
+              as String,
+      hasAlpha: null == hasAlpha
+          ? _self.hasAlpha
+          : hasAlpha // ignore: cast_nullable_to_non_nullable
+              as bool,
+      colorChannels: null == colorChannels
+          ? _self.colorChannels
+          : colorChannels // ignore: cast_nullable_to_non_nullable
+              as int,
+      hasMetadata: null == hasMetadata
+          ? _self.hasMetadata
+          : hasMetadata // ignore: cast_nullable_to_non_nullable
+              as bool,
+      hasGpsData: null == hasGpsData
+          ? _self.hasGpsData
+          : hasGpsData // ignore: cast_nullable_to_non_nullable
+              as bool,
+      metadataTypes: null == metadataTypes
+          ? _self._metadataTypes
+          : metadataTypes // ignore: cast_nullable_to_non_nullable
+              as List<String>,
+    ));
+  }
 }
 
-abstract class _ImageMetadata extends ImageMetadata {
-  const factory _ImageMetadata(
-      {required final int width,
-      required final int height,
-      required final String format,
-      final bool hasAlpha,
-      final int colorChannels,
-      final bool hasMetadata,
-      final bool hasGpsData,
-      final List<String> metadataTypes}) = _$ImageMetadataImpl;
-  const _ImageMetadata._() : super._();
-
-  @override
-  int get width;
-  @override
-  int get height;
-  @override
-  String get format;
-  @override
-  bool get hasAlpha;
-  @override
-  int get colorChannels;
-  @override
-  bool get hasMetadata;
-  @override
-  bool get hasGpsData;
-  @override
-  List<String> get metadataTypes;
-
-  /// Create a copy of ImageMetadata
-  /// with the given fields replaced by the non-null parameter values.
-  @override
-  @JsonKey(includeFromJson: false, includeToJson: false)
-  _$$ImageMetadataImplCopyWith<_$ImageMetadataImpl> get copyWith =>
-      throw _privateConstructorUsedError;
-}
+// dart format on
