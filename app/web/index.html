@@ -46,6 +46,7 @@
   <meta name="theme-color" content="#58A6FF">
   <meta name="background-color" content="#0D1117">
   <meta name="apple-mobile-web-app-capable" content="yes">
+  <meta name="mobile-web-app-capable" content="yes">
   <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
   <meta name="apple-mobile-web-app-title" content="BharatTesting">
   <meta name="msapplication-TileColor" content="#58A6FF">
@@ -210,9 +211,6 @@
   <script>
     window.addEventListener('load', function(ev) {
       _flutter.loader.load({
-        serviceWorkerSettings: {
-          serviceWorkerVersion: serviceWorkerVersion,
-        },
         onEntrypointLoaded: function(engineInitializer) {
           engineInitializer.initializeEngine().then(function(appRunner) {
             appRunner.runApp();
