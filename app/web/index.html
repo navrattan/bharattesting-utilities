@@ -52,7 +52,7 @@
   <meta name="msapplication-config" content="/browserconfig.xml">
 
   <!-- Security Headers -->
-  <meta http-equiv="Content-Security-Policy" content="default-src 'self' data: blob:; script-src 'self' 'unsafe-inline' 'unsafe-eval'; style-src 'self' 'unsafe-inline'; img-src 'self' data: blob:; font-src 'self' data:; connect-src 'self'; media-src 'self' blob:; object-src 'none'; child-src 'self' blob:; worker-src 'self' blob:; frame-src 'none';">
+  <meta http-equiv="Content-Security-Policy" content="default-src 'self' data: blob: https://www.gstatic.com https://fonts.gstatic.com; script-src 'self' 'unsafe-inline' 'unsafe-eval' https://www.gstatic.com; style-src 'self' 'unsafe-inline' https://fonts.googleapis.com; img-src 'self' data: blob:; font-src 'self' data: https://fonts.gstatic.com; connect-src 'self' https://www.gstatic.com https://fonts.gstatic.com; media-src 'self' blob:; object-src 'none'; child-src 'self' blob:; worker-src 'self' blob:; frame-src 'none';">
 
   <!-- Canonical URL -->
   <link rel="canonical" href="https://bharattesting.com/">
@@ -209,9 +209,8 @@
   <!-- Initialize Flutter -->
   <script>
     window.addEventListener('load', function(ev) {
-      // Download main.dart.js
-      _flutter.loader.loadEntrypoint({
-        serviceWorker: {
+      _flutter.loader.load({
+        serviceWorkerSettings: {
           serviceWorkerVersion: serviceWorkerVersion,
         },
         onEntrypointLoaded: function(engineInitializer) {
