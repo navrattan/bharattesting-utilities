@@ -1,0 +1,32 @@
+# Vercel Static Headers for Flutter Web
+/*
+  Access-Control-Allow-Origin: *
+  Access-Control-Allow-Methods: GET, POST, PUT, DELETE, OPTIONS
+  Access-Control-Allow-Headers: Content-Type, Authorization, X-Requested-With
+  Cross-Origin-Embedder-Policy: require-corp
+  Cross-Origin-Opener-Policy: same-origin
+  Cache-Control: public, max-age=300
+
+# Flutter Service Worker
+/flutter_service_worker.js
+  Cache-Control: public, max-age=0, must-revalidate
+  Access-Control-Allow-Origin: *
+
+# Flutter Main App
+/main.dart.js
+  Cache-Control: public, max-age=31536000, immutable
+  Access-Control-Allow-Origin: *
+
+# Fonts and Assets
+/*.woff2
+  Cache-Control: public, max-age=31536000, immutable
+  Access-Control-Allow-Origin: *
+
+/*.woff
+  Cache-Control: public, max-age=31536000, immutable
+  Access-Control-Allow-Origin: *
+
+# Manifest and PWA
+/manifest.json
+  Cache-Control: public, max-age=300
+  Access-Control-Allow-Origin: *
