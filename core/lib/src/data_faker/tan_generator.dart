@@ -251,7 +251,7 @@ class TANGenerator {
     final availableCities = cities ?? _regionCodes.keys.toList();
     final generated = <String>{};
     int attempts = 0;
-    const maxAttempts = count * 5;
+    final maxAttempts = count * 5;
 
     while (generated.length < count && attempts < maxAttempts) {
       final type = entityType ?? _getRandomEntityType(random);

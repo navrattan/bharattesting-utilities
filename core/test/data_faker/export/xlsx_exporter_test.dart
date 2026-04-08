@@ -1,8 +1,8 @@
 import 'dart:typed_data';
 import 'package:test/test.dart';
-import 'package:core/src/data_faker/export/xlsx_exporter.dart';
-import 'package:core/src/data_faker/templates/individual_template.dart';
-import 'package:core/src/data_faker/templates/company_template.dart';
+import 'package:bharattesting_core/src/data_faker/export/xlsx_exporter.dart';
+import 'package:bharattesting_core/src/data_faker/templates/individual_template.dart';
+import 'package:bharattesting_core/src/data_faker/templates/company_template.dart';
 
 void main() {
   group('XLSXExporter', () {

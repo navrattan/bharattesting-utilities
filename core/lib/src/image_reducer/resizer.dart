@@ -604,14 +604,16 @@ class ImageResizer {
   }
 
   static img.Image _applySharpeningFilter(img.Image image, double strength) {
-    // Simple sharpening kernel
-    final kernel = [
-      [0, -strength, 0],
-      [-strength, 1 + (4 * strength), -strength],
-      [0, -strength, 0],
+    // Simple sharpening kernel for image v4
+    // image 4.x convolution takes a List<num> which represents the kernel
+    // It's a flat list for a square kernel
+    final kernelList = [
+      0.0, -strength, 0.0,
+      -strength, 1.0 + (4.0 * strength), -strength,
+      0.0, -strength, 0.0,
     ];
 
-    return img.convolution(image, kernel);
+    return img.convolution(image, filter: kernelList);
   }
 
   static double _calculateQualityScore(

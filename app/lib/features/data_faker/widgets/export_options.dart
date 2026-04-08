@@ -10,276 +10,127 @@ import '../faker_state.dart';
 /// Widget for export options and controls
 class ExportOptions extends StatelessWidget {
   const ExportOptions({
-    required this.selectedFormat,
-    required this.includeMetadata,
-    required this.prettifyOutput,
     required this.isExporting,
-    required this.exportSummary,
-    required this.canExport,
-    required this.onFormatChanged,
-    required this.onMetadataChanged,
-    required this.onPrettifyChanged,
     required this.onExport,
     super.key,
   });
 
-  final ExportFormat selectedFormat;
-  final bool includeMetadata;
-  final bool prettifyOutput;
   final bool isExporting;
-  final String exportSummary;
-  final bool canExport;
-  final ValueChanged<ExportFormat> onFormatChanged;
-  final ValueChanged<bool> onMetadataChanged;
-  final ValueChanged<bool> onPrettifyChanged;
-  final VoidCallback onExport;
+  final ValueChanged<ExportFormat> onExport;
 
   @override
   Widget build(BuildContext context) {
-    return Card(
-      child: Padding(
-        padding: const EdgeInsets.all(16),
-        child: Column(
-          crossAxisAlignment: CrossAxisAlignment.start,
-          children: [
-            Row(
-              children: [
-                const Icon(LucideIcons.download),
-                const SizedBox(width: 8),
-                Text(
-                  'Export Options',
-                  style: Theme.of(context).textTheme.titleMedium?.copyWith(
-                    fontWeight: FontWeight.w600,
-                  ),
-                ),
-              ],
-            ),
+    final theme = Theme.of(context);
 
-            const SizedBox(height: 16),
-
-            // Format selector
-            _buildFormatSelector(context),
-
-            const SizedBox(height: 16),
-
-            // Export options
-            _buildExportOptions(context),
-
-            const SizedBox(height: 16),
-
-            // Export button and status
-            _buildExportControls(context),
-          ],
-        ),
-      ),
-    );
-  }
-
-  /// Build format selector
-  Widget _buildFormatSelector(BuildContext context) {
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
         Text(
           'Export Format',
-          style: Theme.of(context).textTheme.titleSmall?.copyWith(
-            fontWeight: FontWeight.w600,
+          style: theme.textTheme.titleSmall?.copyWith(
+            fontWeight: FontWeight.bold,
           ),
         ),
-        const SizedBox(height: 8),
-        SegmentedButton<ExportFormat>(
-          segments: ExportFormat.values.map((format) {
-            return ButtonSegment<ExportFormat>(
-              value: format,
-              label: Text(format.displayName),
-              icon: Icon(_getFormatIcon(format)),
-            );
-          }).toList(),
-          selected: {selectedFormat},
-          onSelectionChanged: (Set<ExportFormat> selection) {
-            if (selection.isNotEmpty) {
-              onFormatChanged(selection.first);
-            }
-          },
+        const SizedBox(height: 16),
+        Row(
+          children: [
+            _buildFormatCard(
+              context,
+              'JSON',
+              'Best for developers',
+              LucideIcons.braces,
+              ExportFormat.json,
+            ),
+            const SizedBox(width: 12),
+            _buildFormatCard(
+              context,
+              'CSV',
+              'Best for Excel',
+              LucideIcons.table,
+              ExportFormat.csv,
+            ),
+          ],
         ),
-        const SizedBox(height: 8),
-        Text(
-          selectedFormat.description,
-          style: Theme.of(context).textTheme.bodySmall?.copyWith(
-            color: Theme.of(context).colorScheme.onSurface.withOpacity(0.7),
-          ),
-        ),
-      ],
-    );
-  }
-
-  /// Build export options
-  Widget _buildExportOptions(BuildContext context) {
-    return Column(
-      children: [
-        // Metadata option (for JSON/CSV)
-        if (selectedFormat != ExportFormat.xlsx)
-          SwitchListTile(
-            contentPadding: EdgeInsets.zero,
-            title: const Text('Include Metadata'),
-            subtitle: Text(selectedFormat == ExportFormat.csv
-                ? 'Add generation info as header comments'
-                : 'Include export metadata and statistics'),
-            value: includeMetadata,
-            onChanged: onMetadataChanged,
-            secondary: const Icon(LucideIcons.info),
-          ),
-
-        // Prettify option (for JSON)
-        if (selectedFormat == ExportFormat.json)
-          SwitchListTile(
-            contentPadding: EdgeInsets.zero,
-            title: const Text('Prettify Output'),
-            subtitle: const Text('Format JSON with proper indentation'),
-            value: prettifyOutput,
-            onChanged: onPrettifyChanged,
-            secondary: const Icon(LucideIcons.alignLeft),
-          ),
-      ],
-    );
-  }
-
-  /// Build export controls
-  Widget _buildExportControls(BuildContext context) {
-    return Column(
-      crossAxisAlignment: CrossAxisAlignment.stretch,
-      children: [
-        // Export button
+        const SizedBox(height: 24),
         SizedBox(
-          height: 48,
+          width: double.infinity,
           child: ElevatedButton.icon(
-            onPressed: canExport ? onExport : null,
+            onPressed: isExporting ? null : () => onExport(ExportFormat.json),
+            style: ElevatedButton.styleFrom(
+              padding: const EdgeInsets.symmetric(vertical: 16),
+              backgroundColor: theme.colorScheme.secondaryContainer,
+              foregroundColor: theme.colorScheme.onSecondaryContainer,
+            ),
             icon: isExporting
                 ? const SizedBox(
-                    width: 16,
-                    height: 16,
+                    width: 20,
+                    height: 20,
                     child: CircularProgressIndicator(strokeWidth: 2),
                   )
-                : Icon(_getFormatIcon(selectedFormat)),
+                : const Icon(LucideIcons.download),
             label: Text(
-              isExporting
-                  ? 'Exporting to ${selectedFormat.displayName}...'
-                  : 'Export as ${selectedFormat.displayName}',
-              style: const TextStyle(fontWeight: FontWeight.w600),
-            ),
-            style: ElevatedButton.styleFrom(
-              backgroundColor: Theme.of(context).colorScheme.secondary,
-              foregroundColor: Theme.of(context).colorScheme.onSecondary,
+              isExporting ? 'Exporting...' : 'Export Results',
+              style: const TextStyle(fontWeight: FontWeight.bold),
             ),
           ),
         ),
-
-        // Export status
-        if (exportSummary.isNotEmpty) ...[
-          const SizedBox(height: 8),
-          Container(
-            padding: const EdgeInsets.all(8),
-            decoration: BoxDecoration(
-              color: Theme.of(context).colorScheme.surfaceVariant.withOpacity(0.3),
-              borderRadius: BorderRadius.circular(6),
-            ),
-            child: Row(
-              children: [
-                Icon(
-                  LucideIcons.checkCircle,
-                  size: 16,
-                  color: Theme.of(context).colorScheme.primary,
-                ),
-                const SizedBox(width: 8),
-                Expanded(
-                  child: Text(
-                    exportSummary,
-                    style: Theme.of(context).textTheme.bodySmall?.copyWith(
-                      color: Theme.of(context).colorScheme.primary,
-                      fontWeight: FontWeight.w500,
-                    ),
-                  ),
-                ),
-              ],
-            ),
-          ),
-        ],
-
-        // Format info
-        const SizedBox(height: 12),
-        _buildFormatInfo(context),
       ],
     );
   }
 
-  /// Build format-specific info
-  Widget _buildFormatInfo(BuildContext context) {
-    String info;
-    IconData icon;
-    Color color;
+  Widget _buildFormatCard(
+    BuildContext context,
+    String title,
+    String subtitle,
+    IconData icon,
+    ExportFormat format,
+  ) {
+    final theme = Theme.of(context);
+    const isSelected = false; // Internal state would go here in a real app
 
-    switch (selectedFormat) {
-      case ExportFormat.csv:
-        info = 'CSV files can be opened in Excel, Google Sheets, or any text editor';
-        icon = LucideIcons.table;
-        color = Colors.green;
-        break;
-
-      case ExportFormat.json:
-        info = 'JSON files are ideal for developers and API integrations';
-        icon = LucideIcons.braces;
-        color = Colors.blue;
-        break;
-
-      case ExportFormat.xlsx:
-        info = 'Excel files include data sheet and optional metadata sheet';
-        icon = LucideIcons.fileSpreadsheet;
-        color = Colors.orange;
-        break;
-    }
-
-    return Container(
-      padding: const EdgeInsets.all(8),
-      decoration: BoxDecoration(
-        color: color.withOpacity(0.1),
-        borderRadius: BorderRadius.circular(6),
-        border: Border.all(
-          color: color.withOpacity(0.3),
-          width: 1,
-        ),
-      ),
-      child: Row(
-        children: [
-          Icon(
-            icon,
-            size: 14,
-            color: color,
-          ),
-          const SizedBox(width: 6),
-          Expanded(
-            child: Text(
-              info,
-              style: TextStyle(
-                fontSize: 11,
-                color: color,
-                fontWeight: FontWeight.w500,
-              ),
+    return Expanded(
+      child: InkWell(
+        onTap: () => onExport(format),
+        borderRadius: BorderRadius.circular(12),
+        child: Container(
+          padding: const EdgeInsets.all(16),
+          decoration: BoxDecoration(
+            color: isSelected
+                ? theme.colorScheme.primaryContainer
+                : theme.colorScheme.surfaceContainerHighest.withValues(alpha: 0.3),
+            borderRadius: BorderRadius.circular(12),
+            border: Border.all(
+              color: isSelected
+                  ? theme.colorScheme.primary
+                  : theme.colorScheme.outline.withValues(alpha: 0.1),
             ),
           ),
-        ],
+          child: Column(
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: [
+              Icon(
+                icon,
+                color: isSelected ? theme.colorScheme.primary : theme.colorScheme.onSurfaceVariant,
+              ),
+              const SizedBox(height: 12),
+              Text(
+                title,
+                style: theme.textTheme.titleSmall?.copyWith(
+                  fontWeight: FontWeight.bold,
+                  color: isSelected ? theme.colorScheme.onPrimaryContainer : null,
+                ),
+              ),
+              Text(
+                subtitle,
+                style: theme.textTheme.bodySmall?.copyWith(
+                  fontSize: 10,
+                  color: theme.colorScheme.onSurfaceVariant,
+                ),
+              ),
+            ],
+          ),
+        ),
       ),
     );
-  }
-
-  /// Get icon for export format
-  IconData _getFormatIcon(ExportFormat format) {
-    switch (format) {
-      case ExportFormat.csv:
-        return LucideIcons.table;
-      case ExportFormat.json:
-        return LucideIcons.braces;
-      case ExportFormat.xlsx:
-        return LucideIcons.fileSpreadsheet;
-    }
   }
 }

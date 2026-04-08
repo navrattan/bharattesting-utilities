@@ -4,6 +4,7 @@
 library image_format_converter;
 
 import 'dart:typed_data';
+import 'dart:math' as math;
 import 'package:image/image.dart' as img;
 import 'compressor.dart';
 
@@ -154,72 +155,59 @@ class ConversionConfig {
           quality: format.supportsQuality ? 60 : null,
           preserveAlpha: false,
           preserveMetadata: false,
-          autoOptimize: true,
         ),
       ConversionStrategy.preserveAlpha => ConversionConfig(
           targetFormat: format,
           strategy: strategy,
           quality: format.supportsQuality ? 85 : null,
           preserveAlpha: true,
+          preserveMetadata: false,
         ),
       ConversionStrategy.stripMetadata => ConversionConfig(
           targetFormat: format,
           strategy: strategy,
+          quality: format.supportsQuality ? 80 : null,
+          preserveAlpha: true,
           preserveMetadata: false,
         ),
       ConversionStrategy.webOptimized => ConversionConfig(
           targetFormat: format,
           strategy: strategy,
           quality: format.supportsQuality ? 75 : null,
+          preserveAlpha: true,
+          preserveMetadata: false,
           progressiveEncoding: true,
-          maxWidth: 1920,
-          maxHeight: 1080,
         ),
-    };
-  }
-
-  /// Get recommended quality for format and use case
-  int getRecommendedQuality() {
-    if (!targetFormat.supportsQuality) return 100;
-
-    return quality ?? switch (strategy) {
-      ConversionStrategy.preserveQuality => 95,
-      ConversionStrategy.balanceQualitySize => 80,
-      ConversionStrategy.minimizeSize => 60,
-      ConversionStrategy.preserveAlpha => 85,
-      ConversionStrategy.stripMetadata => 75,
-      ConversionStrategy.webOptimized => 75,
     };
   }
 }
 
-/// Format conversion result with analysis
+/// Result of a format conversion operation
 class ConversionResult {
   final Uint8List convertedData;
-  final ConvertibleFormat originalFormat;
-  final ConvertibleFormat targetFormat;
   final int originalSize;
   final int convertedSize;
-  final double compressionRatio;
+  final ConvertibleFormat originalFormat;
+  final ConvertibleFormat targetFormat;
   final Duration processingTime;
   final List<String> optimizations;
-  final Map<String, dynamic> metadata;
   final List<String> warnings;
 
-  ConversionResult({
+  const ConversionResult({
     required this.convertedData,
-    required this.originalFormat,
-    required this.targetFormat,
     required this.originalSize,
     required this.convertedSize,
-    required this.compressionRatio,
+    required this.originalFormat,
+    required this.targetFormat,
     required this.processingTime,
     this.optimizations = const [],
-    this.metadata = const {},
     this.warnings = const [],
   });
 
-  /// Size change percentage (negative = reduction, positive = increase)
+  /// Compression ratio (processed size / original size)
+  double get compressionRatio => convertedSize / originalSize;
+
+  /// Percentage change in size
   double get sizeChangePercent => ((convertedSize - originalSize) / originalSize) * 100;
 
   /// Conversion efficiency score (0-100)
@@ -231,7 +219,7 @@ class ConversionResult {
 
     final speedScore = math.max(0, 40 - (processingTime.inMilliseconds / 50));
 
-    return sizeScore + speedScore;
+    return (sizeScore + speedScore).toDouble();
   }
 
   /// Summary of conversion
@@ -244,221 +232,130 @@ class ConversionResult {
   }
 }
 
-/// Advanced image format converter
-class FormatConverter {
-  /// Convert image to target format
-  static Future<ConversionResult> convert(
-    Uint8List imageData,
-    ConversionConfig config,
-  ) async {
+/// Advanced image format converter service
+class ImageFormatConverter {
+  const ImageFormatConverter._();
+
+  /// Convert image data to target format with options
+  static Future<ConversionResult> convert({
+    required Uint8List imageData,
+    required ConversionConfig config,
+  }) async {
     final stopwatch = Stopwatch()..start();
+    final optimizations = <String>[];
+    final warnings = <String>[];
 
     try {
-      // Detect original format
-      final originalFormat = _detectImageFormat(imageData);
-      if (originalFormat == null) {
-        throw ArgumentError('Unknown or unsupported image format');
-      }
-
-      // Early return if same format and no optimizations needed
-      if (originalFormat == config.targetFormat &&
-          !config.autoOptimize &&
-          config.preserveMetadata) {
-        stopwatch.stop();
-        return ConversionResult(
-          convertedData: imageData,
-          originalFormat: originalFormat,
-          targetFormat: config.targetFormat,
-          originalSize: imageData.length,
-          convertedSize: imageData.length,
-          compressionRatio: 1.0,
-          processingTime: stopwatch.elapsed,
-          warnings: ['No conversion needed - same format'],
-        );
-      }
-
       // Decode image
       final image = img.decodeImage(imageData);
       if (image == null) {
-        throw ArgumentError('Failed to decode image data');
+        throw const FormatConversionException('Could not decode original image data');
       }
 
-      final optimizations = <String>[];
-      final warnings = <String>[];
-      var processedImage = image;
+      final originalFormat = _detectFormat(imageData) ?? ConvertibleFormat.png;
+      
+      // Handle same format conversion if needed for optimization
+      if (originalFormat == config.targetFormat && !config.autoOptimize) {
+        optimizations.add('No conversion needed - formats match');
+      }
 
       // Apply pre-conversion optimizations
-      processedImage = _applyPreConversionOptimizations(
-        processedImage,
+      var processed = _applyPreConversionOptimizations(
+        image,
         originalFormat,
         config,
         optimizations,
         warnings,
       );
 
-      // Apply size constraints if specified
-      if (config.maxWidth != null || config.maxHeight != null) {
-        final resized = _applySizeConstraints(
-          processedImage,
-          config.maxWidth,
-          config.maxHeight,
-        );
-        if (resized != processedImage) {
-          processedImage = resized;
-          optimizations.add('Resized to fit constraints');
-        }
+      // Encode to target format
+      final Uint8List convertedData;
+      switch (config.targetFormat) {
+        case ConvertibleFormat.jpeg:
+          convertedData = Uint8List.fromList(img.encodeJpg(
+            processed,
+            quality: config.quality ?? 85,
+          ));
+          break;
+        case ConvertibleFormat.png:
+          convertedData = Uint8List.fromList(img.encodePng(processed));
+          break;
+        case ConvertibleFormat.webp:
+          // Fallback to PNG for WebP as image package doesn't have WebP encoder yet
+          warnings.add('WebP encoding not supported by current engine, falling back to PNG');
+          convertedData = Uint8List.fromList(img.encodePng(processed));
+          break;
+        case ConvertibleFormat.bmp:
+          convertedData = Uint8List.fromList(img.encodeBmp(processed));
+          break;
+        case ConvertibleFormat.gif:
+          convertedData = Uint8List.fromList(img.encodeGif(processed));
+          break;
+        case ConvertibleFormat.tiff:
+          convertedData = Uint8List.fromList(img.encodeTiff(processed));
+          break;
       }
-
-      // Perform format conversion
-      final convertedData = _performConversion(
-        processedImage,
-        config,
-        optimizations,
-      );
 
       stopwatch.stop();
 
       return ConversionResult(
         convertedData: convertedData,
-        originalFormat: originalFormat,
-        targetFormat: config.targetFormat,
         originalSize: imageData.length,
         convertedSize: convertedData.length,
-        compressionRatio: convertedData.length / imageData.length,
+        originalFormat: originalFormat,
+        targetFormat: config.targetFormat,
         processingTime: stopwatch.elapsed,
         optimizations: optimizations,
-        metadata: {
-          'width': processedImage.width,
-          'height': processedImage.height,
-          'channels': processedImage.numChannels,
-          'hasAlpha': processedImage.hasAlpha,
-          'quality': config.getRecommendedQuality(),
-        },
         warnings: warnings,
       );
-
     } catch (e) {
       stopwatch.stop();
+      if (e is FormatConversionException) rethrow;
       throw FormatConversionException(
         'Format conversion failed: $e',
         processingTime: stopwatch.elapsed,
+        originalError: e,
       );
     }
   }
 
-  /// Get optimal format recommendation for given image and use case
-  static ConvertibleFormat recommendFormat(
-    Uint8List imageData, {
-    String useCase = 'web',
-    bool preserveAlpha = true,
-  }) {
-    final image = img.decodeImage(imageData);
-    if (image == null) return ConvertibleFormat.jpeg;
+  /// Detect original image format from bytes
+  static ConvertibleFormat? _detectFormat(Uint8List data) {
+    if (data.length < 12) return null;
 
-    final hasAlpha = image.hasAlpha;
-    final isSimple = _isSimpleGraphics(image);
-    final isPhoto = !isSimple;
-
-    switch (useCase) {
-      case 'web':
-        if (hasAlpha && preserveAlpha) return ConvertibleFormat.png;
-        return isPhoto ? ConvertibleFormat.jpeg : ConvertibleFormat.png;
-
-      case 'print':
-        return hasAlpha ? ConvertibleFormat.png : ConvertibleFormat.jpeg;
-
-      case 'archive':
-        return ConvertibleFormat.tiff;
-
-      case 'social':
-        return ConvertibleFormat.jpeg;
-
-      case 'thumbnail':
-        return ConvertibleFormat.jpeg;
-
-      default:
-        return hasAlpha ? ConvertibleFormat.png : ConvertibleFormat.jpeg;
-    }
-  }
-
-  /// Batch convert multiple images
-  static Stream<ConversionResult> convertBatch(
-    List<Uint8List> images,
-    ConversionConfig config, {
-    int maxConcurrency = 3,
-  }) async* {
-    for (int i = 0; i < images.length; i += maxConcurrency) {
-      final batch = images.skip(i).take(maxConcurrency);
-      final futures = batch.map((imageData) => convert(imageData, config));
-
-      final results = await Future.wait(futures);
-      for (final result in results) {
-        yield result;
-      }
-    }
-  }
-
-  /// Get conversion compatibility matrix
-  static Map<ConvertibleFormat, List<String>> getCompatibilityWarnings(
-    ConvertibleFormat source,
-    ConvertibleFormat target,
-  ) {
-    final warnings = <ConvertibleFormat, List<String>>{};
-
-    if (source.supportsAlpha && !target.supportsAlpha) {
-      warnings[target] = ['Alpha channel will be lost'];
-    }
-
-    if (source.supportsAnimation && !target.supportsAnimation) {
-      warnings[target] = [...warnings[target] ?? [], 'Animation will be lost'];
-    }
-
-    if (!source.lossy && target.lossy) {
-      warnings[target] = [...warnings[target] ?? [], 'Quality loss expected'];
-    }
-
-    return warnings;
-  }
-
-  // Private helper methods
-
-  static ConvertibleFormat? _detectImageFormat(Uint8List data) {
-    if (data.length < 4) return null;
-
-    // JPEG
-    if (data[0] == 0xFF && data[1] == 0xD8) {
+    // JPEG: FF D8 FF
+    if (data[0] == 0xFF && data[1] == 0xD8 && data[2] == 0xFF) {
       return ConvertibleFormat.jpeg;
     }
 
-    // PNG
+    // PNG: 89 50 4E 47
     if (data[0] == 0x89 && data[1] == 0x50 && data[2] == 0x4E && data[3] == 0x47) {
       return ConvertibleFormat.png;
     }
 
-    // WebP
-    if (data.length >= 12 &&
-        data[0] == 0x52 && data[1] == 0x49 && data[2] == 0x46 && data[3] == 0x46 &&
-        data[8] == 0x57 && data[9] == 0x45 && data[10] == 0x42 && data[11] == 0x50) {
-      return ConvertibleFormat.webp;
+    // GIF: 47 49 46 38
+    if (data[0] == 0x47 && data[1] == 0x49 && data[2] == 0x46 && data[3] == 0x38) {
+      return ConvertibleFormat.gif;
     }
 
-    // BMP
+    // BMP: 42 4D
     if (data[0] == 0x42 && data[1] == 0x4D) {
       return ConvertibleFormat.bmp;
     }
 
-    // GIF
-    if (data.length >= 6 &&
-        data[0] == 0x47 && data[1] == 0x49 && data[2] == 0x46) {
-      return ConvertibleFormat.gif;
+    // WebP: RIFF .... WEBP
+    if (data.length >= 12) {
+      final riff = String.fromCharCodes(data.take(4));
+      final webp = String.fromCharCodes(data.skip(8).take(4));
+      if (riff == 'RIFF' && webp == 'WEBP') {
+        return ConvertibleFormat.webp;
+      }
     }
 
-    // TIFF (II = little endian, MM = big endian)
-    if (data.length >= 4) {
-      if ((data[0] == 0x49 && data[1] == 0x49 && data[2] == 0x2A && data[3] == 0x00) ||
-          (data[0] == 0x4D && data[1] == 0x4D && data[2] == 0x00 && data[3] == 0x2A)) {
-        return ConvertibleFormat.tiff;
-      }
+    // TIFF: 49 49 2A 00 or 4D 4D 00 2A
+    if ((data[0] == 0x49 && data[1] == 0x49 && data[2] == 0x2A) ||
+        (data[0] == 0x4D && data[1] == 0x4D && data[3] == 0x2A)) {
+      return ConvertibleFormat.tiff;
     }
 
     return null;
@@ -475,10 +372,10 @@ class FormatConverter {
 
     // Handle alpha channel based on target format and config
     if (!config.preserveAlpha && optimized.hasAlpha) {
-      optimized = img.removeAlpha(optimized);
+      optimized = img.copyConvert(optimized, numChannels: 3);
       optimizations.add('Removed alpha channel');
     } else if (optimized.hasAlpha && !config.targetFormat.supportsAlpha) {
-      optimized = img.removeAlpha(optimized);
+      optimized = img.copyConvert(optimized, numChannels: 3);
       warnings.add('Alpha channel removed - not supported by ${config.targetFormat.displayName}');
     }
 
@@ -487,7 +384,7 @@ class FormatConverter {
       case ConvertibleFormat.jpeg:
         // JPEG works best in RGB color space
         if (optimized.hasAlpha) {
-          optimized = img.removeAlpha(optimized);
+          optimized = img.copyConvert(optimized, numChannels: 3);
           warnings.add('Alpha channel removed for JPEG compatibility');
         }
         break;
@@ -499,111 +396,60 @@ class FormatConverter {
           optimizations.add('Quantized to 256 colors for GIF');
         }
         break;
-
-      case ConvertibleFormat.png:
-        // PNG optimization depends on content type
-        if (config.autoOptimize && !_isSimpleGraphics(optimized)) {
-          // For photos, consider if PNG is the best choice
-          warnings.add('PNG may not be optimal for photographic content');
-        }
-        break;
-
+      
       default:
-        // No specific optimizations
         break;
     }
 
     return optimized;
   }
 
-  static img.Image _applySizeConstraints(
-    img.Image image,
-    int? maxWidth,
-    int? maxHeight,
-  ) {
-    if (maxWidth == null && maxHeight == null) return image;
-
-    final currentWidth = image.width;
-    final currentHeight = image.height;
-
-    // Calculate scale factor
-    double scale = 1.0;
-
-    if (maxWidth != null && currentWidth > maxWidth) {
-      scale = math.min(scale, maxWidth / currentWidth);
-    }
-
-    if (maxHeight != null && currentHeight > maxHeight) {
-      scale = math.min(scale, maxHeight / currentHeight);
-    }
-
-    if (scale < 1.0) {
-      final newWidth = (currentWidth * scale).round();
-      final newHeight = (currentHeight * scale).round();
-      return img.copyResize(image, width: newWidth, height: newHeight);
-    }
-
-    return image;
-  }
-
-  static Uint8List _performConversion(
-    img.Image image,
-    ConversionConfig config,
-    List<String> optimizations,
-  ) {
-    final quality = config.getRecommendedQuality();
-
-    switch (config.targetFormat) {
-      case ConvertibleFormat.jpeg:
-        optimizations.add('Encoded as JPEG (quality: $quality)');
-        return Uint8List.fromList(img.encodeJpg(image, quality: quality));
-
-      case ConvertibleFormat.png:
-        optimizations.add('Encoded as PNG');
-        return Uint8List.fromList(img.encodePng(image));
-
-      case ConvertibleFormat.webp:
-        // Note: True WebP encoding would require additional library
-        // For now, fall back to PNG
-        optimizations.add('Encoded as PNG (WebP fallback)');
-        return Uint8List.fromList(img.encodePng(image));
-
-      case ConvertibleFormat.bmp:
-        optimizations.add('Encoded as BMP');
-        return Uint8List.fromList(img.encodeBmp(image));
-
-      case ConvertibleFormat.gif:
-        optimizations.add('Encoded as GIF');
-        return Uint8List.fromList(img.encodeGif(image));
-
-      case ConvertibleFormat.tiff:
-        optimizations.add('Encoded as TIFF');
-        return Uint8List.fromList(img.encodeTiff(image));
-    }
-  }
-
-  static bool _isSimpleGraphics(img.Image image) {
-    // Simple heuristic: check color diversity
-    final colors = <int>{};
-    final sampleSize = math.min(1000, image.width * image.height);
-    final step = (image.width * image.height) / sampleSize;
-
-    for (int i = 0; i < sampleSize; i++) {
-      final index = (i * step).round();
-      final y = index ~/ image.width;
-      final x = index % image.width;
-
-      if (y < image.height && x < image.width) {
-        colors.add(image.getPixel(x, y).rgb);
-        if (colors.length > 256) return false; // Too many colors for simple graphics
+  /// Analyze palette and color distribution
+  static Map<String, dynamic> analyzeColors(img.Image image) {
+    final colors = <List<int>>[];
+    
+    // Sample pixels for analysis
+    final stepX = math.max(1, image.width ~/ 32);
+    final stepY = math.max(1, image.height ~/ 32);
+    
+    for (int y = 0; y < image.height; y += stepY) {
+      for (int x = 0; x < image.width; x += stepX) {
+        final pixel = image.getPixel(x, y);
+        colors.add([pixel.r.toInt(), pixel.g.toInt(), pixel.b.toInt()]);
       }
     }
 
-    return colors.length <= 64; // Likely simple graphics/artwork
+    return {
+      'sampleSize': colors.length,
+      'isGrayscale': _checkIfGrayscale(colors),
+      'hasHighContrast': _checkContrast(colors),
+    };
+  }
+
+  static bool _checkIfGrayscale(List<List<int>> colors) {
+    for (final c in colors) {
+      if ((c[0] - c[1]).abs() > 5 || (c[0] - c[2]).abs() > 5 || (c[1] - c[2]).abs() > 5) {
+        return false;
+      }
+    }
+    return true;
+  }
+
+  static bool _checkContrast(List<List<int>> colors) {
+    int minBrightness = 255;
+    int maxBrightness = 0;
+    
+    for (final c in colors) {
+      final b = (c[0] + c[1] + c[2]) ~/ 3;
+      if (b < minBrightness) minBrightness = b;
+      if (b > maxBrightness) maxBrightness = b;
+    }
+    
+    return (maxBrightness - minBrightness) > 128;
   }
 }
 
-/// Exception thrown when format conversion fails
+/// Exception during format conversion
 class FormatConversionException implements Exception {
   final String message;
   final Duration? processingTime;
@@ -621,5 +467,3 @@ class FormatConversionException implements Exception {
     return 'FormatConversionException: $message$time';
   }
 }
-
-import 'dart:math' as math;

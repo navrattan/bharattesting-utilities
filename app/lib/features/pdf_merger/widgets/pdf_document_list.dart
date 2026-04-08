@@ -3,8 +3,8 @@ import '../models/pdf_merger_state.dart';
 
 class PdfDocumentList extends StatelessWidget {
   final List<PdfDocument> documents;
-  final Function(PdfDocument?) onDocumentSelected;
-  final Function(String) onDocumentRemoved;
+  final void Function(PdfDocument?) onDocumentSelected;
+  final void Function(String) onDocumentRemoved;
 
   const PdfDocumentList({
     super.key,
@@ -32,24 +32,8 @@ class PdfDocumentList extends StatelessWidget {
           padding: const EdgeInsets.all(12),
           child: Row(
             children: [
-              // Icon
-              Container(
-                width: 40,
-                height: 40,
-                decoration: BoxDecoration(
-                  color: theme.colorScheme.primaryContainer,
-                  borderRadius: BorderRadius.circular(8),
-                ),
-                child: Icon(
-                  Icons.picture_as_pdf,
-                  color: theme.colorScheme.onPrimaryContainer,
-                  size: 20,
-                ),
-              ),
-
+              _buildStatusIcon(theme, document.status),
               const SizedBox(width: 12),
-
-              // Document info
               Expanded(
                 child: Column(
                   crossAxisAlignment: CrossAxisAlignment.start,
@@ -57,12 +41,11 @@ class PdfDocumentList extends StatelessWidget {
                     Text(
                       document.displayName,
                       style: theme.textTheme.bodyMedium?.copyWith(
-                        fontWeight: FontWeight.w600,
+                        fontWeight: FontWeight.bold,
                       ),
                       maxLines: 1,
                       overflow: TextOverflow.ellipsis,
                     ),
-                    const SizedBox(height: 2),
                     Text(
                       '${document.pageCountText} • ${document.fileSizeText}',
                       style: theme.textTheme.bodySmall?.copyWith(
@@ -72,18 +55,12 @@ class PdfDocumentList extends StatelessWidget {
                   ],
                 ),
               ),
-
-              // Status indicator
-              _buildStatusIndicator(document, theme),
-
-              const SizedBox(width: 8),
-
-              // Remove button
               IconButton(
-                onPressed: () => onDocumentRemoved(document.id),
                 icon: const Icon(Icons.close, size: 18),
-                visualDensity: VisualDensity.compact,
-                tooltip: 'Remove document',
+                onPressed: () => onDocumentRemoved(document.id),
+                padding: EdgeInsets.zero,
+                constraints: const BoxConstraints(),
+                visualDensity: VisualData.compactDensity,
               ),
             ],
           ),
@@ -92,29 +69,20 @@ class PdfDocumentList extends StatelessWidget {
     );
   }
 
-  Widget _buildStatusIndicator(PdfDocument document, ThemeData theme) {
-    switch (document.status) {
+  Widget _buildStatusIcon(ThemeData theme, DocumentStatus status) {
+    switch (status) {
       case DocumentStatus.loading:
         return const SizedBox(
           width: 16,
           height: 16,
           child: CircularProgressIndicator(strokeWidth: 2),
         );
-
       case DocumentStatus.ready:
         return const Icon(
           Icons.check_circle,
           size: 16,
           color: Colors.green,
         );
-
-      case DocumentStatus.loading:
-        return const SizedBox(
-          width: 16,
-          height: 16,
-          child: CircularProgressIndicator(strokeWidth: 2),
-        );
-
       case DocumentStatus.error:
         return Icon(
           Icons.error,
@@ -123,4 +91,9 @@ class PdfDocumentList extends StatelessWidget {
         );
     }
   }
+}
+
+class VisualData {
+  static const visualDensity = VisualDensity.compact;
+  static const compactDensity = VisualDensity(horizontal: -2, vertical: -2);
 }

@@ -8,7 +8,7 @@ import 'package:camera/camera.dart';
 import 'package:permission_handler/permission_handler.dart';
 import 'package:riverpod_annotation/riverpod_annotation.dart';
 import 'package:bharattesting_core/src/document_scanner/edge_detector.dart';
-import 'package:bharattesting_core/src/document_scanner/image_enhancer.dart';
+import 'package:bharattesting_core/src/document_scanner/image_enhancer.dart' as core;
 import 'package:bharattesting_core/src/document_scanner/ocr_processor.dart';
 import 'package:bharattesting_core/src/document_scanner/perspective_corrector.dart';
 import '../models/document_scanner_state.dart';
@@ -18,9 +18,8 @@ part 'document_scanner_provider.g.dart';
 @riverpod
 class DocumentScannerNotifier extends _$DocumentScannerNotifier {
   Timer? _detectionTimer;
-  Timer? _stabilityTimer;
-  StreamSubscription<CameraImage>? _imageSubscription;
   bool _isProcessingFrame = false;
+  StreamSubscription<CameraImage>? _imageSubscription;
 
   @override
   DocumentScannerState build() {
@@ -51,7 +50,7 @@ class DocumentScannerNotifier extends _$DocumentScannerNotifier {
       final permissionStatus = await _checkCameraPermission();
       state = state.copyWith(permissionStatus: permissionStatus);
 
-      if (!permissionStatus.isGranted) return;
+      if (permissionStatus != CameraPermissionStatus.granted) return;
 
       // Get available cameras
       final cameras = await availableCameras();
@@ -184,7 +183,7 @@ class DocumentScannerNotifier extends _$DocumentScannerNotifier {
 
     // Check if detection has been stable for required duration
     final timeSinceDetection = now.difference(state.lastDetectionTime!);
-    return timeSinceDetection.inMilliseconds >= (state.autoCaptureDuration * 1000);
+    return timeSinceDetection.inSeconds >= state.autoCaptureDuration;
   }
 
   /// Auto-capture document when stable
@@ -233,8 +232,10 @@ class DocumentScannerNotifier extends _$DocumentScannerNotifier {
       final page = ScannedPage(
         id: DateTime.now().millisecondsSinceEpoch.toString(),
         originalImageData: rgbData,
-        imageWidth: width,
-        imageHeight: height,
+        originalWidth: width,
+        originalHeight: height,
+        correctedWidth: width,
+        correctedHeight: height,
         detectedCorners: quadrilateral,
         captureTime: DateTime.now(),
       );
@@ -267,8 +268,8 @@ class DocumentScannerNotifier extends _$DocumentScannerNotifier {
       // Perspective correction
       final corrected = await compute(_correctPerspective, {
         'imageData': page.originalImageData,
-        'width': page.imageWidth,
-        'height': page.imageHeight,
+        'width': page.originalWidth,
+        'height': page.originalHeight,
         'quadrilateral': page.detectedCorners,
       });
 
@@ -319,11 +320,11 @@ class DocumentScannerNotifier extends _$DocumentScannerNotifier {
     try {
       final ocrResult = await compute(_extractDocumentText, {
         'imageData': page.filteredImageData!,
-        'width': page.correctedWidth ?? page.imageWidth,
-        'height': page.correctedHeight ?? page.imageHeight,
+        'width': page.correctedWidth,
+        'height': page.correctedHeight,
       });
 
-      final updatedPage = page.copyWith(ocrResult: ocrResult);
+      final updatedPage = page.copyWith(ocrResult: ocrResult.fullText);
       _updatePage(updatedPage);
 
     } catch (e) {
@@ -364,8 +365,10 @@ class DocumentScannerNotifier extends _$DocumentScannerNotifier {
       final page = ScannedPage(
         id: DateTime.now().millisecondsSinceEpoch.toString(),
         originalImageData: rgbData,
-        imageWidth: width,
-        imageHeight: height,
+        originalWidth: width,
+        originalHeight: height,
+        correctedWidth: width,
+        correctedHeight: height,
         detectedCorners: quadrilateral,
         captureTime: DateTime.now(),
       );
@@ -406,8 +409,8 @@ class DocumentScannerNotifier extends _$DocumentScannerNotifier {
     try {
       final filtered = await compute(_applyDocumentFilter, {
         'imageData': page.correctedImageData!,
-        'width': page.correctedWidth ?? page.imageWidth,
-        'height': page.correctedHeight ?? page.imageHeight,
+        'width': page.correctedWidth,
+        'height': page.correctedHeight,
         'filter': state.selectedFilter,
       });
 
@@ -456,33 +459,18 @@ class DocumentScannerNotifier extends _$DocumentScannerNotifier {
     final processedPages = state.scannedPages.where((p) => p.isProcessed).toList();
     if (processedPages.isEmpty) return;
 
-    // Generate searchable PDF if OCR is enabled
-    if (state.includeOcr && processedPages.any((p) => p.hasOcrText)) {
-      final pdfData = await compute(_generateSearchablePdf, {
-        'pages': processedPages,
-        'fileName': state.exportFileName.isNotEmpty
-          ? state.exportFileName
-          : 'BharatTesting_Scan_${DateTime.now().millisecondsSinceEpoch}',
-      });
+    // Regular PDF without OCR
+    final pdfData = await compute(_generatePdf, {
+      'pages': processedPages,
+      'fileName': state.exportFileName.isNotEmpty
+        ? state.exportFileName
+        : 'BharatTesting_Scan_${DateTime.now().millisecondsSinceEpoch}',
+    });
 
-      state = state.copyWith(
-        exportData: pdfData,
-        exportFileName: '${state.exportFileName}.pdf',
-      );
-    } else {
-      // Regular PDF without OCR
-      final pdfData = await compute(_generatePdf, {
-        'pages': processedPages,
-        'fileName': state.exportFileName.isNotEmpty
-          ? state.exportFileName
-          : 'BharatTesting_Scan_${DateTime.now().millisecondsSinceEpoch}',
-      });
-
-      state = state.copyWith(
-        exportData: pdfData,
-        exportFileName: '${state.exportFileName}.pdf',
-      );
-    }
+    state = state.copyWith(
+      exportData: pdfData,
+      exportFileName: '${state.exportFileName}.pdf',
+    );
   }
 
   /// Export as individual images
@@ -589,7 +577,7 @@ class DocumentScannerNotifier extends _$DocumentScannerNotifier {
 
   /// Select page
   void selectPage(String pageId) {
-    final page = state.scannedPages.firstWhere((p) => p.id == pageId);
+    final page = state.scannedPages.firstWhere((p) => p.id == pageId, orElse: () => state.scannedPages.first);
     state = state.copyWith(selectedPage: page);
   }
 
@@ -644,12 +632,10 @@ class DocumentScannerNotifier extends _$DocumentScannerNotifier {
 
   void _stopLiveDetection() {
     _detectionTimer?.cancel();
-    _stabilityTimer?.cancel();
   }
 
   void _cleanup() {
     _detectionTimer?.cancel();
-    _stabilityTimer?.cancel();
     _imageSubscription?.cancel();
     state.cameraController?.dispose();
   }
@@ -675,11 +661,32 @@ Future<CorrectedDocument> _correctPerspective(Map<String, dynamic> params) {
 }
 
 Future<Uint8List> _applyDocumentFilter(Map<String, dynamic> params) {
-  return DocumentImageEnhancer.applyFilter(
+  final core.DocumentFilter coreFilter;
+  switch (params['filter'] as DocumentFilter) {
+    case DocumentFilter.original:
+      coreFilter = core.DocumentFilter.original;
+      break;
+    case DocumentFilter.grayscale:
+      coreFilter = core.DocumentFilter.grayscale;
+      break;
+    case DocumentFilter.blackAndWhite:
+      coreFilter = core.DocumentFilter.blackAndWhite;
+      break;
+    case DocumentFilter.magicColor:
+      coreFilter = core.DocumentFilter.magicColor;
+      break;
+    case DocumentFilter.whiteboard:
+      coreFilter = core.DocumentFilter.whiteboard;
+      break;
+    default:
+      coreFilter = core.DocumentFilter.original;
+  }
+
+  return core.DocumentImageEnhancer.applyFilter(
     params['imageData'] as Uint8List,
     params['width'] as int,
     params['height'] as int,
-    params['filter'] as DocumentFilter,
+    coreFilter,
   );
 }
 

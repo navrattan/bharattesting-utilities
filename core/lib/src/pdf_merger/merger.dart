@@ -35,24 +35,15 @@ class PdfMerger {
       author: options.author ?? 'BharatTesting Utilities',
       creator: 'BharatTesting PDF Merger',
       subject: options.subject,
-      keywords: options.keywords,
+      keywords: options.keywords?.join(', '),
     );
 
-    final bookmarks = <pw.PdfOutlineItem>[];
     int currentPageNumber = 1;
 
     try {
       for (int i = 0; i < inputFiles.length; i++) {
         final inputFile = inputFiles[i];
         final sourceDoc = await _loadPdfDocument(inputFile);
-
-        // Create bookmark for this source file
-        if (options.generateBookmarks) {
-          bookmarks.add(pw.PdfOutlineItem(
-            title: inputFile.displayName,
-            destination: pw.PdfDestination(page: currentPageNumber - 1),
-          ));
-        }
 
         // Process pages from source document
         final pageCount = await _addPagesFromSource(
@@ -63,17 +54,6 @@ class PdfMerger {
         );
 
         currentPageNumber += pageCount;
-
-        // Memory cleanup
-        sourceDoc.dispose();
-      }
-
-      // Add bookmarks to merged document
-      if (options.generateBookmarks && bookmarks.isNotEmpty) {
-        mergedDoc.outline = pw.PdfOutlineItem(
-          title: 'Contents',
-          children: bookmarks,
-        );
       }
 
       // Generate final PDF
@@ -88,8 +68,6 @@ class PdfMerger {
 
     } catch (e) {
       throw PdfMergeException('Failed to merge PDFs: ${e.toString()}');
-    } finally {
-      mergedDoc.dispose();
     }
   }
 

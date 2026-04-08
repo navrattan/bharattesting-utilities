@@ -11,7 +11,7 @@
 library udyam_generator;
 
 import 'dart:math';
-import '../data/state_codes.dart';
+import 'package:bharattesting_core/src/data_faker/data/state_codes.dart';
 
 /// MSME enterprise types for Udyam registration
 enum UdyamEnterpriseType {
@@ -312,7 +312,7 @@ class UdyamGenerator {
     final generated = <String>{};
 
     int attempts = 0;
-    const maxAttempts = count * 5;
+    final maxAttempts = count * 5;
 
     while (generated.length < count && attempts < maxAttempts) {
       try {

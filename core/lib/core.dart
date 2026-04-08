@@ -11,11 +11,17 @@
 
 library core;
 
-// JSON Converter - Auto-repair and multi-format parsing
+// Indian Data Faker
+export 'src/data_faker/data_faker.dart';
+
+// String-to-JSON Converter
 export 'src/json_converter/json_converter.dart';
 
-// Document Scanner - Computer vision pipeline for document digitization
-export 'src/document_scanner/edge_detector.dart';
-export 'src/document_scanner/perspective_corrector.dart';
-export 'src/document_scanner/image_enhancer.dart';
-export 'src/document_scanner/ocr_processor.dart';
+// Image Size Reducer
+export 'src/image_reducer/image_reducer.dart';
+
+// PDF Merger
+export 'src/pdf_merger/pdf_merger.dart';
+
+// Document Scanner
+export 'src/document_scanner/document_scanner.dart';

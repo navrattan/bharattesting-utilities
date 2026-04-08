@@ -1,5 +1,5 @@
 import 'package:test/test.dart';
-import 'package:core/src/json_converter/auto_repair.dart';
+import 'package:bharattesting_core/src/json_converter/auto_repair.dart';
 
 void main() {
   group('AutoRepair', () {
@@ -198,7 +198,7 @@ void main() {
       });
 
       test('handles nested quotes in single quote conversion', () {
-        const malformedJSON = r"{'message': 'He said \"Hello\"'}";
+        const malformedJSON = r"""{'message': 'He said \"Hello\"'}""";
         final result = AutoRepair.repairJSON(malformedJSON);
 
         expect(result.isSuccess, isTrue);

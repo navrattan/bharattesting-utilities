@@ -26,6 +26,13 @@ class DocumentOcrProcessor {
     int height, {
     OcrOptions options = const OcrOptions(),
   }) async {
+    if (imageData.isEmpty) {
+      throw const OcrException('Empty image data');
+    }
+    if (width <= 0 || height <= 0) {
+      throw const OcrException('Invalid image dimensions');
+    }
+
     try {
       // Step 1: Preprocess image for better OCR accuracy
       final preprocessedImage = await _preprocessForOcr(imageData, width, height, options);

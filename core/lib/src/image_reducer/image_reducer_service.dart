@@ -8,7 +8,10 @@ import 'dart:typed_data';
 enum ImageFormat {
   jpeg('JPEG', 'image/jpeg', '.jpg'),
   png('PNG', 'image/png', '.png'),
-  webp('WebP', 'image/webp', '.webp');
+  webp('WebP', 'image/webp', '.webp'),
+  bmp('BMP', 'image/bmp', '.bmp'),
+  gif('GIF', 'image/gif', '.gif'),
+  tiff('TIFF', 'image/tiff', '.tiff');
 
   const ImageFormat(this.displayName, this.mimeType, this.extension);
   final String displayName;

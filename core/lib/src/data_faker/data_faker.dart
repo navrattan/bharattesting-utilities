@@ -4,15 +4,15 @@
 library data_faker;
 
 // Core generators
-export 'generators/pan_generator.dart';
-export 'generators/gstin_generator.dart';
-export 'generators/aadhaar_generator.dart';
-export 'generators/cin_generator.dart';
-export 'generators/tan_generator.dart';
-export 'generators/ifsc_generator.dart';
-export 'generators/upi_generator.dart';
-export 'generators/udyam_generator.dart';
-export 'generators/pin_code_generator.dart';
+export 'pan_generator.dart';
+export 'gstin_generator.dart';
+export 'aadhaar_generator.dart';
+export 'cin_generator.dart';
+export 'tan_generator.dart';
+export 'ifsc_generator.dart';
+export 'upi_generator.dart';
+export 'udyam_generator.dart';
+export 'pin_code_generator.dart';
 
 // Templates
 export 'templates/individual_template.dart';

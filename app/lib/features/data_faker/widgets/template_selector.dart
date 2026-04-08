@@ -1,13 +1,13 @@
 /// Template selector widget for Indian Data Faker
 ///
-/// Allows users to select between different entity templates
+/// Provides a horizontal list or grid of predefined data templates
 
 import 'package:flutter/material.dart';
 import 'package:lucide_icons/lucide_icons.dart';
 
 import '../faker_state.dart';
 
-/// Widget for selecting template type
+/// Widget for selecting a data generation template
 class TemplateSelector extends StatelessWidget {
   const TemplateSelector({
     required this.selectedTemplate,
@@ -20,95 +20,136 @@ class TemplateSelector extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Card(
-      child: Padding(
-        padding: const EdgeInsets.all(16),
-        child: Column(
-          crossAxisAlignment: CrossAxisAlignment.start,
+    return Column(
+      crossAxisAlignment: CrossAxisAlignment.start,
+      children: [
+        Text(
+          'Select Template',
+          style: Theme.of(context).textTheme.titleSmall?.copyWith(
+                fontWeight: FontWeight.bold,
+              ),
+        ),
+        const SizedBox(height: 12),
+        GridView.count(
+          shrinkWrap: true,
+          physics: const NeverScrollableScrollPhysics(),
+          crossAxisCount: _getCrossAxisCount(context),
+          crossAxisSpacing: 12,
+          mainAxisSpacing: 12,
+          childAspectRatio: 2.2,
+          children: TemplateType.values.map((type) {
+            return _TemplateCard(
+              type: type,
+              isSelected: selectedTemplate == type,
+              onTap: () => onTemplateChanged(type),
+            );
+          }).toList(),
+        ),
+      ],
+    );
+  }
+
+  int _getCrossAxisCount(BuildContext context) {
+    final width = MediaQuery.of(context).size.width;
+    if (width > 900) return 3;
+    if (width > 600) return 2;
+    return 1;
+  }
+}
+
+class _TemplateCard extends StatelessWidget {
+  const _TemplateCard({
+    required this.type,
+    required this.isSelected,
+    required this.onTap,
+  });
+
+  final TemplateType type;
+  final bool isSelected;
+  final VoidCallback onTap;
+
+  @override
+  Widget build(BuildContext context) {
+    final theme = Theme.of(context);
+
+    return InkWell(
+      onTap: onTap,
+      borderRadius: BorderRadius.circular(12),
+      child: Container(
+        padding: const EdgeInsets.all(12),
+        decoration: BoxDecoration(
+          color: isSelected
+              ? theme.colorScheme.primaryContainer
+              : theme.colorScheme.surfaceContainerHighest.withValues(alpha: 0.3),
+          borderRadius: BorderRadius.circular(12),
+          border: Border.all(
+            color: isSelected
+                ? theme.colorScheme.primary
+                : theme.colorScheme.outline.withValues(alpha: 0.1),
+            width: isSelected ? 2 : 1,
+          ),
+        ),
+        child: Row(
           children: [
-            Row(
-              children: [
-                const Icon(LucideIcons.fileText),
-                const SizedBox(width: 8),
-                Text(
-                  'Entity Template',
-                  style: Theme.of(context).textTheme.titleMedium?.copyWith(
-                    fontWeight: FontWeight.w600,
-                  ),
-                ),
-              ],
-            ),
-            const SizedBox(height: 16),
-
-            // Template options
-            Wrap(
-              spacing: 8,
-              runSpacing: 8,
-              children: TemplateType.values.map((template) {
-                final isSelected = template == selectedTemplate;
-
-                return FilterChip(
-                  selected: isSelected,
-                  onSelected: (_) => onTemplateChanged(template),
-                  avatar: Icon(
-                    _getTemplateIcon(template),
-                    size: 16,
-                  ),
-                  label: Text(template.displayName),
-                  backgroundColor: isSelected
-                      ? Theme.of(context).colorScheme.primaryContainer
-                      : null,
-                  selectedColor: Theme.of(context).colorScheme.primaryContainer,
-                );
-              }).toList(),
-            ),
-
-            const SizedBox(height: 12),
-
-            // Selected template description
             Container(
-              width: double.infinity,
-              padding: const EdgeInsets.all(12),
+              padding: const EdgeInsets.all(8),
               decoration: BoxDecoration(
-                color: Theme.of(context).colorScheme.surfaceVariant.withOpacity(0.5),
+                color: isSelected
+                    ? theme.colorScheme.primary.withValues(alpha: 0.1)
+                    : theme.colorScheme.surface.withValues(alpha: 0.5),
                 borderRadius: BorderRadius.circular(8),
               ),
+              child: Icon(
+                _getIconForType(type),
+                size: 20,
+                color: isSelected ? theme.colorScheme.primary : theme.colorScheme.onSurfaceVariant,
+              ),
+            ),
+            const SizedBox(width: 12),
+            Expanded(
               child: Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
+                mainAxisAlignment: MainAxisAlignment.center,
                 children: [
                   Text(
-                    selectedTemplate.displayName,
-                    style: Theme.of(context).textTheme.titleSmall?.copyWith(
-                      fontWeight: FontWeight.w600,
+                    type.displayName,
+                    style: theme.textTheme.labelLarge?.copyWith(
+                      fontWeight: FontWeight.bold,
+                      color: isSelected ? theme.colorScheme.onPrimaryContainer : null,
                     ),
                   ),
-                  const SizedBox(height: 4),
                   Text(
-                    selectedTemplate.description,
-                    style: Theme.of(context).textTheme.bodyMedium?.copyWith(
-                      color: Theme.of(context).colorScheme.onSurface.withOpacity(0.7),
+                    _getDescriptionForType(type),
+                    style: theme.textTheme.bodySmall?.copyWith(
+                      fontSize: 10,
+                      color: theme.colorScheme.onSurfaceVariant,
                     ),
+                    maxLines: 1,
+                    overflow: TextOverflow.ellipsis,
                   ),
-                  const SizedBox(height: 8),
-                  _buildIdentifierPreview(context, selectedTemplate),
                 ],
               ),
             ),
+            if (isSelected)
+              Icon(
+                Icons.check_circle,
+                size: 16,
+                color: theme.colorScheme.primary,
+              ),
           ],
         ),
       ),
     );
   }
 
-  /// Get icon for template type
-  IconData _getTemplateIcon(TemplateType template) {
-    switch (template) {
+  IconData _getIconForType(TemplateType type) {
+    switch (type) {
       case TemplateType.individual:
         return LucideIcons.user;
       case TemplateType.company:
         return LucideIcons.building;
       case TemplateType.proprietorship:
-        return LucideIcons.briefcase;
+        return LucideIcons.userCheck;
       case TemplateType.partnership:
         return LucideIcons.users;
       case TemplateType.trust:
@@ -116,45 +157,18 @@ class TemplateSelector extends StatelessWidget {
     }
   }
 
-  /// Build identifier preview for selected template
-  Widget _buildIdentifierPreview(BuildContext context, TemplateType template) {
-    final identifiers = _getTemplateIdentifiers(template);
-
-    return Wrap(
-      spacing: 4,
-      runSpacing: 4,
-      children: identifiers.map((identifier) {
-        return Chip(
-          label: Text(
-            identifier.toUpperCase(),
-            style: const TextStyle(fontSize: 11, fontWeight: FontWeight.w500),
-          ),
-          backgroundColor: Theme.of(context).colorScheme.primary.withOpacity(0.1),
-          side: BorderSide(
-            color: Theme.of(context).colorScheme.primary.withOpacity(0.3),
-            width: 1,
-          ),
-          materialTapTargetSize: MaterialTapTargetSize.shrinkWrap,
-          padding: EdgeInsets.zero,
-          labelPadding: const EdgeInsets.symmetric(horizontal: 6, vertical: 0),
-        );
-      }).toList(),
-    );
-  }
-
-  /// Get identifiers for template
-  List<String> _getTemplateIdentifiers(TemplateType template) {
-    switch (template) {
+  String _getDescriptionForType(TemplateType type) {
+    switch (type) {
       case TemplateType.individual:
-        return ['PAN', 'Aadhaar', 'PIN', 'Address', 'UPI'];
+        return 'Personal PAN, Aadhaar...';
       case TemplateType.company:
-        return ['PAN', 'GSTIN', 'CIN', 'TAN', 'IFSC', 'UPI', 'Udyam'];
+        return 'CIN, GSTIN, TAN...';
       case TemplateType.proprietorship:
-        return ['PAN', 'GSTIN', 'Udyam', 'TAN', 'UPI'];
+        return 'Individual + Business IDs';
       case TemplateType.partnership:
-        return ['PAN', 'GSTIN', 'TAN', 'IFSC', 'UPI', 'Partners'];
+        return 'Partnership Firm IDs';
       case TemplateType.trust:
-        return ['PAN', 'GSTIN', 'TAN', 'IFSC', 'UPI', 'Registration'];
+        return 'NGO and Trust IDs';
     }
   }
 }

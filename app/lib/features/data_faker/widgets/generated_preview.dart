@@ -1,6 +1,6 @@
-/// Generated records preview widget
+/// Preview widget for generated synthetic records
 ///
-/// Displays generated data in a user-friendly table format with copy functionality
+/// Provides a paginated table view of the generated data with copy controls
 
 import 'package:flutter/material.dart';
 import 'package:lucide_icons/lucide_icons.dart';
@@ -19,7 +19,7 @@ class GeneratedPreview extends StatefulWidget {
 
   final List<Map<String, dynamic>> records;
   final TemplateType templateType;
-  final Function(Map<String, dynamic>) onCopySingle;
+  final void Function(Map<String, dynamic>) onCopySingle;
   final VoidCallback onCopyAll;
 
   @override
@@ -38,217 +38,131 @@ class _GeneratedPreviewState extends State<GeneratedPreview> {
 
     final totalPages = (widget.records.length / _recordsPerPage).ceil();
     final startIndex = _currentPage * _recordsPerPage;
-    final endIndex = (startIndex + _recordsPerPage).clamp(0, widget.records.length);
+    final endIndex = (startIndex + _recordsPerPage < widget.records.length)
+        ? startIndex + _recordsPerPage
+        : widget.records.length;
     final currentRecords = widget.records.sublist(startIndex, endIndex);
 
+    final theme = Theme.of(context);
+
     return Card(
-      child: Padding(
-        padding: const EdgeInsets.all(16),
-        child: Column(
-          crossAxisAlignment: CrossAxisAlignment.start,
-          children: [
-            // Header with pagination and actions
-            Row(
-              children: [
-                const Icon(LucideIcons.table),
-                const SizedBox(width: 8),
-                Text(
-                  'Generated Records',
-                  style: Theme.of(context).textTheme.titleMedium?.copyWith(
-                    fontWeight: FontWeight.w600,
-                  ),
-                ),
-                const Spacer(),
-
-                // Copy all button
-                IconButton.outlined(
-                  onPressed: widget.onCopyAll,
-                  icon: const Icon(LucideIcons.copy),
-                  tooltip: 'Copy All Records (JSON)',
-                ),
-              ],
-            ),
-
-            if (totalPages > 1) ...[
-              const SizedBox(height: 8),
-              _buildPagination(totalPages),
-            ],
-
-            const SizedBox(height: 16),
-
-            // Records table
-            _buildRecordsTable(currentRecords),
-          ],
+      elevation: 0,
+      shape: RoundedRectangleBorder(
+        borderRadius: BorderRadius.circular(12),
+        side: BorderSide(
+          color: theme.colorScheme.outline.withValues(alpha: 0.1),
         ),
-      ),
-    );
-  }
-
-  /// Build pagination controls
-  Widget _buildPagination(int totalPages) {
-    return Row(
-      mainAxisAlignment: MainAxisAlignment.center,
-      children: [
-        IconButton(
-          onPressed: _currentPage > 0
-              ? () => setState(() => _currentPage--)
-              : null,
-          icon: const Icon(LucideIcons.chevronLeft),
-        ),
-        Text(
-          'Page ${_currentPage + 1} of $totalPages',
-          style: Theme.of(context).textTheme.bodyMedium,
-        ),
-        IconButton(
-          onPressed: _currentPage < totalPages - 1
-              ? () => setState(() => _currentPage++)
-              : null,
-          icon: const Icon(LucideIcons.chevronRight),
-        ),
-      ],
-    );
-  }
-
-  /// Build records table
-  Widget _buildRecordsTable(List<Map<String, dynamic>> records) {
-    final displayFields = _getDisplayFields(widget.templateType);
-
-    return Container(
-      width: double.infinity,
-      decoration: BoxDecoration(
-        border: Border.all(
-          color: Theme.of(context).colorScheme.outline.withOpacity(0.3),
-        ),
-        borderRadius: BorderRadius.circular(8),
       ),
       child: Column(
+        crossAxisAlignment: CrossAxisAlignment.stretch,
         children: [
-          // Header row
-          Container(
-            padding: const EdgeInsets.all(12),
-            decoration: BoxDecoration(
-              color: Theme.of(context).colorScheme.surfaceVariant.withOpacity(0.5),
-              borderRadius: const BorderRadius.only(
-                topLeft: Radius.circular(8),
-                topRight: Radius.circular(8),
-              ),
-            ),
-            child: Row(
-              children: [
-                ...displayFields.map((field) {
-                  return Expanded(
-                    child: Text(
-                      field.toUpperCase(),
-                      style: Theme.of(context).textTheme.labelMedium?.copyWith(
-                        fontWeight: FontWeight.w600,
-                      ),
-                    ),
-                  );
-                }).toList(),
-                const SizedBox(width: 40), // Space for action button
-              ],
-            ),
-          ),
-
-          // Data rows
-          ...records.asMap().entries.map((entry) {
-            final index = entry.key;
-            final record = entry.value;
-            final isLast = index == records.length - 1;
-
-            return Container(
-              padding: const EdgeInsets.all(12),
-              decoration: BoxDecoration(
-                color: index.isEven
-                    ? Colors.transparent
-                    : Theme.of(context).colorScheme.surfaceVariant.withOpacity(0.2),
-                borderRadius: isLast
-                    ? const BorderRadius.only(
-                        bottomLeft: Radius.circular(8),
-                        bottomRight: Radius.circular(8),
-                      )
-                    : null,
-              ),
-              child: Row(
-                children: [
-                  ...displayFields.map((field) {
-                    final value = record[field]?.toString() ?? '-';
-                    final displayValue = _formatFieldValue(field, value);
-
-                    return Expanded(
-                      child: SelectableText(
-                        displayValue,
-                        style: Theme.of(context).textTheme.bodySmall?.copyWith(
-                          fontFamily: _isMonospaceField(field) ? 'monospace' : null,
-                        ),
-                      ),
-                    );
-                  }).toList(),
-
-                  // Copy single record button
-                  IconButton(
-                    onPressed: () => widget.onCopySingle(record),
-                    icon: const Icon(LucideIcons.copy, size: 16),
-                    tooltip: 'Copy Record (JSON)',
-                    constraints: const BoxConstraints(
-                      minWidth: 32,
-                      minHeight: 32,
-                    ),
-                  ),
-                ],
-              ),
-            );
-          }).toList(),
+          _buildHeader(context),
+          _buildTable(context, currentRecords),
+          if (totalPages > 1) _buildPagination(context, totalPages),
         ],
       ),
     );
   }
 
-  /// Get display fields based on template type
-  List<String> _getDisplayFields(TemplateType templateType) {
-    switch (templateType) {
-      case TemplateType.individual:
-        return ['pan', 'aadhaar', 'state', 'pin_code'];
-
-      case TemplateType.company:
-        return ['pan', 'gstin', 'cin', 'state'];
-
-      case TemplateType.proprietorship:
-        return ['pan', 'gstin', 'udyam', 'state'];
-
-      case TemplateType.partnership:
-        return ['pan', 'gstin', 'tan', 'state'];
-
-      case TemplateType.trust:
-        return ['pan', 'trust_type', 'gst_registered', 'state'];
-    }
+  Widget _buildHeader(BuildContext context) {
+    final theme = Theme.of(context);
+    return Padding(
+      padding: const EdgeInsets.all(16),
+      child: Row(
+        children: [
+          Icon(LucideIcons.eye, size: 18, color: theme.colorScheme.primary),
+          const SizedBox(width: 8),
+          Text(
+            'Data Preview',
+            style: theme.textTheme.titleSmall?.copyWith(fontWeight: FontWeight.bold),
+          ),
+          const Spacer(),
+          TextButton.icon(
+            onPressed: widget.onCopyAll,
+            icon: const Icon(LucideIcons.copy, size: 14),
+            label: const Text('Copy All'),
+          ),
+        ],
+      ),
+    );
   }
 
-  /// Format field value for display
-  String _formatFieldValue(String field, String value) {
-    switch (field) {
-      case 'gst_registered':
-        return value.toLowerCase() == 'true' ? 'Yes' : 'No';
+  Widget _buildTable(BuildContext context, List<Map<String, dynamic>> records) {
+    if (records.isEmpty) return const SizedBox.shrink();
 
-      case 'trust_type':
-        return value.replaceAll('_', ' ').split(' ').map((word) {
-          return word.substring(0, 1).toUpperCase() + word.substring(1);
-        }).join(' ');
+    final theme = Theme.of(context);
+    final columns = records.first.keys.toList();
 
-      default:
-        // Truncate long values
-        if (value.length > 20) {
-          return '${value.substring(0, 17)}...';
-        }
-        return value;
-    }
+    return SingleChildScrollView(
+      scrollDirection: Axis.horizontal,
+      child: DataTable(
+        headingRowColor: WidgetStateProperty.all(
+          theme.colorScheme.surfaceContainerHighest.withValues(alpha: 0.3),
+        ),
+        columnSpacing: 24,
+        columns: [
+          ...columns.map((col) => DataColumn(
+                label: Text(
+                  col.toUpperCase(),
+                  style: theme.textTheme.labelSmall?.copyWith(
+                    fontWeight: FontWeight.bold,
+                    color: theme.colorScheme.primary,
+                  ),
+                ),
+              )),
+          const DataColumn(label: Text('')), // Actions column
+        ],
+        rows: records.map((record) {
+          return DataRow(
+            cells: [
+              ...columns.map((col) => DataCell(
+                    Text(
+                      record[col]?.toString() ?? '-',
+                      style: theme.textTheme.bodySmall,
+                    ),
+                  )),
+              DataCell(
+                IconButton(
+                  icon: const Icon(LucideIcons.copy, size: 16),
+                  onPressed: () => widget.onCopySingle(record),
+                  tooltip: 'Copy record',
+                ),
+              ),
+            ],
+          );
+        }).toList(),
+      ),
+    );
   }
 
-  /// Check if field should use monospace font
-  bool _isMonospaceField(String field) {
-    const monospaceFields = [
-      'pan', 'gstin', 'aadhaar', 'cin', 'tan', 'ifsc', 'pin_code', 'udyam'
-    ];
-    return monospaceFields.contains(field);
+  Widget _buildPagination(BuildContext context, int totalPages) {
+    final theme = Theme.of(context);
+    return Padding(
+      padding: const EdgeInsets.all(8.0),
+      child: Row(
+        mainAxisAlignment: MainAxisAlignment.center,
+        children: [
+          IconButton(
+            icon: const Icon(LucideIcons.chevronLeft, size: 18),
+            onPressed: _currentPage > 0
+                ? () => setState(() => _currentPage--)
+                : null,
+          ),
+          Padding(
+            padding: const EdgeInsets.symmetric(horizontal: 16),
+            child: Text(
+              'Page ${_currentPage + 1} of $totalPages',
+              style: theme.textTheme.bodySmall,
+            ),
+          ),
+          IconButton(
+            icon: const Icon(LucideIcons.chevronRight, size: 18),
+            onPressed: _currentPage < totalPages - 1
+                ? () => setState(() => _currentPage++)
+                : null,
+          ),
+        ],
+      ),
+    );
   }
 }

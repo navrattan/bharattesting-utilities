@@ -10,7 +10,7 @@
 library pin_code_generator;
 
 import 'dart:math';
-import '../data/state_codes.dart';
+import 'package:bharattesting_core/src/data_faker/data/state_codes.dart';
 
 /// Geographic regions for PIN code first digit
 enum PINRegion {
@@ -184,6 +184,35 @@ class PINCodeGenerator {
     );
   }
 
+  /// Generate a PIN code for a specific state
+  static String generateForState(String stateName, Random random) {
+    return generate(stateName: stateName, random: random);
+  }
+
+  /// Get state name from PIN code
+  static String? getStateFromPin(String pinCode) {
+    final pin = int.tryParse(pinCode);
+    if (pin == null) return null;
+    return StateCodes.getStateFromPin(pin);
+  }
+
+  /// Get city name from PIN code (simplified)
+  static String? getCityFromPin(String pinCode) {
+    // Return a generic city name based on PIN sub-region or major cities
+    final pin = int.tryParse(pinCode);
+    if (pin == null) return null;
+
+    for (final stateEntry in StateCodes.majorCities.entries) {
+      for (final cityEntry in stateEntry.value.entries) {
+        final range = cityEntry.value;
+        if (pin >= range[0] && pin <= range[1]) {
+          return cityEntry.key;
+        }
+      }
+    }
+    return 'Main City';
+  }
+
   /// Generate PIN for specific city
   ///
   /// [cityName] Name of the city
@@ -341,7 +370,7 @@ class PINCodeGenerator {
     final generated = <String>{};
 
     int attempts = 0;
-    const maxAttempts = count * 5;
+    final maxAttempts = count * 5;
 
     while (generated.length < count && attempts < maxAttempts) {
       try {
@@ -637,9 +666,4 @@ extension PINStringExtension on String {
     if (isValidPIN) return substring(3);
     return null;
   }
-}
-
-/// Extension to help with null-safety
-extension IterableExtension<T> on Iterable<T> {
-  T? get firstOrNull => isEmpty ? null : first;
 }

@@ -31,6 +31,13 @@ class DocumentEdgeDetector {
     int height, {
     EdgeDetectionOptions options = const EdgeDetectionOptions(),
   }) async {
+    if (imageData.isEmpty) {
+      throw const EdgeDetectionException('Empty image data');
+    }
+    if (width <= 0 || height <= 0) {
+      throw const EdgeDetectionException('Invalid image dimensions');
+    }
+
     try {
       // Step 1: Convert to grayscale if needed
       final grayImage = await _convertToGrayscale(imageData, width, height);

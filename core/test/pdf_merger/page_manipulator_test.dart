@@ -460,7 +460,7 @@ void main() {
         expect(reordered.length, equals(1000));
       });
 
-      test('should maintain page metadata through operations', () {
+      test('should maintain page metadata through operations', () async {
         final pageWithMetadata = testPages.first.copyWith(
           metadata: {'custom': 'value', 'source': 'test'},
         );

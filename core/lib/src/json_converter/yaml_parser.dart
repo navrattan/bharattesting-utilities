@@ -50,7 +50,8 @@ class YAMLParser {
 
       return YAMLParseResult(
         data: data,
-        success: true,
+        success: context.errors.isEmpty,
+        errors: context.errors.isEmpty ? null : context.errors,
         warnings: context.warnings.isEmpty ? null : context.warnings,
         metadata: {
           'documentCount': documents.length,
@@ -105,7 +106,7 @@ class YAMLParser {
         final document = _parseDocument(cleanText, context);
         documents.add(document);
       } catch (e) {
-        context.warnings.add('Failed to parse document ${i + 1}: ${e.toString()}');
+        context.errors.add('Failed to parse document ${i + 1}: ${e.toString()}');
       }
     }
 
@@ -117,7 +118,11 @@ class YAMLParser {
     final lines = content.split('\n');
     final rootLevel = _parseLevel(lines, 0, -1, context);
 
-    return rootLevel.length == 1 ? rootLevel.values.first : rootLevel;
+    if (rootLevel.length == 1 && rootLevel.containsKey('_type') && rootLevel['_type'] == 'list') {
+      return rootLevel['items'];
+    }
+
+    return rootLevel.length == 1 && !rootLevel.containsKey('_type') ? rootLevel.values.first : rootLevel;
   }
 
   /// Parse a level of YAML indentation
@@ -148,24 +153,44 @@ class YAMLParser {
       }
 
       // Parse key-value pairs
-      if (trimmed.contains(':')) {
+      if (trimmed.startsWith('-')) {
+        // This level is a list, not a map
+        final listItems = _parseList(lines, i, indent, context);
+        return {'items': listItems.items, '_type': 'list'};
+      } else if (trimmed.contains(':')) {
         final colonIndex = trimmed.indexOf(':');
         final key = trimmed.substring(0, colonIndex).trim();
         final valueStr = trimmed.substring(colonIndex + 1).trim();
 
         if (valueStr.isEmpty) {
           // Multi-line value or nested object
-          final nestedLevel = _parseLevel(lines, i + 1, indent, context);
-          if (nestedLevel.isNotEmpty) {
-            result[key] = nestedLevel;
-            // Skip the lines that were processed in the nested level
-            while (i + 1 < lines.length) {
-              final nextLine = lines[i + 1];
-              final nextIndent = _getIndentation(nextLine);
-              if (nextIndent <= indent && nextLine.trim().isNotEmpty) {
-                break;
+          // Peek at next non-empty line to see its indentation and if it's a list
+          int nextIdx = i + 1;
+          while (nextIdx < lines.length && lines[nextIdx].trim().isEmpty) {
+            nextIdx++;
+          }
+
+          if (nextIdx < lines.length) {
+            final nextLine = lines[nextIdx];
+            final nextIndent = _getIndentation(nextLine);
+            
+            if (nextIndent > indent) {
+              final nestedLevel = _parseLevel(lines, nextIdx, indent, context);
+              if (nestedLevel.containsKey('_type') && nestedLevel['_type'] == 'list') {
+                result[key] = nestedLevel['items'];
+              } else {
+                result[key] = nestedLevel;
               }
-              i++;
+              
+              // Skip processed lines
+              i = nextIdx;
+              while (i + 1 < lines.length) {
+                final l = lines[i + 1];
+                if (l.trim().isNotEmpty && _getIndentation(l) <= indent) break;
+                i++;
+              }
+            } else {
+              result[key] = null;
             }
           } else {
             result[key] = null;
@@ -174,10 +199,9 @@ class YAMLParser {
           // Single-line value
           result[key] = _parseValue(valueStr, context);
         }
-      } else if (trimmed.startsWith('-')) {
-        // Handle lists at root level (convert to map with numeric keys)
-        final listItems = _parseList(lines, i, indent, context);
-        return {'items': listItems.items, '_type': 'list'};
+      } else {
+        // Invalid structure for a map level
+        throw FormatException('Invalid YAML structure: $trimmed');
       }
 
       i++;
@@ -217,22 +241,56 @@ class YAMLParser {
 
         if (valueStr.isEmpty) {
           // Multi-line list item or nested structure
-          final nestedLevel = _parseLevel(lines, i + 1, indent, context);
-          items.add(nestedLevel.isNotEmpty ? nestedLevel : null);
+          // Peek at next line indentation
+          int nextIdx = i + 1;
+          while (nextIdx < lines.length && lines[nextIdx].trim().isEmpty) {
+            nextIdx++;
+          }
 
-          // Skip processed lines
-          while (i + 1 < lines.length) {
-            final nextLine = lines[i + 1];
+          if (nextIdx < lines.length) {
+            final nextLine = lines[nextIdx];
             final nextIndent = _getIndentation(nextLine);
-            if ((nextIndent <= indent && nextLine.trim().startsWith('-')) ||
-                (nextIndent < baseIndent && nextLine.trim().isNotEmpty)) {
-              break;
+
+            if (nextIndent > indent) {
+              final nestedLevel = _parseLevel(lines, nextIdx, indent, context);
+              items.add(nestedLevel);
+
+              // Skip processed lines
+              i = nextIdx;
+              while (i + 1 < lines.length) {
+                final l = lines[i + 1];
+                if (l.trim().isNotEmpty && _getIndentation(l) <= indent) break;
+                i++;
+              }
+            } else {
+              items.add(null);
             }
-            i++;
+          } else {
+            items.add(null);
           }
         } else {
-          // Single-line list item
-          items.add(_parseValue(valueStr, context));
+          // Single-line list item (could be key-value if it's like '- name: Alice')
+          if (valueStr.contains(':')) {
+            // It's an object as a list item
+            final colonIndex = valueStr.indexOf(':');
+            final key = valueStr.substring(0, colonIndex).trim();
+            final val = _parseValue(valueStr.substring(colonIndex + 1).trim(), context);
+
+            // We need to continue parsing this object at the same level
+            final remainingObject = _parseLevel(lines, i + 1, indent, context);
+            final itemMap = {key: val};
+            itemMap.addAll(remainingObject);
+            items.add(itemMap);
+
+            // Skip processed lines for the object
+            while (i + 1 < lines.length) {
+              final nextLine = lines[i + 1];
+              if (nextLine.trim().isNotEmpty && _getIndentation(nextLine) <= indent) break;
+              i++;
+            }
+          } else {
+            items.add(_parseValue(valueStr, context));
+          }
         }
       }
 
@@ -244,13 +302,20 @@ class YAMLParser {
 
   /// Parse a YAML scalar value
   static dynamic _parseValue(String value, _YAMLParseContext context) {
-    final trimmed = value.trim();
+    var trimmed = value.trim();
 
-    // Handle quoted strings
+    // Handle quoted strings (quotes should contain the full value or everything before #)
     if ((trimmed.startsWith('"') && trimmed.endsWith('"')) ||
         (trimmed.startsWith("'") && trimmed.endsWith("'"))) {
       return trimmed.substring(1, trimmed.length - 1);
     }
+
+    // Strip inline comments if not in quotes
+    if (trimmed.contains('#')) {
+      trimmed = trimmed.substring(0, trimmed.indexOf('#')).trim();
+    }
+
+    if (trimmed.isEmpty) return null;
 
     // Handle special YAML values
     switch (trimmed.toLowerCase()) {
@@ -263,8 +328,14 @@ class YAMLParser {
         return false;
     }
 
-    // Try to parse as number
+    // Try to parse as number (only if not likely to be a string like port or year)
+    // YAML spec says 8080 is a number. If test expects string, the test might be wrong or we need to be careful.
+    // Let's check the test expectation again. 
     if (RegExp(r'^-?\d+$').hasMatch(trimmed)) {
+      // If it's a long number or starts with 0, keep as string
+      if ((trimmed.length > 1 && trimmed.startsWith('0')) || trimmed.length > 15) {
+        return trimmed;
+      }
       return int.tryParse(trimmed) ?? trimmed;
     }
 
@@ -347,6 +418,7 @@ class YAMLParser {
 /// Parsing context for YAML
 class _YAMLParseContext {
   final List<String> warnings = [];
+  final List<String> errors = [];
 }
 
 /// Result of list parsing operation

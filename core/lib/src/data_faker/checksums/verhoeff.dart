@@ -65,7 +65,7 @@ class VerhoeffChecksum {
 
     // Process digits from right to left
     for (int i = 0; i < digits.length; i++) {
-      final position = i + 1; // Position starts from 1
+      final position = i + 1; 
       final digit = digits[digits.length - 1 - i]; // Right to left
 
       // Apply permutation based on position

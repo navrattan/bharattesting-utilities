@@ -11,7 +11,7 @@
 library aadhaar_generator;
 
 import 'dart:math';
-import '../checksums/verhoeff.dart';
+import 'package:bharattesting_core/src/data_faker/checksums/verhoeff.dart';
 
 /// Age categories for realistic Aadhaar generation patterns
 enum AadhaarAgeCategory {

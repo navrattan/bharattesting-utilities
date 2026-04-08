@@ -11,7 +11,7 @@
 library address_generator;
 
 import 'dart:math';
-import '../data/state_codes.dart';
+import 'package:bharattesting_core/src/data_faker/data/state_codes.dart';
 import 'pin_code_generator.dart';
 
 /// Address types for different location contexts

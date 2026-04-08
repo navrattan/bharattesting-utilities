@@ -326,29 +326,30 @@ class CSVParser {
     int dateCount = 0;
 
     for (final value in values) {
-      if (value.isEmpty) continue;
+      final trimmed = value.trim();
+      if (trimmed.isEmpty) continue;
 
       // Check for integer
-      if (int.tryParse(value) != null) {
+      if (int.tryParse(trimmed) != null) {
         intCount++;
         continue;
       }
 
       // Check for double
-      if (double.tryParse(value) != null) {
+      if (double.tryParse(trimmed) != null) {
         doubleCount++;
         continue;
       }
 
       // Check for boolean
-      final lowerValue = value.toLowerCase();
+      final lowerValue = trimmed.toLowerCase();
       if (['true', 'false', 'yes', 'no', '1', '0'].contains(lowerValue)) {
         boolCount++;
         continue;
       }
 
       // Check for date (basic patterns)
-      if (_isDate(value)) {
+      if (_isDate(trimmed)) {
         dateCount++;
         continue;
       }
@@ -367,17 +368,21 @@ class CSVParser {
 
   /// Convert value to appropriate type
   static dynamic _convertValue(String value, _ColumnType type) {
-    if (value.isEmpty) return null;
+    if (value.isEmpty) return '';
+
+    // Use trimmed value for type detection/conversion check
+    final trimmed = value.trim();
+    if (trimmed.isEmpty) return value; // Return original spaces if not trimmed
 
     switch (type) {
       case _ColumnType.integer:
-        return int.tryParse(value) ?? value;
+        return int.tryParse(trimmed) ?? value;
 
       case _ColumnType.double:
-        return double.tryParse(value) ?? value;
+        return double.tryParse(trimmed) ?? value;
 
       case _ColumnType.boolean:
-        final lowerValue = value.toLowerCase();
+        final lowerValue = trimmed.toLowerCase();
         if (['true', 'yes', '1'].contains(lowerValue)) return true;
         if (['false', 'no', '0'].contains(lowerValue)) return false;
         return value;

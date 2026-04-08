@@ -1,5 +1,5 @@
 import 'package:test/test.dart';
-import 'package:core/src/json_converter/json_formatter.dart';
+import 'package:bharattesting_core/src/json_converter/json_formatter.dart';
 
 void main() {
   group('JSONFormatter', () {
@@ -359,7 +359,7 @@ void main() {
       });
 
       test('does not compact objects with long string values', () {
-        const longStringInput = '{"short":"ok","long":"${'A' * 30}"}';
+        final longStringInput = '{"short":"ok","long":"${'A' * 30}"}';
         const options = JSONFormatOptions(compactObjects: true);
         final result = JSONFormatter.prettify(longStringInput, options);
 
@@ -367,7 +367,7 @@ void main() {
       });
 
       test('does not compact when keys are too long', () {
-        const longKeyInput = '{"${'very_long_key_name' * 2}":"value"}';
+        final longKeyInput = '{"${'very_long_key_name' * 2}":"value"}';
         const options = JSONFormatOptions(compactObjects: true);
         final result = JSONFormatter.prettify(longKeyInput, options);
 
@@ -419,7 +419,7 @@ void main() {
         expect(stopwatch.elapsedMilliseconds, lessThan(1000)); // Under 1 second
 
         print('Minified large JSON (${buffer.length} chars) in ${stopwatch.elapsedMilliseconds}ms');
-        print('Compression ratio: ${(result.metadata!['compressionRatio'] as double * 100).toStringAsFixed(1)}%');
+        print('Compression ratio: ${((result.metadata!['compressionRatio'] as double) * 100).toStringAsFixed(1)}%');
       });
 
       test('deep nesting performance', () {

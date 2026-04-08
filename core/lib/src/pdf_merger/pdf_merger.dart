@@ -1,4 +1,6 @@
 /// PDF Merger - Merge, rotate, encrypt PDFs
 library pdf_merger;
 
-// TODO: Implement in Phase 4
+export 'merger.dart';
+export 'page_manipulator.dart';
+export 'encryptor.dart';

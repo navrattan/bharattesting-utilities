@@ -1,5 +1,5 @@
 import 'package:test/test.dart';
-import 'package:core/src/image_reducer/compressor.dart';
+import 'package:bharattesting_core/src/image_reducer/compressor.dart';
 import 'dart:typed_data';
 
 void main() {

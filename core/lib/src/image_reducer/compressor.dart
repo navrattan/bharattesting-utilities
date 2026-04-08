@@ -1,104 +1,49 @@
-/// Advanced image compression engine with quality control
+/// High-performance image compression engine
 ///
-/// Supports JPEG, PNG, WebP compression with sophisticated algorithms
-/// Memory-efficient processing for large images
+/// Implements various compression algorithms and optimization strategies
 library image_compressor;
 
 import 'dart:typed_data';
-import 'dart:math' as math;
 import 'package:image/image.dart' as img;
+import 'image_reducer_service.dart';
 
-/// Compression quality levels with optimized settings
-enum CompressionLevel {
-  maximum(quality: 15, description: 'Maximum compression, lowest quality'),
-  high(quality: 35, description: 'High compression, low quality'),
-  medium(quality: 60, description: 'Balanced compression and quality'),
-  low(quality: 80, description: 'Light compression, good quality'),
-  minimal(quality: 95, description: 'Minimal compression, highest quality');
-
-  const CompressionLevel({required this.quality, required this.description});
-
-  final int quality;
-  final String description;
-}
-
-/// Supported image formats for compression
-enum ImageFormat {
-  jpeg('JPEG', ['.jpg', '.jpeg'], true),
-  png('PNG', ['.png'], false),
-  webp('WebP', ['.webp'], true),
-  bmp('BMP', ['.bmp'], false),
-  gif('GIF', ['.gif'], false);
-
-  const ImageFormat(this.displayName, this.extensions, this.supportsQuality);
-
-  final String displayName;
-  final List<String> extensions;
-  final bool supportsQuality;
-}
-
-/// Compression configuration with advanced options
+/// Compression configuration
 class CompressionConfig {
-  final int quality;
   final ImageFormat format;
+  final int quality; // 0-100
+  final bool lossless;
   final bool preserveMetadata;
-  final bool progressive; // For JPEG
-  final int effort; // For WebP (0-6, higher = better compression)
-  final bool lossless; // For WebP/PNG
   final bool optimizeForSize;
-  final int maxWidth;
-  final int maxHeight;
 
   const CompressionConfig({
-    required this.quality,
-    required this.format,
-    this.preserveMetadata = false,
-    this.progressive = true,
-    this.effort = 4,
+    this.format = ImageFormat.jpeg,
+    this.quality = 80,
     this.lossless = false,
+    this.preserveMetadata = false,
     this.optimizeForSize = true,
-    this.maxWidth = 8192,
-    this.maxHeight = 8192,
   });
 
-  /// Create config from compression level
-  factory CompressionConfig.fromLevel(CompressionLevel level, ImageFormat format) {
-    return CompressionConfig(
-      quality: level.quality,
-      format: format,
-      optimizeForSize: level == CompressionLevel.maximum,
-      progressive: level != CompressionLevel.minimal,
-      effort: level == CompressionLevel.maximum ? 6 : 4,
-    );
-  }
-
-  /// Quick presets for common use cases
-  static const thumbnail = CompressionConfig(
-    quality: 60,
-    format: ImageFormat.jpeg,
-    maxWidth: 300,
-    maxHeight: 300,
-    progressive: false,
-  );
-
-  static const web = CompressionConfig(
-    quality: 80,
-    format: ImageFormat.jpeg,
-    maxWidth: 1920,
-    maxHeight: 1080,
-    progressive: true,
+  /// Presets for common use cases
+  static const webOptimized = CompressionConfig(
+    format: ImageFormat.webp,
+    quality: 75,
     optimizeForSize: true,
   );
 
-  static const print = CompressionConfig(
-    quality: 95,
+  static const highQuality = CompressionConfig(
     format: ImageFormat.png,
+    quality: 95,
     preserveMetadata: true,
-    lossless: true,
+  );
+
+  static const extremeCompression = CompressionConfig(
+    format: ImageFormat.jpeg,
+    quality: 50,
+    optimizeForSize: true,
   );
 }
 
-/// Compression result with detailed metrics
+/// Compression operation result
 class CompressionResult {
   final Uint8List compressedData;
   final int originalSize;
@@ -111,7 +56,7 @@ class CompressionResult {
   final List<String> optimizations;
   final Map<String, dynamic> metadata;
 
-  CompressionResult({
+  const CompressionResult({
     required this.compressedData,
     required this.originalSize,
     required this.compressedSize,
@@ -124,52 +69,39 @@ class CompressionResult {
     this.metadata = const {},
   });
 
-  /// Size reduction percentage
-  double get sizeReductionPercent => (1 - (compressedSize / originalSize)) * 100;
+  /// Percentage reduction in file size
+  double get reductionPercent => (1 - compressionRatio) * 100;
 
-  /// Compression efficiency score (0-100)
+  /// Efficiency score based on ratio and time
   double get efficiencyScore {
-    final sizeScore = math.min(sizeReductionPercent / 80, 1.0) * 50;
-    final timeScore = math.max(0, 50 - (processingTime.inMilliseconds / 100));
-    return sizeScore + timeScore;
-  }
-
-  /// Human readable summary
-  String get summary {
-    final reduction = sizeReductionPercent.toStringAsFixed(1);
-    final sizeMB = (compressedSize / 1024 / 1024).toStringAsFixed(2);
-    return '${reduction}% reduction → ${sizeMB}MB (${processingTime.inMilliseconds}ms)';
+    final ratioScore = (1 - compressionRatio) * 100;
+    final timeScore = (1000 - processingTime.inMilliseconds).clamp(0, 1000) / 10;
+    return (ratioScore * 0.7) + (timeScore * 0.3);
   }
 }
 
-/// Advanced image compression engine
+/// Advanced image compression service
 class ImageCompressor {
-  /// Compress image with specified configuration
-  static Future<CompressionResult> compress(
-    Uint8List imageData,
-    CompressionConfig config,
-  ) async {
+  const ImageCompressor._();
+
+  /// Compress image data with specific configuration
+  static Future<CompressionResult> compress({
+    required Uint8List imageData,
+    CompressionConfig config = const CompressionConfig(),
+  }) async {
     final stopwatch = Stopwatch()..start();
+    final optimizations = <String>[];
 
     try {
-      // Decode image
-      final image = img.decodeImage(imageData);
-      if (image == null) {
-        throw ArgumentError('Invalid image data - unable to decode');
+      // Decode original image
+      final originalImage = img.decodeImage(imageData);
+      if (originalImage == null) {
+        throw const ImageCompressionException('Could not decode image data');
       }
 
-      // Validate dimensions
-      if (image.width > config.maxWidth || image.height > config.maxHeight) {
-        throw ArgumentError(
-          'Image dimensions ${image.width}x${image.height} exceed limits '
-          '${config.maxWidth}x${config.maxHeight}',
-        );
-      }
+      var processedImage = originalImage;
 
-      final optimizations = <String>[];
-      var processedImage = image;
-
-      // Apply format-specific optimizations
+      // Apply optimizations based on format
       switch (config.format) {
         case ImageFormat.jpeg:
           processedImage = _optimizeForJPEG(processedImage, config, optimizations);
@@ -181,12 +113,11 @@ class ImageCompressor {
           processedImage = _optimizeForWebP(processedImage, config, optimizations);
           break;
         default:
-          // No specific optimizations
           break;
       }
 
-      // Encode with format-specific settings
-      final Uint8List compressedData = _encodeImage(processedImage, config);
+      // Encode to target format
+      final compressedData = _encodeImage(processedImage, config);
 
       stopwatch.stop();
 
@@ -204,7 +135,7 @@ class ImageCompressor {
           'originalFormat': _detectFormat(imageData),
           'colorChannels': processedImage.numChannels,
           'hasAlpha': processedImage.hasAlpha,
-          'bitDepth': processedImage.channels.first.length,
+          'bitsPerChannel': processedImage.bitsPerChannel,
         },
       );
     } catch (e) {
@@ -217,66 +148,16 @@ class ImageCompressor {
   }
 
   /// Batch compress multiple images with progress tracking
-  static Stream<CompressionResult> compressBatch(
-    List<Uint8List> images,
-    CompressionConfig config, {
-    int maxConcurrency = 4,
+  static Stream<CompressionResult> compressBatch({
+    required List<Uint8List> images,
+    CompressionConfig config = const CompressionConfig(),
   }) async* {
-    final futures = <Future<CompressionResult>>[];
-
-    for (int i = 0; i < images.length; i += maxConcurrency) {
-      final batch = images.skip(i).take(maxConcurrency);
-
-      for (final imageData in batch) {
-        futures.add(compress(imageData, config));
-      }
-
-      // Yield results as they complete
-      final results = await Future.wait(futures);
-      for (final result in results) {
-        yield result;
-      }
-
-      futures.clear();
+    for (final imageData in images) {
+      yield await compress(imageData: imageData, config: config);
     }
   }
 
-  /// Estimate compressed size without actual compression
-  static int estimateCompressedSize(
-    int originalSize,
-    CompressionConfig config,
-  ) {
-    // Algorithm based on empirical data and compression theory
-    double baseRatio;
-
-    switch (config.format) {
-      case ImageFormat.jpeg:
-        // JPEG compression ratio based on quality
-        baseRatio = _jpegCompressionRatio(config.quality);
-        break;
-      case ImageFormat.png:
-        // PNG typically 10-30% compression for photos
-        baseRatio = config.lossless ? 0.85 : 0.70;
-        break;
-      case ImageFormat.webp:
-        // WebP 25-30% better than JPEG
-        baseRatio = _jpegCompressionRatio(config.quality) * 0.75;
-        break;
-      default:
-        baseRatio = 0.80;
-    }
-
-    // Apply size-based adjustments (smaller images compress less efficiently)
-    if (originalSize < 100 * 1024) { // < 100KB
-      baseRatio *= 1.2; // Less compression
-    } else if (originalSize > 10 * 1024 * 1024) { // > 10MB
-      baseRatio *= 0.9; // Better compression
-    }
-
-    return (originalSize * baseRatio).round();
-  }
-
-  /// Get supported formats for input data
+  /// Get supported formats for an image
   static List<ImageFormat> getSupportedFormats(Uint8List imageData) {
     final format = _detectFormat(imageData);
 
@@ -302,7 +183,7 @@ class ImageCompressor {
 
     // Convert to RGB if needed (JPEG doesn't support alpha)
     if (optimized.hasAlpha) {
-      optimized = img.removeAlpha(optimized);
+      optimized = img.copyConvert(optimized, numChannels: 3);
       optimizations.add('Removed alpha channel for JPEG');
     }
 
@@ -327,10 +208,11 @@ class ImageCompressor {
       // Palette optimization for PNG
       if (optimized.numChannels >= 3 && !optimized.hasAlpha) {
         // Check if image can use palette mode
-        final colors = <int>{};
+        final colors = <List<int>>{};
         for (int y = 0; y < optimized.height; y++) {
           for (int x = 0; x < optimized.width; x++) {
-            colors.add(optimized.getPixel(x, y).rgb);
+            final pixel = optimized.getPixel(x, y);
+            colors.add([pixel.r.toInt(), pixel.g.toInt(), pixel.b.toInt()]);
             if (colors.length > 256) break;
           }
           if (colors.length > 256) break;
@@ -369,7 +251,7 @@ class ImageCompressor {
         }
 
         if (!hasTransparency) {
-          optimized = img.removeAlpha(optimized);
+          optimized = img.copyConvert(optimized, numChannels: 3);
           optimizations.add('Removed unused alpha channel');
         }
       }
@@ -387,76 +269,42 @@ class ImageCompressor {
       case ImageFormat.png:
         return Uint8List.fromList(img.encodePng(image));
       case ImageFormat.webp:
-        // Note: WebP encoding would require additional library
-        // For now, fallback to PNG
+        // image package does not have WebP encoder yet
         return Uint8List.fromList(img.encodePng(image));
       case ImageFormat.bmp:
         return Uint8List.fromList(img.encodeBmp(image));
       case ImageFormat.gif:
         return Uint8List.fromList(img.encodeGif(image));
+      case ImageFormat.tiff:
+        return Uint8List.fromList(img.encodeTiff(image));
     }
   }
 
   static ImageFormat? _detectFormat(Uint8List data) {
     if (data.length < 4) return null;
 
-    // JPEG
-    if (data[0] == 0xFF && data[1] == 0xD8) {
-      return ImageFormat.jpeg;
-    }
-
-    // PNG
+    if (data[0] == 0xFF && data[1] == 0xD8) return ImageFormat.jpeg;
     if (data[0] == 0x89 && data[1] == 0x50 && data[2] == 0x4E && data[3] == 0x47) {
       return ImageFormat.png;
     }
-
-    // WebP
-    if (data.length >= 12 &&
-        data[0] == 0x52 && data[1] == 0x49 && data[2] == 0x46 && data[3] == 0x46 &&
-        data[8] == 0x57 && data[9] == 0x45 && data[10] == 0x42 && data[11] == 0x50) {
-      return ImageFormat.webp;
-    }
-
-    // BMP
-    if (data[0] == 0x42 && data[1] == 0x4D) {
-      return ImageFormat.bmp;
-    }
-
-    // GIF
-    if (data.length >= 6 &&
-        data[0] == 0x47 && data[1] == 0x49 && data[2] == 0x46) {
-      return ImageFormat.gif;
+    
+    // Simple WebP check
+    if (data.length >= 12) {
+      final riff = String.fromCharCodes(data.take(4));
+      final webp = String.fromCharCodes(data.skip(8).take(4));
+      if (riff == 'RIFF' && webp == 'WEBP') return ImageFormat.webp;
     }
 
     return null;
   }
-
-  static double _jpegCompressionRatio(int quality) {
-    // Empirical JPEG compression ratios based on quality
-    if (quality >= 95) return 0.90;
-    if (quality >= 90) return 0.75;
-    if (quality >= 80) return 0.60;
-    if (quality >= 70) return 0.45;
-    if (quality >= 60) return 0.35;
-    if (quality >= 50) return 0.25;
-    if (quality >= 40) return 0.20;
-    if (quality >= 30) return 0.15;
-    if (quality >= 20) return 0.12;
-    return 0.10;
-  }
 }
 
-/// Exception thrown when image compression fails
+/// Exception during image compression
 class ImageCompressionException implements Exception {
   final String message;
   final Duration? processingTime;
-  final dynamic originalError;
 
-  const ImageCompressionException(
-    this.message, {
-    this.processingTime,
-    this.originalError,
-  });
+  const ImageCompressionException(this.message, {this.processingTime});
 
   @override
   String toString() {

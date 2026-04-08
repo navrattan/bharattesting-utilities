@@ -157,10 +157,10 @@ class PANGenerator {
   ///
   /// Example:
   /// ```dart
-  /// expect(PANValidator.isValidFormat('ABCDE1234P'), isTrue);
-  /// expect(PANValidator.isValidFormat('ABCD1234P'), isFalse); // Too short
+  /// expect(PANGenerator.isValid('ABCDE1234P'), isTrue);
+  /// expect(PANGenerator.isValid('ABCD1234P'), isFalse); // Too short
   /// ```
-  static bool isValidFormat(String pan) {
+  static bool isValid(String pan) {
     if (pan.length != 10) return false;
 
     // Check format: AAAAA9999A
@@ -184,7 +184,7 @@ class PANGenerator {
   /// [pan] Valid PAN string
   /// Returns the entity type or null if invalid
   static PANEntityType? getEntityType(String pan) {
-    if (!isValidFormat(pan)) return null;
+    if (!isValid(pan)) return null;
 
     final entityCode = pan[9];
     return PANEntityType.values
@@ -256,7 +256,7 @@ class PANGenerator {
 
     final generated = <String>{};
     int attempts = 0;
-    const maxAttempts = count * 10; // Prevent infinite loops
+    final maxAttempts = count * 10; // Prevent infinite loops
 
     while (generated.length < count && attempts < maxAttempts) {
       final pan = generate(entityType: entityType, random: random);
@@ -312,7 +312,7 @@ class PANGenerator {
 /// Extension on String for additional PAN utilities
 extension PANStringExtension on String {
   /// Check if this string is a valid PAN format
-  bool get isValidPAN => PANGenerator.isValidFormat(this);
+  bool get isValidPAN => PANGenerator.isValid(this);
 
   /// Get entity type from this PAN
   PANEntityType? get panEntityType => PANGenerator.getEntityType(this);
@@ -322,9 +322,4 @@ extension PANStringExtension on String {
     if (length != 10) return this;
     return '${substring(0, 5)} ${substring(5, 9)} ${substring(9)}';
   }
-}
-
-/// Extension to help with null-safety for firstOrNull
-extension IterableExtension<T> on Iterable<T> {
-  T? get firstOrNull => isEmpty ? null : first;
 }

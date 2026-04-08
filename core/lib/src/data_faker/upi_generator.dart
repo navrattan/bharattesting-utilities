@@ -11,7 +11,7 @@
 library upi_generator;
 
 import 'dart:math';
-import '../data/bank_codes.dart';
+import 'package:bharattesting_core/src/data_faker/data/bank_codes.dart';
 
 /// UPI ID types for different usage patterns
 enum UPIIDType {
@@ -344,7 +344,7 @@ class UPIGenerator {
     final generated = <String>{};
 
     int attempts = 0;
-    const maxAttempts = count * 5;
+    final maxAttempts = count * 5;
 
     while (generated.length < count && attempts < maxAttempts) {
       try {

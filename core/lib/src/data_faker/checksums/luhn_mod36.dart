@@ -54,24 +54,24 @@ class LuhnMod36Checksum {
     }
 
     int sum = 0;
-    bool isEvenPosition = false; // Start from rightmost position (odd)
+    bool shouldDouble = true; // GSTIN standard: double the first character from right, then every second
 
     // Process characters from right to left
     for (int i = input.length - 1; i >= 0; i--) {
       int value = _getCharValue(input[i]);
 
-      if (isEvenPosition) {
-        // Double the value for even positions (from right)
+      if (shouldDouble) {
+        // Double the value for alternate positions
         value *= 2;
 
-        // If result is >= 36, subtract 35 (equivalent to adding digits in base 36)
+        // If result is >= 36, subtract 35 or add digits in base 36
         if (value >= 36) {
           value = (value ~/ 36) + (value % 36);
         }
       }
 
       sum += value;
-      isEvenPosition = !isEvenPosition;
+      shouldDouble = !shouldDouble;
     }
 
     // Calculate check digit

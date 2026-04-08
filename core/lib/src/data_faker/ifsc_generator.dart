@@ -7,8 +7,8 @@
 library ifsc_generator;
 
 import 'dart:math';
-import '../data/bank_codes.dart';
-import '../data/state_codes.dart';
+import 'package:bharattesting_core/src/data_faker/data/bank_codes.dart';
+import 'package:bharattesting_core/src/data_faker/data/state_codes.dart';
 
 /// Branch types for realistic IFSC generation
 enum IFSCBranchType {
@@ -235,7 +235,7 @@ class IFSCGenerator {
     final availableBanks = bankNames ?? BankCodes.bankIfscPrefixes.keys.toList();
     final generated = <String>{};
     int attempts = 0;
-    const maxAttempts = count * 5;
+    final maxAttempts = count * 5;
 
     while (generated.length < count && attempts < maxAttempts) {
       try {

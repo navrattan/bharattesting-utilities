@@ -9,8 +9,8 @@
 library gstin_generator;
 
 import 'dart:math';
-import '../checksums/luhn_mod36.dart';
-import '../data/state_codes.dart';
+import 'package:bharattesting_core/src/data_faker/checksums/luhn_mod36.dart';
+import 'package:bharattesting_core/src/data_faker/data/state_codes.dart';
 import 'pan_generator.dart';
 
 /// Entity codes for GSTIN (13th character)
@@ -160,7 +160,7 @@ class GSTINGenerator {
 
     // Generate or validate PAN
     final businessPAN = pan ?? _generateBusinessPAN(random);
-    if (!PANGenerator.isValidFormat(businessPAN)) {
+    if (!PANGenerator.isValid(businessPAN)) {
       throw ArgumentError('Invalid PAN format: $businessPAN');
     }
 
@@ -242,7 +242,7 @@ class GSTINGenerator {
 
     // Validate embedded PAN
     final pan = gstin.substring(2, 12);
-    if (!PANGenerator.isValidFormat(pan)) return false;
+    if (!PANGenerator.isValid(pan)) return false;
 
     // Validate entity code
     final entityCode = gstin[12];
@@ -310,7 +310,7 @@ class GSTINGenerator {
 
     final generated = <String>{};
     int attempts = 0;
-    const maxAttempts = count * 5;
+    final maxAttempts = count * 5;
 
     while (generated.length < count && attempts < maxAttempts) {
       try {
@@ -478,9 +478,4 @@ extension GSTINStringExtension on String {
 
   /// Check if GSTIN is from specific state
   bool isGSTINFromState(int stateCode) => GSTINGenerator.isFromState(this, stateCode);
-}
-
-/// Extension to help with null-safety
-extension IterableExtension<T> on Iterable<T> {
-  T? get firstOrNull => isEmpty ? null : first;
 }

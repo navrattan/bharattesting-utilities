@@ -1,5 +1,5 @@
 import 'package:test/test.dart';
-import 'package:core/src/json_converter/string_parser.dart';
+import 'package:bharattesting_core/src/json_converter/string_parser.dart';
 
 void main() {
   group('StringParser', () {

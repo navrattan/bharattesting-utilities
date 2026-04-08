@@ -1,5 +1,5 @@
 import 'package:test/test.dart';
-import 'package:core/src/json_converter/yaml_parser.dart';
+import 'package:bharattesting_core/src/json_converter/yaml_parser.dart';
 
 void main() {
   group('YAMLParser', () {
@@ -16,8 +16,8 @@ active: true
         expect(result.success, isTrue);
         expect(result.data, isA<Map>());
         expect(result.data['name'], equals('Alice'));
-        expect(result.data['age'], equals('30')); // Simplified parser returns strings
-        expect(result.data['active'], equals('true'));
+        expect(result.data['age'], equals(30));
+        expect(result.data['active'], equals(true));
       });
 
       test('parses nested objects', () {
@@ -414,7 +414,7 @@ a:
 "key with spaces": value
 "key:with:colons": another_value
 "unicode_key_🔥": "unicode_value_⚡️"
-"numbers_123": "symbols_!@#$%"
+"numbers_123": "symbols_!@#\$%"
 ''';
 
         final result = YAMLParser.parse(yamlInput);

@@ -1,6 +1,8 @@
 /// Indian bank codes, IFSC prefixes, and UPI handles
 library bank_codes;
 
+import 'dart:math' as math;
+
 /// Bank information for generating IFSC codes and UPI IDs
 class BankCodes {
   const BankCodes._();
@@ -134,7 +136,7 @@ class BankCodes {
   /// Generate random branch code (7 characters)
   static String _generateBranchCode(String bankPrefix) {
     final locations = bankBranchLocations[bankPrefix] ?? ['MAIN'];
-    final location = (locations..shuffle()).first;
+    final location = (locations.toList()..shuffle()).first;
 
     // Pad or truncate to fit 7 characters with numbers
     if (location.length >= 7) {
@@ -160,7 +162,7 @@ class BankCodes {
   /// Get random UPI handle for a specific bank
   static String getRandomUpiHandleForBank(String bankName) {
     final bankHandles = getUpiHandles(bankName);
-    bankHandles.shuffle();
+    bankHandles.toList()..shuffle();
     return bankHandles.first;
   }
 
@@ -171,10 +173,10 @@ class BankCodes {
     String? bankName,
   }) {
     // Clean name for UPI ID
-    final cleanName = name
+    final baseCleanName = name
         .toLowerCase()
-        .replaceAll(RegExp(r'[^a-z0-9]'), '')
-        .substring(0, name.length > 15 ? 15 : name.length);
+        .replaceAll(RegExp(r'[^a-z0-9]'), '');
+    final cleanName = baseCleanName.substring(0, math.min(15, baseCleanName.length));
 
     String handle;
     if (bankName != null) {

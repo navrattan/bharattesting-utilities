@@ -6,7 +6,7 @@ part of 'faker_provider.dart';
 // RiverpodGenerator
 // **************************************************************************
 
-String _$availableStatesHash() => r'11e6b023e72bea232eedf957c98c4ad7836ab9ce';
+String _$availableStatesHash() => r'ce0f0f604abc431a1759200cbbe28d85cbe07ba7';
 
 /// Provider for available Indian states
 ///
@@ -25,11 +25,9 @@ final availableStatesProvider = AutoDisposeProvider<List<String>>.internal(
 @Deprecated('Will be removed in 3.0. Use Ref instead')
 // ignore: unused_element
 typedef AvailableStatesRef = AutoDisposeProviderRef<List<String>>;
-String _$fakerNotifierHash() => r'27f3b1375ce32569dc5f4be585d6484cb6d30441';
+String _$fakerNotifierHash() => r'96b705bed24795d79314610c6563af70079e3c31';
 
-/// Provider for Indian Data Faker
-///
-/// Copied from [FakerNotifier].
+/// See also [FakerNotifier].
 @ProviderFor(FakerNotifier)
 final fakerNotifierProvider =
     AutoDisposeNotifierProvider<FakerNotifier, FakerState>.internal(

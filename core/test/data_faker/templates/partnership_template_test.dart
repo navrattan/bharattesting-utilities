@@ -1,10 +1,10 @@
 import 'package:test/test.dart';
-import 'package:core/src/data_faker/templates/partnership_template.dart';
-import 'package:core/src/data_faker/pan_generator.dart';
-import 'package:core/src/data_faker/gstin_generator.dart';
-import 'package:core/src/data_faker/tan_generator.dart';
-import 'package:core/src/data_faker/ifsc_generator.dart';
-import 'package:core/src/data_faker/upi_generator.dart';
+import 'package:bharattesting_core/src/data_faker/templates/partnership_template.dart';
+import 'package:bharattesting_core/src/data_faker/pan_generator.dart';
+import 'package:bharattesting_core/src/data_faker/gstin_generator.dart';
+import 'package:bharattesting_core/src/data_faker/tan_generator.dart';
+import 'package:bharattesting_core/src/data_faker/ifsc_generator.dart';
+import 'package:bharattesting_core/src/data_faker/upi_generator.dart';
 
 void main() {
   group('PartnershipTemplate', () {

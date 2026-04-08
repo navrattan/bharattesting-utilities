@@ -6,16 +6,16 @@ import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:lucide_icons/lucide_icons.dart';
 
-import '../../shared/widgets/tool_scaffold.dart';
-import '../../shared/widgets/btqa_footer.dart';
 import '../../l10n/l10n.dart';
+import '../../shared/widgets/btqa_footer.dart';
+import '../../shared/widgets/tool_scaffold.dart';
 import 'faker_provider.dart';
 import 'faker_state.dart';
-import 'widgets/template_selector.dart';
-import 'widgets/identifier_picker.dart';
 import 'widgets/bulk_slider.dart';
-import 'widgets/generated_preview.dart';
 import 'widgets/export_options.dart';
+import 'widgets/generated_preview.dart';
+import 'widgets/identifier_picker.dart';
+import 'widgets/template_selector.dart';
 
 /// Main Data Faker screen
 class FakerScreen extends ConsumerWidget {
@@ -46,16 +46,13 @@ class FakerScreen extends ConsumerWidget {
             // Preview and export section
             if (state.generatedRecords.isNotEmpty) ...[
               _buildResultsSection(context, state, notifier),
-              const SizedBox(height: 24),
+            ] else if (state.isGenerating) ...[
+              _buildLoadingState(context),
+            ] else ...[
+              _buildEmptyState(context),
             ],
 
-            // Error display
-            if (state.errorMessage != null)
-              _buildErrorCard(context, state.errorMessage!, notifier),
-
-            const SizedBox(height: 24),
-
-            // Footer
+            const SizedBox(height: 48),
             const BTQAFooter(),
           ],
         ),
@@ -63,36 +60,32 @@ class FakerScreen extends ConsumerWidget {
     );
   }
 
-  /// Build disclaimer card
+  /// Build disclaimer card about synthetic data
   Widget _buildDisclaimerCard(BuildContext context) {
     return Card(
+      color: Theme.of(context).colorScheme.surfaceContainerHighest.withValues(alpha: 0.5),
+      elevation: 0,
+      shape: RoundedRectangleBorder(
+        borderRadius: BorderRadius.circular(12),
+        side: BorderSide(
+          color: Theme.of(context).colorScheme.outline.withValues(alpha: 0.2),
+        ),
+      ),
       child: Padding(
         padding: const EdgeInsets.all(16),
-        child: Column(
-          crossAxisAlignment: CrossAxisAlignment.start,
+        child: Row(
           children: [
-            Row(
-              children: [
-                Icon(
-                  LucideIcons.alertTriangle,
-                  color: Theme.of(context).colorScheme.secondary,
-                ),
-                const SizedBox(width: 8),
-                Text(
-                  'Important Disclaimer',
-                  style: Theme.of(context).textTheme.titleMedium?.copyWith(
-                    color: Theme.of(context).colorScheme.secondary,
-                    fontWeight: FontWeight.w600,
-                  ),
-                ),
-              ],
+            Icon(
+              LucideIcons.info,
+              color: Theme.of(context).colorScheme.primary,
             ),
-            const SizedBox(height: 8),
-            Text(
-              'All generated data is completely synthetic and for testing purposes only. '
-              'Never use this data for fraud, identity theft, or any illegal activities. '
-              'Generated identifiers follow official formats but are not real.',
-              style: Theme.of(context).textTheme.bodyMedium,
+            const SizedBox(width: 16),
+            Expanded(
+              child: Text(
+                'All generated data is completely synthetic and fictional. '
+                'No real PII is stored or transmitted. For testing purposes only.',
+                style: Theme.of(context).textTheme.bodySmall,
+              ),
             ),
           ],
         ),
@@ -127,16 +120,13 @@ class FakerScreen extends ConsumerWidget {
         // Identifier picker (for advanced users)
         if (state.supportsCustomSelection)
           IdentifierPicker(
-            availableIdentifiers: state.availableIdentifiers,
             selectedIdentifiers: state.selectedIdentifiers,
-            includeAll: state.includeAllIdentifiers,
-            onIncludeAllChanged: notifier.setIncludeAllIdentifiers,
-            onIdentifierToggled: notifier.toggleIdentifier,
+            onToggle: notifier.toggleIdentifier,
           ),
 
         const SizedBox(height: 16),
 
-        // Bulk size slider
+        // Bulk generation controls
         BulkSlider(
           selectedSize: state.bulkSize,
           onSizeChanged: notifier.setBulkSize,
@@ -145,7 +135,7 @@ class FakerScreen extends ConsumerWidget {
         const SizedBox(height: 16),
 
         // Advanced options
-              _buildAdvancedOptions(context, ref, state, notifier),
+        _buildAdvancedOptions(context, ref, state, notifier),
 
         const SizedBox(height: 24),
 
@@ -164,30 +154,28 @@ class FakerScreen extends ConsumerWidget {
   ) {
     return ExpansionTile(
       leading: const Icon(LucideIcons.settings),
-      title: const Text('Advanced Options'),
+      title: const Text('Advanced Settings'),
       children: [
         Padding(
-          padding: const EdgeInsets.symmetric(horizontal: 16),
+          padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 8),
           child: Column(
             children: [
-              // Seed options
+              // Seed control
               SwitchListTile(
                 title: const Text('Use Random Seed'),
-                subtitle: Text(state.useRandomSeed
-                  ? 'Each generation will be unique'
-                  : 'Use custom seed for reproducible results'),
+                subtitle: const Text('New data on every generation'),
                 value: state.useRandomSeed,
                 onChanged: notifier.setUseRandomSeed,
               ),
 
               if (!state.useRandomSeed)
                 Padding(
-                  padding: const EdgeInsets.only(left: 16, right: 16, bottom: 8),
+                  padding: const EdgeInsets.symmetric(horizontal: 16),
                   child: TextFormField(
+                    initialValue: state.customSeed?.toString(),
                     decoration: const InputDecoration(
                       labelText: 'Custom Seed',
-                      hintText: 'Enter a number (e.g. 12345)',
-                      border: OutlineInputBorder(),
+                      hintText: 'Enter any number',
                     ),
                     keyboardType: TextInputType.number,
                     onChanged: (value) {
@@ -218,36 +206,31 @@ class FakerScreen extends ConsumerWidget {
     FakerState state,
     FakerNotifier notifier,
   ) {
-    final canGenerate = state.canGenerate;
-    final isGenerating = state.isGenerating;
-
-    return SizedBox(
-      width: double.infinity,
-      height: 56,
-      child: ElevatedButton.icon(
-        onPressed: canGenerate ? notifier.generateRecords : null,
-        icon: isGenerating
+    return ElevatedButton.icon(
+      onPressed: state.isGenerating ? null : notifier.generateRecords,
+      style: ElevatedButton.styleFrom(
+        padding: const EdgeInsets.symmetric(vertical: 16),
+        backgroundColor: Theme.of(context).colorScheme.primary,
+        foregroundColor: Theme.of(context).colorScheme.onPrimary,
+      ),
+      icon: state.isGenerating
           ? const SizedBox(
-              width: 16,
-              height: 16,
-              child: CircularProgressIndicator(strokeWidth: 2),
+              width: 20,
+              height: 20,
+              child: CircularProgressIndicator(
+                strokeWidth: 2,
+                color: Colors.white,
+              ),
             )
           : const Icon(LucideIcons.play),
-        label: Text(
-          isGenerating
-            ? 'Generating ${state.bulkSize.displayName}...'
-            : 'Generate ${state.bulkSize.displayName}',
-          style: const TextStyle(fontSize: 16, fontWeight: FontWeight.w600),
-        ),
-        style: ElevatedButton.styleFrom(
-          backgroundColor: Theme.of(context).colorScheme.primary,
-          foregroundColor: Theme.of(context).colorScheme.onPrimary,
-        ),
+      label: Text(
+        state.isGenerating ? 'Generating...' : 'Generate Synthetic Data',
+        style: const TextStyle(fontWeight: FontWeight.bold),
       ),
     );
   }
 
-  /// Build results section
+  /// Build results and export section
   Widget _buildResultsSection(
     BuildContext context,
     FakerState state,
@@ -256,6 +239,7 @@ class FakerScreen extends ConsumerWidget {
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
+        const Divider(height: 48),
         Row(
           mainAxisAlignment: MainAxisAlignment.spaceBetween,
           children: [
@@ -263,85 +247,82 @@ class FakerScreen extends ConsumerWidget {
               'Generated Results',
               style: Theme.of(context).textTheme.headlineSmall,
             ),
-            TextButton.icon(
-              onPressed: notifier.clearRecords,
-              icon: const Icon(LucideIcons.trash2),
-              label: const Text('Clear'),
+            Text(
+              '${state.generatedRecords.length} records',
+              style: Theme.of(context).textTheme.bodySmall,
             ),
           ],
         ),
-        const SizedBox(height: 8),
-
-        Text(
-          state.generationSummary,
-          style: Theme.of(context).textTheme.bodyMedium?.copyWith(
-            color: Theme.of(context).colorScheme.onSurface.withOpacity(0.7),
-          ),
-        ),
-
         const SizedBox(height: 16),
 
-        // Generated preview
+        // Preview of records
         GeneratedPreview(
           records: state.generatedRecords,
           templateType: state.selectedTemplate,
-          onCopySingle: notifier.copySingleRecord,
-          onCopyAll: notifier.copyAllRecords,
+          onCopySingle: notifier.copySingleToClipboard,
+          onCopyAll: notifier.copyToClipboard,
         ),
 
-        const SizedBox(height: 16),
+        const SizedBox(height: 24),
 
         // Export options
         ExportOptions(
-          selectedFormat: state.selectedExportFormat,
-          includeMetadata: state.includeMetadata,
-          prettifyOutput: state.prettifyOutput,
           isExporting: state.isExporting,
-          exportSummary: state.exportSummary,
-          canExport: state.canExport,
-          onFormatChanged: notifier.setExportFormat,
-          onMetadataChanged: notifier.setIncludeMetadata,
-          onPrettifyChanged: notifier.setPrettifyOutput,
           onExport: notifier.exportRecords,
         ),
       ],
     );
   }
 
-  /// Build error card
-  Widget _buildErrorCard(
-    BuildContext context,
-    String errorMessage,
-    FakerNotifier notifier,
-  ) {
-    return Card(
-      color: Theme.of(context).colorScheme.errorContainer,
-      child: Padding(
-        padding: const EdgeInsets.all(16),
-        child: Row(
-          children: [
-            Icon(
-              LucideIcons.alertCircle,
-              color: Theme.of(context).colorScheme.onErrorContainer,
-            ),
-            const SizedBox(width: 8),
-            Expanded(
-              child: Text(
-                errorMessage,
-                style: Theme.of(context).textTheme.bodyMedium?.copyWith(
-                  color: Theme.of(context).colorScheme.onErrorContainer,
-                ),
-              ),
-            ),
-            IconButton(
-              onPressed: notifier.clearError,
-              icon: Icon(
-                LucideIcons.x,
-                color: Theme.of(context).colorScheme.onErrorContainer,
-              ),
-            ),
-          ],
+  /// Build empty state
+  Widget _buildEmptyState(BuildContext context) {
+    return Container(
+      padding: const EdgeInsets.symmetric(vertical: 48),
+      decoration: BoxDecoration(
+        color: Theme.of(context).colorScheme.surfaceContainerHighest.withValues(alpha: 0.2),
+        borderRadius: BorderRadius.circular(16),
+        border: Border.all(
+          color: Theme.of(context).colorScheme.outline.withValues(alpha: 0.1),
         ),
+      ),
+      child: Column(
+        children: [
+          Icon(
+            LucideIcons.database,
+            size: 64,
+            color: Theme.of(context).colorScheme.primary.withValues(alpha: 0.3),
+          ),
+          const SizedBox(height: 16),
+          Text(
+            'No data generated yet',
+            style: Theme.of(context).textTheme.titleMedium?.copyWith(
+                  color: Theme.of(context).colorScheme.onSurfaceVariant,
+                ),
+          ),
+          const SizedBox(height: 8),
+          const Text(
+            'Adjust options above and click generate',
+            textAlign: TextAlign.center,
+          ),
+        ],
+      ),
+    );
+  }
+
+  /// Build loading state
+  Widget _buildLoadingState(BuildContext context) {
+    return const Padding(
+      padding: EdgeInsets.symmetric(vertical: 48),
+      child: Column(
+        children: [
+          CircularProgressIndicator(),
+          SizedBox(height: 24),
+          Text('Generating synthetic identity data...'),
+          Text(
+            'This runs entirely offline on your device',
+            style: TextStyle(fontSize: 12, color: Colors.grey),
+          ),
+        ],
       ),
     );
   }

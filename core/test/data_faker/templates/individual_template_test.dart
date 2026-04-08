@@ -1,9 +1,9 @@
 import 'package:test/test.dart';
-import 'package:core/src/data_faker/templates/individual_template.dart';
-import 'package:core/src/data_faker/aadhaar_generator.dart';
-import 'package:core/src/data_faker/pan_generator.dart';
-import 'package:core/src/data_faker/pin_code_generator.dart';
-import 'package:core/src/data_faker/upi_generator.dart';
+import 'package:bharattesting_core/src/data_faker/templates/individual_template.dart';
+import 'package:bharattesting_core/src/data_faker/aadhaar_generator.dart';
+import 'package:bharattesting_core/src/data_faker/pan_generator.dart';
+import 'package:bharattesting_core/src/data_faker/pin_code_generator.dart';
+import 'package:bharattesting_core/src/data_faker/upi_generator.dart';
 
 void main() {
   group('IndividualTemplate', () {
