@@ -3,7 +3,6 @@ library home_screen;
 
 import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
-import '../../theme/app_theme.dart';
 
 /// Home screen displaying all 5 tools as cards
 ///
@@ -22,10 +21,10 @@ class HomeScreen extends StatelessWidget {
         child: ConstrainedBox(
           constraints: const BoxConstraints(maxWidth: 1200),
           child: Padding(
-            padding: const EdgeInsets.all(AppTheme.spacingXl),
+            padding: const EdgeInsets.all(24),
             child: Column(
               children: [
-                const SizedBox(height: AppTheme.spacingXl),
+                const SizedBox(height: 24),
 
                 // Welcome section
                 Text(
@@ -35,7 +34,7 @@ class HomeScreen extends StatelessWidget {
                       ),
                   textAlign: TextAlign.center,
                 ),
-                const SizedBox(height: AppTheme.spacingMd),
+                const SizedBox(height: 12),
                 Text(
                   '5 free, privacy-first, offline developer tools',
                   style: Theme.of(context).textTheme.titleLarge?.copyWith(
@@ -44,7 +43,7 @@ class HomeScreen extends StatelessWidget {
                   textAlign: TextAlign.center,
                 ),
 
-                const SizedBox(height: AppTheme.spacingXxl),
+                const SizedBox(height: 32),
 
                 // Tool cards grid
                 Expanded(
@@ -65,29 +64,15 @@ class _ToolCardsGrid extends StatelessWidget {
   Widget build(BuildContext context) {
     return GridView.count(
       crossAxisCount: _getCrossAxisCount(context),
-      crossAxisSpacing: AppTheme.spacingLg,
-      mainAxisSpacing: AppTheme.spacingLg,
+      crossAxisSpacing: 16,
+      mainAxisSpacing: 16,
       childAspectRatio: 1.2,
       children: const [
         _ToolCard(
-          title: 'Document Scanner',
-          description: 'Camera + OCR → Searchable PDF',
-          icon: Icons.document_scanner,
-          route: '/document-scanner',
-          status: 'Live',
-        ),
-        _ToolCard(
-          title: 'Image Size Reducer',
-          description: 'Compress, resize, batch process',
-          icon: Icons.photo_size_select_large,
-          route: '/image-reducer',
-          status: 'Live',
-        ),
-        _ToolCard(
-          title: 'PDF Merger',
-          description: 'Merge, rotate, password-protect',
-          icon: Icons.picture_as_pdf,
-          route: '/pdf-merger',
+          title: 'Indian Data Faker',
+          description: 'Generate PAN, GSTIN, Aadhaar, etc.',
+          icon: Icons.account_circle,
+          route: '/indian-data-faker',
           status: 'Live',
         ),
         _ToolCard(
@@ -98,11 +83,25 @@ class _ToolCardsGrid extends StatelessWidget {
           status: 'Live',
         ),
         _ToolCard(
-          title: 'Indian Data Faker',
-          description: 'Generate PAN, GSTIN, Aadhaar, etc.',
-          icon: Icons.account_circle,
-          route: '/indian-data-faker',
-          status: 'Live',
+          title: 'Image Size Reducer',
+          description: 'Compress, resize, batch process',
+          icon: Icons.photo_size_select_large,
+          route: '/image-reducer',
+          status: 'Coming Soon',
+        ),
+        _ToolCard(
+          title: 'PDF Merger',
+          description: 'Merge, rotate, password-protect',
+          icon: Icons.picture_as_pdf,
+          route: '/pdf-merger',
+          status: 'Coming Soon',
+        ),
+        _ToolCard(
+          title: 'Document Scanner',
+          description: 'Camera + OCR → Searchable PDF',
+          icon: Icons.document_scanner,
+          route: '/document-scanner',
+          status: 'Coming Soon',
         ),
       ],
     );
@@ -134,57 +133,64 @@ class _ToolCard extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final isLive = status == 'Live';
+
     return Card(
       child: InkWell(
-        onTap: () {
-          context.go(route);
-        },
-        borderRadius: BorderRadius.circular(AppTheme.cardRadius),
-        child: Padding(
-          padding: const EdgeInsets.all(AppTheme.spacingXl),
-          child: Column(
-            mainAxisAlignment: MainAxisAlignment.center,
-            children: [
-              Icon(
-                icon,
-                size: 48,
-                color: Theme.of(context).colorScheme.primary,
-              ),
-              const SizedBox(height: AppTheme.spacingLg),
-              Text(
-                title,
-                style: Theme.of(context).textTheme.titleLarge?.copyWith(
-                      fontWeight: FontWeight.w600,
-                    ),
-                textAlign: TextAlign.center,
-              ),
-              const SizedBox(height: AppTheme.spacingSm),
-              Text(
-                description,
-                style: Theme.of(context).textTheme.bodyMedium?.copyWith(
-                      color: Theme.of(context).colorScheme.onSurfaceVariant,
-                    ),
-                textAlign: TextAlign.center,
-              ),
-              const SizedBox(height: AppTheme.spacingMd),
-              Container(
-                padding: const EdgeInsets.symmetric(
-                  horizontal: AppTheme.spacingMd,
-                  vertical: AppTheme.spacingSm,
+        onTap: isLive ? () => context.go(route) : null,
+        borderRadius: BorderRadius.circular(12),
+        child: Opacity(
+          opacity: isLive ? 1.0 : 0.6,
+          child: Padding(
+            padding: const EdgeInsets.all(24),
+            child: Column(
+              mainAxisAlignment: MainAxisAlignment.center,
+              children: [
+                Icon(
+                  icon,
+                  size: 48,
+                  color: Theme.of(context).colorScheme.primary,
                 ),
-                decoration: BoxDecoration(
-                  color: Theme.of(context).colorScheme.secondaryContainer,
-                  borderRadius: BorderRadius.circular(AppTheme.radiusSm),
-                ),
-                child: Text(
-                  status,
-                  style: Theme.of(context).textTheme.labelMedium?.copyWith(
-                        color: Theme.of(context).colorScheme.onSecondaryContainer,
-                        fontWeight: FontWeight.w500,
+                const SizedBox(height: 16),
+                Text(
+                  title,
+                  style: Theme.of(context).textTheme.titleLarge?.copyWith(
+                        fontWeight: FontWeight.w600,
                       ),
+                  textAlign: TextAlign.center,
                 ),
-              ),
-            ],
+                const SizedBox(height: 8),
+                Text(
+                  description,
+                  style: Theme.of(context).textTheme.bodyMedium?.copyWith(
+                        color: Theme.of(context).colorScheme.onSurfaceVariant,
+                      ),
+                  textAlign: TextAlign.center,
+                ),
+                const SizedBox(height: 12),
+                Container(
+                  padding: const EdgeInsets.symmetric(
+                    horizontal: 12,
+                    vertical: 8,
+                  ),
+                  decoration: BoxDecoration(
+                    color: isLive
+                        ? Theme.of(context).colorScheme.secondaryContainer
+                        : Theme.of(context).colorScheme.surfaceVariant,
+                    borderRadius: BorderRadius.circular(8),
+                  ),
+                  child: Text(
+                    status,
+                    style: Theme.of(context).textTheme.labelMedium?.copyWith(
+                          color: isLive
+                              ? Theme.of(context).colorScheme.onSecondaryContainer
+                              : Theme.of(context).colorScheme.onSurfaceVariant,
+                          fontWeight: FontWeight.w500,
+                        ),
+                  ),
+                ),
+              ],
+            ),
           ),
         ),
       ),
