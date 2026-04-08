@@ -1,7 +1,4 @@
 import 'dart:typed_data';
-import 'package:freezed_annotation/freezed_annotation.dart';
-
-part 'image_reducer_state.freezed.dart';
 
 enum ResizePreset {
   thumbnail,
@@ -193,27 +190,76 @@ class ImageReductionResult {
   }
 }
 
-@freezed
-class ImageReducerState with _$ImageReducerState {
-  const factory ImageReducerState({
-    @Default(<ProcessedImage>[]) List<ProcessedImage> images,
-    @Default(false) bool isProcessing,
-    @Default(80) int quality,
-    @Default(ResizePreset.medium) ResizePreset selectedPreset,
-    @Default(ConvertibleFormat.jpeg) ConvertibleFormat targetFormat,
-    @Default(ConversionStrategy.balanceQualitySize) ConversionStrategy strategy,
-    @Default(PrivacyLevel.moderate) PrivacyLevel privacyLevel,
-    @Default(false) bool stripMetadata,
-    @Default(false) bool enableResize,
-    @Default(false) bool enableFormatConversion,
-    @Default(0) int processingProgress,
-    @Default(<String>[]) List<String> processingErrors,
-    ProcessedImage? selectedImage,
-    @Default(false) bool showAdvancedSettings,
-    @Default(false) bool showBatchMode,
-  }) = _ImageReducerState;
+class ImageReducerState {
+  const ImageReducerState({
+    this.images = const <ProcessedImage>[],
+    this.isProcessing = false,
+    this.quality = 80,
+    this.selectedPreset = ResizePreset.medium,
+    this.targetFormat = ConvertibleFormat.jpeg,
+    this.strategy = ConversionStrategy.balanceQualitySize,
+    this.privacyLevel = PrivacyLevel.moderate,
+    this.stripMetadata = false,
+    this.enableResize = false,
+    this.enableFormatConversion = false,
+    this.processingProgress = 0,
+    this.processingErrors = const <String>[],
+    this.selectedImage,
+    this.showAdvancedSettings = false,
+    this.showBatchMode = false,
+  });
 
-  const ImageReducerState._();
+  final List<ProcessedImage> images;
+  final bool isProcessing;
+  final int quality;
+  final ResizePreset selectedPreset;
+  final ConvertibleFormat targetFormat;
+  final ConversionStrategy strategy;
+  final PrivacyLevel privacyLevel;
+  final bool stripMetadata;
+  final bool enableResize;
+  final bool enableFormatConversion;
+  final int processingProgress;
+  final List<String> processingErrors;
+  final ProcessedImage? selectedImage;
+  final bool showAdvancedSettings;
+  final bool showBatchMode;
+
+  ImageReducerState copyWith({
+    List<ProcessedImage>? images,
+    bool? isProcessing,
+    int? quality,
+    ResizePreset? selectedPreset,
+    ConvertibleFormat? targetFormat,
+    ConversionStrategy? strategy,
+    PrivacyLevel? privacyLevel,
+    bool? stripMetadata,
+    bool? enableResize,
+    bool? enableFormatConversion,
+    int? processingProgress,
+    List<String>? processingErrors,
+    ProcessedImage? selectedImage,
+    bool? showAdvancedSettings,
+    bool? showBatchMode,
+  }) {
+    return ImageReducerState(
+      images: images ?? this.images,
+      isProcessing: isProcessing ?? this.isProcessing,
+      quality: quality ?? this.quality,
+      selectedPreset: selectedPreset ?? this.selectedPreset,
+      targetFormat: targetFormat ?? this.targetFormat,
+      strategy: strategy ?? this.strategy,
+      privacyLevel: privacyLevel ?? this.privacyLevel,
+      stripMetadata: stripMetadata ?? this.stripMetadata,
+      enableResize: enableResize ?? this.enableResize,
+      enableFormatConversion: enableFormatConversion ?? this.enableFormatConversion,
+      processingProgress: processingProgress ?? this.processingProgress,
+      processingErrors: processingErrors ?? this.processingErrors,
+      selectedImage: selectedImage ?? this.selectedImage,
+      showAdvancedSettings: showAdvancedSettings ?? this.showAdvancedSettings,
+      showBatchMode: showBatchMode ?? this.showBatchMode,
+    );
+  }
 
   bool get hasImages => images.isNotEmpty;
   bool get hasSingleImage => images.length == 1;
@@ -245,21 +291,52 @@ class ImageReducerState with _$ImageReducerState {
   }
 }
 
-@freezed
-class ProcessedImage with _$ProcessedImage {
-  const factory ProcessedImage({
-    required String fileName,
-    required Uint8List originalData,
+class ProcessedImage {
+  const ProcessedImage({
+    required this.fileName,
+    required this.originalData,
+    this.processedData,
+    this.result,
+    this.status = ProcessingStatus.pending,
+    this.error = '',
+    this.estimatedSize = 0,
+    this.detectedFormat,
+    this.metadata,
+  });
+
+  final String fileName;
+  final Uint8List originalData;
+  final Uint8List? processedData;
+  final ImageReductionResult? result;
+  final ProcessingStatus status;
+  final String error;
+  final int estimatedSize;
+  final ConvertibleFormat? detectedFormat;
+  final ImageMetadata? metadata;
+
+  ProcessedImage copyWith({
+    String? fileName,
+    Uint8List? originalData,
     Uint8List? processedData,
     ImageReductionResult? result,
-    @Default(ProcessingStatus.pending) ProcessingStatus status,
-    @Default('') String error,
-    @Default(0) int estimatedSize,
+    ProcessingStatus? status,
+    String? error,
+    int? estimatedSize,
     ConvertibleFormat? detectedFormat,
     ImageMetadata? metadata,
-  }) = _ProcessedImage;
-
-  const ProcessedImage._();
+  }) {
+    return ProcessedImage(
+      fileName: fileName ?? this.fileName,
+      originalData: originalData ?? this.originalData,
+      processedData: processedData ?? this.processedData,
+      result: result ?? this.result,
+      status: status ?? this.status,
+      error: error ?? this.error,
+      estimatedSize: estimatedSize ?? this.estimatedSize,
+      detectedFormat: detectedFormat ?? this.detectedFormat,
+      metadata: metadata ?? this.metadata,
+    );
+  }
 
   bool get isProcessed => processedData != null;
   bool get hasError => error.isNotEmpty;
@@ -314,20 +391,48 @@ enum ProcessingStatus {
   final String displayName;
 }
 
-@freezed
-class ImageMetadata with _$ImageMetadata {
-  const factory ImageMetadata({
-    required int width,
-    required int height,
-    required String format,
-    @Default(false) bool hasAlpha,
-    @Default(0) int colorChannels,
-    @Default(false) bool hasMetadata,
-    @Default(false) bool hasGpsData,
-    @Default(<String>[]) List<String> metadataTypes,
-  }) = _ImageMetadata;
+class ImageMetadata {
+  const ImageMetadata({
+    required this.width,
+    required this.height,
+    required this.format,
+    this.hasAlpha = false,
+    this.colorChannels = 0,
+    this.hasMetadata = false,
+    this.hasGpsData = false,
+    this.metadataTypes = const <String>[],
+  });
 
-  const ImageMetadata._();
+  final int width;
+  final int height;
+  final String format;
+  final bool hasAlpha;
+  final int colorChannels;
+  final bool hasMetadata;
+  final bool hasGpsData;
+  final List<String> metadataTypes;
+
+  ImageMetadata copyWith({
+    int? width,
+    int? height,
+    String? format,
+    bool? hasAlpha,
+    int? colorChannels,
+    bool? hasMetadata,
+    bool? hasGpsData,
+    List<String>? metadataTypes,
+  }) {
+    return ImageMetadata(
+      width: width ?? this.width,
+      height: height ?? this.height,
+      format: format ?? this.format,
+      hasAlpha: hasAlpha ?? this.hasAlpha,
+      colorChannels: colorChannels ?? this.colorChannels,
+      hasMetadata: hasMetadata ?? this.hasMetadata,
+      hasGpsData: hasGpsData ?? this.hasGpsData,
+      metadataTypes: metadataTypes ?? this.metadataTypes,
+    );
+  }
 
   String get dimensions => '${width} × ${height}';
   int get megapixels => ((width * height) / 1000000).round();

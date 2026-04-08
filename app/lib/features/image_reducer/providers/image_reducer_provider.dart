@@ -9,7 +9,7 @@ import 'package:path_provider/path_provider.dart';
 import 'package:riverpod_annotation/riverpod_annotation.dart';
 import 'package:archive/archive.dart';
 import 'package:share_plus/share_plus.dart';
-import 'package:bharattesting_core/image_reducer.dart';
+import 'package:bharattesting_core/core.dart';
 import '../models/image_reducer_state.dart';
 
 part 'image_reducer_provider.g.dart';
