@@ -7,24 +7,22 @@ set -e
 
 echo "🚀 Starting BharatTesting Utilities build on Vercel..."
 echo "Working directory: $(pwd)"
-echo "Home directory: $HOME"
-
-# Create necessary directories
-mkdir -p $HOME/bin
+echo "User: $(whoami)"
 
 # Define Flutter version and directory
 FLUTTER_VERSION="3.29.0"
-FLUTTER_DIR="$HOME/flutter"
+FLUTTER_DIR="/tmp/flutter"
 
-# Check if Flutter is already installed
+# Fix git configuration for Vercel environment
+git config --global --add safe.directory '*'
+git config --global user.email "build@vercel.com"
+git config --global user.name "Vercel Build"
+
+# Download and install Flutter
 if [ ! -d "$FLUTTER_DIR" ]; then
     echo "📦 Installing Flutter $FLUTTER_VERSION..."
 
-    # Create Flutter directory
-    mkdir -p $FLUTTER_DIR
-
-    # Download and install Flutter (with better error handling)
-    cd $HOME
+    cd /tmp
     echo "Downloading Flutter..."
     curl -L -o flutter.tar.xz "https://storage.googleapis.com/flutter_infra_release/releases/stable/linux/flutter_linux_${FLUTTER_VERSION}-stable.tar.xz"
 
@@ -37,66 +35,46 @@ if [ ! -d "$FLUTTER_DIR" ]; then
     tar xf flutter.tar.xz
     rm flutter.tar.xz
 
+    # Fix ownership and permissions
+    chmod -R 755 $FLUTTER_DIR
+
     echo "✅ Flutter $FLUTTER_VERSION installed"
 else
-    echo "✅ Flutter already installed"
+    echo "✅ Flutter already available"
 fi
 
 # Add Flutter to PATH
 export PATH="$FLUTTER_DIR/bin:$PATH"
-export PUB_CACHE="$HOME/.pub-cache"
+export PUB_CACHE="/tmp/.pub-cache"
+export FLUTTER_ROOT="$FLUTTER_DIR"
 
-# Verify Flutter installation
-echo "🔍 Verifying Flutter installation..."
-which flutter || echo "Flutter not in PATH"
-flutter --version || echo "Flutter version check failed"
+# Disable analytics and crash reporting
+export FLUTTER_ANALYTICS_DISABLED=true
 
-# Navigate back to project root
-cd $VERCEL_PROJECT_DIR
+# Navigate to project directory
+cd $PWD
 
-# Enable web support
-echo "🌐 Enabling web support..."
-flutter config --enable-web --no-analytics
+echo "🌐 Configuring Flutter for web..."
+flutter config --enable-web --no-analytics --suppress-analytics
 
-# Install dependencies for core package
-echo "📦 Installing core dependencies..."
-if [ -d "core" ]; then
-    cd core
-    flutter pub get --no-precompile
-    cd ..
-else
-    echo "⚠️  Core directory not found"
-fi
-
-# Install dependencies for app
 echo "📦 Installing app dependencies..."
-if [ -d "app" ]; then
-    cd app
-    flutter pub get --no-precompile
+cd app
+flutter pub get --offline
 
-    # Check if build_runner is available
-    echo "🔄 Running code generation..."
-    dart run build_runner build --delete-conflicting-outputs || echo "⚠️  Code generation skipped"
+echo "🏗️  Building Flutter web release..."
+flutter build web --release --web-renderer canvaskit --source-maps
 
-    # Build web release
-    echo "🏗️  Building Flutter web release..."
-    flutter build web --release --base-href /
+# Verify build output
+if [ -f "build/web/index.html" ]; then
+    echo "✅ Web build completed successfully!"
+    echo "📁 Build output directory: build/web"
+    ls -la build/web/ | head -10
 
-    # Verify build output
-    if [ -f "build/web/index.html" ]; then
-        echo "✅ Web build completed successfully!"
-        echo "📁 Build output directory: build/web"
-        ls -la build/web/ | head -10
-    else
-        echo "❌ Web build failed - index.html not found"
-        echo "Contents of build directory:"
-        ls -la build/ || echo "Build directory not found"
-        exit 1
-    fi
-
-    cd ..
+    # Show build size
+    echo "📊 Build size:"
+    du -sh build/web/
 else
-    echo "❌ App directory not found"
+    echo "❌ Web build failed - index.html not found"
     exit 1
 fi
 
