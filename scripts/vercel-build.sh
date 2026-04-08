@@ -36,34 +36,23 @@ git config --global --add safe.directory "$PROJECT_ROOT"
 # Ensure we are back in the project root
 cd "$PROJECT_ROOT"
 
-echo "📁 Checking repository structure..."
-ls -F
-
 if [ -d "app" ]; then
     echo "✅ Moving to app directory"
     cd app
-elif [ -f "pubspec.yaml" ]; then
-    echo "✅ Already in a directory with pubspec.yaml"
-else
-    echo "❌ Could not locate app directory."
-    exit 1
 fi
 
 echo "🌐 Configuring Flutter for web..."
-# Disable the root warning check and allow analytics to be disabled
-export CHROME_EXECUTABLE=/usr/bin/google-chrome
 flutter config --enable-web --no-analytics
 
 echo "📦 Installing dependencies..."
-# Core first if available
 if [ -d "../core" ]; then
     echo "📦 Getting core dependencies..."
-    cd ../core && flutter pub get
-    cd "$PROJECT_ROOT/app"
+    (cd ../core && flutter pub get)
 fi
 flutter pub get
 
 echo "🏗️  Building Flutter web release..."
-flutter build web --release --web-renderer canvaskit --base-href /
+# Using the most compatible web build command for Flutter 3.29
+flutter build web --release --base-href /
 
 echo "✅ Web build completed successfully!"
