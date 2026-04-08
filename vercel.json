@@ -1,5 +1,5 @@
 {
-  "buildCommand": "cd app && flutter build web --release",
+  "buildCommand": "chmod +x ./scripts/vercel-build.sh && ./scripts/vercel-build.sh",
   "outputDirectory": "app/build/web",
   "headers": [
     {
