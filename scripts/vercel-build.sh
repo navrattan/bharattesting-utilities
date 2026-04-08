@@ -52,7 +52,25 @@ fi
 flutter pub get
 
 echo "🏗️  Building Flutter web release..."
-# Using the most compatible web build command for Flutter 3.29
-flutter build web --release --base-href /
+echo "Debug: Current directory: $(pwd)"
+echo "Debug: Available memory: $(free -h 2>/dev/null || echo 'Memory info not available')"
+echo "Debug: Flutter version: $(flutter --version --machine 2>/dev/null || flutter --version)"
+
+# Try building with memory-optimized settings first
+echo "Attempting Flutter web build with optimized settings..."
+if flutter build web --release --base-href / --tree-shake-icons --source-maps --verbose; then
+    echo "✅ Optimized build succeeded!"
+elif flutter build web --release --base-href / --no-tree-shake-icons --verbose; then
+    echo "✅ Fallback build succeeded!"
+else
+    echo "❌ All Flutter web build attempts failed!"
+    echo "Checking Flutter doctor for issues..."
+    flutter doctor -v || echo "Flutter doctor failed"
+    echo "Directory contents:"
+    ls -la . || echo "Directory listing failed"
+    echo "Pub cache info:"
+    flutter pub cache list 2>/dev/null || echo "Pub cache listing failed"
+    exit 1
+fi
 
 echo "✅ Web build completed successfully!"
