@@ -1,5 +1,5 @@
 name: bharattesting_core
-description: Core business logic for BharatTesting Utilities - pure Dart package with no Flutter dependency
+description: Core business logic for BharatTesting - High-performance, offline-first Indian test data generators and document utilities.
 version: 1.0.0
 publish_to: none
 

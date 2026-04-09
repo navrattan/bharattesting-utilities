@@ -38,24 +38,24 @@ class ToolScaffold extends ConsumerWidget {
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
-    // Audit Note: The "blank screen" was likely caused by wrapping Expanded widgets 
-    // inside a SingleChildScrollView here. We now only wrap 'child' in a scroll view.
-    // Screens using 'body' MUST handle their own scrolling if they don't use Expanded.
-    final Widget mainContent = body ?? (child != null ? SingleChildScrollView(child: child!) : const SizedBox.shrink());
-    
+    // Determine if we are in a tool-specific route for "Shapeshifter" mode
     final path = GoRouterState.of(context).uri.path;
     final intent = ToolIntent.fromPath(path);
     final branding = ToolBranding.all[intent];
     
-    // Update browser title for SEO and UX
+    // Update browser title dynamically for SEO
     BrandingService.updateBrowserTitle(path);
 
-    // Apply branding color if available via a Theme wrapper
+    // Provide the content - prioritising body for complex layouts
+    final Widget mainContent = body ?? (child != null ? SingleChildScrollView(child: child!) : const SizedBox.shrink());
+
     return Theme(
       data: branding != null 
         ? Theme.of(context).copyWith(
+            primaryColor: branding.primaryColor,
             colorScheme: Theme.of(context).colorScheme.copyWith(
               primary: branding.primaryColor,
+              secondary: branding.primaryColor,
             ),
           )
         : Theme.of(context),
@@ -117,7 +117,7 @@ class _MobileLayout extends StatelessWidget {
     return Scaffold(
       appBar: AppBar(
         title: title != null ? Text(title!) : null,
-        backgroundColor: branding != null ? branding!.primaryColor : null,
+        backgroundColor: branding?.primaryColor,
         foregroundColor: branding != null ? Colors.white : null,
         actions: [
           ...?actions,
@@ -127,8 +127,8 @@ class _MobileLayout extends StatelessWidget {
       ),
       drawer: drawer,
       endDrawer: endDrawer,
-      body: child, // Removed Column to prevent layout issues, assuming child handles footer if needed
-      bottomNavigationBar: NavigationBar(
+      body: child,
+      bottomNavigationBar: branding != null ? null : NavigationBar(
         selectedIndex: currentIndex,
         onDestinationSelected: (index) => AppRouter.navigateToIndex(context, index),
         destinations: AppRouter.destinations,
@@ -167,19 +167,21 @@ class _TabletLayout extends StatelessWidget {
       endDrawer: endDrawer,
       body: Row(
         children: [
-          NavigationRail(
-            selectedIndex: currentIndex,
-            onDestinationSelected: (index) => AppRouter.navigateToIndex(context, index),
-            labelType: NavigationRailLabelType.selected,
-            destinations: AppRouter.destinations
-                .map((dest) => NavigationRailDestination(
-                      icon: dest.icon,
-                      selectedIcon: dest.selectedIcon ?? dest.icon,
-                      label: Text(dest.label),
-                    ))
-                .toList(),
-          ),
-          const VerticalDivider(thickness: 1, width: 1),
+          if (branding == null) ...[
+            NavigationRail(
+              selectedIndex: currentIndex,
+              onDestinationSelected: (index) => AppRouter.navigateToIndex(context, index),
+              labelType: NavigationRailLabelType.selected,
+              destinations: AppRouter.destinations
+                  .map((dest) => NavigationRailDestination(
+                        icon: dest.icon,
+                        selectedIcon: dest.selectedIcon ?? dest.icon,
+                        label: Text(dest.label),
+                      ))
+                  .toList(),
+            ),
+            const VerticalDivider(thickness: 1, width: 1),
+          ],
           Expanded(
             child: Column(
               children: [
@@ -191,19 +193,8 @@ class _TabletLayout extends StatelessWidget {
                     const LanguageSwitcher(),
                     const GitHubButtons(),
                   ],
-                  automaticallyImplyLeading: false,
+                  automaticallyImplyLeading: branding != null,
                 ),
-                if (subtitle != null)
-                  Padding(
-                    padding: const EdgeInsets.fromLTRB(16, 8, 16, 0),
-                    child: Align(
-                      alignment: Alignment.centerLeft,
-                      child: Text(
-                        subtitle!,
-                        style: Theme.of(context).textTheme.bodyMedium,
-                      ),
-                    ),
-                  ),
                 Expanded(child: child),
                 const BTQAFooter(),
               ],
@@ -246,7 +237,7 @@ class _DesktopLayout extends StatelessWidget {
       endDrawer: endDrawer,
       body: Column(
         children: [
-          // Dynamic Branded Header
+          // Header
           Material(
             elevation: 1,
             color: branding != null ? branding!.primaryColor : theme.colorScheme.surface,
@@ -267,54 +258,42 @@ class _DesktopLayout extends StatelessWidget {
                     ),
                   ),
                   const SizedBox(width: AppTheme.spacingXl),
-                  Expanded(
-                    child: Row(
-                      children: AppRouter.destinations
-                          .asMap()
-                          .entries
-                          .map((entry) => _DesktopNavItem(
-                                label: entry.value.label,
-                                icon: entry.value.icon,
-                                selectedIcon: entry.value.selectedIcon ?? entry.value.icon,
-                                isSelected: entry.key == currentIndex,
-                                isBranded: branding != null,
-                                onTap: () => AppRouter.navigateToIndex(context, entry.key),
-                              ))
-                          .toList(),
-                    ),
-                  ),
+                  // Only show full nav if not in "standalone" focus mode
+                  if (branding == null)
+                    Expanded(
+                      child: Row(
+                        children: AppRouter.destinations
+                            .asMap()
+                            .entries
+                            .map((entry) => _DesktopNavItem(
+                                  label: entry.value.label,
+                                  icon: entry.value.icon,
+                                  selectedIcon: entry.value.selectedIcon ?? entry.value.icon,
+                                  isSelected: entry.key == currentIndex,
+                                  isBranded: false,
+                                  onTap: () => AppRouter.navigateToIndex(context, entry.key),
+                                ))
+                            .toList(),
+                      ),
+                    )
+                  else
+                    const Spacer(),
                   if (actions != null) ...actions!,
-                  const LanguageSwitcher(isBranded: true),
+                  LanguageSwitcher(isBranded: branding != null),
                   const GitHubButtons(),
                 ],
               ),
             ),
           ),
+          // Content Area - FIXED CONSTRAINTS
           Expanded(
-            child: Column(
-              children: [
-                if (subtitle != null)
-                  Padding(
-                    padding: const EdgeInsets.fromLTRB(AppTheme.spacingXl, AppTheme.spacingMd, AppTheme.spacingXl, 0),
-                    child: Align(
-                      alignment: Alignment.centerLeft,
-                      child: Text(subtitle!, style: theme.textTheme.bodyLarge),
-                    ),
-                  ),
-                Expanded(
-                  child: Container(
-                    width: double.infinity,
-                    alignment: Alignment.center,
-                    child: ConstrainedBox(
-                      constraints: const BoxConstraints(maxWidth: 1200),
-                      child: child,
-                    ),
-                  ),
-                ),
-                const BTQAFooter(),
-              ],
+            child: Container(
+              width: double.infinity,
+              color: theme.colorScheme.background,
+              child: child,
             ),
           ),
+          const BTQAFooter(),
         ],
       ),
     );

@@ -33,17 +33,6 @@
       "@type": "Offer",
       "price": "0",
       "priceCurrency": "INR"
-    },
-    "featureList": [
-      "Indian Data Faker (Aadhaar, PAN, GSTIN)",
-      "Intelligent JSON/CSV/YAML Repair",
-      "Secure PDF Merger",
-      "Document Scanner with OCR",
-      "Image Size Reducer"
-    ],
-    "author": {
-      "@type": "Organization",
-      "name": "BharatTesting"
     }
   }
   </script>
@@ -82,6 +71,16 @@
   <div class="loading"></div>
   <div class="text">BharatTesting is loading...</div>
 
+  <!-- Use the standard flutter bootstrap script -->
   <script src="flutter_bootstrap.js" async></script>
+  
+  <script>
+    // Handle Service Worker lifecycle
+    if ('serviceWorker' in navigator) {
+      window.addEventListener('load', function () {
+        navigator.serviceWorker.register('flutter_service_worker.js');
+      });
+    }
+  </script>
 </body>
 </html>

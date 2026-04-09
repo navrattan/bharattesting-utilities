@@ -1,136 +1,74 @@
-# BharatTesting Utilities
-
-**5 free, privacy-first, offline developer tools in one app** 🇮🇳
+# 🇮🇳 Bharat Testing Utilities
+### Making software testing accessible for every developer, student, and startup in India.
 
 [![Flutter](https://img.shields.io/badge/Flutter-3.29+-02569B?logo=flutter)](https://flutter.dev)
 [![Dart](https://img.shields.io/badge/Dart-3.5+-0175C2?logo=dart)](https://dart.dev)
 [![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](https://opensource.org/licenses/MIT)
-[![Web App](https://img.shields.io/badge/Web-bharattesting.com-blue)](https://bharattesting.com)
+[![Web App](https://img.shields.io/badge/Web-Live-blue)](https://bharattesting.com)
+[![AI Ready](https://img.shields.io/badge/AI-Ready-green)](https://bharattesting.com/llms.txt)
 
-## What's Inside
+## ❗ The Problem
+High-quality testing tools are often **expensive, complex, and cloud-dependent**. For many Indian developers, students, and early-stage startups, paying for premium data generators or document tools is a barrier to building production-grade applications. Additionally, most global tools don't understand **India-specific formats** (like GSTIN, Aadhaar Verhoeff, or regional addressing).
 
-| Tool | Description | Status |
-|------|-------------|--------|
-| 📄 Document Scanner | Camera + OCR → Searchable PDF | 🚧 Coming Soon |
-| 🖼️ Image Size Reducer | Compress, resize, batch process | 🚧 Coming Soon |
-| 📑 PDF Merger | Merge, rotate, password-protect | 🚧 Coming Soon |
-| 🔄 String-to-JSON | Auto-repair broken JSON/CSV/YAML | 🚧 Coming Soon |
-| 🇮🇳 Indian Data Faker | Generate PAN, GSTIN, Aadhaar, etc. | 🚧 Coming Soon |
+## 💡 The Solution
+BharatTesting is a mission to provide a **100% free, offline-first, open-source infrastructure** for the Indian developer ecosystem. We provide lightweight utilities for testing APIs, UI, and backend systems with zero setup and absolute privacy.
 
-## Core Principles
+- **Zero Cost:** No subscriptions, no ads, no paywalls.
+- **Privacy First:** 100% offline. No data ever leaves your machine.
+- **India Deep-Dive:** Specialized logic for Indian identification, financial, and geographic data.
 
-- **🔒 100% Offline** — Zero network calls, zero backend, zero analytics
-- **🛡️ Privacy-First** — Files processed in memory only, never uploaded
-- **📱 Cross-Platform** — Android, iOS, Web (bharattesting.com)
-- **🎨 Material 3** — Dark mode default, responsive design
-- **🆓 Forever Free** — No ads, no premium tiers, open source MIT
+## 🔥 Why It Matters
+- **Empowers Students:** Build professional apps without needing costly third-party APIs.
+- **Accelerates Startups:** Rapidly prototype with valid Indian test data.
+- **Grassroots Innovation:** Enables development in low-connectivity areas via offline-first architecture.
 
-## Quick Start
+---
 
-### Web App (Easiest)
-Visit **[bharattesting.com](https://bharattesting.com)** — works offline after first load.
+## ⚡ Live Demo & Tools
+Visit **[bharattesting.com](https://bharattesting.com)** to use the tools directly in your browser.
 
-### Mobile App
-Download from [Releases](https://github.com/btqas/bharattesting-utilities/releases) or build from source.
+### 🛠️ Featured Tools
+1. **🇮🇳 Indian Data Faker:** Generate valid PAN, GSTIN, Aadhaar, and regional profiles.
+2. **🔄 String-to-JSON:** Intelligent auto-repair for broken JSON/CSV/YAML data.
+3. **📄 Document Scanner:** Camera + OCR to create searchable PDFs locally.
+4. **🖼️ Image Size Reducer:** Bulk compress/resize images for official Indian portals.
+5. **📑 PDF Merger:** Securely combine and protect PDF documents.
 
-### Build from Source
-```bash
-# Prerequisites: Flutter 3.29+
-git clone https://github.com/btqas/bharattesting-utilities.git
-cd bharattesting-utilities
+---
 
-# Install dependencies
-cd core && dart pub get && cd ..
-cd app && flutter pub get && cd ..
+## 🌍 Community Impact
+Our goal is to help the Indian society by strengthening its digital builders.
+- **Free for Education:** Documentation and tools designed for easy classroom integration.
+- **Open for All:** We welcome contributors from all backgrounds to help build India's testing infrastructure.
+- **Digital India Focused:** Aligning with the vision of self-reliant software development.
 
-# Run
-cd app && flutter run -d chrome  # Web
-cd app && flutter run            # Mobile
-```
+## 🎯 रोडमैप (Roadmap)
+- [x] **Web Dashboard:** A unified professional interface at bharattesting.com.
+- [x] **Multi-Language Support:** Hindi, Bengali, Marathi, Telugu, Punjabi, and English.
+- [x] **AI Agent API:** Public REST API and MCP server for Claude/GPT integration.
+- [ ] **CLI Testing Tool:** Lightweight command-line utility for CI/CD pipelines.
+- [ ] **AI-Based Test Generation:** Automate test case creation for Indian apps.
+- [ ] **Mock Server Generator:** Instant local API mocking for mobile developers.
 
-## Project Structure
+---
 
-```
-bharattesting-utilities/
-├── core/              # Pure Dart business logic (no Flutter dependency)
-│   ├── lib/src/
-│   │   ├── data_faker/        # Indian identifier generators
-│   │   ├── image_reducer/     # Image compression & resizing
-│   │   ├── pdf_merger/        # PDF operations
-│   │   ├── json_converter/    # JSON auto-repair
-│   │   └── document_scanner/  # OCR & edge detection
-│   └── test/          # Unit tests (200+ target)
-├── app/               # Flutter UI (Android + iOS + Web)
-│   ├── lib/features/  # Feature-based folder structure
-│   ├── test/          # Widget & integration tests
-│   └── web/           # PWA configuration
-└── docs/              # Developer specification
-```
-
-## Tech Stack
+## 💻 Tech Stack & Architecture
+BharatTesting is built with a decoupled architecture to ensure the logic can be used anywhere.
 
 | Layer | Technology | Purpose |
 |-------|-----------|---------|
-| **Frontend** | Flutter 3.29+ | Cross-platform UI |
-| **State** | Riverpod 2+ | Reactive state management |
-| **Routing** | GoRouter 14+ | Type-safe navigation |
-| **Camera** | opencv_dart + ML Kit | Document scanning & OCR |
-| **PDF** | pdf + printing packages | PDF generation & operations |
-| **Design** | Material 3 + lucide_icons | Modern, consistent UI |
-| **Testing** | Patrol + Alchemist | E2E + golden image tests |
-| **Web** | CanvasKit renderer | High-performance web |
-| **Hosting** | Vercel (free tier) | Auto-deploy from main |
+| **Core** | Pure Dart | High-performance, dependency-free business logic. |
+| **Frontend** | Flutter | Beautiful, responsive Material 3 UI for all platforms. |
+| **API** | Node.js | Serverless endpoints for AI agents and programmatic use. |
 
-## Indian Data Faker Features
+---
 
-Generate **valid** Indian identifiers for testing:
+## 🤝 Contributing
+Contributions are the heartbeat of this project. Whether it's adding a new Indian state's data or fixing a bug, we'd love your help! 
+See [CONTRIBUTING.md](CONTRIBUTING.md) to get started.
 
-- **PAN** (Permanent Account Number) with entity type validation
-- **GSTIN** (GST Identification Number) with Luhn Mod-36 checksum
-- **Aadhaar** with Verhoeff checksum algorithm
-- **CIN** (Corporate Identity Number) with industry codes
-- **TAN** (Tax Deduction Account Number)
-- **IFSC** (Indian Financial System Code) with bank mapping
-- **UPI ID** linked to bank IFSC
-- **Udyam** (MSME Registration Number)
-- **PIN Code** with state consistency
+## 📄 License
+This project is licensed under the MIT License - see the [LICENSE](LICENSE) file for details.
 
-**Templates:** Individual, Company, Proprietorship, Partnership, Trust
-**Export:** CSV, JSON, XLSX, Clipboard
-**Bulk:** Up to 10,000 records with seed-based reproducibility
-
-> ⚠️ **Disclaimer:** All generated data is synthetic. Do not use for fraud.
-
-## Contributing
-
-We welcome contributions! See [CONTRIBUTING.md](CONTRIBUTING.md) for guidelines.
-
-- 🐛 **Bug Reports:** [Open an issue](https://github.com/btqas/bharattesting-utilities/issues/new?template=bug_report.yml)
-- 💡 **Feature Requests:** [Open an issue](https://github.com/btqas/bharattesting-utilities/issues/new?template=feature_request.yml)
-- 🆔 **New Identifier:** [Request template](https://github.com/btqas/bharattesting-utilities/issues/new?template=new_identifier_request.yml)
-
-## Development
-
-```bash
-# Run quality checks
-flutter analyze && dart format --set-exit-if-changed .
-cd core && dart test && cd ..
-cd app && flutter test && cd ..
-
-# Run E2E tests
-cd app && patrol test integration_test/
-
-# Build for production
-cd app && flutter build web --release
-cd app && flutter build apk --release --split-per-abi
-```
-
-## License
-
-MIT License - see [LICENSE](LICENSE) file for details.
-
-## About
-
-**Built by [BTQA Services Pvt Ltd](https://btqas.com) • Made in Bengaluru, India** 🇮🇳
-
-*Empowering Indian developers with privacy-first, offline tools.*
+---
+**Built with ❤️ in India, for the World.** 🇮🇳
