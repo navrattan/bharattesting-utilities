@@ -5,7 +5,7 @@
 
   <meta charset="UTF-8">
   <meta content="IE=Edge" http-equiv="X-UA-Compatible">
-  <meta name="description" content="BharatTesting Utilities - 5 free, privacy-first, offline developer tools.">
+  <meta name="description" content="BharatTesting Utilities - 100% Free, Offline Indian Developer Tools.">
 
   <!-- iOS meta tags & icons -->
   <meta name="mobile-web-app-capable" content="yes">
@@ -25,7 +25,6 @@
     "@context": "https://schema.org",
     "@type": "WebApplication",
     "name": "BharatTesting",
-    "description": "5 free, privacy-first, offline developer tools including Indian Data Faker, PDF Merger, and Document Scanner.",
     "url": "https://bharattesting.com",
     "applicationCategory": "DeveloperApplication",
     "operatingSystem": "Web",
@@ -47,7 +46,7 @@
       align-items: center;
       height: 100vh;
       margin: 0;
-      font-family: sans-serif;
+      font-family: -apple-system, system-ui, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
     }
     .loading {
       width: 40px;
@@ -64,6 +63,7 @@
       margin-top: 20px;
       color: #58A6FF;
       font-weight: bold;
+      letter-spacing: 0.5px;
     }
   </style>
 </head>
@@ -71,16 +71,10 @@
   <div class="loading"></div>
   <div class="text">BharatTesting is loading...</div>
 
-  <!-- Use the standard flutter bootstrap script -->
+  <!-- 
+    The modern Flutter Web entrypoint. 
+    This script handles service workers, engine initialization, and app execution.
+  -->
   <script src="flutter_bootstrap.js" async></script>
-  
-  <script>
-    // Handle Service Worker lifecycle
-    if ('serviceWorker' in navigator) {
-      window.addEventListener('load', function () {
-        navigator.serviceWorker.register('flutter_service_worker.js');
-      });
-    }
-  </script>
 </body>
 </html>
