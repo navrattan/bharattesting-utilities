@@ -207,7 +207,8 @@ class _DataTypeGrid extends ConsumerWidget {
   Widget build(BuildContext context, WidgetRef ref) {
     final notifier = ref.read(fakerNotifierProvider.notifier);
     final screenWidth = MediaQuery.of(context).size.width;
-    final crossAxisCount = screenWidth > 1200 ? 6 : (screenWidth > 900 ? 5 : (screenWidth > 600 ? 4 : 3));
+    // Ultra compact: 8 on desktop, 6 on tablet, 4 on mobile
+    final crossAxisCount = screenWidth > 1200 ? 8 : (screenWidth > 900 ? 6 : (screenWidth > 600 ? 5 : 4));
     
     final types = [
       ('Name', LucideIcons.user, 'name'),
@@ -229,9 +230,9 @@ class _DataTypeGrid extends ConsumerWidget {
       physics: const NeverScrollableScrollPhysics(),
       gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
         crossAxisCount: crossAxisCount,
-        crossAxisSpacing: 8,
-        mainAxisSpacing: 8,
-        childAspectRatio: 1.1,
+        crossAxisSpacing: 6,
+        mainAxisSpacing: 6,
+        childAspectRatio: 1.0, // Square tiles for maximum density
       ),
       itemCount: types.length,
       itemBuilder: (context, index) {
@@ -257,16 +258,16 @@ class _FormatGrid extends ConsumerWidget {
   Widget build(BuildContext context, WidgetRef ref) {
     final notifier = ref.read(fakerNotifierProvider.notifier);
     final screenWidth = MediaQuery.of(context).size.width;
-    final crossAxisCount = screenWidth > 1200 ? 6 : (screenWidth > 900 ? 5 : (screenWidth > 600 ? 4 : 3));
+    final crossAxisCount = screenWidth > 1200 ? 8 : (screenWidth > 900 ? 6 : (screenWidth > 600 ? 5 : 4));
     
     return GridView.builder(
       shrinkWrap: true,
       physics: const NeverScrollableScrollPhysics(),
       gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
         crossAxisCount: crossAxisCount,
-        crossAxisSpacing: 8,
-        mainAxisSpacing: 8,
-        childAspectRatio: 1.1,
+        crossAxisSpacing: 6,
+        mainAxisSpacing: 6,
+        childAspectRatio: 1.0,
       ),
       itemCount: ExportFormat.values.length,
       itemBuilder: (context, index) {
@@ -323,16 +324,16 @@ class _SelectionTile extends StatelessWidget {
         duration: const Duration(milliseconds: 200),
         decoration: BoxDecoration(
           color: isSelected ? color : color.withOpacity(0.05),
-          borderRadius: BorderRadius.circular(16),
+          borderRadius: BorderRadius.circular(12),
           border: Border.all(
             color: isSelected ? color : theme.colorScheme.outline.withOpacity(0.2),
-            width: 2,
+            width: 1.5,
           ),
           boxShadow: isSelected ? [
             BoxShadow(
-              color: color.withOpacity(0.3),
-              blurRadius: 8,
-              offset: const Offset(0, 4),
+              color: color.withOpacity(0.2),
+              blurRadius: 4,
+              offset: const Offset(0, 2),
             )
           ] : [],
         ),
@@ -342,17 +343,19 @@ class _SelectionTile extends StatelessWidget {
             Icon(
               icon,
               color: isSelected ? Colors.white : color,
-              size: 24,
+              size: 20,
             ),
-            const SizedBox(height: 4),
+            const SizedBox(height: 2),
             Text(
               label,
               style: TextStyle(
                 color: isSelected ? Colors.white : theme.colorScheme.onSurface,
                 fontWeight: isSelected ? FontWeight.bold : FontWeight.normal,
-                fontSize: 12,
+                fontSize: 10,
               ),
               textAlign: TextAlign.center,
+              maxLines: 1,
+              overflow: TextOverflow.ellipsis,
             ),
           ],
         ),
