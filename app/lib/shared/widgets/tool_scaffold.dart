@@ -47,7 +47,7 @@ class ToolScaffold extends ConsumerWidget {
     BrandingService.updateBrowserTitle(path);
 
     // Provide the content
-    final Widget mainContent = body ?? (child != null ? SingleChildScrollView(child: child!) : const SizedBox.shrink());
+    final Widget mainContent = body ?? child ?? const SizedBox.shrink();
 
     // FIX: Ensure we inherit the FULL theme and only override specific branding colors
     final baseTheme = Theme.of(context);

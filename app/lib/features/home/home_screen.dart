@@ -18,8 +18,7 @@ class HomeScreen extends StatelessWidget {
     final theme = Theme.of(context);
     final l10n = context.l10n;
 
-    return Scaffold(
-      backgroundColor: theme.colorScheme.background,
+    return ToolScaffold(
       body: CustomScrollView(
         slivers: [
           // Elegant App Bar with Language Switcher
