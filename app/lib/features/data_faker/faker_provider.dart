@@ -93,9 +93,26 @@ List<Map<String, dynamic>> _generateRecordsInIsolate(Map<String, dynamic> params
   final count = params['count'] as int;
   final seed = params['seed'] as int?;
   final identifiers = params['identifiers'] as List<String>;
+  final templateName = params['template'] as String;
   
-  // Use IndividualTemplate as base but filter fields
-  final rawRecords = core.IndividualTemplate.generateBulk(count: count, baseSeed: seed);
+  List<Map<String, dynamic>> rawRecords;
+  
+  switch (templateName) {
+    case 'company':
+      rawRecords = core.CompanyTemplate.generateBulk(count: count, baseSeed: seed);
+      break;
+    case 'proprietorship':
+      rawRecords = core.ProprietorshipTemplate.generateBulk(count: count, baseSeed: seed);
+      break;
+    case 'partnership':
+      rawRecords = core.PartnershipTemplate.generateBulk(count: count, baseSeed: seed);
+      break;
+    case 'trust':
+      rawRecords = core.TrustTemplate.generateBulk(count: count, baseSeed: seed);
+      break;
+    default:
+      rawRecords = core.IndividualTemplate.generateBulk(count: count, baseSeed: seed);
+  }
   
   return rawRecords.map((record) {
     final filtered = <String, dynamic>{};
@@ -103,6 +120,10 @@ List<Map<String, dynamic>> _generateRecordsInIsolate(Map<String, dynamic> params
       if (record.containsKey(id)) {
         filtered[id] = record[id];
       }
+    }
+    // Always include a name if available
+    if (record.containsKey('name')) {
+      filtered['name'] = record['name'];
     }
     return filtered;
   }).toList();

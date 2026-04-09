@@ -44,8 +44,9 @@ class FakerScreen extends ConsumerWidget {
             Row(
               children: [
                 Expanded(
+                  flex: 3,
                   child: Slider(
-                    value: state.recordCount.toDouble(),
+                    value: state.recordCount.toDouble().clamp(1, 100),
                     min: 1,
                     max: 100,
                     divisions: 99,
@@ -53,20 +54,24 @@ class FakerScreen extends ConsumerWidget {
                     onChanged: (val) => ref.read(fakerNotifierProvider.notifier).updateRecordCount(val.toInt()),
                   ),
                 ),
-                Container(
-                  width: 60,
-                  padding: const EdgeInsets.symmetric(horizontal: 12, vertical: 8),
-                  decoration: BoxDecoration(
-                    color: theme.colorScheme.primaryContainer,
-                    borderRadius: BorderRadius.circular(8),
-                  ),
-                  child: Text(
-                    state.recordCount.toString(),
-                    style: TextStyle(
-                      fontWeight: FontWeight.bold,
-                      color: theme.colorScheme.onPrimaryContainer,
+                const SizedBox(width: 16),
+                Expanded(
+                  flex: 1,
+                  child: TextFormField(
+                    initialValue: state.recordCount.toString(),
+                    keyboardType: TextInputType.number,
+                    decoration: InputDecoration(
+                      labelText: 'Count',
+                      hintText: '1-10000',
+                      border: OutlineInputBorder(borderRadius: BorderRadius.circular(8)),
+                      contentPadding: const EdgeInsets.symmetric(horizontal: 12, vertical: 8),
                     ),
-                    textAlign: TextAlign.center,
+                    onChanged: (val) {
+                      final count = int.tryParse(val);
+                      if (count != null) {
+                        ref.read(fakerNotifierProvider.notifier).updateRecordCount(count.clamp(1, 10000));
+                      }
+                    },
                   ),
                 ),
               ],
@@ -202,7 +207,7 @@ class _DataTypeGrid extends ConsumerWidget {
   Widget build(BuildContext context, WidgetRef ref) {
     final notifier = ref.read(fakerNotifierProvider.notifier);
     final screenWidth = MediaQuery.of(context).size.width;
-    final crossAxisCount = screenWidth > 900 ? 4 : (screenWidth > 500 ? 3 : 2);
+    final crossAxisCount = screenWidth > 1200 ? 6 : (screenWidth > 900 ? 5 : (screenWidth > 600 ? 4 : 3));
     
     final types = [
       ('Name', LucideIcons.user, 'name'),
@@ -226,7 +231,7 @@ class _DataTypeGrid extends ConsumerWidget {
         crossAxisCount: crossAxisCount,
         crossAxisSpacing: 8,
         mainAxisSpacing: 8,
-        childAspectRatio: 1.4,
+        childAspectRatio: 1.1,
       ),
       itemCount: types.length,
       itemBuilder: (context, index) {
@@ -252,7 +257,7 @@ class _FormatGrid extends ConsumerWidget {
   Widget build(BuildContext context, WidgetRef ref) {
     final notifier = ref.read(fakerNotifierProvider.notifier);
     final screenWidth = MediaQuery.of(context).size.width;
-    final crossAxisCount = screenWidth > 900 ? 4 : (screenWidth > 500 ? 3 : 2);
+    final crossAxisCount = screenWidth > 1200 ? 6 : (screenWidth > 900 ? 5 : (screenWidth > 600 ? 4 : 3));
     
     return GridView.builder(
       shrinkWrap: true,
@@ -261,7 +266,7 @@ class _FormatGrid extends ConsumerWidget {
         crossAxisCount: crossAxisCount,
         crossAxisSpacing: 8,
         mainAxisSpacing: 8,
-        childAspectRatio: 1.4,
+        childAspectRatio: 1.1,
       ),
       itemCount: ExportFormat.values.length,
       itemBuilder: (context, index) {

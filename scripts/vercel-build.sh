@@ -51,6 +51,9 @@ if [ -d "../core" ]; then
 fi
 flutter pub get
 
+echo "🌍 Generating localizations..."
+flutter gen-l10n
+
 echo "⚙️  Generating code with build_runner..."
 # Use --quiet and limit memory if possible for build_runner
 dart run build_runner build --delete-conflicting-outputs
@@ -62,9 +65,9 @@ echo "Debug: Flutter version: $(flutter --version --machine 2>/dev/null || flutt
 
 # Try building with memory-optimized settings first
 echo "Attempting Flutter web build with optimized settings..."
-if flutter build web --release --base-href / --web-renderer html --tree-shake-icons --source-maps --verbose; then
+if flutter build web --release --base-href / --web-renderer=html --tree-shake-icons --source-maps --verbose; then
     echo "✅ Optimized build succeeded!"
-elif flutter build web --release --base-href / --web-renderer html --no-tree-shake-icons --verbose; then
+elif flutter build web --release --base-href / --web-renderer=html --no-tree-shake-icons --verbose; then
     echo "✅ Fallback build succeeded!"
 else
     echo "❌ All Flutter web build attempts failed!"
