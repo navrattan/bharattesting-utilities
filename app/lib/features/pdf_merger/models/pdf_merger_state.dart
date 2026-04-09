@@ -1,8 +1,5 @@
 import 'dart:typed_data';
-import 'package:freezed_annotation/freezed_annotation.dart';
 import 'package:bharattesting_core/core.dart' as core;
-
-part 'pdf_merger_state.freezed.dart';
 
 class PdfPermissions {
   const PdfPermissions({
@@ -107,40 +104,116 @@ enum PageOrientation {
   square,
 }
 
-@freezed
-abstract class PdfMergerState with _$PdfMergerState {
-  const factory PdfMergerState({
-    @Default([]) List<PdfDocument> documents,
-    @Default([]) List<PdfPageThumbnail> pages,
-    @Default(false) bool isProcessing,
-    @Default(0) int processingProgress,
-    @Default([]) List<String> processingErrors,
+class PdfMergerState {
+  const PdfMergerState({
+    this.documents = const [],
+    this.pages = const [],
+    this.isProcessing = false,
+    this.processingProgress = 0,
+    this.processingErrors = const [],
+    this.selectedDocument,
+    this.selectedPage,
+    this.showPasswordDialog = false,
+    this.showAdvancedSettings = false,
+    this.enableEncryption = false,
+    this.encryptionPassword = '',
+    this.permissions = const PdfPermissions(),
+    this.mergeOptions = const PdfMergeOptions(),
+    this.mergedPdfData,
+    this.outputFileName = 'merged_document.pdf',
+  });
+
+  final List<PdfDocument> documents;
+  final List<PdfPageThumbnail> pages;
+  final bool isProcessing;
+  final int processingProgress;
+  final List<String> processingErrors;
+  final PdfDocument? selectedDocument;
+  final PdfPageThumbnail? selectedPage;
+  final bool showPasswordDialog;
+  final bool showAdvancedSettings;
+  final bool enableEncryption;
+  final String encryptionPassword;
+  final PdfPermissions permissions;
+  final PdfMergeOptions mergeOptions;
+  final Uint8List? mergedPdfData;
+  final String outputFileName;
+
+  PdfMergerState copyWith({
+    List<PdfDocument>? documents,
+    List<PdfPageThumbnail>? pages,
+    bool? isProcessing,
+    int? processingProgress,
+    List<String>? processingErrors,
     PdfDocument? selectedDocument,
     PdfPageThumbnail? selectedPage,
-    @Default(false) bool showPasswordDialog,
-    @Default(false) bool showAdvancedSettings,
-    @Default(false) bool enableEncryption,
-    @Default('') String encryptionPassword,
-    @Default(PdfPermissions()) PdfPermissions permissions,
-    @Default(PdfMergeOptions()) PdfMergeOptions mergeOptions,
+    bool? showPasswordDialog,
+    bool? showAdvancedSettings,
+    bool? enableEncryption,
+    String? encryptionPassword,
+    PdfPermissions? permissions,
+    PdfMergeOptions? mergeOptions,
     Uint8List? mergedPdfData,
-    @Default('merged_document.pdf') String outputFileName,
-  }) = _PdfMergerState;
+    String? outputFileName,
+  }) {
+    return PdfMergerState(
+      documents: documents ?? this.documents,
+      pages: pages ?? this.pages,
+      isProcessing: isProcessing ?? this.isProcessing,
+      processingProgress: processingProgress ?? this.processingProgress,
+      processingErrors: processingErrors ?? this.processingErrors,
+      selectedDocument: selectedDocument ?? this.selectedDocument,
+      selectedPage: selectedPage ?? this.selectedPage,
+      showPasswordDialog: showPasswordDialog ?? this.showPasswordDialog,
+      showAdvancedSettings: showAdvancedSettings ?? this.showAdvancedSettings,
+      enableEncryption: enableEncryption ?? this.enableEncryption,
+      encryptionPassword: encryptionPassword ?? this.encryptionPassword,
+      permissions: permissions ?? this.permissions,
+      mergeOptions: mergeOptions ?? this.mergeOptions,
+      mergedPdfData: mergedPdfData ?? this.mergedPdfData,
+      outputFileName: outputFileName ?? this.outputFileName,
+    );
+  }
 }
 
-@freezed
-abstract class PdfDocument with _$PdfDocument {
-  const factory PdfDocument({
-    required String id,
-    required String fileName,
-    required Uint8List data,
-    required int fileSize,
-    required int pageCount,
-    @Default(DocumentStatus.ready) DocumentStatus status,
-    String? error,
-  }) = _PdfDocument;
+class PdfDocument {
+  const PdfDocument({
+    required this.id,
+    required this.fileName,
+    required this.data,
+    required this.fileSize,
+    required this.pageCount,
+    this.status = DocumentStatus.ready,
+    this.error,
+  });
 
-  const PdfDocument._();
+  final String id;
+  final String fileName;
+  final Uint8List data;
+  final int fileSize;
+  final int pageCount;
+  final DocumentStatus status;
+  final String? error;
+
+  PdfDocument copyWith({
+    String? id,
+    String? fileName,
+    Uint8List? data,
+    int? fileSize,
+    int? pageCount,
+    DocumentStatus? status,
+    String? error,
+  }) {
+    return PdfDocument(
+      id: id ?? this.id,
+      fileName: fileName ?? this.fileName,
+      data: data ?? this.data,
+      fileSize: fileSize ?? this.fileSize,
+      pageCount: pageCount ?? this.pageCount,
+      status: status ?? this.status,
+      error: error ?? this.error,
+    );
+  }
 
   String get displayName => fileName;
   String get fileSizeText => '${(fileSize / 1024).toStringAsFixed(1)} KB';
@@ -149,23 +222,60 @@ abstract class PdfDocument with _$PdfDocument {
 
 enum DocumentStatus { loading, ready, error }
 
-@freezed
-abstract class PdfPageThumbnail with _$PdfPageThumbnail {
-  const factory PdfPageThumbnail({
-    required String id,
-    required String documentId,
-    required int pageNumber,
-    required int globalIndex,
-    required PageDimensions dimensions,
-    @Default(PageRotation.none) PageRotation rotation,
-    Uint8List? thumbnailData,
-    @Default(false) bool isSelected,
-    @Default(false) bool isDuplicate,
-    @Default(false) bool isBlank,
-    @Default(ThumbnailStatus.loading) ThumbnailStatus status,
-  }) = _PdfPageThumbnail;
+class PdfPageThumbnail {
+  const PdfPageThumbnail({
+    required this.id,
+    required this.documentId,
+    required this.pageNumber,
+    required this.globalIndex,
+    required this.dimensions,
+    this.rotation = PageRotation.none,
+    this.thumbnailData,
+    this.isSelected = false,
+    this.isDuplicate = false,
+    this.isBlank = false,
+    this.status = ThumbnailStatus.loading,
+  });
 
-  const PdfPageThumbnail._();
+  final String id;
+  final String documentId;
+  final int pageNumber;
+  final int globalIndex;
+  final PageDimensions dimensions;
+  final PageRotation rotation;
+  final Uint8List? thumbnailData;
+  final bool isSelected;
+  final bool isDuplicate;
+  final bool isBlank;
+  final ThumbnailStatus status;
+
+  PdfPageThumbnail copyWith({
+    String? id,
+    String? documentId,
+    int? pageNumber,
+    int? globalIndex,
+    PageDimensions? dimensions,
+    PageRotation? rotation,
+    Uint8List? thumbnailData,
+    bool? isSelected,
+    bool? isDuplicate,
+    bool? isBlank,
+    ThumbnailStatus? status,
+  }) {
+    return PdfPageThumbnail(
+      id: id ?? this.id,
+      documentId: documentId ?? this.documentId,
+      pageNumber: pageNumber ?? this.pageNumber,
+      globalIndex: globalIndex ?? this.globalIndex,
+      dimensions: dimensions ?? this.dimensions,
+      rotation: rotation ?? this.rotation,
+      thumbnailData: thumbnailData ?? this.thumbnailData,
+      isSelected: isSelected ?? this.isSelected,
+      isDuplicate: isDuplicate ?? this.isDuplicate,
+      isBlank: isBlank ?? this.isBlank,
+      status: status ?? this.status,
+    );
+  }
 
   int get displayGlobalNumber => globalIndex + 1;
   bool get isReady => status == ThumbnailStatus.ready;
@@ -173,33 +283,66 @@ abstract class PdfPageThumbnail with _$PdfPageThumbnail {
 
 enum ThumbnailStatus { loading, ready, error }
 
-@freezed
-abstract class PdfMergerOperation with _$PdfMergerOperation {
-  const factory PdfMergerOperation({
-    required String id,
-    required String message,
-    required DateTime startTime,
+class PdfMergerOperation {
+  const PdfMergerOperation({
+    required this.id,
+    required this.message,
+    required this.startTime,
+    this.endTime,
+    this.progress = 0.0,
+    this.isCompleted = false,
+    this.error,
+  });
+
+  final String id;
+  final String message;
+  final DateTime startTime;
+  final DateTime? endTime;
+  final double progress;
+  final bool isCompleted;
+  final String? error;
+
+  PdfMergerOperation copyWith({
+    String? id,
+    String? message,
+    DateTime? startTime,
     DateTime? endTime,
-    @Default(0.0) double progress,
-    @Default(false) bool isCompleted,
+    double? progress,
+    bool? isCompleted,
     String? error,
-  }) = _PdfMergerOperation;
+  }) {
+    return PdfMergerOperation(
+      id: id ?? this.id,
+      message: message ?? this.message,
+      startTime: startTime ?? this.startTime,
+      endTime: endTime ?? this.endTime,
+      progress: progress ?? this.progress,
+      isCompleted: isCompleted ?? this.isCompleted,
+      error: error ?? this.error,
+    );
+  }
 }
 
-@freezed
-abstract class MergeStatistics with _$MergeStatistics {
-  const factory MergeStatistics({
-    required int totalDocuments,
-    required int totalPages,
-    required int totalSize,
-    required int estimatedOutputSize,
-    @Default(0.0) double compressionRatio,
-    @Default(Duration.zero) Duration estimatedTime,
-    @Default({}) Map<String, int> orientationCounts,
-    @Default(0) int duplicateCount,
-  }) = _MergeStatistics;
+class MergeStatistics {
+  const MergeStatistics({
+    required this.totalDocuments,
+    required this.totalPages,
+    required this.totalSize,
+    required this.estimatedOutputSize,
+    this.compressionRatio = 0.0,
+    this.estimatedTime = Duration.zero,
+    this.orientationCounts = const {},
+    this.duplicateCount = 0,
+  });
 
-  const MergeStatistics._();
+  final int totalDocuments;
+  final int totalPages;
+  final int totalSize;
+  final int estimatedOutputSize;
+  final double compressionRatio;
+  final Duration estimatedTime;
+  final Map<String, int> orientationCounts;
+  final int duplicateCount;
 
   String get totalSizeText => '${(totalSize / 1024 / 1024).toStringAsFixed(2)} MB';
   String get outputSizeText => '${(estimatedOutputSize / 1024 / 1024).toStringAsFixed(2)} MB';
@@ -207,24 +350,34 @@ abstract class MergeStatistics with _$MergeStatistics {
   String get estimatedTimeText => '${estimatedTime.inSeconds}s';
 }
 
-@freezed
-abstract class PageReorderOperation with _$PageReorderOperation {
-  const factory PageReorderOperation({
-    required String pageId,
-    required int fromIndex,
-    required int toIndex,
-    @Default(true) bool isValid,
-    @Default(false) bool isActive,
-  }) = _PageReorderOperation;
+class PageReorderOperation {
+  const PageReorderOperation({
+    required this.pageId,
+    required this.fromIndex,
+    required this.toIndex,
+    this.isValid = true,
+    this.isActive = false,
+  });
+
+  final String pageId;
+  final int fromIndex;
+  final int toIndex;
+  final bool isValid;
+  final bool isActive;
 }
 
-@freezed
-abstract class BatchPageOperation with _$BatchPageOperation {
-  const factory BatchPageOperation({
-    required List<String> pageIds,
-    required String operationType,
-    @Default({}) Map<String, dynamic> parameters,
-    @Default(0.0) double progress,
-    @Default(false) bool isProcessing,
-  }) = _BatchPageOperation;
+class BatchPageOperation {
+  const BatchPageOperation({
+    required this.pageIds,
+    required this.operationType,
+    this.parameters = const {},
+    this.progress = 0.0,
+    this.isProcessing = false,
+  });
+
+  final List<String> pageIds;
+  final String operationType;
+  final Map<String, dynamic> parameters;
+  final double progress;
+  final bool isProcessing;
 }

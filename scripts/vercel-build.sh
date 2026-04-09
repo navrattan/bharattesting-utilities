@@ -45,12 +45,15 @@ fi
 echo "🌐 Configuring Flutter for web..."
 flutter config --enable-web --no-analytics
 
-echo "📦 Installing dependencies..."
+echo "📦 Getting core dependencies..."
 if [ -d "../core" ]; then
-    echo "📦 Getting core dependencies..."
     (cd ../core && flutter pub get)
 fi
 flutter pub get
+
+echo "⚙️  Generating code with build_runner..."
+# Use --quiet and limit memory if possible for build_runner
+dart run build_runner build --delete-conflicting-outputs
 
 echo "🏗️  Building Flutter web release..."
 echo "Debug: Current directory: $(pwd)"

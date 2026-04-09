@@ -2,10 +2,7 @@
 ///
 /// Manages template selection, generation options, and export functionality
 
-import 'package:freezed_annotation/freezed_annotation.dart';
 import 'package:bharattesting_core/core.dart' as core hide TemplateType;
-
-part 'faker_state.freezed.dart';
 
 /// Available template types for generation
 enum TemplateType {
@@ -48,41 +45,88 @@ enum BulkSize {
 }
 
 /// State for Indian Data Faker
-@freezed
-abstract class FakerState with _$FakerState {
-  const factory FakerState({
-    // Template selection
-    @Default(TemplateType.individual) TemplateType selectedTemplate,
+class FakerState {
+  const FakerState({
+    this.selectedTemplate = TemplateType.individual,
+    this.bulkSize = BulkSize.single,
+    this.useRandomSeed = true,
+    this.customSeed,
+    this.preferredState,
+    this.includeAllIdentifiers = true,
+    this.selectedIdentifiers = const {},
+    this.generatedRecords = const [],
+    this.lastGeneratedAt,
+    this.selectedExportFormat = ExportFormat.json,
+    this.includeMetadata = true,
+    this.prettifyOutput = true,
+    this.isGenerating = false,
+    this.isExporting = false,
+    this.lastExportPath,
+    this.errorMessage,
+    this.lastGenerationTimeMs,
+    this.lastExportTimeMs,
+  });
 
-    // Generation options
-    @Default(BulkSize.single) BulkSize bulkSize,
-    @Default(true) bool useRandomSeed,
-    @Default(null) int? customSeed,
-    @Default(null) String? preferredState,
+  final TemplateType selectedTemplate;
+  final BulkSize bulkSize;
+  final bool useRandomSeed;
+  final int? customSeed;
+  final String? preferredState;
+  final bool includeAllIdentifiers;
+  final Set<String> selectedIdentifiers;
+  final List<Map<String, dynamic>> generatedRecords;
+  final DateTime? lastGeneratedAt;
+  final ExportFormat selectedExportFormat;
+  final bool includeMetadata;
+  final bool prettifyOutput;
+  final bool isGenerating;
+  final bool isExporting;
+  final String? lastExportPath;
+  final String? errorMessage;
+  final int? lastGenerationTimeMs;
+  final int? lastExportTimeMs;
 
-    // Identifier toggles (for custom selection)
-    @Default(true) bool includeAllIdentifiers,
-    @Default({}) Set<String> selectedIdentifiers,
-
-    // Generated data
-    @Default([]) List<Map<String, dynamic>> generatedRecords,
-    @Default(null) DateTime? lastGeneratedAt,
-
-    // Export options
-    @Default(ExportFormat.json) ExportFormat selectedExportFormat,
-    @Default(true) bool includeMetadata,
-    @Default(true) bool prettifyOutput,
-
-    // UI state
-    @Default(false) bool isGenerating,
-    @Default(false) bool isExporting,
-    @Default(null) String? lastExportPath,
-    @Default(null) String? errorMessage,
-
-    // Performance metrics
-    @Default(null) int? lastGenerationTimeMs,
-    @Default(null) int? lastExportTimeMs,
-  }) = _FakerState;
+  FakerState copyWith({
+    TemplateType? selectedTemplate,
+    BulkSize? bulkSize,
+    bool? useRandomSeed,
+    int? customSeed,
+    String? preferredState,
+    bool? includeAllIdentifiers,
+    Set<String>? selectedIdentifiers,
+    List<Map<String, dynamic>>? generatedRecords,
+    DateTime? lastGeneratedAt,
+    ExportFormat? selectedExportFormat,
+    bool? includeMetadata,
+    bool? prettifyOutput,
+    bool? isGenerating,
+    bool? isExporting,
+    String? lastExportPath,
+    String? errorMessage,
+    int? lastGenerationTimeMs,
+    int? lastExportTimeMs,
+  }) {
+    return FakerState(
+      selectedTemplate: selectedTemplate ?? this.selectedTemplate,
+      bulkSize: bulkSize ?? this.bulkSize,
+      useRandomSeed: useRandomSeed ?? this.useRandomSeed,
+      customSeed: customSeed ?? this.customSeed,
+      preferredState: preferredState ?? this.preferredState,
+      includeAllIdentifiers: includeAllIdentifiers ?? this.includeAllIdentifiers,
+      selectedIdentifiers: selectedIdentifiers ?? this.selectedIdentifiers,
+      generatedRecords: generatedRecords ?? this.generatedRecords,
+      lastGeneratedAt: lastGeneratedAt ?? this.lastGeneratedAt,
+      selectedExportFormat: selectedExportFormat ?? this.selectedExportFormat,
+      includeMetadata: includeMetadata ?? this.includeMetadata,
+      prettifyOutput: prettifyOutput ?? this.prettifyOutput,
+      isGenerating: isGenerating ?? this.isGenerating,
+      isExporting: isExporting ?? this.isExporting,
+      lastExportPath: lastExportPath ?? this.lastExportPath,
+      errorMessage: errorMessage ?? this.errorMessage,
+      lastGenerationTimeMs: lastGenerationTimeMs ?? this.lastGenerationTimeMs,
+      lastExportTimeMs: lastExportTimeMs ?? this.lastExportTimeMs,
+    );
+  }
 }
 
 /// Extension methods for FakerState
