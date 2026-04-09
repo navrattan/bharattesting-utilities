@@ -5,6 +5,6 @@ import '../services/persistence_service.dart';
 part 'persistence_provider.g.dart';
 
 @Riverpod(keepAlive: true)
-PersistenceService persistence(PersistenceProviderRef ref) {
+PersistenceService persistence(PersistenceRef ref) {
   throw UnimplementedError('persistenceProvider must be overridden in ProviderScope');
 }

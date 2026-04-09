@@ -9,6 +9,7 @@ import 'btqa_footer.dart';
 import 'github_buttons.dart';
 import 'language_switcher.dart';
 import '../providers/locale_provider.dart';
+import '../providers/theme_provider.dart';
 import '../models/tool_branding.dart';
 import '../services/branding_service.dart';
 import '../../router/app_router.dart';
@@ -108,7 +109,7 @@ class ToolScaffold extends ConsumerWidget {
 }
 
 /// Mobile layout with bottom navigation
-class _MobileLayout extends StatelessWidget {
+class _MobileLayout extends ConsumerWidget {
   const _MobileLayout({
     required this.child,
     this.title,
@@ -126,7 +127,7 @@ class _MobileLayout extends StatelessWidget {
   final ToolBranding? branding;
 
   @override
-  Widget build(BuildContext context) {
+  Widget build(BuildContext context, WidgetRef ref) {
     final currentLocation = GoRouterState.of(context).uri.path;
     final currentIndex = AppRouter.getCurrentIndex(currentLocation);
 
@@ -158,7 +159,7 @@ class _MobileLayout extends StatelessWidget {
 }
 
 /// Tablet layout
-class _TabletLayout extends StatelessWidget {
+class _TabletLayout extends ConsumerWidget {
   const _TabletLayout({
     required this.child,
     this.title,
@@ -178,7 +179,7 @@ class _TabletLayout extends StatelessWidget {
   final ToolBranding? branding;
 
   @override
-  Widget build(BuildContext context) {
+  Widget build(BuildContext context, WidgetRef ref) {
     final currentLocation = GoRouterState.of(context).uri.path;
     final currentIndex = AppRouter.getCurrentIndex(currentLocation);
 
@@ -231,7 +232,7 @@ class _TabletLayout extends StatelessWidget {
 }
 
 /// Desktop layout with FIXED visibility constraints
-class _DesktopLayout extends StatelessWidget {
+class _DesktopLayout extends ConsumerWidget {
   const _DesktopLayout({
     required this.child,
     this.title,
@@ -251,7 +252,7 @@ class _DesktopLayout extends StatelessWidget {
   final ToolBranding? branding;
 
   @override
-  Widget build(BuildContext context) {
+  Widget build(BuildContext context, WidgetRef ref) {
     final currentLocation = GoRouterState.of(context).uri.path;
     final currentIndex = AppRouter.getCurrentIndex(currentLocation);
     final theme = Theme.of(context);
