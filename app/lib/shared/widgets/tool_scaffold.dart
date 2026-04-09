@@ -8,10 +8,12 @@ import 'responsive_layout.dart';
 import 'btqa_footer.dart';
 import 'github_buttons.dart';
 import '../providers/locale_provider.dart';
+import '../models/tool_branding.dart';
+import '../services/branding_service.dart';
 import '../../router/app_router.dart';
 import '../../theme/app_theme.dart';
 
-/// Main scaffold that wraps all tool screens
+/// Main scaffold that wraps all tool screens with Dynamic Branding
 class ToolScaffold extends ConsumerWidget {
   const ToolScaffold({
     this.child,
@@ -37,30 +39,49 @@ class ToolScaffold extends ConsumerWidget {
   @override
   Widget build(BuildContext context, WidgetRef ref) {
     final content = body ?? child ?? const SizedBox.shrink();
+    final path = GoRouterState.of(context).uri.path;
+    final intent = ToolIntent.fromPath(path);
+    final branding = ToolBranding.all[intent];
+    
+    // Update browser title
+    BrandingService.updateBrowserTitle(path);
 
-    return ResponsiveLayout(
-      mobile: _MobileLayout(
-        child: content,
-        title: title,
-        actions: actions,
-        drawer: drawer,
-        endDrawer: endDrawer,
-      ),
-      tablet: _TabletLayout(
-        child: content,
-        title: title,
-        subtitle: subtitle,
-        actions: actions,
-        drawer: drawer,
-        endDrawer: endDrawer,
-      ),
-      desktop: _DesktopLayout(
-        child: content,
-        title: title,
-        subtitle: subtitle,
-        actions: actions,
-        drawer: drawer,
-        endDrawer: endDrawer,
+    // Apply branding color if available
+    return Theme(
+      data: branding != null 
+        ? Theme.of(context).copyWith(
+            colorScheme: Theme.of(context).colorScheme.copyWith(
+              primary: branding.primaryColor,
+            ),
+          )
+        : Theme.of(context),
+      child: ResponsiveLayout(
+        mobile: _MobileLayout(
+          child: content,
+          title: branding?.standaloneTitle ?? title,
+          actions: actions,
+          drawer: drawer,
+          endDrawer: endDrawer,
+          branding: branding,
+        ),
+        tablet: _TabletLayout(
+          child: content,
+          title: branding?.title ?? title,
+          subtitle: subtitle,
+          actions: actions,
+          drawer: drawer,
+          endDrawer: endDrawer,
+          branding: branding,
+        ),
+        desktop: _DesktopLayout(
+          child: content,
+          title: branding?.title ?? title,
+          subtitle: subtitle,
+          actions: actions,
+          drawer: drawer,
+          endDrawer: endDrawer,
+          branding: branding,
+        ),
       ),
     );
   }
@@ -74,6 +95,7 @@ class _MobileLayout extends StatelessWidget {
     this.actions,
     this.drawer,
     this.endDrawer,
+    this.branding,
   });
 
   final Widget child;
@@ -81,6 +103,7 @@ class _MobileLayout extends StatelessWidget {
   final List<Widget>? actions;
   final Widget? drawer;
   final Widget? endDrawer;
+  final ToolBranding? branding;
 
   @override
   Widget build(BuildContext context) {
@@ -89,7 +112,9 @@ class _MobileLayout extends StatelessWidget {
 
     return Scaffold(
       appBar: AppBar(
-        title: Text(title ?? 'BharatTesting'),
+        title: title != null ? Text(title!) : null,
+        backgroundColor: branding != null ? branding!.primaryColor : null,
+        foregroundColor: branding != null ? Colors.white : null,
         actions: [
           ...?actions,
           const LanguageSwitcher(),
@@ -106,9 +131,7 @@ class _MobileLayout extends StatelessWidget {
       ),
       bottomNavigationBar: NavigationBar(
         selectedIndex: currentIndex,
-        onDestinationSelected: (index) {
-          AppRouter.navigateToIndex(context, index);
-        },
+        onDestinationSelected: (index) => AppRouter.navigateToIndex(context, index),
         destinations: AppRouter.destinations,
       ),
     );
@@ -124,6 +147,7 @@ class _TabletLayout extends StatelessWidget {
     this.actions,
     this.drawer,
     this.endDrawer,
+    this.branding,
   });
 
   final Widget child;
@@ -132,6 +156,7 @@ class _TabletLayout extends StatelessWidget {
   final List<Widget>? actions;
   final Widget? drawer;
   final Widget? endDrawer;
+  final ToolBranding? branding;
 
   @override
   Widget build(BuildContext context) {
@@ -145,12 +170,10 @@ class _TabletLayout extends StatelessWidget {
         children: [
           NavigationRail(
             selectedIndex: currentIndex,
-            onDestinationSelected: (index) {
-              AppRouter.navigateToIndex(context, index);
-            },
+            onDestinationSelected: (index) => AppRouter.navigateToIndex(context, index),
             labelType: NavigationRailLabelType.selected,
             destinations: AppRouter.destinations
-                    .map((dest) => NavigationRailDestination(
+                .map((dest) => NavigationRailDestination(
                       icon: dest.icon,
                       selectedIcon: dest.selectedIcon ?? dest.icon,
                       label: Text(dest.label),
@@ -162,7 +185,8 @@ class _TabletLayout extends StatelessWidget {
             child: Column(
               children: [
                 AppBar(
-                  title: Text(title ?? 'BharatTesting Utilities'),
+                  title: Text(title ?? 'BharatTesting'),
+                  backgroundColor: branding != null ? branding!.primaryColor.withOpacity(0.1) : null,
                   actions: [
                     ...?actions,
                     const LanguageSwitcher(),
@@ -192,7 +216,7 @@ class _TabletLayout extends StatelessWidget {
   }
 }
 
-/// Desktop layout with top navigation and side rail
+/// Desktop layout with top navigation
 class _DesktopLayout extends StatelessWidget {
   const _DesktopLayout({
     required this.child,
@@ -201,6 +225,7 @@ class _DesktopLayout extends StatelessWidget {
     this.actions,
     this.drawer,
     this.endDrawer,
+    this.branding,
   });
 
   final Widget child;
@@ -209,32 +234,38 @@ class _DesktopLayout extends StatelessWidget {
   final List<Widget>? actions;
   final Widget? drawer;
   final Widget? endDrawer;
+  final ToolBranding? branding;
 
   @override
   Widget build(BuildContext context) {
     final currentLocation = GoRouterState.of(context).uri.path;
     final currentIndex = AppRouter.getCurrentIndex(currentLocation);
+    final theme = Theme.of(context);
 
     return Scaffold(
       drawer: drawer,
       endDrawer: endDrawer,
       body: Column(
         children: [
-          // Top navigation bar
+          // Dynamic Branded Header
           Material(
             elevation: 1,
+            color: branding != null ? branding!.primaryColor : theme.colorScheme.surface,
             child: Container(
               height: 64,
-              padding: const EdgeInsets.symmetric(
-                horizontal: AppTheme.spacingXl,
-              ),
+              padding: const EdgeInsets.symmetric(horizontal: AppTheme.spacingXl),
               child: Row(
                 children: [
+                  if (branding != null) ...[
+                    Icon(branding!.icon, color: Colors.white),
+                    const SizedBox(width: 12),
+                  ],
                   Text(
                     title ?? 'BharatTesting Utilities',
-                    style: Theme.of(context).textTheme.titleLarge?.copyWith(
-                          fontWeight: FontWeight.w600,
-                        ),
+                    style: theme.textTheme.titleLarge?.copyWith(
+                      fontWeight: FontWeight.bold,
+                      color: branding != null ? Colors.white : null,
+                    ),
                   ),
                   const SizedBox(width: AppTheme.spacingXl),
                   Expanded(
@@ -247,54 +278,46 @@ class _DesktopLayout extends StatelessWidget {
                                 icon: entry.value.icon,
                                 selectedIcon: entry.value.selectedIcon ?? entry.value.icon,
                                 isSelected: entry.key == currentIndex,
-                                onTap: () => AppRouter.navigateToIndex(
-                                  context,
-                                  entry.key,
-                                ),
+                                isBranded: branding != null,
+                                onTap: () => AppRouter.navigateToIndex(context, entry.key),
                               ))
                           .toList(),
                     ),
                   ),
                   if (actions != null) ...actions!,
-                  const SizedBox(width: AppTheme.spacingSm),
-                  const LanguageSwitcher(),
+                  const LanguageSwitcher(isBranded: true),
                   const GitHubButtons(),
                 ],
               ),
             ),
           ),
-          if (subtitle != null)
-            Padding(
-              padding: const EdgeInsets.fromLTRB(
-                AppTheme.spacingXl,
-                AppTheme.spacingMd,
-                AppTheme.spacingXl,
-                AppTheme.spacingSm,
-              ),
-              child: Align(
-                alignment: Alignment.centerLeft,
-                child: Text(
-                  subtitle!,
-                  style: Theme.of(context).textTheme.bodyMedium,
-                ),
-              ),
-            ),
           Expanded(
-            child: ConstrainedBox(
-              constraints: const BoxConstraints(
-                maxWidth: Breakpoints.desktop,
+            child: SingleChildScrollView(
+              child: Column(
+                children: [
+                  if (subtitle != null)
+                    Padding(
+                      padding: const EdgeInsets.all(AppTheme.spacingXl),
+                      child: Align(
+                        alignment: Alignment.centerLeft,
+                        child: Text(subtitle!, style: theme.textTheme.bodyLarge),
+                      ),
+                    ),
+                  ConstrainedBox(
+                    constraints: const BoxConstraints(maxWidth: 1200),
+                    child: child,
+                  ),
+                  const BTQAFooter(),
+                ],
               ),
-              child: child,
             ),
           ),
-          const BTQAFooter(),
         ],
       ),
     );
   }
 }
 
-/// Desktop navigation item
 class _DesktopNavItem extends StatelessWidget {
   const _DesktopNavItem({
     required this.label,
@@ -302,6 +325,7 @@ class _DesktopNavItem extends StatelessWidget {
     required this.selectedIcon,
     required this.isSelected,
     required this.onTap,
+    this.isBranded = false,
   });
 
   final String label;
@@ -309,9 +333,15 @@ class _DesktopNavItem extends StatelessWidget {
   final Widget selectedIcon;
   final bool isSelected;
   final VoidCallback onTap;
+  final bool isBranded;
 
   @override
   Widget build(BuildContext context) {
+    final theme = Theme.of(context);
+    final color = isBranded 
+        ? (isSelected ? Colors.white : Colors.white70)
+        : (isSelected ? theme.colorScheme.primary : theme.colorScheme.onSurfaceVariant);
+
     return Padding(
       padding: const EdgeInsets.symmetric(horizontal: AppTheme.spacingSm),
       child: TextButton.icon(
@@ -319,13 +349,8 @@ class _DesktopNavItem extends StatelessWidget {
         icon: isSelected ? selectedIcon : icon,
         label: Text(label),
         style: TextButton.styleFrom(
-          foregroundColor: isSelected
-              ? Theme.of(context).colorScheme.primary
-              : Theme.of(context).colorScheme.onSurfaceVariant,
-          padding: const EdgeInsets.symmetric(
-            horizontal: AppTheme.spacingLg,
-            vertical: AppTheme.spacingMd,
-          ),
+          foregroundColor: color,
+          padding: const EdgeInsets.symmetric(horizontal: AppTheme.spacingLg, vertical: AppTheme.spacingMd),
         ),
       ),
     );
@@ -333,41 +358,24 @@ class _DesktopNavItem extends StatelessWidget {
 }
 
 class LanguageSwitcher extends ConsumerWidget {
-  const LanguageSwitcher({super.key});
+  final bool isBranded;
+  const LanguageSwitcher({this.isBranded = false, super.key});
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
     return PopupMenuButton<String>(
-      icon: const Icon(Icons.language),
+      icon: Icon(Icons.language, color: isBranded ? Colors.white : null),
       tooltip: 'Switch Language',
       onSelected: (String languageCode) {
         ref.read(localeNotifierProvider.notifier).setLanguageCode(languageCode);
       },
       itemBuilder: (BuildContext context) => <PopupMenuEntry<String>>[
-        const PopupMenuItem<String>(
-          value: 'en',
-          child: Text('English'),
-        ),
-        const PopupMenuItem<String>(
-          value: 'hi',
-          child: Text('हिन्दी (Hindi)'),
-        ),
-        const PopupMenuItem<String>(
-          value: 'bn',
-          child: Text('বাংলা (Bengali)'),
-        ),
-        const PopupMenuItem<String>(
-          value: 'mr',
-          child: Text('मराठी (Marathi)'),
-        ),
-        const PopupMenuItem<String>(
-          value: 'te',
-          child: Text('తెలుగు (Telugu)'),
-        ),
-        const PopupMenuItem<String>(
-          value: 'pa',
-          child: Text('ਪੰਜਾਬੀ (Punjabi)'),
-        ),
+        const PopupMenuItem<String>(value: 'en', child: Text('English')),
+        const PopupMenuItem<String>(value: 'hi', child: Text('हिन्दी (Hindi)')),
+        const PopupMenuItem<String>(value: 'bn', child: Text('বাংলা (Bengali)')),
+        const PopupMenuItem<String>(value: 'mr', child: Text('मਰਾਠੀ (Marathi)')),
+        const PopupMenuItem<String>(value: 'te', child: Text('తెలుగు (Telugu)')),
+        const PopupMenuItem<String>(value: 'pa', child: Text('ਪੰਜਾਬੀ (Punjabi)')),
       ],
     );
   }
