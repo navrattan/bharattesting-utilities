@@ -38,101 +38,110 @@ class _JsonConverterScreenState extends ConsumerState<JsonConverterScreen>
     final state = ref.watch(jsonConverterProvider);
     final notifier = ref.read(jsonConverterProvider.notifier);
 
-    return DefaultTabController(
-      length: 2,
-      child: ToolScaffold(
-        key: _scaffoldKey,
-        title: context.l10n.jsonConverterTitle,
-        subtitle: context.l10n.jsonConverterSubtitle,
-        actions: [
-          IconButton(
-            icon: const Icon(Icons.help_outline),
-            onPressed: () => _showHelpDialog(context),
-            tooltip: 'Help',
-          ),
-        ],
-        drawer: _buildExamplesDrawer(),
-        body: Column(
-          children: [
-            // Format info and action buttons
-            Padding(
-              padding: const EdgeInsets.all(16),
-              child: Row(
+    return Column(
+      children: [
+        // Header Area (replacing ToolScaffold header part)
+        Padding(
+          padding: const EdgeInsets.fromLTRB(16, 16, 16, 0),
+          child: Row(
+            children: [
+              Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
-                  Expanded(
-                    child: FormatInfoPanel(
-                      detectedFormat: state.formatDisplayName,
-                      confidence: state.confidenceDisplayText,
-                      appliedRepairs: state.appliedRepairs,
-                      hasWarnings: state.hasWarnings,
-                      warningCount: state.warnings.length,
-                    ),
+                  Text(
+                    context.l10n.jsonConverterTitle,
+                    style: Theme.of(context).textTheme.headlineSmall?.copyWith(fontWeight: FontWeight.bold),
                   ),
-                  const SizedBox(width: 16),
-                  ActionButtons(
-                    canCopy: state.hasOutput,
-                    canClear: state.hasInput,
-                    autoRepairEnabled: state.autoRepairEnabled,
-                    prettifyEnabled: state.prettifyOutput,
-                    onCopy: notifier.copyToClipboard,
-                    onPaste: notifier.pasteFromClipboard,
-                    onClear: notifier.clearInput,
-                    onToggleAutoRepair: notifier.toggleAutoRepair,
-                    onTogglePrettify: notifier.togglePrettify,
-                    onProcess: notifier.processInput,
-                  ),
+                  Text(context.l10n.jsonConverterSubtitle),
                 ],
               ),
-            ),
-
-            // Main content area
-            Expanded(
-              child: LayoutBuilder(
-                builder: (context, constraints) {
-                  final isWide = constraints.maxWidth > 900;
-
-                  if (isWide) {
-                    // Side-by-side layout for desktop
-                    return Row(
-                      children: [
-                        Expanded(
-                          child: _buildInputSection(),
-                        ),
-                        const VerticalDivider(width: 1),
-                        Expanded(
-                          child: _buildOutputSection(),
-                        ),
-                      ],
-                    );
-                  } else {
-                    // Tabbed layout for mobile
-                    return Column(
-                      children: [
-                        TabBar(
-                          controller: _tabController,
-                          tabs: const [
-                            Tab(text: 'Input', icon: Icon(Icons.edit_note)),
-                            Tab(text: 'Output', icon: Icon(Icons.code_off)),
-                          ],
-                        ),
-                        Expanded(
-                          child: TabBarView(
-                            controller: _tabController,
-                            children: [
-                              _buildInputSection(),
-                              _buildOutputSection(),
-                            ],
-                          ),
-                        ),
-                      ],
-                    );
-                  }
-                },
+              const Spacer(),
+              IconButton(
+                icon: const Icon(Icons.help_outline),
+                onPressed: () => _showHelpDialog(context),
+                tooltip: 'Help',
               ),
-            ),
-          ],
+            ],
+          ),
         ),
-      ),
+        
+        // Format info and action buttons
+        Padding(
+          padding: const EdgeInsets.all(16),
+          child: Row(
+            children: [
+              Expanded(
+                child: FormatInfoPanel(
+                  detectedFormat: state.formatDisplayName,
+                  confidence: state.confidenceDisplayText,
+                  appliedRepairs: state.appliedRepairs,
+                  hasWarnings: state.hasWarnings,
+                  warningCount: state.warnings.length,
+                ),
+              ),
+              const SizedBox(width: 16),
+              ActionButtons(
+                canCopy: state.hasOutput,
+                canClear: state.hasInput,
+                autoRepairEnabled: state.autoRepairEnabled,
+                prettifyEnabled: state.prettifyOutput,
+                onCopy: notifier.copyToClipboard,
+                onPaste: notifier.pasteFromClipboard,
+                onClear: notifier.clearInput,
+                onToggleAutoRepair: notifier.toggleAutoRepair,
+                onTogglePrettify: notifier.togglePrettify,
+                onProcess: notifier.processInput,
+              ),
+            ],
+          ),
+        ),
+
+        // Main content area
+        Expanded(
+          child: LayoutBuilder(
+            builder: (context, constraints) {
+              final isWide = constraints.maxWidth > 900;
+
+              if (isWide) {
+                // Side-by-side layout for desktop
+                return Row(
+                  children: [
+                    Expanded(
+                      child: _buildInputSection(),
+                    ),
+                    const VerticalDivider(width: 1),
+                    Expanded(
+                      child: _buildOutputSection(),
+                    ),
+                  ],
+                );
+              } else {
+                // Tabbed layout for mobile
+                return Column(
+                  children: [
+                    TabBar(
+                      controller: _tabController,
+                      tabs: const [
+                        Tab(text: 'Input', icon: Icon(Icons.edit_note)),
+                        Tab(text: 'Output', icon: Icon(Icons.code_off)),
+                      ],
+                    ),
+                    Expanded(
+                      child: TabBarView(
+                        controller: _tabController,
+                        children: [
+                          _buildInputSection(),
+                          _buildOutputSection(),
+                        ],
+                      ),
+                    ),
+                  ],
+                );
+              }
+            },
+          ),
+        ),
+      ],
     );
   }
 

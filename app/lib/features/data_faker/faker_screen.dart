@@ -16,114 +16,118 @@ class FakerScreen extends ConsumerWidget {
     final state = ref.watch(fakerNotifierProvider);
     final theme = Theme.of(context);
 
-    return ToolScaffold(
-      title: context.l10n.dataFakerTitle,
-      subtitle: 'Generate synthetic but valid Indian identity and business data',
-      body: SingleChildScrollView(
-        padding: const EdgeInsets.all(AppTheme.spacingXl),
-        child: Column(
-          crossAxisAlignment: CrossAxisAlignment.start,
-          children: [
-            // STEP 1: SELECT DATA TYPE
-            _buildSectionHeader(context, "1", "Choose the types of data you want"),
-            const SizedBox(height: 16),
-            _DataTypeGrid(state: state),
-            
-            const SizedBox(height: 32),
-            
-            // STEP 2: SELECT FORMAT
-            _buildSectionHeader(context, "2", "Choose a data format"),
-            const SizedBox(height: 16),
-            _FormatGrid(state: state),
-            
-            const SizedBox(height: 32),
+    return SingleChildScrollView(
+      padding: const EdgeInsets.all(AppTheme.spacingXl),
+      child: Column(
+        crossAxisAlignment: CrossAxisAlignment.start,
+        children: [
+          // Header Area (Replacing ToolScaffold header part)
+          Text(
+            context.l10n.dataFakerTitle,
+            style: theme.textTheme.headlineMedium?.copyWith(fontWeight: FontWeight.bold),
+          ),
+          const Text('Generate synthetic but valid Indian identity and business data'),
+          const SizedBox(height: 32),
 
-            // STEP 3: RECORD COUNT
-            _buildSectionHeader(context, "3", "How many records?"),
-            const SizedBox(height: 8),
-            Row(
+          // STEP 1: SELECT DATA TYPE
+          _buildSectionHeader(context, "1", "Choose the types of data you want"),
+          const SizedBox(height: 16),
+          _DataTypeGrid(state: state),
+          
+          const SizedBox(height: 32),
+          
+          // STEP 2: SELECT FORMAT
+          _buildSectionHeader(context, "2", "Choose a data format"),
+          const SizedBox(height: 16),
+          _FormatGrid(state: state),
+          
+          const SizedBox(height: 32),
+
+          // STEP 3: RECORD COUNT
+          _buildSectionHeader(context, "3", "How many records?"),
+          const SizedBox(height: 8),
+          Row(
+            children: [
+              Expanded(
+                flex: 3,
+                child: Wrap(
+                  spacing: 8,
+                  children: [1, 10, 100, 1000].map((count) {
+                    final isSelected = state.recordCount == count;
+                    return ChoiceChip(
+                      label: Text(count.toString()),
+                      selected: isSelected,
+                      onSelected: (selected) {
+                        if (selected) {
+                          ref.read(fakerNotifierProvider.notifier).updateRecordCount(count);
+                        }
+                      },
+                    );
+                  }).toList(),
+                ),
+              ),
+              const SizedBox(width: 16),
+              Expanded(
+                flex: 1,
+                child: TextFormField(
+                  key: ValueKey('record_count_${state.recordCount}'),
+                  initialValue: state.recordCount.toString(),
+                  keyboardType: TextInputType.number,
+                  decoration: InputDecoration(
+                    labelText: 'Custom',
+                    hintText: '1-10000',
+                    border: OutlineInputBorder(borderRadius: BorderRadius.circular(8)),
+                    contentPadding: const EdgeInsets.symmetric(horizontal: 12, vertical: 8),
+                  ),
+                  onChanged: (val) {
+                    final count = int.tryParse(val);
+                    if (count != null) {
+                      ref.read(fakerNotifierProvider.notifier).updateRecordCount(count.clamp(1, 10000));
+                    }
+                  },
+                ),
+              ),
+            ],
+          ),
+          
+          const SizedBox(height: 48),
+          
+          // ACTIONS & PREVIEW
+          Center(
+            child: Column(
               children: [
-                Expanded(
-                  flex: 3,
-                  child: Wrap(
-                    spacing: 8,
-                    children: [1, 10, 100, 1000].map((count) {
-                      final isSelected = state.recordCount == count;
-                      return ChoiceChip(
-                        label: Text(count.toString()),
-                        selected: isSelected,
-                        onSelected: (selected) {
-                          if (selected) {
-                            ref.read(fakerNotifierProvider.notifier).updateRecordCount(count);
-                          }
-                        },
-                      );
-                    }).toList(),
-                  ),
-                ),
-                const SizedBox(width: 16),
-                Expanded(
-                  flex: 1,
-                  child: TextFormField(
-                    key: ValueKey('record_count_${state.recordCount}'),
-                    initialValue: state.recordCount.toString(),
-                    keyboardType: TextInputType.number,
-                    decoration: InputDecoration(
-                      labelText: 'Custom',
-                      hintText: '1-10000',
-                      border: OutlineInputBorder(borderRadius: BorderRadius.circular(8)),
-                      contentPadding: const EdgeInsets.symmetric(horizontal: 12, vertical: 8),
+                SizedBox(
+                  width: 300,
+                  height: 56,
+                  child: ElevatedButton.icon(
+                    onPressed: state.isGenerating ? null : () => ref.read(fakerNotifierProvider.notifier).generateRecords(),
+                    icon: state.isGenerating 
+                      ? const SizedBox(width: 20, height: 20, child: CircularProgressIndicator(strokeWidth: 2))
+                      : const Icon(LucideIcons.zap),
+                    label: Text(
+                      state.isGenerating ? 'GENERATING...' : 'GENERATE DATA',
+                      style: const TextStyle(fontWeight: FontWeight.bold, letterSpacing: 1.2),
                     ),
-                    onChanged: (val) {
-                      final count = int.tryParse(val);
-                      if (count != null) {
-                        ref.read(fakerNotifierProvider.notifier).updateRecordCount(count.clamp(1, 10000));
-                      }
-                    },
+                    style: ElevatedButton.styleFrom(
+                      backgroundColor: theme.colorScheme.primary,
+                      foregroundColor: theme.colorScheme.onPrimary,
+                      shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(16)),
+                    ),
                   ),
                 ),
+                if (state.generatedRecords.isNotEmpty) ...[
+                  const SizedBox(height: 16),
+                  TextButton.icon(
+                    onPressed: () => _showPreview(context, state),
+                    icon: const Icon(LucideIcons.eye),
+                    label: const Text('View Preview'),
+                  ),
+                ]
               ],
             ),
-            
-            const SizedBox(height: 48),
-            
-            // ACTIONS & PREVIEW
-            Center(
-              child: Column(
-                children: [
-                  SizedBox(
-                    width: 300,
-                    height: 56,
-                    child: ElevatedButton.icon(
-                      onPressed: state.isGenerating ? null : () => ref.read(fakerNotifierProvider.notifier).generateRecords(),
-                      icon: state.isGenerating 
-                        ? const SizedBox(width: 20, height: 20, child: CircularProgressIndicator(strokeWidth: 2))
-                        : const Icon(LucideIcons.zap),
-                      label: Text(
-                        state.isGenerating ? 'GENERATING...' : 'GENERATE DATA',
-                        style: const TextStyle(fontWeight: FontWeight.bold, letterSpacing: 1.2),
-                      ),
-                      style: ElevatedButton.styleFrom(
-                        backgroundColor: theme.colorScheme.primary,
-                        foregroundColor: theme.colorScheme.onPrimary,
-                        shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(16)),
-                      ),
-                    ),
-                  ),
-                  if (state.generatedRecords.isNotEmpty) ...[
-                    const SizedBox(height: 16),
-                    TextButton.icon(
-                      onPressed: () => _showPreview(context, state),
-                      icon: const Icon(LucideIcons.eye),
-                      label: const Text('View Preview'),
-                    ),
-                  ]
-                ],
-              ),
-            ),
-            const SizedBox(height: 60),
-          ],
-        ),
+          ),
+          const SizedBox(height: 60),
+        ],
       ),
     );
   }
