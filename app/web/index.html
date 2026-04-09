@@ -46,7 +46,7 @@
       align-items: center;
       height: 100vh;
       margin: 0;
-      font-family: -apple-system, system-ui, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+      font-family: -apple-system, system-ui, sans-serif;
     }
     .loading {
       width: 40px;
@@ -63,7 +63,6 @@
       margin-top: 20px;
       color: #58A6FF;
       font-weight: bold;
-      letter-spacing: 0.5px;
     }
   </style>
 </head>
@@ -71,10 +70,7 @@
   <div class="loading"></div>
   <div class="text">BharatTesting is loading...</div>
 
-  <!-- 
-    The modern Flutter Web entrypoint. 
-    This script handles service workers, engine initialization, and app execution.
-  -->
+  <!-- The modern Flutter Web entrypoint handles everything automatically -->
   <script src="flutter_bootstrap.js" async></script>
 </body>
 </html>

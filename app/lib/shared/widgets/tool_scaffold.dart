@@ -38,15 +38,16 @@ class ToolScaffold extends ConsumerWidget {
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
-    // Determine if we are in a tool-specific route for "Shapeshifter" mode
     final path = GoRouterState.of(context).uri.path;
     final intent = ToolIntent.fromPath(path);
     final branding = ToolBranding.all[intent];
     
-    // Update browser title dynamically for SEO
+    // Update browser title dynamically
     BrandingService.updateBrowserTitle(path);
 
-    // Provide the content - prioritising body for complex layouts
+    // AUDIT FIX: We must NOT wrap 'body' in a SingleChildScrollView 
+    // because many tools (JSON, PDF) use internal Expanded widgets.
+    // If child is provided, we wrap it for backward compatibility.
     final Widget mainContent = body ?? (child != null ? SingleChildScrollView(child: child!) : const SizedBox.shrink());
 
     return Theme(
@@ -137,7 +138,7 @@ class _MobileLayout extends StatelessWidget {
   }
 }
 
-/// Tablet layout with navigation rail
+/// Tablet layout with side rail
 class _TabletLayout extends StatelessWidget {
   const _TabletLayout({
     required this.child,
@@ -206,7 +207,7 @@ class _TabletLayout extends StatelessWidget {
   }
 }
 
-/// Desktop layout with top navigation
+/// Desktop layout with tight constraints for tool rendering
 class _DesktopLayout extends StatelessWidget {
   const _DesktopLayout({
     required this.child,
@@ -237,7 +238,7 @@ class _DesktopLayout extends StatelessWidget {
       endDrawer: endDrawer,
       body: Column(
         children: [
-          // Header
+          // Dynamic Branded Header
           Material(
             elevation: 1,
             color: branding != null ? branding!.primaryColor : theme.colorScheme.surface,
@@ -258,7 +259,6 @@ class _DesktopLayout extends StatelessWidget {
                     ),
                   ),
                   const SizedBox(width: AppTheme.spacingXl),
-                  // Only show full nav if not in "standalone" focus mode
                   if (branding == null)
                     Expanded(
                       child: Row(
@@ -270,7 +270,6 @@ class _DesktopLayout extends StatelessWidget {
                                   icon: entry.value.icon,
                                   selectedIcon: entry.value.selectedIcon ?? entry.value.icon,
                                   isSelected: entry.key == currentIndex,
-                                  isBranded: false,
                                   onTap: () => AppRouter.navigateToIndex(context, entry.key),
                                 ))
                             .toList(),
@@ -285,12 +284,12 @@ class _DesktopLayout extends StatelessWidget {
               ),
             ),
           ),
-          // Content Area - FIXED CONSTRAINTS
+          // Content Area - FIXED: Remove centering to prevent height collapse
           Expanded(
             child: Container(
               width: double.infinity,
               color: theme.colorScheme.background,
-              child: child,
+              child: child, // Content now receives full height from Expanded
             ),
           ),
           const BTQAFooter(),
@@ -307,7 +306,6 @@ class _DesktopNavItem extends StatelessWidget {
     required this.selectedIcon,
     required this.isSelected,
     required this.onTap,
-    this.isBranded = false,
   });
 
   final String label;
@@ -315,15 +313,10 @@ class _DesktopNavItem extends StatelessWidget {
   final Widget selectedIcon;
   final bool isSelected;
   final VoidCallback onTap;
-  final bool isBranded;
 
   @override
   Widget build(BuildContext context) {
     final theme = Theme.of(context);
-    final color = isBranded 
-        ? (isSelected ? Colors.white : Colors.white70)
-        : (isSelected ? theme.colorScheme.primary : theme.colorScheme.onSurfaceVariant);
-
     return Padding(
       padding: const EdgeInsets.symmetric(horizontal: AppTheme.spacingSm),
       child: TextButton.icon(
@@ -331,8 +324,13 @@ class _DesktopNavItem extends StatelessWidget {
         icon: isSelected ? selectedIcon : icon,
         label: Text(label),
         style: TextButton.styleFrom(
-          foregroundColor: color,
-          padding: const EdgeInsets.symmetric(horizontal: AppTheme.spacingLg, vertical: AppTheme.spacingMd),
+          foregroundColor: isSelected 
+              ? theme.colorScheme.primary 
+              : theme.colorScheme.onSurfaceVariant,
+          padding: const EdgeInsets.symmetric(
+            horizontal: AppTheme.spacingLg, 
+            vertical: AppTheme.spacingMd,
+          ),
         ),
       ),
     );
