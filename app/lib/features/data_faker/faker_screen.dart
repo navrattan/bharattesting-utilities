@@ -45,23 +45,31 @@ class FakerScreen extends ConsumerWidget {
               children: [
                 Expanded(
                   flex: 3,
-                  child: Slider(
-                    value: state.recordCount.toDouble().clamp(1, 100),
-                    min: 1,
-                    max: 100,
-                    divisions: 99,
-                    label: state.recordCount.toString(),
-                    onChanged: (val) => ref.read(fakerNotifierProvider.notifier).updateRecordCount(val.toInt()),
+                  child: Wrap(
+                    spacing: 8,
+                    children: [1, 10, 100, 1000].map((count) {
+                      final isSelected = state.recordCount == count;
+                      return ChoiceChip(
+                        label: Text(count.toString()),
+                        selected: isSelected,
+                        onSelected: (selected) {
+                          if (selected) {
+                            ref.read(fakerNotifierProvider.notifier).updateRecordCount(count);
+                          }
+                        },
+                      );
+                    }).toList(),
                   ),
                 ),
                 const SizedBox(width: 16),
                 Expanded(
                   flex: 1,
                   child: TextFormField(
+                    key: ValueKey('record_count_${state.recordCount}'),
                     initialValue: state.recordCount.toString(),
                     keyboardType: TextInputType.number,
                     decoration: InputDecoration(
-                      labelText: 'Count',
+                      labelText: 'Custom',
                       hintText: '1-10000',
                       border: OutlineInputBorder(borderRadius: BorderRadius.circular(8)),
                       contentPadding: const EdgeInsets.symmetric(horizontal: 12, vertical: 8),
