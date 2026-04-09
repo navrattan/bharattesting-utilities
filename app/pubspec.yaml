@@ -1,7 +1,7 @@
 name: bharattesting_utilities
 description: Making software testing accessible for every developer, student, and startup in India. A suite of 100% free, offline-first developer tools.
 publish_to: none
-version: 1.0.0+1
+version: 1.0.0+2
 
 environment:
   sdk: ^3.5.0
