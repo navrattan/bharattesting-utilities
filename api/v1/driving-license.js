@@ -1,21 +1,42 @@
-const { verhoeff, luhnMod36 } = require('./utils/checksums');
+const formatResponse = require('./utils/formatter');
 
 module.exports = async (req, res) => {
-  const { count = 1, state = 'DL' } = req.query;
+  const { count = 1, state = 'KA' } = req.query;
   const numCount = Math.min(parseInt(count), 100);
   
-  const generateDL = (st) => {
-    const sc = st.toUpperCase().substring(0, 2);
-    const year = (new Date().getFullYear() - Math.floor(Math.random() * 20)).toString();
-    const rto = (Math.floor(Math.random() * 99) + 1).toString().padStart(2, '0');
-    const seq = Math.floor(Math.random() * 9999999).toString().padStart(7, '0');
-    return `${sc}${rto}${year}${seq}`;
+  // PDF P.9: State-RTO mapping
+  const stateRTOs = {
+    'KA': '01', // Bengaluru
+    'MH': '01', // Mumbai
+    'DL': '01', // New Delhi
+    'TN': '01', // Chennai
+    'TS': '01', // Hyderabad
+    'WB': '01', // Kolkata
+    'UP': '14', // Noida
+    'GJ': '01'  // Ahmedabad
+  };
+
+  const selectedState = state.toUpperCase();
+  const rto = stateRTOs[selectedState] || '01';
+  
+  const generateDL = () => {
+    const year = Math.floor(Math.random() * 20) + 2005;
+    let sequence = '';
+    for (let i = 0; i < 7; i++) {
+      sequence += Math.floor(Math.random() * 10).toString();
+    }
+    // Format: KA01 20240000001
+    return {
+      dl_number: `${selectedState}${rto}${year}${sequence}`,
+      state: selectedState,
+      issue_year: year
+    };
   };
 
   const results = [];
   for (let i = 0; i < numCount; i++) {
-    results.push(generateDL(state));
+    results.push(generateDL());
   }
 
-  res.status(200).json({ data: results });
+  return formatResponse(req, res, results, 'dl_records');
 };
