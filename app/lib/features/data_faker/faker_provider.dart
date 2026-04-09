@@ -15,8 +15,25 @@ part 'faker_provider.g.dart';
 class FakerNotifier extends _$FakerNotifier {
   @override
   FakerState build() {
+    // Return initial state with sensible defaults for Individual template
     return const FakerState(
       selectedIdentifiers: {'name', 'phone', 'email', 'pan', 'aadhaar'},
+    );
+  }
+
+  void updateTemplate(core.TemplateType template) {
+    if (state.selectedTemplate == template) return;
+    
+    // Create a new state with the new template and reset identifiers to defaults for that template
+    final newState = FakerState(
+      selectedTemplate: template,
+      recordCount: state.recordCount,
+      selectedExportFormat: state.selectedExportFormat,
+    );
+    
+    // Sync identifiers: switch to defaults for the new template
+    state = newState.copyWith(
+      selectedIdentifiers: newState.availableIdentifiers.toSet(),
     );
   }
 
@@ -38,7 +55,13 @@ class FakerNotifier extends _$FakerNotifier {
     state = state.copyWith(selectedIdentifiers: current);
   }
 
+  void setPreferredState(String? indianState) {
+    state = state.copyWith(preferredState: indianState);
+  }
+
   Future<void> generateRecords() async {
+    if (state.isGenerating) return;
+    
     state = state.copyWith(isGenerating: true, errorMessage: null);
     try {
       final seed = state.useRandomSeed ? null : state.customSeed;

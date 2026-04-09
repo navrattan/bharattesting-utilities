@@ -29,6 +29,31 @@ class FakerScreen extends ConsumerWidget {
           const Text('Generate synthetic but valid Indian identity and business data'),
           const SizedBox(height: 32),
 
+          // STEP 0: SELECT TEMPLATE
+          _buildSectionHeader(context, "0", "Select Template"),
+          const SizedBox(height: 12),
+          Center(
+            child: SegmentedButton<core.TemplateType>(
+              segments: const [
+                ButtonSegment(
+                  value: core.TemplateType.individual,
+                  label: Text('Individual'),
+                  icon: Icon(LucideIcons.user),
+                ),
+                ButtonSegment(
+                  value: core.TemplateType.company,
+                  label: Text('Business/Company'),
+                  icon: Icon(LucideIcons.building),
+                ),
+              ],
+              selected: {state.selectedTemplate},
+              onSelectionChanged: (Set<core.TemplateType> newSelection) {
+                ref.read(fakerNotifierProvider.notifier).updateTemplate(newSelection.first);
+              },
+            ),
+          ),
+          const SizedBox(height: 32),
+
           // STEP 1: SELECT DATA TYPE
           _buildSectionHeader(context, "1", "Choose the types of data you want"),
           const SizedBox(height: 16),
@@ -222,20 +247,25 @@ class _DataTypeGrid extends ConsumerWidget {
     // Ultra compact: 8 on desktop, 6 on tablet, 4 on mobile
     final crossAxisCount = screenWidth > 1200 ? 8 : (screenWidth > 900 ? 6 : (screenWidth > 600 ? 5 : 4));
     
-    final types = [
-      ('Name', LucideIcons.user, 'name'),
-      ('Phone', LucideIcons.phone, 'phone'),
-      ('Email', LucideIcons.mail, 'email'),
-      ('Address', LucideIcons.mapPin, 'address'),
-      ('PAN', LucideIcons.creditCard, 'pan'),
-      ('Aadhaar', LucideIcons.fingerprint, 'aadhaar'),
-      ('GSTIN', LucideIcons.briefcase, 'gstin'),
-      ('UPI ID', LucideIcons.wallet, 'upi_id'),
-      ('PIN Code', LucideIcons.map, 'pin_code'),
-      ('IFSC', LucideIcons.banknote, 'ifsc'),
-      ('Vehicle', LucideIcons.car, 'vehicle'),
-      ('Company', LucideIcons.building, 'company'),
-    ];
+    // Dynamically get identifiers based on template
+    final availableIds = state.availableIdentifiers;
+    final types = availableIds.map((id) {
+      final label = id.replaceAll('_', ' ').split(' ').map((s) => s.substring(0, 1).toUpperCase() + s.substring(1)).join(' ');
+      IconData icon;
+      switch (id) {
+        case 'pan': icon = LucideIcons.creditCard; break;
+        case 'aadhaar': icon = LucideIcons.fingerprint; break;
+        case 'gstin': icon = LucideIcons.briefcase; break;
+        case 'cin': icon = LucideIcons.building; break;
+        case 'upi_id': icon = LucideIcons.wallet; break;
+        case 'phone': icon = LucideIcons.phone; break;
+        case 'email': icon = LucideIcons.mail; break;
+        case 'address': icon = LucideIcons.mapPin; break;
+        case 'pin_code': icon = LucideIcons.map; break;
+        default: icon = LucideIcons.database;
+      }
+      return (label, icon, id);
+    }).toList();
 
     return GridView.builder(
       shrinkWrap: true,
