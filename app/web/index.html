@@ -19,6 +19,24 @@
   <title>BharatTesting Utilities</title>
   <link rel="manifest" href="manifest.json">
 
+  <script>
+    // NUCLEAR RESET: Clear stale service workers causing "Failed to fetch"
+    if ('serviceWorker' in navigator) {
+      navigator.serviceWorker.getRegistrations().then(function(registrations) {
+        for(let registration of registrations) {
+          registration.unregister();
+          console.log('Stale Service Worker cleared');
+        }
+      });
+    }
+    // Clear caches to ensure fresh assets
+    if ('caches' in window) {
+      caches.keys().then(function(names) {
+        for (let name of names) caches.delete(name);
+      });
+    }
+  </script>
+
   <!-- Schema.org for AI discovery -->
   <script type="application/ld+json">
   {
@@ -46,7 +64,7 @@
       align-items: center;
       height: 100vh;
       margin: 0;
-      font-family: -apple-system, system-ui, sans-serif;
+      font-family: -apple-system, system-ui, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
     }
     .loading {
       width: 40px;
@@ -63,6 +81,7 @@
       margin-top: 20px;
       color: #58A6FF;
       font-weight: bold;
+      letter-spacing: 0.5px;
     }
   </style>
 </head>
@@ -70,7 +89,7 @@
   <div class="loading"></div>
   <div class="text">BharatTesting is loading...</div>
 
-  <!-- The modern Flutter Web entrypoint handles everything automatically -->
+  <!-- The modern Flutter Web entrypoint -->
   <script src="flutter_bootstrap.js" async></script>
 </body>
 </html>
