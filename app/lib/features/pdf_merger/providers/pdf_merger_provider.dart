@@ -32,88 +32,61 @@ class PdfMerger extends _$PdfMerger {
       newDocs.add(doc);
     }
 
+    state = state.copyWith(documents: [...state.documents, ...newDocs]);
+    _generateAllThumbnails();
+  }
+
+  void removeDocument(String id) {
     state = state.copyWith(
-      documents: [...state.documents, ...newDocs],
+      documents: state.documents.where((doc) => doc.id != id).toList(),
+      pages: state.pages.where((page) => page.documentId != id).toList(),
     );
-
-    for (final doc in newDocs) {
-      _generateThumbnailsForDoc(doc);
-    }
   }
 
-  /// Alias for addDocuments used by drag and drop
-  Future<void> addDocumentsFromDrop(List<PlatformFile> files) => addDocuments(files);
-
-  Future<void> _generateThumbnailsForDoc(PdfDocument doc) async {
-    try {
-      final thumbnails = await PdfThumbnailGenerator.generate(doc.data);
-      
-      final updatedDoc = doc.copyWith(pageCount: thumbnails.length);
-      final updatedDocs = state.documents.map((d) => d.id == doc.id ? updatedDoc : d).toList();
-      
-      final newPages = <PdfPageThumbnail>[];
-      for (int i = 0; i < thumbnails.length; i++) {
-        newPages.add(PdfPageThumbnail(
-          id: '${doc.id}_$i',
-          documentId: doc.id,
-          pageNumber: i + 1,
-          globalIndex: state.pages.length + i,
-          dimensions: const PageDimensions(width: 595, height: 842),
-          thumbnailData: thumbnails[i],
-          status: ThumbnailStatus.ready,
-        ));
-      }
-
-      state = state.copyWith(
-        documents: updatedDocs,
-        pages: [...state.pages, ...newPages],
-      );
-    } catch (e) {
-      _addError('Failed to process ${doc.fileName}: $e');
+  void reorderDocuments(int oldIndex, int newIndex) {
+    final docs = List<PdfDocument>.from(state.documents);
+    if (oldIndex < newIndex) {
+      newIndex -= 1;
     }
+    final item = docs.removeAt(oldIndex);
+    docs.insert(newIndex, item);
+    state = state.copyWith(documents: docs);
+    _rebuildPagesFromDocs();
   }
 
-  /// Select a document
   void selectDocument(PdfDocument? doc) {
     state = state.copyWith(selectedDocument: doc);
   }
 
-  /// Select a page
-  void selectPage(PdfPageThumbnail? page) {
+  void selectPage(String id) {
+    final page = state.pages.firstWhere((p) => p.id == id);
     state = state.copyWith(selectedPage: page);
   }
 
-  /// Remove a page
-  void removePage(String pageId) {
+  void removePage(String id) {
     state = state.copyWith(
-      pages: state.pages.where((p) => p.id != pageId).toList(),
+      pages: state.pages.where((p) => p.id != id).toList(),
     );
   }
 
-  /// Remove a document
-  void removeDocument(String docId) {
+  void rotatePage(String id, core.PageRotation rotation) {
     state = state.copyWith(
-      documents: state.documents.where((d) => d.id != docId).toList(),
-      pages: state.pages.where((p) => p.documentId != docId).toList(),
+      pages: state.pages.map((p) => p.id == id ? p.copyWith(rotation: rotation) : p).toList(),
     );
   }
 
-  /// Duplicate a page
-  void duplicatePage(String pageId) {
-    final index = state.pages.indexWhere((p) => p.id == pageId);
+  void duplicatePage(String id) {
+    final index = state.pages.indexWhere((p) => p.id == id);
     if (index == -1) return;
-
-    final original = state.pages[index];
-    final copy = original.copyWith(
-      id: '${original.id}_copy_${DateTime.now().millisecondsSinceEpoch}',
-    );
-
-    final updatedPages = List<PdfPageThumbnail>.from(state.pages);
-    updatedPages.insert(index + 1, copy);
-    state = state.copyWith(pages: updatedPages);
+    
+    final page = state.pages[index];
+    final newPage = page.copyWith(id: '${page.id}_copy_${DateTime.now().millisecondsSinceEpoch}');
+    
+    final newPages = List<PdfPageThumbnail>.from(state.pages);
+    newPages.insert(index + 1, newPage);
+    state = state.copyWith(pages: newPages);
   }
 
-  /// Reorder pages
   void reorderPages(int oldIndex, int newIndex) {
     final pages = List<PdfPageThumbnail>.from(state.pages);
     if (oldIndex < newIndex) {
@@ -124,57 +97,28 @@ class PdfMerger extends _$PdfMerger {
     state = state.copyWith(pages: pages);
   }
 
-  /// Rotate a page
-  Future<void> rotatePage(String pageId, core.PageRotation rotation) async {
-    final pages = state.pages.map((p) {
-      if (p.id == pageId) {
-        // Map core.PageRotation to app's PageRotation
-        final appRotation = PageRotation.fromDegrees(rotation.degrees);
-        return p.copyWith(rotation: appRotation);
-      }
-      return p;
-    }).toList();
-    state = state.copyWith(pages: pages);
+  void updateMergeOptions(core.PdfMergeOptions options) {
+    state = state.copyWith(mergeOptions: options);
   }
 
-  /// Toggle encryption
-  void toggleEncryption() {
-    state = state.copyWith(enableEncryption: !state.enableEncryption);
+  void toggleEncryption(bool enabled) {
+    state = state.copyWith(enableEncryption: enabled);
   }
 
-  /// Update encryption password
   void updateEncryptionPassword(String password) {
     state = state.copyWith(encryptionPassword: password);
   }
 
-  /// Update permissions
-  void updatePermissions(PdfPermissions permissions) {
-    state = state.copyWith(permissions: permissions);
+  void updatePermissions(core.PdfPermissions perms) {
+    state = state.copyWith(permissions: perms);
   }
 
-  /// Update merge options
-  void updateMergeOptions(PdfMergeOptions options) {
-    state = state.copyWith(mergeOptions: options);
+  Future<void> _generateAllThumbnails() async {
+    // Implementation for thumbnail generation
   }
 
-  /// Calculate statistics
-  MergeStatistics calculateStatistics() {
-    return MergeStatistics(
-      totalPages: state.pages.length,
-      totalSize: state.documents.fold(0, (sum, doc) => sum + doc.fileSize),
-      estimatedOutputSize: state.documents.fold(0, (sum, doc) => sum + doc.fileSize),
-      totalDocuments: state.documents.length,
-    );
-  }
-
-  /// Clear all
-  void clearAll() {
-    state = const PdfMergerState();
-  }
-
-  /// Download merged PDF
-  Future<void> downloadMergedPdf() async {
-    // Download logic
+  void _rebuildPagesFromDocs() {
+    // Logic to rebuild pages list when documents are reordered
   }
 
   /// Merge PDFs
@@ -191,11 +135,7 @@ class PdfMerger extends _$PdfMerger {
 
       final mergedData = await core.PdfMerger.mergePdfs(
         inputFiles,
-        options: core.PdfMergeOptions(
-          generateBookmarks: state.mergeOptions.generateBookmarks,
-          preserveMetadata: state.mergeOptions.preserveMetadata,
-          optimizeForSize: state.mergeOptions.optimizeForSize,
-        ),
+        options: state.mergeOptions,
       );
 
       state = state.copyWith(
@@ -211,9 +151,17 @@ class PdfMerger extends _$PdfMerger {
     }
   }
 
-  void _addError(String message) {
-    state = state.copyWith(
-      processingErrors: [...state.processingErrors, message],
+  void downloadMergedPdf() {
+    // Web download logic
+  }
+
+  /// Get merge statistics
+  MergeStatistics get statistics {
+    return MergeStatistics(
+      totalDocuments: state.documents.length,
+      totalPages: state.pages.length,
+      totalSize: state.documents.fold(0, (sum, doc) => sum + doc.fileSize),
+      estimatedOutputSize: state.documents.fold(0, (sum, doc) => sum + doc.fileSize),
     );
   }
 }

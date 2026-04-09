@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
-import 'models/pdf_merger_state.dart' hide PdfMerger;
+import '../../l10n/l10n.dart';
+import '../../shared/widgets/tool_scaffold.dart';
+import 'models/pdf_merger_state.dart';
 import 'providers/pdf_merger_provider.dart';
 import 'package:bharattesting_core/core.dart' as core;
 import 'widgets/pdf_drop_zone.dart';
@@ -37,52 +39,47 @@ class _PdfMergerScreenState extends ConsumerState<PdfMergerScreen>
     final state = ref.watch(pdfMergerProvider);
     final notifier = ref.read(pdfMergerProvider.notifier);
 
-    return Scaffold(
-      appBar: AppBar(
-        title: const Text('PDF Merger'),
-        actions: [
-          if (state.mergedPdfData != null)
-            IconButton(
-              icon: const Icon(Icons.download),
-              onPressed: () => notifier.downloadMergedPdf(),
-              tooltip: 'Download Merged PDF',
-            ),
+    return ToolScaffold(
+      title: context.l10n.pdfMergerTitle,
+      subtitle: 'Merge, rotate, password-protect',
+      actions: [
+        if (state.mergedPdfData != null)
           IconButton(
-            icon: const Icon(Icons.delete_sweep),
-            onPressed: () => _showClearConfirmation(context, notifier),
-            tooltip: 'Clear All',
+            icon: const Icon(Icons.download),
+            onPressed: () => notifier.downloadMergedPdf(),
+            tooltip: 'Download Merged PDF',
+          ),
+        IconButton(
+          icon: const Icon(Icons.settings_outlined),
+          onPressed: () => _showSettings(context, state, notifier),
+          tooltip: 'Merge Settings',
+        ),
+      ],
+      body: Column(
+        children: [
+          Material(
+            color: Theme.of(context).colorScheme.surface,
+            child: TabBar(
+              controller: _tabController,
+              tabs: const [
+                Tab(text: 'Files', icon: Icon(Icons.description)),
+                Tab(text: 'Pages', icon: Icon(Icons.grid_view)),
+                Tab(text: 'Settings', icon: Icon(Icons.settings)),
+              ],
+            ),
+          ),
+          Expanded(
+            child: TabBarView(
+              controller: _tabController,
+              children: [
+                _buildFilesTab(context, state, notifier),
+                _buildPagesTab(context, state, notifier),
+                _buildSettingsTab(context, state, notifier),
+              ],
+            ),
           ),
         ],
-        bottom: TabBar(
-          controller: _tabController,
-          tabs: const [
-            Tab(text: 'Files', icon: Icon(Icons.description)),
-            Tab(text: 'Pages', icon: Icon(Icons.grid_view)),
-            Tab(text: 'Settings', icon: Icon(Icons.settings)),
-          ],
-        ),
       ),
-      body: TabBarView(
-        controller: _tabController,
-        children: [
-          _buildFilesTab(context, state, notifier),
-          _buildPagesTab(context, state, notifier),
-          _buildSettingsTab(context, state, notifier),
-        ],
-      ),
-      floatingActionButton: state.pages.isNotEmpty
-          ? FloatingActionButton.extended(
-              onPressed: state.isProcessing ? null : () => notifier.mergePdfs(),
-              icon: state.isProcessing
-                  ? const SizedBox(
-                      width: 24,
-                      height: 24,
-                      child: CircularProgressIndicator(strokeWidth: 2, color: Colors.white),
-                    )
-                  : const Icon(Icons.merge_type),
-              label: Text(state.isProcessing ? 'Merging...' : 'Merge PDFs'),
-            )
-          : null,
     );
   }
 
@@ -90,7 +87,7 @@ class _PdfMergerScreenState extends ConsumerState<PdfMergerScreen>
     return Column(
       children: [
         PdfDropZone(
-          onFilesAdded: (files) => notifier.addDocumentsFromDrop(files),
+          onFilesAdded: (files) => notifier.addDocuments(files),
         ),
         Expanded(
           child: state.documents.isEmpty
@@ -98,17 +95,13 @@ class _PdfMergerScreenState extends ConsumerState<PdfMergerScreen>
                   context,
                   Icons.upload_file,
                   'No PDF files added',
-                  'Upload or drag and drop PDF files to start merging',
+                  'Drag and drop PDF files here or click to upload',
                 )
-              : ListView(
-                  padding: const EdgeInsets.all(16),
-                  children: [
-                    PdfDocumentList(
-                      documents: state.documents,
-                      onDocumentSelected: (doc) => notifier.selectDocument(doc),
-                      onDocumentRemoved: (id) => notifier.removeDocument(id),
-                    ),
-                  ],
+              : PdfDocumentList(
+                  documents: state.documents,
+                  onDocumentRemoved: (id) => notifier.removeDocument(id),
+                  onDocumentSelected: (doc) => notifier.selectDocument(doc),
+                  onReorder: (oldIdx, newIdx) => notifier.reorderDocuments(oldIdx, newIdx),
                 ),
         ),
       ],
@@ -116,7 +109,7 @@ class _PdfMergerScreenState extends ConsumerState<PdfMergerScreen>
   }
 
   Widget _buildPagesTab(BuildContext context, PdfMergerState state, PdfMerger notifier) {
-    if (state.pages.isEmpty) {
+    if (state.documents.isEmpty) {
       return _buildEmptyState(
         context,
         Icons.grid_view,
@@ -125,55 +118,37 @@ class _PdfMergerScreenState extends ConsumerState<PdfMergerScreen>
       );
     }
 
-    return PdfPageGrid(
-      pages: state.pages,
-      onPageSelected: (page) => notifier.selectPage(page),
-      onPageRotated: (id, rot) => notifier.rotatePage(id, core.PageRotation.fromDegrees(rot.degrees)),
-      onPageDuplicated: (id) => notifier.duplicatePage(id),
-      onPageRemoved: (id) => notifier.removePage(id),
-      onPagesReordered: (oldIdx, newIdx) => notifier.reorderPages(oldIdx, newIdx),
+    return Column(
+      children: [
+        MergeStatisticsPanel(statistics: notifier.statistics),
+        Expanded(
+          child: PdfPageGrid(
+            pages: state.pages,
+            onPageSelected: (page) => notifier.selectPage(page?.id ?? ''),
+            onPageRemoved: (id) => notifier.removePage(id),
+            onPageRotated: (id, rotation) => notifier.rotatePage(id, rotation),
+            onPageDuplicated: (id) => notifier.duplicatePage(id),
+            onPagesReordered: (oldIdx, newIdx) => notifier.reorderPages(oldIdx, newIdx),
+          ),
+        ),
+      ],
     );
   }
 
   Widget _buildSettingsTab(BuildContext context, PdfMergerState state, PdfMerger notifier) {
     return SingleChildScrollView(
       padding: const EdgeInsets.all(16),
-      child: Column(
-        children: [
-          MergeControlsPanel(
-            enableEncryption: state.enableEncryption,
-            onToggleEncryption: () => notifier.toggleEncryption(),
-            password: state.encryptionPassword,
-            onPasswordChanged: (val) => notifier.updateEncryptionPassword(val),
-            permissions: core.PdfPermissions(
-              allowPrinting: state.permissions.allowPrinting,
-              allowCopy: state.permissions.allowCopy,
-              allowModification: state.permissions.allowModification,
-              allowAnnotations: state.permissions.allowAnnotations,
-            ),
-            onPermissionsChanged: (val) => notifier.updatePermissions(PdfPermissions(
-              allowPrinting: val.allowPrinting,
-              allowCopy: val.allowCopy,
-              allowModification: val.allowModification,
-              allowAnnotations: val.allowAnnotations,
-            )),
-            mergeOptions: core.PdfMergeOptions(
-              generateBookmarks: state.mergeOptions.generateBookmarks,
-              preserveMetadata: state.mergeOptions.preserveMetadata,
-              optimizeForSize: state.mergeOptions.optimizeForSize,
-            ),
-            onMergeOptionsChanged: (val) => notifier.updateMergeOptions(PdfMergeOptions(
-              generateBookmarks: val.generateBookmarks,
-              preserveMetadata: val.preserveMetadata,
-              optimizeForSize: val.optimizeForSize,
-            )),
-          ),
-          const SizedBox(height: 16),
-          if (state.pages.isNotEmpty)
-            MergeStatisticsPanel(
-              statistics: notifier.calculateStatistics(),
-            ),
-        ],
+      child: MergeControlsPanel(
+        mergeOptions: state.mergeOptions,
+        onMergeOptionsChanged: (options) => notifier.updateMergeOptions(options),
+        enableEncryption: state.enableEncryption,
+        onToggleEncryption: () => notifier.toggleEncryption(!state.enableEncryption),
+        password: state.encryptionPassword,
+        onPasswordChanged: (val) => notifier.updateEncryptionPassword(val),
+        permissions: state.permissions,
+        onPermissionsChanged: (perms) => notifier.updatePermissions(perms),
+        isProcessing: state.isProcessing,
+        onMerge: () => notifier.mergePdfs(),
       ),
     );
   }
@@ -183,38 +158,30 @@ class _PdfMergerScreenState extends ConsumerState<PdfMergerScreen>
       child: Column(
         mainAxisAlignment: MainAxisAlignment.center,
         children: [
-          Icon(icon, size: 64, color: Colors.grey[400]),
+          Icon(icon, size: 64, color: Theme.of(context).colorScheme.outline),
           const SizedBox(height: 16),
           Text(title, style: Theme.of(context).textTheme.titleLarge),
           const SizedBox(height: 8),
-          Text(subtitle, textAlign: TextAlign.center, style: TextStyle(color: Colors.grey[600])),
+          Text(subtitle, style: Theme.of(context).textTheme.bodyMedium),
         ],
       ),
     );
   }
 
-  Future<void> _showClearConfirmation(BuildContext context, PdfMerger notifier) async {
-    final confirmed = await showDialog<bool>(
+  void _showSettings(BuildContext context, PdfMergerState state, PdfMerger notifier) {
+    showModalBottomSheet(
       context: context,
-      builder: (context) => AlertDialog(
-        title: const Text('Clear All?'),
-        content: const Text('This will remove all documents and pages. This action cannot be undone.'),
-        actions: [
-          TextButton(onPressed: () => Navigator.pop(context, false), child: const Text('Cancel')),
-          ElevatedButton(
-            onPressed: () => Navigator.pop(context, true),
-            style: ElevatedButton.styleFrom(
-              backgroundColor: Theme.of(context).colorScheme.error,
-              foregroundColor: Theme.of(context).colorScheme.onError,
-            ),
-            child: const Text('Clear All'),
-          ),
-        ],
+      isScrollControlled: true,
+      builder: (context) => DraggableScrollableSheet(
+        initialChildSize: 0.7,
+        minChildSize: 0.5,
+        maxChildSize: 0.9,
+        expand: false,
+        builder: (context, scrollController) => SingleChildScrollView(
+          controller: scrollController,
+          child: _buildSettingsTab(context, state, notifier),
+        ),
       ),
     );
-
-    if (confirmed == true) {
-      notifier.clearAll();
-    }
   }
 }

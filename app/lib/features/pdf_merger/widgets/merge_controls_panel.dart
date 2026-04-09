@@ -11,6 +11,8 @@ class MergeControlsPanel extends StatelessWidget {
   final ValueChanged<core.PdfPermissions> onPermissionsChanged;
   final core.PdfMergeOptions mergeOptions;
   final ValueChanged<core.PdfMergeOptions> onMergeOptionsChanged;
+  final bool isProcessing;
+  final VoidCallback onMerge;
 
   const MergeControlsPanel({
     super.key,
@@ -22,58 +24,55 @@ class MergeControlsPanel extends StatelessWidget {
     required this.onPermissionsChanged,
     required this.mergeOptions,
     required this.onMergeOptionsChanged,
+    required this.isProcessing,
+    required this.onMerge,
   });
 
   @override
   Widget build(BuildContext context) {
-    return Card(
-      child: Padding(
-        padding: const EdgeInsets.all(16),
-        child: Column(
-          crossAxisAlignment: CrossAxisAlignment.start,
-          children: [
-            Text(
-              'Merge Settings',
-              style: Theme.of(context).textTheme.titleMedium,
-            ),
-            const SizedBox(height: 16),
-            SwitchListTile(
-              title: const Text('Enable Encryption'),
-              subtitle: const Text('Protect PDF with a password'),
-              value: enableEncryption,
-              onChanged: (_) => onToggleEncryption(),
-            ),
-            if (enableEncryption) ...[
-              const SizedBox(height: 8),
-              TextField(
-                decoration: const InputDecoration(
-                  labelText: 'User Password',
-                  border: OutlineInputBorder(),
-                  prefixIcon: Icon(Icons.lock_outline),
+    final theme = Theme.of(context);
+    
+    return Column(
+      crossAxisAlignment: CrossAxisAlignment.stretch,
+      children: [
+        Card(
+          child: Padding(
+            padding: const EdgeInsets.all(16),
+            child: Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+                Text('Merge Options', style: theme.textTheme.titleMedium),
+                const SizedBox(height: 16),
+                SwitchListTile(
+                  title: const Text('Generate Bookmarks'),
+                  subtitle: const Text('Create index from original file names'),
+                  value: mergeOptions.generateBookmarks,
+                  onChanged: (val) => onMergeOptionsChanged(mergeOptions.copyWith(generateBookmarks: val)),
                 ),
-                onChanged: onPasswordChanged,
-                obscureText: true,
-              ),
-            ],
-            const Divider(height: 32),
-            _buildMergeOption(
-              context,
-              'Generate Bookmarks',
-              mergeOptions.generateBookmarks,
-              (val) => onMergeOptionsChanged(mergeOptions.copyWith(generateBookmarks: val)),
+                SwitchListTile(
+                  title: const Text('Preserve Metadata'),
+                  subtitle: const Text('Keep author, creator and keywords'),
+                  value: mergeOptions.preserveMetadata,
+                  onChanged: (val) => onMergeOptionsChanged(mergeOptions.copyWith(preserveMetadata: val)),
+                ),
+              ],
             ),
-          ],
+          ),
         ),
-      ),
-    );
-  }
-
-  Widget _buildMergeOption(BuildContext context, String title, bool value, ValueChanged<bool> onChanged) {
-    return SwitchListTile(
-      title: Text(title),
-      value: value,
-      onChanged: onChanged,
-      contentPadding: EdgeInsets.zero,
+        const SizedBox(height: 16),
+        ElevatedButton.icon(
+          onPressed: isProcessing ? null : onMerge,
+          style: ElevatedButton.styleFrom(
+            padding: const EdgeInsets.all(16),
+            backgroundColor: theme.colorScheme.primary,
+            foregroundColor: theme.colorScheme.onPrimary,
+          ),
+          icon: isProcessing 
+            ? const SizedBox(width: 20, height: 20, child: CircularProgressIndicator(strokeWidth: 2, color: Colors.white))
+            : const Icon(Icons.merge_type),
+          label: Text(isProcessing ? 'Processing...' : 'Merge PDFs'),
+        ),
+      ],
     );
   }
 }

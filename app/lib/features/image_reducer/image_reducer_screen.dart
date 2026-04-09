@@ -44,7 +44,7 @@ class _ImageReducerScreenState extends ConsumerState<ImageReducerScreen>
 
     return ToolScaffold(
       key: _scaffoldKey,
-      title: 'Image Size Reducer',
+      title: context.l10n.imageSizeReducerTitle,
       subtitle: 'Compress, resize, and optimize images',
       actions: [
         IconButton(

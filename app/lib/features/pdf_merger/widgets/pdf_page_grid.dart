@@ -1,10 +1,11 @@
 import 'package:flutter/material.dart';
+import 'package:bharattesting_core/core.dart' as core;
 import '../models/pdf_merger_state.dart';
 
 class PdfPageGrid extends StatefulWidget {
   final List<PdfPageThumbnail> pages;
   final void Function(PdfPageThumbnail?) onPageSelected;
-  final void Function(String, PageRotation) onPageRotated;
+  final void Function(String, core.PageRotation) onPageRotated;
   final void Function(String) onPageDuplicated;
   final void Function(String) onPageRemoved;
   final void Function(int, int) onPagesReordered;
@@ -137,7 +138,7 @@ class _PdfPageGridState extends State<PdfPageGrid> {
           IconButton(
             icon: const Icon(Icons.rotate_right, size: 18),
             onPressed: () {
-              final nextRotation = PageRotation.fromDegrees(page.rotation.degrees + 90);
+              final nextRotation = core.PageRotation.fromDegrees(page.rotation.degrees + 90);
               widget.onPageRotated(page.id, nextRotation);
             },
             padding: EdgeInsets.zero,

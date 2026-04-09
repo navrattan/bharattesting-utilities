@@ -65,29 +65,6 @@ class PdfMergeOptions {
   }
 }
 
-enum PageRotation {
-  none(0),
-  rotate90(90),
-  rotate180(180),
-  rotate270(270);
-
-  const PageRotation(this.degrees);
-  final int degrees;
-
-  static PageRotation fromDegrees(int degrees) {
-    switch (degrees % 360) {
-      case 90:
-        return PageRotation.rotate90;
-      case 180:
-        return PageRotation.rotate180;
-      case 270:
-        return PageRotation.rotate270;
-      default:
-        return PageRotation.none;
-    }
-  }
-}
-
 class PageDimensions {
   const PageDimensions({required this.width, required this.height});
   final double width;
@@ -117,8 +94,8 @@ class PdfMergerState {
     this.showAdvancedSettings = false,
     this.enableEncryption = false,
     this.encryptionPassword = '',
-    this.permissions = const PdfPermissions(),
-    this.mergeOptions = const PdfMergeOptions(),
+    this.permissions = const core.PdfPermissions(),
+    this.mergeOptions = const core.PdfMergeOptions(),
     this.mergedPdfData,
     this.outputFileName = 'merged_document.pdf',
   });
@@ -134,8 +111,8 @@ class PdfMergerState {
   final bool showAdvancedSettings;
   final bool enableEncryption;
   final String encryptionPassword;
-  final PdfPermissions permissions;
-  final PdfMergeOptions mergeOptions;
+  final core.PdfPermissions permissions;
+  final core.PdfMergeOptions mergeOptions;
   final Uint8List? mergedPdfData;
   final String outputFileName;
 
@@ -151,8 +128,8 @@ class PdfMergerState {
     bool? showAdvancedSettings,
     bool? enableEncryption,
     String? encryptionPassword,
-    PdfPermissions? permissions,
-    PdfMergeOptions? mergeOptions,
+    core.PdfPermissions? permissions,
+    core.PdfMergeOptions? mergeOptions,
     Uint8List? mergedPdfData,
     String? outputFileName,
   }) {
@@ -229,7 +206,7 @@ class PdfPageThumbnail {
     required this.pageNumber,
     required this.globalIndex,
     required this.dimensions,
-    this.rotation = PageRotation.none,
+    this.rotation = core.PageRotation.none,
     this.thumbnailData,
     this.isSelected = false,
     this.isDuplicate = false,
@@ -242,7 +219,7 @@ class PdfPageThumbnail {
   final int pageNumber;
   final int globalIndex;
   final PageDimensions dimensions;
-  final PageRotation rotation;
+  final core.PageRotation rotation;
   final Uint8List? thumbnailData;
   final bool isSelected;
   final bool isDuplicate;
@@ -255,7 +232,7 @@ class PdfPageThumbnail {
     int? pageNumber,
     int? globalIndex,
     PageDimensions? dimensions,
-    PageRotation? rotation,
+    core.PageRotation? rotation,
     Uint8List? thumbnailData,
     bool? isSelected,
     bool? isDuplicate,
@@ -348,36 +325,4 @@ class MergeStatistics {
   String get outputSizeText => '${(estimatedOutputSize / 1024 / 1024).toStringAsFixed(2)} MB';
   String get compressionText => '${(compressionRatio * 100).toStringAsFixed(0)}%';
   String get estimatedTimeText => '${estimatedTime.inSeconds}s';
-}
-
-class PageReorderOperation {
-  const PageReorderOperation({
-    required this.pageId,
-    required this.fromIndex,
-    required this.toIndex,
-    this.isValid = true,
-    this.isActive = false,
-  });
-
-  final String pageId;
-  final int fromIndex;
-  final int toIndex;
-  final bool isValid;
-  final bool isActive;
-}
-
-class BatchPageOperation {
-  const BatchPageOperation({
-    required this.pageIds,
-    required this.operationType,
-    this.parameters = const {},
-    this.progress = 0.0,
-    this.isProcessing = false,
-  });
-
-  final List<String> pageIds;
-  final String operationType;
-  final Map<String, dynamic> parameters;
-  final double progress;
-  final bool isProcessing;
 }

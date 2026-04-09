@@ -630,6 +630,22 @@ class PINCodeGenerator {
   static List<String> getSupportedStates() {
     return StateCodes.statePinRanges.keys.toList();
   }
+
+  /// Alias for generate to maintain compatibility
+  static String generatePinCode({
+    String? stateName,
+    PINAreaType? areaType,
+    String? cityName,
+    Random? random,
+  }) => generate(
+    stateName: stateName ?? 'Delhi',
+    areaType: areaType,
+    cityName: cityName,
+    random: random ?? Random(),
+  );
+
+  /// Alias for isValid to maintain compatibility
+  static bool validatePinCode(String pinCode, [String? stateName]) => isValid(pinCode, stateName);
 }
 
 /// Extension on String for PIN code utilities

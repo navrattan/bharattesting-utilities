@@ -2,21 +2,17 @@
 library tool_scaffold;
 
 import 'package:flutter/material.dart';
+import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:go_router/go_router.dart';
 import 'responsive_layout.dart';
 import 'btqa_footer.dart';
 import 'github_buttons.dart';
+import '../providers/locale_provider.dart';
 import '../../router/app_router.dart';
 import '../../theme/app_theme.dart';
 
 /// Main scaffold that wraps all tool screens
-///
-/// Features:
-/// - Responsive navigation (bottom nav on mobile, navigation rail on tablet/desktop)
-/// - App bar with title and GitHub buttons
-/// - Footer on every screen
-/// - Consistent layout and spacing
-class ToolScaffold extends StatelessWidget {
+class ToolScaffold extends ConsumerWidget {
   const ToolScaffold({
     this.child,
     this.body,
@@ -39,7 +35,7 @@ class ToolScaffold extends StatelessWidget {
   final Widget? endDrawer;
 
   @override
-  Widget build(BuildContext context) {
+  Widget build(BuildContext context, WidgetRef ref) {
     final content = body ?? child ?? const SizedBox.shrink();
 
     return ResponsiveLayout(
@@ -96,6 +92,7 @@ class _MobileLayout extends StatelessWidget {
         title: Text(title ?? 'BharatTesting'),
         actions: [
           ...?actions,
+          const LanguageSwitcher(),
           const GitHubButtons(compact: true),
         ],
       ),
@@ -168,6 +165,7 @@ class _TabletLayout extends StatelessWidget {
                   title: Text(title ?? 'BharatTesting Utilities'),
                   actions: [
                     ...?actions,
+                    const LanguageSwitcher(),
                     const GitHubButtons(),
                   ],
                   automaticallyImplyLeading: false,
@@ -259,6 +257,7 @@ class _DesktopLayout extends StatelessWidget {
                   ),
                   if (actions != null) ...actions!,
                   const SizedBox(width: AppTheme.spacingSm),
+                  const LanguageSwitcher(),
                   const GitHubButtons(),
                 ],
               ),
@@ -329,6 +328,47 @@ class _DesktopNavItem extends StatelessWidget {
           ),
         ),
       ),
+    );
+  }
+}
+
+class LanguageSwitcher extends ConsumerWidget {
+  const LanguageSwitcher({super.key});
+
+  @override
+  Widget build(BuildContext context, WidgetRef ref) {
+    return PopupMenuButton<String>(
+      icon: const Icon(Icons.language),
+      tooltip: 'Switch Language',
+      onSelected: (String languageCode) {
+        ref.read(localeNotifierProvider.notifier).setLanguageCode(languageCode);
+      },
+      itemBuilder: (BuildContext context) => <PopupMenuEntry<String>>[
+        const PopupMenuItem<String>(
+          value: 'en',
+          child: Text('English'),
+        ),
+        const PopupMenuItem<String>(
+          value: 'hi',
+          child: Text('हिन्दी (Hindi)'),
+        ),
+        const PopupMenuItem<String>(
+          value: 'bn',
+          child: Text('বাংলা (Bengali)'),
+        ),
+        const PopupMenuItem<String>(
+          value: 'mr',
+          child: Text('मराठी (Marathi)'),
+        ),
+        const PopupMenuItem<String>(
+          value: 'te',
+          child: Text('తెలుగు (Telugu)'),
+        ),
+        const PopupMenuItem<String>(
+          value: 'pa',
+          child: Text('ਪੰਜਾਬੀ (Punjabi)'),
+        ),
+      ],
     );
   }
 }

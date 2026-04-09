@@ -1,131 +1,90 @@
-/// BharatTesting app color system - Material 3 with dark mode default
-library app_colors;
+import 'package:flutter/material.dart';
 
-import 'dart:ui';
-
-/// Color tokens for BharatTesting Utilities
-///
-/// Primary: Blue (#58A6FF dark / #0969DA light) - GitHub-inspired
-/// Secondary: Green (#3FB950 / #1A7F37) - Success/Generate actions
-/// Background: Dark GitHub colors (#0D1117 / #FFFFFF)
+/// Professional color palette for BharatTesting
+/// 
+/// Theme: Digital India / Professional Trust
+/// Primary: Deep Navy and Royal Blue
+/// Accents: Indian Saffron and India Green
 class AppColors {
   const AppColors._();
 
   // ============================================================================
-  // DARK MODE COLORS (Default)
+  // BRAND COLORS
   // ============================================================================
+  
+  static const Color navyDeep = Color(0xFF002147); // Oxford Navy
+  static const Color navyMedium = Color(0xFF003366); // Professional Navy
+  static const Color royalBlue = Color(0xFF0056B3); // Primary Action Blue
+  static const Color skyBlue = Color(0xFFE7F1FF); // Light background blue
+  
+  static const Color indianSaffron = Color(0xFFFF9933); // CTA / Highlights
+  static const Color indiaGreen = Color(0xFF138808); // Success / New
+  static const Color ashGrey = Color(0xFFF8F9FA); // Off-white background
 
-  /// Primary brand color - blue tones
+  // ============================================================================
+  // DARK THEME COLORS
+  // ============================================================================
+  
   static const Color primaryDark = Color(0xFF58A6FF);
-  static const Color onPrimaryDark = Color(0xFF0D1117);
-  static const Color primaryContainerDark = Color(0xFF1C2128);
-  static const Color onPrimaryContainerDark = Color(0xFF58A6FF);
-
-  /// Secondary - green for success/generate actions
-  static const Color secondaryDark = Color(0xFF3FB950);
-  static const Color onSecondaryDark = Color(0xFF0D1117);
-  static const Color secondaryContainerDark = Color(0xFF1A7F37);
-  static const Color onSecondaryContainerDark = Color(0xFF3FB950);
-
-  /// Background & Surface
+  static const Color onPrimaryDark = Color(0xFFFFFFFF);
+  static const Color primaryContainerDark = Color(0xFF003366);
+  static const Color onPrimaryContainerDark = Color(0xFFD1E4FF);
+  
+  static const Color secondaryDark = Color(0xFF79C0FF);
+  static const Color onSecondaryDark = Color(0xFF002147);
+  static const Color secondaryContainerDark = Color(0xFF004A77);
+  static const Color onSecondaryContainerDark = Color(0xFFC2E7FF);
+  
   static const Color backgroundDark = Color(0xFF0D1117);
-  static const Color onBackgroundDark = Color(0xFFF0F6FC);
+  static const Color onBackgroundDark = Color(0xFFC9D1D9);
   static const Color surfaceDark = Color(0xFF161B22);
   static const Color onSurfaceDark = Color(0xFFF0F6FC);
   static const Color surfaceVariantDark = Color(0xFF21262D);
   static const Color onSurfaceVariantDark = Color(0xFF8B949E);
-
-  /// Error states
-  static const Color errorDark = Color(0xFFF85149);
-  static const Color onErrorDark = Color(0xFF0D1117);
-  static const Color errorContainerDark = Color(0xFF8E1538);
-  static const Color onErrorContainerDark = Color(0xFFF85149);
-
-  /// Outline & dividers
+  
   static const Color outlineDark = Color(0xFF30363D);
-  static const Color outlineVariantDark = Color(0xFF21262D);
+  static const Color outlineVariantDark = Color(0xFF484F58);
+  
+  static const Color errorDark = Color(0xFFF85149);
+  static const Color onErrorDark = Color(0xFFFFFFFF);
+  static const Color errorContainerDark = Color(0xFFDA3633);
+  static const Color onErrorContainerDark = Color(0xFFFFD1D1);
 
-  /// Inverse colors for contrast
+  // ============================================================================
+  // LIGHT THEME COLORS (New "Professional" Palette)
+  // ============================================================================
+  
+  static const Color primaryLight = navyMedium;
+  static const Color onPrimaryLight = Color(0xFFFFFFFF);
+  static const Color primaryContainerLight = skyBlue;
+  static const Color onPrimaryContainerLight = navyDeep;
+  
+  static const Color secondaryLight = royalBlue;
+  static const Color onSecondaryLight = Color(0xFFFFFFFF);
+  static const Color secondaryContainerLight = Color(0xFFD0E4FF);
+  static const Color onSecondaryContainerLight = Color(0xFF001D35);
+  
+  static const Color backgroundLight = ashGrey;
+  static const Color onBackgroundLight = Color(0xFF1A1C1E);
+  static const Color surfaceLight = Color(0xFFFFFFFF);
+  static const Color onSurfaceLight = Color(0xFF1A1C1E);
+  static const Color surfaceVariantLight = Color(0xFFE1E2EC);
+  static const Color onSurfaceVariantLight = Color(0xFF44474E);
+  
+  static const Color outlineLight = Color(0xFF74777F);
+  static const Color outlineVariantLight = Color(0xFFC4C6D0);
+  
+  static const Color errorLight = Color(0xFFBA1A1A);
+  static const Color onErrorLight = Color(0xFFFFFFFF);
+  static const Color errorContainerLight = Color(0xFFFFDAD6);
+  static const Color onErrorContainerLight = Color(0xFF410002);
+  
+  // Inverse
   static const Color inverseSurfaceDark = Color(0xFFF0F6FC);
   static const Color onInverseSurfaceDark = Color(0xFF0D1117);
-  static const Color inversePrimaryDark = Color(0xFF0969DA);
-
-  // ============================================================================
-  // LIGHT MODE COLORS
-  // ============================================================================
-
-  /// Primary brand color - blue tones
-  static const Color primaryLight = Color(0xFF0969DA);
-  static const Color onPrimaryLight = Color(0xFFFFFFFF);
-  static const Color primaryContainerLight = Color(0xFFDDF4FF);
-  static const Color onPrimaryContainerLight = Color(0xFF0969DA);
-
-  /// Secondary - green for success/generate actions
-  static const Color secondaryLight = Color(0xFF1A7F37);
-  static const Color onSecondaryLight = Color(0xFFFFFFFF);
-  static const Color secondaryContainerLight = Color(0xFFDCFFE4);
-  static const Color onSecondaryContainerLight = Color(0xFF1A7F37);
-
-  /// Background & Surface
-  static const Color backgroundLight = Color(0xFFFFFFFF);
-  static const Color onBackgroundLight = Color(0xFF1C2128);
-  static const Color surfaceLight = Color(0xFFF6F8FA);
-  static const Color onSurfaceLight = Color(0xFF1C2128);
-  static const Color surfaceVariantLight = Color(0xFFF3F4F6);
-  static const Color onSurfaceVariantLight = Color(0xFF656D76);
-
-  /// Error states
-  static const Color errorLight = Color(0xFFCF222E);
-  static const Color onErrorLight = Color(0xFFFFFFFF);
-  static const Color errorContainerLight = Color(0xFFFFEBEE);
-  static const Color onErrorContainerLight = Color(0xFFCF222E);
-
-  /// Outline & dividers
-  static const Color outlineLight = Color(0xFFD0D7DE);
-  static const Color outlineVariantLight = Color(0xFFF3F4F6);
-
-  /// Inverse colors for contrast
-  static const Color inverseSurfaceLight = Color(0xFF1C2128);
-  static const Color onInverseSurfaceLight = Color(0xFFFFFFFF);
-  static const Color inversePrimaryLight = Color(0xFF58A6FF);
-
-  // ============================================================================
-  // SEMANTIC COLORS (Both modes)
-  // ============================================================================
-
-  /// Success colors (same as secondary)
-  static const Color successDark = secondaryDark;
-  static const Color successLight = secondaryLight;
-
-  /// Warning colors
-  static const Color warningDark = Color(0xFFD29922);
-  static const Color warningLight = Color(0xFFBF8700);
-
-  /// Info colors (same as primary)
-  static const Color infoDark = primaryDark;
-  static const Color infoLight = primaryLight;
-
-  // ============================================================================
-  // CUSTOM TOOL COLORS
-  // ============================================================================
-
-  /// Document Scanner accent
-  static const Color documentScannerDark = Color(0xFF7C3AED);
-  static const Color documentScannerLight = Color(0xFF6D28D9);
-
-  /// Image Reducer accent
-  static const Color imageReducerDark = Color(0xFFEC4899);
-  static const Color imageReducerLight = Color(0xFFDB2777);
-
-  /// PDF Merger accent
-  static const Color pdfMergerDark = Color(0xFFF59E0B);
-  static const Color pdfMergerLight = Color(0xFFD97706);
-
-  /// JSON Converter accent
-  static const Color jsonConverterDark = Color(0xFF10B981);
-  static const Color jsonConverterLight = Color(0xFF059669);
-
-  /// Data Faker accent
-  static const Color dataFakerDark = Color(0xFFF97316);
-  static const Color dataFakerLight = Color(0xFFEA580C);
+  static const Color inversePrimaryDark = Color(0xFF0056B3);
+  
+  static const Color inverseSurfaceLight = Color(0xFF2F3033);
+  static const Color onInverseSurfaceLight = Color(0xFFF1F0F4);
+  static const Color inversePrimaryLight = Color(0xFFADC6FF);
 }

@@ -3,6 +3,9 @@
 /// Detects and parses: JSON, CSV, YAML, XML, URL-encoded, INI formats
 
 import 'dart:convert';
+import 'package:csv/csv.dart';
+import 'package:yaml/yaml.dart';
+import 'yaml_parser.dart';
 
 /// Supported input formats for auto-detection
 enum InputFormat {
@@ -70,11 +73,11 @@ class StringParser {
       _detectYAML,
       _detectURLEncoded,
       _detectINI,
-      _detectCSV, // CSV last as it's most permissive
+      _detectCSV,
     ];
 
     ParseResult? bestResult;
-    double bestConfidence = 0.0;
+    double bestConfidence = 0.05; // Lowered to ensure we pick up low confidence matches
 
     for (final detector in detectors) {
       try {
@@ -82,23 +85,22 @@ class StringParser {
         if (result.confidence > bestConfidence) {
           bestResult = result;
           bestConfidence = result.confidence;
-
-          // If we have high confidence, stop searching
-          if (bestConfidence >= 0.9) {
-            break;
-          }
         }
       } catch (e) {
-        // Continue to next detector
+        // Continue
       }
     }
 
-    return bestResult ?? ParseResult(
-      detectedFormat: InputFormat.unknown,
-      data: trimmed,
-      confidence: 0.0,
-      errors: ['Unable to detect input format'],
-    );
+    if (bestResult == null) {
+      return ParseResult(
+        detectedFormat: InputFormat.unknown,
+        data: trimmed,
+        confidence: 0.0,
+        errors: ['Unable to detect input format'],
+      );
+    }
+
+    return bestResult;
   }
 
   /// Parse input as specific format
@@ -128,32 +130,20 @@ class StringParser {
 
   /// Detect and parse JSON format
   static ParseResult _detectJSON(String input) {
+    final trimmed = input.trim();
+    
+    // Check if it looks like JSON even if it might be malformed
+    final startsWithBracket = trimmed.startsWith('{') || trimmed.startsWith('[');
+    
     try {
-      // Quick structural checks
-      final trimmed = input.trim();
-      if (!((trimmed.startsWith('{') && trimmed.endsWith('}')) ||
-            (trimmed.startsWith('[') && trimmed.endsWith(']')))) {
-        return ParseResult(
-          detectedFormat: InputFormat.json,
-          data: null,
-          confidence: 0.0,
-        );
-      }
-
       final data = jsonDecode(trimmed);
       return ParseResult(
         detectedFormat: InputFormat.json,
         data: data,
         confidence: 1.0,
-        metadata: {
-          'type': data is Map ? 'object' : data is List ? 'array' : 'primitive',
-          'size': data is Map ? data.length : data is List ? data.length : 1,
-        },
       );
     } catch (e) {
-      // Might be malformed JSON - return low confidence
-      final trimmed = input.trim();
-      if (trimmed.startsWith('{') || trimmed.startsWith('[')) {
+      if (startsWithBracket) {
         return ParseResult(
           detectedFormat: InputFormat.json,
           data: null,
@@ -161,8 +151,7 @@ class StringParser {
           errors: ['Malformed JSON: ${e.toString()}'],
         );
       }
-
-      return ParseResult(
+      return const ParseResult(
         detectedFormat: InputFormat.json,
         data: null,
         confidence: 0.0,
@@ -170,7 +159,7 @@ class StringParser {
     }
   }
 
-  /// Parse JSON format (called after detection)
+  /// Parse JSON format
   static ParseResult _parseJSON(String input) {
     try {
       final data = jsonDecode(input.trim());
@@ -178,9 +167,6 @@ class StringParser {
         detectedFormat: InputFormat.json,
         data: data,
         confidence: 1.0,
-        metadata: {
-          'type': data is Map ? 'object' : data is List ? 'array' : 'primitive',
-        },
       );
     } catch (e) {
       return ParseResult(
@@ -195,26 +181,15 @@ class StringParser {
   /// Detect and parse XML format
   static ParseResult _detectXML(String input) {
     final trimmed = input.trim();
-
-    // Basic XML structure detection
-    if (!trimmed.startsWith('<') || !trimmed.endsWith('>')) {
-      return ParseResult(
-        detectedFormat: InputFormat.xml,
-        data: null,
-        confidence: 0.0,
-      );
+    if (!trimmed.startsWith('<')) {
+      return const ParseResult(detectedFormat: InputFormat.xml, data: null, confidence: 0.0);
     }
 
-    // Check for XML declaration or root element
     final hasXmlDeclaration = trimmed.startsWith('<?xml');
     final hasRootElement = RegExp(r'<[a-zA-Z][^>]*>').hasMatch(trimmed);
 
     if (!hasXmlDeclaration && !hasRootElement) {
-      return ParseResult(
-        detectedFormat: InputFormat.xml,
-        data: null,
-        confidence: 0.2,
-      );
+      return const ParseResult(detectedFormat: InputFormat.xml, data: null, confidence: 0.0);
     }
 
     try {
@@ -223,22 +198,13 @@ class StringParser {
         detectedFormat: InputFormat.xml,
         data: data,
         confidence: hasXmlDeclaration ? 1.0 : 0.8,
-        metadata: {
-          'hasDeclaration': hasXmlDeclaration,
-          'rootElement': _extractRootElement(trimmed),
-        },
       );
     } catch (e) {
-      return ParseResult(
-        detectedFormat: InputFormat.xml,
-        data: null,
-        confidence: 0.0,
-        errors: [e.toString()],
-      );
+      return const ParseResult(detectedFormat: InputFormat.xml, data: null, confidence: 0.0);
     }
   }
 
-  /// Parse XML format (simplified parser)
+  /// Parse XML format
   static ParseResult _parseXML(String input) {
     try {
       final data = _parseXMLContent(input);
@@ -259,136 +225,57 @@ class StringParser {
 
   /// Detect and parse YAML format
   static ParseResult _detectYAML(String input) {
-    final lines = input.split('\n');
-    int yamlIndicators = 0;
-    int totalLines = lines.where((line) => line.trim().isNotEmpty).length;
-
-    if (totalLines == 0) {
-      return ParseResult(
-        detectedFormat: InputFormat.yaml,
-        data: null,
-        confidence: 0.0,
-      );
+    final trimmed = input.trim();
+    if (trimmed.isEmpty || trimmed.length < 3 || trimmed.startsWith('{') || trimmed.startsWith('[')) {
+      return const ParseResult(detectedFormat: InputFormat.yaml, data: null, confidence: 0.0);
     }
 
-    // Look for YAML indicators
+    final lines = trimmed.split('\n');
+    int indicators = 0;
     for (final line in lines) {
-      final trimmed = line.trim();
-      if (trimmed.isEmpty || trimmed.startsWith('#')) continue;
-
-      // YAML document separator
-      if (trimmed == '---' || trimmed == '...') {
-        yamlIndicators += 2;
-        continue;
-      }
-
-      // Key-value pairs with colon
-      if (RegExp(r'^[^:]+:\s*').hasMatch(trimmed)) {
-        yamlIndicators++;
-      }
-
-      // List items
-      if (RegExp(r'^-\s+').hasMatch(trimmed)) {
-        yamlIndicators++;
-      }
-
-      // Indented structure
-      if (RegExp(r'^\s{2,}').hasMatch(line)) {
-        yamlIndicators++;
+      final l = line.trim();
+      if (l.isEmpty || l.startsWith('#')) continue;
+      if (l == '---' || l == '...' || RegExp(r'^[^: \t]+:\s*').hasMatch(l) || RegExp(r'^-\s+').hasMatch(l)) {
+        indicators++;
       }
     }
 
-    final confidence = (yamlIndicators / totalLines).clamp(0.0, 1.0);
-
-    if (confidence < 0.3) {
-      return ParseResult(
-        detectedFormat: InputFormat.yaml,
-        data: null,
-        confidence: confidence,
-      );
-    }
+    double confidence = (indicators / (lines.length + 1)).clamp(0.0, 1.0);
+    if (confidence < 0.4) return const ParseResult(detectedFormat: InputFormat.yaml, data: null, confidence: 0.0);
 
     try {
       final data = _parseYAMLContent(input);
-      return ParseResult(
-        detectedFormat: InputFormat.yaml,
-        data: data,
-        confidence: confidence,
-        metadata: {
-          'lineCount': totalLines,
-          'yamlIndicators': yamlIndicators,
-        },
-      );
+      return ParseResult(detectedFormat: InputFormat.yaml, data: data, confidence: confidence);
     } catch (e) {
-      return ParseResult(
-        detectedFormat: InputFormat.yaml,
-        data: null,
-        confidence: 0.0,
-        errors: [e.toString()],
-      );
+      return const ParseResult(detectedFormat: InputFormat.yaml, data: null, confidence: 0.0);
     }
   }
 
-  /// Parse YAML format (simplified parser)
+  /// Parse YAML format
   static ParseResult _parseYAML(String input) {
-    try {
-      final data = _parseYAMLContent(input);
-      return ParseResult(
-        detectedFormat: InputFormat.yaml,
-        data: data,
-        confidence: 1.0,
-      );
-    } catch (e) {
-      return ParseResult(
-        detectedFormat: InputFormat.yaml,
-        data: null,
-        confidence: 0.0,
-        errors: [e.toString()],
-      );
-    }
+    final result = YAMLParser.parse(input);
+    return ParseResult(
+      detectedFormat: InputFormat.yaml,
+      data: result.data,
+      confidence: 1.0,
+      errors: result.errors,
+    );
   }
 
   /// Detect and parse URL-encoded format
   static ParseResult _detectURLEncoded(String input) {
     final trimmed = input.trim();
+    if (!trimmed.contains('=')) return const ParseResult(detectedFormat: InputFormat.urlEncoded, data: null, confidence: 0.0);
 
-    // Check for URL-encoded patterns
     final hasAmpersands = trimmed.contains('&');
-    final hasEquals = trimmed.contains('=');
     final hasEncodedChars = RegExp(r'%[0-9A-Fa-f]{2}').hasMatch(trimmed);
-    final noSpaces = !trimmed.contains(' ') || hasEncodedChars;
-
-    if (!hasEquals) {
-      return ParseResult(
-        detectedFormat: InputFormat.urlEncoded,
-        data: null,
-        confidence: 0.0,
-      );
-    }
-
-    double confidence = 0.3; // Base confidence for having equals sign
-
-    if (hasAmpersands) confidence += 0.3;
-    if (hasEncodedChars) confidence += 0.2;
-    if (noSpaces) confidence += 0.2;
+    double confidence = 0.3 + (hasAmpersands ? 0.3 : 0) + (hasEncodedChars ? 0.4 : 0);
 
     try {
       final data = _parseURLEncodedContent(trimmed);
-      return ParseResult(
-        detectedFormat: InputFormat.urlEncoded,
-        data: data,
-        confidence: confidence,
-        metadata: {
-          'parameterCount': data.length,
-        },
-      );
+      return ParseResult(detectedFormat: InputFormat.urlEncoded, data: data, confidence: confidence.clamp(0.0, 1.0));
     } catch (e) {
-      return ParseResult(
-        detectedFormat: InputFormat.urlEncoded,
-        data: null,
-        confidence: 0.0,
-        errors: [e.toString()],
-      );
+      return const ParseResult(detectedFormat: InputFormat.urlEncoded, data: null, confidence: 0.0);
     }
   }
 
@@ -396,84 +283,35 @@ class StringParser {
   static ParseResult _parseURLEncoded(String input) {
     try {
       final data = _parseURLEncodedContent(input);
-      return ParseResult(
-        detectedFormat: InputFormat.urlEncoded,
-        data: data,
-        confidence: 1.0,
-      );
+      return ParseResult(detectedFormat: InputFormat.urlEncoded, data: data, confidence: 1.0);
     } catch (e) {
-      return ParseResult(
-        detectedFormat: InputFormat.urlEncoded,
-        data: null,
-        confidence: 0.0,
-        errors: [e.toString()],
-      );
+      return ParseResult(detectedFormat: InputFormat.urlEncoded, data: null, confidence: 0.0, errors: [e.toString()]);
     }
   }
 
   /// Detect and parse INI format
   static ParseResult _detectINI(String input) {
     final lines = input.split('\n');
-    int iniIndicators = 0;
-    int totalLines = lines.where((line) => line.trim().isNotEmpty).length;
-
-    if (totalLines == 0) {
-      return ParseResult(
-        detectedFormat: InputFormat.ini,
-        data: null,
-        confidence: 0.0,
-      );
-    }
-
+    int indicators = 0;
+    int nonBlank = 0;
     for (final line in lines) {
-      final trimmed = line.trim();
-      if (trimmed.isEmpty) continue;
-
-      // Section headers [section]
-      if (RegExp(r'^\[[^\]]+\]$').hasMatch(trimmed)) {
-        iniIndicators += 2;
-        continue;
-      }
-
-      // Comments
-      if (trimmed.startsWith('#') || trimmed.startsWith(';')) {
-        iniIndicators++;
-        continue;
-      }
-
-      // Key-value pairs
-      if (RegExp(r'^[^=]+=[^=]*$').hasMatch(trimmed)) {
-        iniIndicators++;
+      final l = line.trim();
+      if (l.isEmpty) continue;
+      nonBlank++;
+      if (RegExp(r'^\[[^\]]+\]$').hasMatch(l) || l.startsWith('#') || l.startsWith(';') || RegExp(r'^[^=]+=[^=]*$').hasMatch(l)) {
+        indicators++;
       }
     }
 
-    final confidence = totalLines > 0 ? (iniIndicators / totalLines).clamp(0.0, 1.0) : 0.0;
-
-    if (confidence < 0.4) {
-      return ParseResult(
-        detectedFormat: InputFormat.ini,
-        data: null,
-        confidence: confidence,
-      );
-    }
+    if (nonBlank == 0) return const ParseResult(detectedFormat: InputFormat.ini, data: null, confidence: 0.0);
+    double confidence = (indicators / nonBlank).clamp(0.0, 1.0);
+    if (confidence < 0.6) return const ParseResult(detectedFormat: InputFormat.ini, data: null, confidence: 0.0);
 
     try {
       final data = _parseINIContent(input);
-      return ParseResult(
-        detectedFormat: InputFormat.ini,
-        data: data,
-        confidence: confidence,
-        metadata: {
-          'sectionCount': data.keys.length,
-        },
-      );
+      return ParseResult(detectedFormat: InputFormat.ini, data: data, confidence: confidence);
     } catch (e) {
-      return ParseResult(
-        detectedFormat: InputFormat.ini,
-        data: null,
-        confidence: 0.0,
-        errors: [e.toString()],
-      );
+      return const ParseResult(detectedFormat: InputFormat.ini, data: null, confidence: 0.0);
     }
   }
 
@@ -481,86 +319,28 @@ class StringParser {
   static ParseResult _parseINI(String input) {
     try {
       final data = _parseINIContent(input);
-      return ParseResult(
-        detectedFormat: InputFormat.ini,
-        data: data,
-        confidence: 1.0,
-      );
+      return ParseResult(detectedFormat: InputFormat.ini, data: data, confidence: 1.0);
     } catch (e) {
-      return ParseResult(
-        detectedFormat: InputFormat.ini,
-        data: null,
-        confidence: 0.0,
-        errors: [e.toString()],
-      );
+      return ParseResult(detectedFormat: InputFormat.ini, data: null, confidence: 0.0, errors: [e.toString()]);
     }
   }
 
   /// Detect and parse CSV format
   static ParseResult _detectCSV(String input) {
-    final lines = input.split('\n').where((line) => line.trim().isNotEmpty).toList();
+    final trimmed = input.trim();
+    if (trimmed.length < 5 || !trimmed.contains(',')) return const ParseResult(detectedFormat: InputFormat.csv, data: null, confidence: 0.0);
 
-    if (lines.isEmpty) {
-      return ParseResult(
-        detectedFormat: InputFormat.csv,
-        data: null,
-        confidence: 0.0,
-      );
-    }
+    final lines = trimmed.split('\n').where((l) => l.trim().isNotEmpty).toList();
+    if (lines.length < 2) return const ParseResult(detectedFormat: InputFormat.csv, data: null, confidence: 0.0);
 
-    // Analyze first few lines for CSV patterns
-    final sampleLines = lines.take(5).toList();
-    final commaCount = sampleLines.map((line) => line.split(',').length).toList();
-    final hasConsistentColumns = commaCount.toSet().length == 1;
-
-    double confidence = 0.1; // Base confidence
-
-    if (hasConsistentColumns && commaCount.first > 1) {
-      confidence += 0.4;
-    }
-
-    // Check for quoted fields
-    if (sampleLines.any((line) => line.contains('"'))) {
-      confidence += 0.2;
-    }
-
-    // Check for header row (first row different from data rows)
-    if (lines.length > 1) {
-      final firstRow = lines[0].split(',');
-      final secondRow = lines[1].split(',');
-
-      if (firstRow.length == secondRow.length) {
-        // Check if first row looks like headers (mostly text)
-        final firstRowNumeric = firstRow.where((cell) =>
-          double.tryParse(cell.trim()) != null).length;
-        final secondRowNumeric = secondRow.where((cell) =>
-          double.tryParse(cell.trim()) != null).length;
-
-        if (firstRowNumeric < secondRowNumeric) {
-          confidence += 0.3;
-        }
-      }
-    }
+    final counts = lines.take(5).map((l) => ','.allMatches(l).length).toList();
+    if (counts.first == 0 || !counts.every((c) => c == counts.first)) return const ParseResult(detectedFormat: InputFormat.csv, data: null, confidence: 0.0);
 
     try {
       final data = _parseCSVContent(input);
-      return ParseResult(
-        detectedFormat: InputFormat.csv,
-        data: data,
-        confidence: confidence.clamp(0.0, 1.0),
-        metadata: {
-          'rowCount': lines.length,
-          'columnCount': commaCount.isNotEmpty ? commaCount.first : 0,
-          'hasHeader': confidence > 0.5,
-        },
-      );
+      return ParseResult(detectedFormat: InputFormat.csv, data: data, confidence: 0.5);
     } catch (e) {
-      return ParseResult(
-        detectedFormat: InputFormat.csv,
-        data: null,
-        confidence: 0.0,
-        errors: [e.toString()],
-      );
+      return const ParseResult(detectedFormat: InputFormat.csv, data: null, confidence: 0.0);
     }
   }
 
@@ -568,158 +348,79 @@ class StringParser {
   static ParseResult _parseCSV(String input) {
     try {
       final data = _parseCSVContent(input);
-      return ParseResult(
-        detectedFormat: InputFormat.csv,
-        data: data,
-        confidence: 1.0,
-      );
+      return ParseResult(detectedFormat: InputFormat.csv, data: data, confidence: 1.0);
     } catch (e) {
-      return ParseResult(
-        detectedFormat: InputFormat.csv,
-        data: null,
-        confidence: 0.0,
-        errors: [e.toString()],
-      );
+      return ParseResult(detectedFormat: InputFormat.csv, data: null, confidence: 0.0, errors: [e.toString()]);
     }
   }
 
-  /// Parse XML content into Dart objects (simplified)
   static Map<String, dynamic> _parseXMLContent(String xml) {
-    // This is a simplified XML parser for basic structures
-    // In production, you'd use a proper XML parser library
-
-    final result = <String, dynamic>{};
-
-    // Extract root element name
     final rootMatch = RegExp(r'<([a-zA-Z][^>\s]*)[^>]*>').firstMatch(xml);
-    if (rootMatch != null) {
-      result['rootElement'] = rootMatch.group(1);
-    }
-
-    // Extract text content (simplified)
-    final textContent = xml
-        .replaceAll(RegExp(r'<[^>]+>'), ' ')
-        .replaceAll(RegExp(r'\s+'), ' ')
-        .trim();
-
-    if (textContent.isNotEmpty) {
-      result['textContent'] = textContent;
-    }
-
-    // Note: This is a basic parser. For production use, implement proper XML parsing
-    result['_note'] = 'Simplified XML parsing - use proper XML parser for complex structures';
-
-    return result;
+    return {'rootElement': rootMatch?.group(1), '_note': 'Simplified XML parsing'};
   }
 
-  /// Parse YAML content into Dart objects (simplified)
   static dynamic _parseYAMLContent(String yaml) {
-    // This is a simplified YAML parser for basic structures
-    // In production, you'd use the yaml package
-
-    final lines = yaml.split('\n');
-    final result = <String, dynamic>{};
-
-    for (final line in lines) {
-      final trimmed = line.trim();
-      if (trimmed.isEmpty || trimmed.startsWith('#')) continue;
-
-      if (trimmed.contains(':')) {
-        final parts = trimmed.split(':');
-        if (parts.length >= 2) {
-          final key = parts[0].trim();
-          final value = parts.sublist(1).join(':').trim();
-          result[key] = value.isEmpty ? null : value;
-        }
-      }
-    }
-
-    return result;
+    final doc = loadYaml(yaml);
+    return _convertYamlNode(doc);
   }
 
-  /// Parse URL-encoded content into Map
+  static dynamic _convertYamlNode(dynamic node) {
+    if (node is YamlMap) {
+      return Map<String, dynamic>.fromEntries(node.nodes.entries.map((e) => MapEntry(e.key.value.toString(), _convertYamlNode(e.value))));
+    } else if (node is YamlList) {
+      return node.map(_convertYamlNode).toList();
+    } else if (node is YamlScalar) {
+      return node.value;
+    }
+    return node;
+  }
+
   static Map<String, dynamic> _parseURLEncodedContent(String content) {
     final result = <String, dynamic>{};
-
-    final pairs = content.split('&');
-    for (final pair in pairs) {
+    for (final pair in content.split('&')) {
       final parts = pair.split('=');
-      if (parts.length >= 2) {
-        final key = Uri.decodeComponent(parts[0]);
-        final value = Uri.decodeComponent(parts.sublist(1).join('='));
-        result[key] = value;
-      } else if (parts.length == 1) {
-        result[parts[0]] = null;
-      }
+      if (parts.length >= 2) result[Uri.decodeComponent(parts[0])] = Uri.decodeComponent(parts.sublist(1).join('='));
+      else if (parts.isNotEmpty && parts[0].isNotEmpty) result[Uri.decodeComponent(parts[0])] = null;
     }
-
     return result;
   }
 
-  /// Parse INI content into nested Map
   static Map<String, Map<String, String>> _parseINIContent(String content) {
     final result = <String, Map<String, String>>{};
-    String currentSection = 'default';
-
-    final lines = content.split('\n');
-    for (final line in lines) {
-      final trimmed = line.trim();
-      if (trimmed.isEmpty || trimmed.startsWith('#') || trimmed.startsWith(';')) {
-        continue;
-      }
-
-      // Section header
-      if (trimmed.startsWith('[') && trimmed.endsWith(']')) {
-        currentSection = trimmed.substring(1, trimmed.length - 1);
-        result[currentSection] = <String, String>{};
-        continue;
-      }
-
-      // Key-value pair
-      if (trimmed.contains('=')) {
-        final parts = trimmed.split('=');
-        if (parts.length >= 2) {
-          final key = parts[0].trim();
-          final value = parts.sublist(1).join('=').trim();
-          result.putIfAbsent(currentSection, () => <String, String>{});
-          result[currentSection]![key] = value;
-        }
+    String section = 'default';
+    for (final line in content.split('\n')) {
+      final l = line.trim();
+      if (l.isEmpty || l.startsWith('#') || l.startsWith(';')) continue;
+      if (l.startsWith('[') && l.endsWith(']')) {
+        section = l.substring(1, l.length - 1);
+        result[section] = <String, String>{};
+      } else if (l.contains('=')) {
+        final parts = l.split('=');
+        result.putIfAbsent(section, () => <String, String>{})[parts[0].trim()] = _stripInlineComment(parts.sublist(1).join('='));
       }
     }
-
     return result;
   }
 
-  /// Parse CSV content into list of maps
   static List<Map<String, dynamic>> _parseCSVContent(String content) {
-    final lines = content.split('\n').where((line) => line.trim().isNotEmpty).toList();
-
-    if (lines.isEmpty) return [];
-
-    // Simple CSV parser (doesn't handle escaped quotes properly)
-    final headers = lines[0].split(',').map((h) => h.trim()).toList();
-    final rows = <Map<String, dynamic>>[];
-
+    final lines = content.split(RegExp(r'\r?\n')).where((l) => l.trim().isNotEmpty).toList();
+    if (lines.length < 2) return [];
+    final headers = const CsvToListConverter().convert('${lines[0]}\n')[0].map((h) => h.toString().trim()).toList();
+    final result = <Map<String, dynamic>>[];
     for (int i = 1; i < lines.length; i++) {
-      final values = lines[i].split(',').map((v) => v.trim()).toList();
+      final values = const CsvToListConverter(shouldParseNumbers: true).convert('${lines[i]}\n')[0];
       final row = <String, dynamic>{};
-
-      for (int j = 0; j < headers.length && j < values.length; j++) {
-        final value = values[j];
-        // Try to parse as number
-        final numValue = double.tryParse(value);
-        row[headers[j]] = numValue ?? value;
+      for (int j = 0; j < headers.length; j++) {
+        final val = j < values.length ? values[j] : null;
+        row[headers[j]] = val is String ? val.trim() : val;
       }
-
-      rows.add(row);
+      result.add(row);
     }
-
-    return rows;
+    return result;
   }
 
-  /// Extract root element name from XML
-  static String? _extractRootElement(String xml) {
-    final match = RegExp(r'<([a-zA-Z][^>\s]*)[^>]*>').firstMatch(xml);
-    return match?.group(1);
+  static String _stripInlineComment(String val) {
+    final commentIdx = val.indexOf(RegExp(r'\s?[#;]'));
+    return (commentIdx != -1 ? val.substring(0, commentIdx) : val).trim();
   }
 }

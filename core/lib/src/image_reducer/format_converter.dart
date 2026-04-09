@@ -86,6 +86,9 @@ enum ConvertibleFormat {
   /// Get primary file extension
   String get primaryExtension => extensions.first;
 
+  /// Get primary file extension without dot
+  String get extension => primaryExtension.replaceFirst('.', '');
+
   /// Check if format supports quality settings
   bool get supportsQuality => lossy;
 }

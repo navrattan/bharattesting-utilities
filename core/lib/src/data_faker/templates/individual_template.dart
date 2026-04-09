@@ -61,10 +61,14 @@ class IndividualTemplate {
   static List<Map<String, dynamic>> generateBulk({
     required int count,
     int? baseSeed,
+    String? preferredState,
   }) {
     return List.generate(
       count,
-      (index) => generate(seed: baseSeed != null ? baseSeed + index : null),
+      (index) => generate(
+        seed: baseSeed != null ? baseSeed + index : null,
+        preferredState: preferredState,
+      ),
     );
   }
 

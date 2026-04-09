@@ -6,7 +6,7 @@ part of 'image_reducer_provider.dart';
 // RiverpodGenerator
 // **************************************************************************
 
-String _$imageReducerHash() => r'3f6e6fa5f2bf804a48b9b677e621c60a35e60d00';
+String _$imageReducerHash() => r'd3a9d01ba8686f1137101e7e084030f23d530964';
 
 /// See also [ImageReducer].
 @ProviderFor(ImageReducer)

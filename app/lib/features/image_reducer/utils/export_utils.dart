@@ -24,12 +24,13 @@ class ExportUtils {
     for (final image in images) {
       try {
         // Add processed image if available
-        if (image.processedData != null) {
+        final processedData = image.processedData;
+        if (processedData != null) {
           final processedFileName = _getProcessedFileName(image);
           final processedFile = ArchiveFile(
             processedFileName,
-            image.processedData!.length,
-            image.processedData,
+            processedData.length,
+            processedData,
           );
           archive.addFile(processedFile);
         }
@@ -61,7 +62,7 @@ class ExportUtils {
 
     final zipData = ZipEncoder().encode(archive);
     return {
-      'data': Uint8List.fromList(zipData!),
+      'data': Uint8List.fromList(zipData),
       'fileCount': archive.files.length - 1, // Excluding summary
     };
   }
