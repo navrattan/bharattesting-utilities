@@ -164,8 +164,26 @@
         "parameters": [
           { "name": "count", "in": "query", "schema": { "type": "integer", "default": 1 } },
           { "name": "state", "in": "query", "schema": { "type": "string" } },
-          { "name": "format", "in": "query", "schema": { "type": "string", "enum": ["json", "csv", "xml", "sql"], "default": "json" } }
+          { "name": "seed", "in": "query", "description": "Seed for reproducible random generation", "schema": { "type": "string" } },
+          { "name": "format", "in": "query", "schema": { "type": "string", "enum": ["json", "csv", "xml", "sql", "ndjson"], "default": "json" } }
         ],
+        "responses": { "200": { "description": "OK" } }
+      }
+    },
+    "/card": {
+      "get": {
+        "summary": "Generate Credit/Debit Cards",
+        "parameters": [
+          { "name": "count", "in": "query", "schema": { "type": "integer", "default": 1 } },
+          { "name": "type", "in": "query", "schema": { "type": "string", "enum": ["RuPay", "Visa", "MasterCard"] } },
+          { "name": "seed", "in": "query", "schema": { "type": "string" } }
+        ],
+        "responses": { "200": { "description": "OK" } }
+      }
+    },
+    "/changelog": {
+      "get": {
+        "summary": "API Version History",
         "responses": { "200": { "description": "OK" } }
       }
     }
