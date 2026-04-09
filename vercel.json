@@ -2,7 +2,15 @@
   "buildCommand": "bash scripts/vercel-build.sh",
   "outputDirectory": "app/build/web",
   "framework": null,
-  "alias": "bharattesting.com",
+  "alias": ["bharattesting.com", "api.bharattesting.com"],
+  "redirects": [
+    {
+      "source": "/",
+      "has": [{ "type": "host", "value": "api.bharattesting.com" }],
+      "destination": "/api/v1",
+      "permanent": false
+    }
+  ],
   "rewrites": [
     { "source": "/api/docs", "destination": "/api-docs.html" },
     { "source": "/indian-data-faker", "destination": "/indian-data-faker.html" },

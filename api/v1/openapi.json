@@ -7,8 +7,12 @@
   },
   "servers": [
     {
+      "url": "https://api.bharattesting.com/v1",
+      "description": "API subdomain"
+    },
+    {
       "url": "https://bharattesting.com/api/v1",
-      "description": "Production server"
+      "description": "Production server (Legacy)"
     }
   ],
   "paths": {
