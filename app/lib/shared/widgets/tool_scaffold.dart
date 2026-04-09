@@ -7,6 +7,7 @@ import 'package:go_router/go_router.dart';
 import 'responsive_layout.dart';
 import 'btqa_footer.dart';
 import 'github_buttons.dart';
+import 'language_switcher.dart';
 import '../providers/locale_provider.dart';
 import '../models/tool_branding.dart';
 import '../services/branding_service.dart';
@@ -42,24 +43,31 @@ class ToolScaffold extends ConsumerWidget {
     final intent = ToolIntent.fromPath(path);
     final branding = ToolBranding.all[intent];
     
-    // Update browser title dynamically
+    // Update browser title
     BrandingService.updateBrowserTitle(path);
 
-    // AUDIT FIX: We must NOT wrap 'body' in a SingleChildScrollView 
-    // because many tools (JSON, PDF) use internal Expanded widgets.
-    // If child is provided, we wrap it for backward compatibility.
+    // Provide the content
     final Widget mainContent = body ?? (child != null ? SingleChildScrollView(child: child!) : const SizedBox.shrink());
 
-    return Theme(
-      data: branding != null 
-        ? Theme.of(context).copyWith(
-            primaryColor: branding.primaryColor,
-            colorScheme: Theme.of(context).colorScheme.copyWith(
+    // FIX: Ensure we inherit the FULL theme and only override specific branding colors
+    final baseTheme = Theme.of(context);
+    final brandedTheme = branding != null 
+        ? baseTheme.copyWith(
+            colorScheme: baseTheme.colorScheme.copyWith(
               primary: branding.primaryColor,
               secondary: branding.primaryColor,
+              onPrimary: Colors.white,
+            ),
+            // Ensure icons and primary buttons use the brand color
+            primaryColor: branding.primaryColor,
+            floatingActionButtonTheme: baseTheme.floatingActionButtonTheme.copyWith(
+              backgroundColor: branding.primaryColor,
             ),
           )
-        : Theme.of(context),
+        : baseTheme;
+
+    return Theme(
+      data: brandedTheme,
       child: ResponsiveLayout(
         mobile: _MobileLayout(
           child: mainContent,
@@ -138,7 +146,7 @@ class _MobileLayout extends StatelessWidget {
   }
 }
 
-/// Tablet layout with side rail
+/// Tablet layout
 class _TabletLayout extends StatelessWidget {
   const _TabletLayout({
     required this.child,
@@ -207,7 +215,7 @@ class _TabletLayout extends StatelessWidget {
   }
 }
 
-/// Desktop layout with tight constraints for tool rendering
+/// Desktop layout with FIXED visibility constraints
 class _DesktopLayout extends StatelessWidget {
   const _DesktopLayout({
     required this.child,
@@ -238,7 +246,7 @@ class _DesktopLayout extends StatelessWidget {
       endDrawer: endDrawer,
       body: Column(
         children: [
-          // Dynamic Branded Header
+          // Dynamic Header
           Material(
             elevation: 1,
             color: branding != null ? branding!.primaryColor : theme.colorScheme.surface,
@@ -284,12 +292,13 @@ class _DesktopLayout extends StatelessWidget {
               ),
             ),
           ),
-          // Content Area - FIXED: Remove centering to prevent height collapse
+          // Content Area - FIXED: Removed centering logic which caused height collapse on Web
           Expanded(
             child: Container(
               width: double.infinity,
+              height: double.infinity, // Force full height
               color: theme.colorScheme.background,
-              child: child, // Content now receives full height from Expanded
+              child: child,
             ),
           ),
           const BTQAFooter(),
@@ -333,30 +342,6 @@ class _DesktopNavItem extends StatelessWidget {
           ),
         ),
       ),
-    );
-  }
-}
-
-class LanguageSwitcher extends ConsumerWidget {
-  final bool isBranded;
-  const LanguageSwitcher({this.isBranded = false, super.key});
-
-  @override
-  Widget build(BuildContext context, WidgetRef ref) {
-    return PopupMenuButton<String>(
-      icon: Icon(Icons.language, color: isBranded ? Colors.white : null),
-      tooltip: 'Switch Language',
-      onSelected: (String languageCode) {
-        ref.read(localeNotifierProvider.notifier).setLanguageCode(languageCode);
-      },
-      itemBuilder: (BuildContext context) => <PopupMenuEntry<String>>[
-        const PopupMenuItem<String>(value: 'en', child: Text('English')),
-        const PopupMenuItem<String>(value: 'hi', child: Text('हिन्दी (Hindi)')),
-        const PopupMenuItem<String>(value: 'bn', child: Text('বাংলা (Bengali)')),
-        const PopupMenuItem<String>(value: 'mr', child: Text('मराठी (Marathi)')),
-        const PopupMenuItem<String>(value: 'te', child: Text('తెలుగు (Telugu)')),
-        const PopupMenuItem<String>(value: 'pa', child: Text('ਪੰਜਾਬੀ (Punjabi)')),
-      ],
     );
   }
 }

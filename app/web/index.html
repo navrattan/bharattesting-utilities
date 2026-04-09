@@ -19,24 +19,6 @@
   <title>BharatTesting Utilities</title>
   <link rel="manifest" href="manifest.json">
 
-  <script>
-    // NUCLEAR RESET: Clear stale service workers causing "Failed to fetch"
-    if ('serviceWorker' in navigator) {
-      navigator.serviceWorker.getRegistrations().then(function(registrations) {
-        for(let registration of registrations) {
-          registration.unregister();
-          console.log('Stale Service Worker cleared');
-        }
-      });
-    }
-    // Clear caches to ensure fresh assets
-    if ('caches' in window) {
-      caches.keys().then(function(names) {
-        for (let name of names) caches.delete(name);
-      });
-    }
-  </script>
-
   <!-- Schema.org for AI discovery -->
   <script type="application/ld+json">
   {
@@ -66,6 +48,12 @@
       margin: 0;
       font-family: -apple-system, system-ui, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
     }
+    #loading-indicator {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+    }
     .loading {
       width: 40px;
       height: 40px;
@@ -86,10 +74,20 @@
   </style>
 </head>
 <body>
-  <div class="loading"></div>
-  <div class="text">BharatTesting is loading...</div>
+  <div id="loading-indicator">
+    <div class="loading"></div>
+    <div class="text">BharatTesting is loading...</div>
+  </div>
 
   <!-- The modern Flutter Web entrypoint -->
   <script src="flutter_bootstrap.js" async></script>
+  
+  <script>
+    // Clean up loading indicator when app is ready
+    window.addEventListener('flutter-first-frame', function() {
+      var loading = document.getElementById('loading-indicator');
+      if (loading) loading.style.display = 'none';
+    });
+  </script>
 </body>
 </html>

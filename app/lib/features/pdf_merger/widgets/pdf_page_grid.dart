@@ -31,10 +31,13 @@ class _PdfPageGridState extends State<PdfPageGrid> {
       return const Center(child: Text('No pages found'));
     }
 
+    final screenWidth = MediaQuery.of(context).size.width;
+    final crossAxisCount = screenWidth > 1200 ? 6 : (screenWidth > 900 ? 4 : (screenWidth > 600 ? 3 : 2));
+
     return GridView.builder(
       padding: const EdgeInsets.all(16),
-      gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
-        crossAxisCount: 2,
+      gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
+        crossAxisCount: crossAxisCount,
         childAspectRatio: 0.7,
         crossAxisSpacing: 16,
         mainAxisSpacing: 16,

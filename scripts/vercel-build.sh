@@ -77,4 +77,9 @@ else
     exit 1
 fi
 
+# NEW: Run integrity audit to prevent "Blank Screen" or "Failed to Fetch" issues
+echo "🛡️  Running build integrity audit..."
+cd "$PROJECT_ROOT"
+bash scripts/verify-web-build.sh
+
 echo "✅ Web build completed successfully!"

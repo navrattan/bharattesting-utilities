@@ -7,6 +7,7 @@ import '../../l10n/l10n.dart';
 import '../../theme/app_theme.dart';
 import '../../shared/widgets/tool_scaffold.dart';
 import '../../shared/widgets/responsive_layout.dart';
+import '../../shared/widgets/language_switcher.dart';
 
 /// Home screen displaying all tools in a professional Bento grid
 class HomeScreen extends StatelessWidget {
