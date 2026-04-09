@@ -2,8 +2,8 @@
   "openapi": "3.0.0",
   "info": {
     "title": "BharatTesting API",
-    "description": "API for generating valid Indian test data including Aadhaar, PAN, GSTIN, and User Profiles. Privacy-first and 100% offline-ready logic.",
-    "version": "1.1.0"
+    "description": "API for generating valid Indian test data. Privacy-first and 100% offline-ready logic.",
+    "version": "1.2.0"
   },
   "servers": [
     {
@@ -19,86 +19,154 @@
     "/aadhaar": {
       "get": {
         "summary": "Generate Aadhaar numbers",
-        "description": "Generates valid 12-digit Aadhaar numbers with Verhoeff checksum validation.",
+        "description": "Valid 12-digit numbers with Verhoeff checksum.",
         "parameters": [
           { "name": "count", "in": "query", "schema": { "type": "integer", "default": 1, "maximum": 100 } },
           { "name": "format", "in": "query", "schema": { "type": "string", "enum": ["json", "csv", "xml", "sql"], "default": "json" } }
         ],
-        "responses": {
-          "200": { "description": "Successful response" }
-        }
+        "responses": { "200": { "description": "OK" } }
       }
     },
     "/pan": {
       "get": {
         "summary": "Generate PAN numbers",
-        "description": "Generates valid Permanent Account Numbers with entity-type awareness (Individual, Company, etc.).",
         "parameters": [
           { "name": "count", "in": "query", "schema": { "type": "integer", "default": 1 } },
-          { "name": "type", "in": "query", "description": "Entity type: P (Individual), C (Company), H (HUF), F (Firm), A (AOP), T (Trust), B (BOI), L (Local), J (Artificial), G (Govt)", "schema": { "type": "string", "enum": ["P", "C", "H", "F", "A", "T", "B", "L", "J", "G"], "default": "P" } },
+          { "name": "type", "in": "query", "description": "P, C, H, F, A, T, B, L, J, G", "schema": { "type": "string", "default": "P" } },
           { "name": "format", "in": "query", "schema": { "type": "string", "enum": ["json", "csv", "xml", "sql"], "default": "json" } }
         ],
-        "responses": { "200": { "description": "Successful response" } }
+        "responses": { "200": { "description": "OK" } }
       }
     },
     "/gstin": {
       "get": {
-        "summary": "Generate GSTIN numbers",
-        "description": "Generates valid 15-digit GST Identification Numbers with state-code validation and mod-36 checksum.",
+        "summary": "Generate GSTIN",
         "parameters": [
           { "name": "count", "in": "query", "schema": { "type": "integer", "default": 1 } },
-          { "name": "stateCode", "in": "query", "description": "2-digit Indian State Code (e.g., 27 for Maharashtra)", "schema": { "type": "string", "default": "27" } },
+          { "name": "stateCode", "in": "query", "schema": { "type": "string", "default": "27" } },
           { "name": "format", "in": "query", "schema": { "type": "string", "enum": ["json", "csv", "xml", "sql"], "default": "json" } }
         ],
-        "responses": { "200": { "description": "Successful response" } }
+        "responses": { "200": { "description": "OK" } }
+      }
+    },
+    "/address": {
+      "get": {
+        "summary": "Generate Indian Addresses",
+        "parameters": [
+          { "name": "count", "in": "query", "schema": { "type": "integer", "default": 1 } },
+          { "name": "state", "in": "query", "schema": { "type": "string" } },
+          { "name": "format", "in": "query", "schema": { "type": "string", "enum": ["json", "csv", "sql"], "default": "json" } }
+        ],
+        "responses": { "200": { "description": "OK" } }
+      }
+    },
+    "/vehicle": {
+      "get": {
+        "summary": "Generate Vehicle Numbers",
+        "parameters": [
+          { "name": "count", "in": "query", "schema": { "type": "integer", "default": 1 } },
+          { "name": "state", "in": "query", "schema": { "type": "string" } },
+          { "name": "format", "in": "query", "schema": { "type": "string", "enum": ["json", "csv", "sql"], "default": "json" } }
+        ],
+        "responses": { "200": { "description": "OK" } }
+      }
+    },
+    "/bank-account": {
+      "get": {
+        "summary": "Generate Bank Accounts",
+        "parameters": [
+          { "name": "count", "in": "query", "schema": { "type": "integer", "default": 1 } },
+          { "name": "bank", "in": "query", "schema": { "type": "string" } },
+          { "name": "format", "in": "query", "schema": { "type": "string", "enum": ["json", "csv", "sql"], "default": "json" } }
+        ],
+        "responses": { "200": { "description": "OK" } }
+      }
+    },
+    "/pincode": {
+      "get": {
+        "summary": "Generate Pin Codes",
+        "parameters": [
+          { "name": "count", "in": "query", "schema": { "type": "integer", "default": 1 } },
+          { "name": "state", "in": "query", "schema": { "type": "string" } },
+          { "name": "format", "in": "query", "schema": { "type": "string", "enum": ["json", "csv", "sql"], "default": "json" } }
+        ],
+        "responses": { "200": { "description": "OK" } }
+      }
+    },
+    "/company": {
+      "get": {
+        "summary": "Generate Company Data",
+        "parameters": [
+          { "name": "count", "in": "query", "schema": { "type": "integer", "default": 1 } },
+          { "name": "format", "in": "query", "schema": { "type": "string", "enum": ["json", "csv", "sql"], "default": "json" } }
+        ],
+        "responses": { "200": { "description": "OK" } }
+      }
+    },
+    "/passport": {
+      "get": {
+        "summary": "Generate Passports",
+        "parameters": [
+          { "name": "count", "in": "query", "schema": { "type": "integer", "default": 1 } },
+          { "name": "type", "in": "query", "schema": { "type": "string", "enum": ["new", "old"], "default": "new" } },
+          { "name": "format", "in": "query", "schema": { "type": "string", "enum": ["json", "csv", "sql"], "default": "json" } }
+        ],
+        "responses": { "200": { "description": "OK" } }
+      }
+    },
+    "/email": {
+      "get": {
+        "summary": "Generate Emails",
+        "parameters": [
+          { "name": "count", "in": "query", "schema": { "type": "integer", "default": 1 } },
+          { "name": "domain_type", "in": "query", "schema": { "type": "string", "enum": ["personal", "company", "gov"], "default": "personal" } },
+          { "name": "format", "in": "query", "schema": { "type": "string", "enum": ["json", "csv", "sql"], "default": "json" } }
+        ],
+        "responses": { "200": { "description": "OK" } }
       }
     },
     "/phone": {
       "get": {
-        "summary": "Generate Indian mobile numbers",
-        "description": "Generates valid +91 mobile numbers with real operator-specific prefixes.",
+        "summary": "Generate Phone Numbers",
         "parameters": [
           { "name": "count", "in": "query", "schema": { "type": "integer", "default": 1 } },
-          { "name": "operator", "in": "query", "description": "Operator filter: Jio, Airtel, Vi, BSNL", "schema": { "type": "string", "enum": ["Jio", "Airtel", "Vi", "BSNL"] } },
+          { "name": "operator", "in": "query", "schema": { "type": "string", "enum": ["Jio", "Airtel", "Vi", "BSNL"] } },
           { "name": "format", "in": "query", "schema": { "type": "string", "enum": ["json", "csv", "xml", "sql"], "default": "json" } }
         ],
-        "responses": { "200": { "description": "Successful response" } }
+        "responses": { "200": { "description": "OK" } }
       }
     },
     "/upi": {
       "get": {
         "summary": "Generate UPI IDs",
-        "description": "Generates synthetic but valid-looking UPI VPA IDs with provider-specific handles.",
         "parameters": [
           { "name": "count", "in": "query", "schema": { "type": "integer", "default": 1 } },
-          { "name": "provider", "in": "query", "description": "Provider: gpay, phonepe, paytm, amazon, whatsapp", "schema": { "type": "string", "enum": ["gpay", "phonepe", "paytm", "amazon", "whatsapp"] } },
+          { "name": "provider", "in": "query", "schema": { "type": "string", "enum": ["gpay", "phonepe", "paytm", "amazon", "whatsapp"] } },
           { "name": "format", "in": "query", "schema": { "type": "string", "enum": ["json", "csv", "xml", "sql"], "default": "json" } }
         ],
-        "responses": { "200": { "description": "Successful response" } }
+        "responses": { "200": { "description": "OK" } }
       }
     },
     "/ifsc": {
       "get": {
-        "summary": "Generate IFSC codes",
-        "description": "Generates valid Indian Financial System Codes mapped to major banks.",
+        "summary": "Generate IFSC",
         "parameters": [
           { "name": "count", "in": "query", "schema": { "type": "integer", "default": 1 } },
-          { "name": "bank", "in": "query", "description": "Bank filter: SBI, HDFC, ICICI, Axis, PNB, BOB, Canara, Yes", "schema": { "type": "string", "enum": ["SBI", "HDFC", "ICICI", "Axis", "PNB", "BOB", "Canara", "Yes"] } },
+          { "name": "bank", "in": "query", "schema": { "type": "string", "enum": ["SBI", "HDFC", "ICICI", "Axis", "PNB", "BOB", "Canara", "Yes"] } },
           { "name": "format", "in": "query", "schema": { "type": "string", "enum": ["json", "csv", "xml", "sql"], "default": "json" } }
         ],
-        "responses": { "200": { "description": "Successful response" } }
+        "responses": { "200": { "description": "OK" } }
       }
     },
     "/profile": {
       "get": {
-        "summary": "Generate Indian user profiles",
-        "description": "Generates complete synthetic Indian user profiles including identity, contact, and address data.",
+        "summary": "Generate User Profiles",
         "parameters": [
           { "name": "count", "in": "query", "schema": { "type": "integer", "default": 1 } },
-          { "name": "state", "in": "query", "description": "Indian state filter for regional data consistency", "schema": { "type": "string" } },
+          { "name": "state", "in": "query", "schema": { "type": "string" } },
           { "name": "format", "in": "query", "schema": { "type": "string", "enum": ["json", "csv", "xml", "sql"], "default": "json" } }
         ],
-        "responses": { "200": { "description": "Successful response" } }
+        "responses": { "200": { "description": "OK" } }
       }
     }
   }
