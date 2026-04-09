@@ -1,8 +1,20 @@
 const yaml = require('js-yaml');
 
 /**
+ * Standard error response formatter
+ */
+module.exports.error = (res, code, message, details = null) => {
+  return res.status(code === 'INVALID_PARAM' ? 400 : 500).json({
+    error: true,
+    code: code,
+    message: message,
+    details: details,
+    timestamp: new Date().toISOString()
+  });
+};
+
+/**
  * Shared formatter for BharatTesting API responses
- * Supports: JSON, CSV, XML, SQL, YAML, NDJSON, Playwright Fixtures
  */
 module.exports = (req, res, data, rootName = 'results') => {
   const queryFormat = req.query.format;
@@ -22,7 +34,12 @@ module.exports = (req, res, data, rootName = 'results') => {
     format = 'ndjson';
   }
 
+  // Add X-Request-ID for tracing
+  const requestId = Math.random().toString(36).substring(2, 15) + Math.random().toString(36).substring(2, 15);
+  res.setHeader('X-Request-ID', requestId);
+
   const results = Array.isArray(data) ? data : [data];
+  const disclaimer = 'Generated data is FAKE and for testing purposes only. Do not use for real-world identification or fraud.';
 
   switch (format) {
     case 'csv':
@@ -88,7 +105,9 @@ module.exports = (req, res, data, rootName = 'results') => {
         meta: {
           count: results.length,
           format: 'json',
-          generated_at: new Date().toISOString()
+          generated_at: new Date().toISOString(),
+          disclaimer: disclaimer,
+          request_id: requestId
         }
       });
   }

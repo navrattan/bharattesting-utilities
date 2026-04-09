@@ -68,33 +68,40 @@ class ToolScaffold extends ConsumerWidget {
 
     return Theme(
       data: brandedTheme,
-      child: ResponsiveLayout(
-        mobile: _MobileLayout(
-          child: mainContent,
-          title: branding?.standaloneTitle ?? title,
-          actions: actions,
-          drawer: drawer,
-          endDrawer: endDrawer,
-          branding: branding,
-        ),
-        tablet: _TabletLayout(
-          child: mainContent,
-          title: branding?.title ?? title,
-          subtitle: subtitle,
-          actions: actions,
-          drawer: drawer,
-          endDrawer: endDrawer,
-          branding: branding,
-        ),
-        desktop: _DesktopLayout(
-          child: mainContent,
-          title: branding?.title ?? title,
-          subtitle: subtitle,
-          actions: actions,
-          drawer: drawer,
-          endDrawer: endDrawer,
-          branding: branding,
-        ),
+      child: Column(
+        children: [
+          const LegalDisclaimer(),
+          Expanded(
+            child: ResponsiveLayout(
+              mobile: _MobileLayout(
+                child: mainContent,
+                title: branding?.standaloneTitle ?? title,
+                actions: actions,
+                drawer: drawer,
+                endDrawer: endDrawer,
+                branding: branding,
+              ),
+              tablet: _TabletLayout(
+                child: mainContent,
+                title: branding?.title ?? title,
+                subtitle: subtitle,
+                actions: actions,
+                drawer: drawer,
+                endDrawer: endDrawer,
+                branding: branding,
+              ),
+              desktop: _DesktopLayout(
+                child: mainContent,
+                title: branding?.title ?? title,
+                subtitle: subtitle,
+                actions: actions,
+                drawer: drawer,
+                endDrawer: endDrawer,
+                branding: branding,
+              ),
+            ),
+          ),
+        ],
       ),
     );
   }

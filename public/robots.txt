@@ -1,0 +1,10 @@
+# Allow AI crawlers and humans to find tools and docs
+User-agent: *
+Allow: /
+Allow: /tools/
+Allow: /api/docs
+
+# Block indexing of raw API data responses to prevent spam
+Disallow: /api/v1/*
+
+Sitemap: https://bharattesting.com/sitemap.xml

@@ -62,9 +62,9 @@ echo "Debug: Flutter version: $(flutter --version --machine 2>/dev/null || flutt
 
 # Try building with memory-optimized settings first
 echo "Attempting Flutter web build with optimized settings..."
-if flutter build web --release --base-href / --tree-shake-icons --source-maps --verbose; then
+if flutter build web --release --base-href / --web-renderer html --tree-shake-icons --source-maps --verbose; then
     echo "✅ Optimized build succeeded!"
-elif flutter build web --release --base-href / --no-tree-shake-icons --verbose; then
+elif flutter build web --release --base-href / --web-renderer html --no-tree-shake-icons --verbose; then
     echo "✅ Fallback build succeeded!"
 else
     echo "❌ All Flutter web build attempts failed!"

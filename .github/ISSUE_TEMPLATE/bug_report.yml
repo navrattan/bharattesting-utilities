@@ -1,95 +1,36 @@
 name: Bug Report
-description: Report a bug or issue with BharatTesting Utilities
-title: "[Bug] "
+description: Report a bug to help us improve BharatTesting
 labels: ["bug"]
-assignees:
-  - navrattan
 body:
   - type: markdown
     attributes:
       value: |
-        Thanks for reporting a bug! Please fill out the details below.
-
-  - type: dropdown
-    id: tool
-    attributes:
-      label: Which tool is affected?
-      options:
-        - Document Scanner
-        - Image Size Reducer
-        - PDF Merger
-        - String-to-JSON Converter
-        - Indian Data Faker
-        - App Navigation/General
-        - Multiple tools
-    validations:
-      required: true
-
-  - type: dropdown
-    id: platform
-    attributes:
-      label: Platform
-      options:
-        - Web (bharattesting.com)
-        - Android
-        - iOS
-        - Multiple platforms
-    validations:
-      required: true
-
+        Thanks for taking the time to fill out this bug report!
   - type: textarea
-    id: bug-description
+    id: description
     attributes:
-      label: Bug Description
-      description: Clear description of the bug
-      placeholder: Describe what's wrong...
+      label: Describe the bug
+      description: A clear and concise description of what the bug is.
     validations:
       required: true
-
   - type: textarea
-    id: steps-to-reproduce
+    id: reproduction
     attributes:
       label: Steps to Reproduce
-      description: How can we reproduce this bug?
+      description: How do we reproduce this?
       placeholder: |
-        1. Go to...
-        2. Click on...
-        3. See error...
+        1. Go to '...'
+        2. Click on '....'
+        3. See error
     validations:
       required: true
-
+  - type: input
+    id: version
+    attributes:
+      label: Version
+      description: What version of the app/API are you using?
   - type: textarea
-    id: expected-behavior
+    id: expected
     attributes:
       label: Expected Behavior
-      description: What should happen instead?
-    validations:
-      required: true
-
-  - type: textarea
-    id: screenshots
-    attributes:
-      label: Screenshots or Error Messages
-      description: Add screenshots or paste error messages if applicable
-
-  - type: textarea
-    id: device-info
-    attributes:
-      label: Device/Browser Information
-      description: Device model, OS version, browser version, screen size, etc.
-      placeholder: |
-        - Device: iPhone 14 Pro
-        - OS: iOS 17.0
-        - Browser: Safari 17.0
-        - Screen: 393x852
-
-  - type: checkboxes
-    id: privacy-confirm
-    attributes:
-      label: Privacy Confirmation
-      description: Since we're privacy-first
-      options:
-        - label: I confirm this bug doesn't require sharing personal/sensitive data
-          required: true
-        - label: This bug occurs with synthetic/test data only
-          required: false
+      description: What you expected to happen.
