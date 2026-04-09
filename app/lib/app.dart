@@ -5,6 +5,7 @@ import 'generated/l10n/app_localizations.dart';
 import 'router/app_router.dart';
 import 'theme/app_theme.dart';
 import 'shared/providers/locale_provider.dart';
+import 'shared/providers/theme_provider.dart';
 
 /// Main application widget
 ///
@@ -19,6 +20,7 @@ class BharatTestingApp extends ConsumerWidget {
   @override
   Widget build(BuildContext context, WidgetRef ref) {
     final locale = ref.watch(localeNotifierProvider);
+    final themeMode = ref.watch(themeNotifierProvider);
 
     return MaterialApp.router(
       title: 'BharatTesting Utilities',
@@ -30,25 +32,12 @@ class BharatTestingApp extends ConsumerWidget {
       // Theme configuration
       theme: AppTheme.light,
       darkTheme: AppTheme.dark,
-      themeMode: ThemeMode.dark, // Default to dark mode
+      themeMode: themeMode, 
 
       // Internationalization
       locale: locale,
-      localizationsDelegates: const [
-        AppLocalizations.delegate,
-        GlobalMaterialLocalizations.delegate,
-        GlobalWidgetsLocalizations.delegate,
-        GlobalCupertinoLocalizations.delegate,
-      ],
-      supportedLocales: const [
-        Locale('en', 'US'), // English (US) - primary
-        Locale('en', 'IN'), // English (India)
-        Locale('hi', 'IN'), // Hindi (India)
-        Locale('bn', 'IN'), // Bengali (India)
-        Locale('mr', 'IN'), // Marathi (India)
-        Locale('te', 'IN'), // Telugu (India)
-        Locale('pa', 'IN'), // Punjabi (India)
-      ],
+      localizationsDelegates: AppLocalizations.localizationsDelegates,
+      supportedLocales: AppLocalizations.supportedLocales,
 
       // App metadata
       builder: (context, child) {

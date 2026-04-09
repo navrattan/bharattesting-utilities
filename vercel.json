@@ -23,7 +23,7 @@
     { "source": "/document-scanner", "destination": "/document-scanner.html" },
     {
       "source": "/api/v1/(.*)",
-      "destination": "/api/v1/$1"
+      "destination": "/api/v1/main"
     },
     {
       "source": "/((?!.*\\.).*)",

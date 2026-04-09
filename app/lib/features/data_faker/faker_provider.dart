@@ -24,6 +24,10 @@ class FakerNotifier extends _$FakerNotifier {
     state = state.copyWith(selectedExportFormat: format);
   }
 
+  void updateRecordCount(int count) {
+    state = state.copyWith(recordCount: count);
+  }
+
   void toggleIdentifier(String id) {
     final current = Set<String>.from(state.selectedIdentifiers);
     if (current.contains(id)) {
@@ -40,7 +44,7 @@ class FakerNotifier extends _$FakerNotifier {
       final seed = state.useRandomSeed ? null : state.customSeed;
       final records = await compute(_generateRecordsInIsolate, {
         'template': state.selectedTemplate.name,
-        'count': state.bulkSize.count,
+        'count': state.recordCount,
         'seed': seed,
         'preferredState': state.preferredState,
         'identifiers': state.selectedIdentifiers.toList(),

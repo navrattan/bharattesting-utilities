@@ -136,6 +136,10 @@ class _MobileLayout extends StatelessWidget {
         backgroundColor: branding?.primaryColor,
         foregroundColor: branding != null ? Colors.white : null,
         actions: [
+          IconButton(
+            icon: Icon(Theme.of(context).brightness == Brightness.dark ? Icons.light_mode : Icons.dark_mode),
+            onPressed: () => ref.read(themeNotifierProvider.notifier).toggleTheme(),
+          ),
           ...?actions,
           const LanguageSwitcher(),
           const GitHubButtons(compact: true),
@@ -205,6 +209,10 @@ class _TabletLayout extends StatelessWidget {
                   title: Text(title ?? 'BharatTesting'),
                   backgroundColor: branding != null ? branding!.primaryColor.withOpacity(0.1) : null,
                   actions: [
+                    IconButton(
+                      icon: Icon(Theme.of(context).brightness == Brightness.dark ? Icons.light_mode : Icons.dark_mode),
+                      onPressed: () => ref.read(themeNotifierProvider.notifier).toggleTheme(),
+                    ),
                     ...?actions,
                     const LanguageSwitcher(),
                     const GitHubButtons(),
@@ -292,6 +300,11 @@ class _DesktopLayout extends StatelessWidget {
                     )
                   else
                     const Spacer(),
+                  IconButton(
+                    icon: Icon(theme.brightness == Brightness.dark ? Icons.light_mode : Icons.dark_mode),
+                    onPressed: () => ref.read(themeNotifierProvider.notifier).toggleTheme(),
+                    color: branding != null ? Colors.white : null,
+                  ),
                   if (actions != null) ...actions!,
                   LanguageSwitcher(isBranded: branding != null),
                   const GitHubButtons(),

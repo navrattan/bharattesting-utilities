@@ -57,6 +57,7 @@ class FakerState {
     this.errorMessage,
     this.lastGenerationTimeMs,
     this.lastExportTimeMs,
+    this.recordCount = 10,
   });
 
   final core.TemplateType selectedTemplate;
@@ -77,6 +78,7 @@ class FakerState {
   final String? errorMessage;
   final int? lastGenerationTimeMs;
   final int? lastExportTimeMs;
+  final int recordCount;
 
   FakerState copyWith({
     core.TemplateType? selectedTemplate,
@@ -97,6 +99,7 @@ class FakerState {
     String? errorMessage,
     int? lastGenerationTimeMs,
     int? lastExportTimeMs,
+    int? recordCount,
   }) {
     return FakerState(
       selectedTemplate: selectedTemplate ?? this.selectedTemplate,
@@ -117,6 +120,7 @@ class FakerState {
       errorMessage: errorMessage ?? this.errorMessage,
       lastGenerationTimeMs: lastGenerationTimeMs ?? this.lastGenerationTimeMs,
       lastExportTimeMs: lastExportTimeMs ?? this.lastExportTimeMs,
+      recordCount: recordCount ?? this.recordCount,
     );
   }
 }

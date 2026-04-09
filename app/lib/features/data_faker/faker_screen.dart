@@ -26,15 +26,51 @@ class FakerScreen extends ConsumerWidget {
           children: [
             // STEP 1: SELECT DATA TYPE
             _buildSectionHeader(context, "1", "Choose the types of data you want"),
-            const SizedBox(height: 20),
+            const SizedBox(height: 16),
             _DataTypeGrid(state: state),
             
-            const SizedBox(height: 48),
+            const SizedBox(height: 32),
             
             // STEP 2: SELECT FORMAT
             _buildSectionHeader(context, "2", "Choose a data format"),
-            const SizedBox(height: 20),
+            const SizedBox(height: 16),
             _FormatGrid(state: state),
+            
+            const SizedBox(height: 32),
+
+            // STEP 3: RECORD COUNT
+            _buildSectionHeader(context, "3", "How many records?"),
+            const SizedBox(height: 8),
+            Row(
+              children: [
+                Expanded(
+                  child: Slider(
+                    value: state.recordCount.toDouble(),
+                    min: 1,
+                    max: 100,
+                    divisions: 99,
+                    label: state.recordCount.toString(),
+                    onChanged: (val) => ref.read(fakerNotifierProvider.notifier).updateRecordCount(val.toInt()),
+                  ),
+                ),
+                Container(
+                  width: 60,
+                  padding: const EdgeInsets.symmetric(horizontal: 12, vertical: 8),
+                  decoration: BoxDecoration(
+                    color: theme.colorScheme.primaryContainer,
+                    borderRadius: BorderRadius.circular(8),
+                  ),
+                  child: Text(
+                    state.recordCount.toString(),
+                    style: TextStyle(
+                      fontWeight: FontWeight.bold,
+                      color: theme.colorScheme.onPrimaryContainer,
+                    ),
+                    textAlign: TextAlign.center,
+                  ),
+                ),
+              ],
+            ),
             
             const SizedBox(height: 48),
             
@@ -188,9 +224,9 @@ class _DataTypeGrid extends ConsumerWidget {
       physics: const NeverScrollableScrollPhysics(),
       gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
         crossAxisCount: crossAxisCount,
-        crossAxisSpacing: 12,
-        mainAxisSpacing: 12,
-        childAspectRatio: 1.2,
+        crossAxisSpacing: 8,
+        mainAxisSpacing: 8,
+        childAspectRatio: 1.4,
       ),
       itemCount: types.length,
       itemBuilder: (context, index) {
@@ -223,9 +259,9 @@ class _FormatGrid extends ConsumerWidget {
       physics: const NeverScrollableScrollPhysics(),
       gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
         crossAxisCount: crossAxisCount,
-        crossAxisSpacing: 12,
-        mainAxisSpacing: 12,
-        childAspectRatio: 1.2,
+        crossAxisSpacing: 8,
+        mainAxisSpacing: 8,
+        childAspectRatio: 1.4,
       ),
       itemCount: ExportFormat.values.length,
       itemBuilder: (context, index) {
@@ -301,15 +337,15 @@ class _SelectionTile extends StatelessWidget {
             Icon(
               icon,
               color: isSelected ? Colors.white : color,
-              size: 28,
+              size: 24,
             ),
-            const SizedBox(height: 8),
+            const SizedBox(height: 4),
             Text(
               label,
               style: TextStyle(
                 color: isSelected ? Colors.white : theme.colorScheme.onSurface,
                 fontWeight: isSelected ? FontWeight.bold : FontWeight.normal,
-                fontSize: 13,
+                fontSize: 12,
               ),
               textAlign: TextAlign.center,
             ),
