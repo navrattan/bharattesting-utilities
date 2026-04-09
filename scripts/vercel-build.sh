@@ -17,6 +17,7 @@ if [ ! -d "$FLUTTER_DIR" ]; then
     echo "📦 Installing Flutter $FLUTTER_VERSION..."
     (
         cd /tmp
+        echo "⬇️  Downloading Linux x64 Flutter $FLUTTER_VERSION stable bundle..."
         curl -L -o flutter.tar.xz "https://storage.googleapis.com/flutter_infra_release/releases/stable/linux/flutter_linux_${FLUTTER_VERSION}-stable.tar.xz"
         tar xf flutter.tar.xz
         rm flutter.tar.xz
