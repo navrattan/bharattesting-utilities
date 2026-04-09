@@ -1,0 +1,101 @@
+import os
+
+TEMPLATE = """<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>{title} | BharatTesting Utilities</title>
+    <meta name="description" content="{description}">
+    <meta name="keywords" content="{keywords}">
+    
+    <!-- Open Graph -->
+    <meta property="og:title" content="{title} | BharatTesting">
+    <meta property="og:description" content="{description}">
+    <meta property="og:url" content="https://bharattesting.com/tools/{slug}">
+    <meta property="og:type" content="website">
+    
+    <!-- Schema.org -->
+    <script type="application/ld+json">
+    {{
+        "@context": "https://schema.org",
+        "@type": "WebApplication",
+        "name": "{title}",
+        "description": "{description}",
+        "url": "https://bharattesting.com/tools/{slug}",
+        "applicationCategory": "DeveloperApplication",
+        "operatingSystem": "Web",
+        "offers": {{ "@type": "Offer", "price": "0", "priceCurrency": "INR" }}
+    }}
+    </script>
+    
+    <style>
+        body {{ font-family: sans-serif; line-height: 1.6; max-width: 800px; margin: 40px auto; padding: 20px; color: #333; }}
+        .header {{ border-bottom: 2px solid #58A6FF; padding-bottom: 20px; margin-bottom: 40px; }}
+        .btn {{ display: inline-block; background: #0056B3; color: white; padding: 12px 24px; text-decoration: none; border-radius: 8px; font-weight: bold; }}
+        .api-box {{ background: #f4f4f4; padding: 20px; border-radius: 8px; font-family: monospace; border-left: 4px solid #58A6FF; }}
+    </style>
+</head>
+<body>
+    <div class="header">
+        <h1>{title}</h1>
+        <p>{description}</p>
+    </div>
+
+    <section>
+        <h2>About this tool</h2>
+        <p>{long_description}</p>
+        <a href="https://bharattesting.com/#/{slug}" class="btn">Launch Interactive Tool</a>
+    </section>
+
+    <section style="margin-top: 40px;">
+        <h2>API Access (For Agents & Developers)</h2>
+        <p>This tool is available via our high-speed API for programmatic access.</p>
+        <div class="api-box">
+            GET https://api.bharattesting.com/v1/{api_endpoint}
+        </div>
+        <p><a href="https://api.bharattesting.com/docs">View API Documentation</a></p>
+    </section>
+
+    <footer style="margin-top: 60px; font-size: 0.8em; color: #666;">
+        <p>&copy; 2026 BharatTesting Utilities. Made with ❤️ in Bengaluru.</p>
+    </footer>
+</body>
+</html>
+"""
+
+TOOLS = [
+    {
+        "slug": "indian-data-faker",
+        "title": "Indian Data Faker",
+        "description": "Generate synthetic but valid Indian identity and business data.",
+        "keywords": "indian data faker, fake indian identity, test data india",
+        "long_description": "Generate names, phone numbers, addresses, and more with regional awareness for all Indian states.",
+        "api_endpoint": "profile"
+    },
+    {
+        "slug": "aadhaar-generator",
+        "title": "Aadhaar Number Generator",
+        "description": "Generate valid 12-digit Aadhaar numbers for testing.",
+        "keywords": "aadhaar generator, test aadhaar number, verhoeff checksum",
+        "long_description": "Create Aadhaar numbers that pass Verhoeff checksum validation for your QA and development needs.",
+        "api_endpoint": "aadhaar"
+    },
+    {
+        "slug": "pan-generator",
+        "title": "PAN Card Generator",
+        "description": "Generate entity-aware Permanent Account Numbers.",
+        "keywords": "pan generator, test pan card, individual pan, company pan",
+        "long_description": "Generate PAN cards for individuals, companies, trusts, and more with strict entity-type validation.",
+        "api_endpoint": "pan"
+    }
+]
+
+# Ensure public/tools directory exists
+os.makedirs("public/tools", exist_ok=True)
+
+for tool in TOOLS:
+    content = TEMPLATE.format(**tool)
+    with open(f"public/tools/{tool['slug']}.html", "w") as f:
+        f.write(content)
+    print(f"Generated: public/tools/{tool['slug']}.html")

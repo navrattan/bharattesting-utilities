@@ -1,0 +1,19 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "title": "PAN Record",
+  "type": "object",
+  "properties": {
+    "pan": {
+      "type": "string",
+      "pattern": "^[A-Z]{5}[0-9]{4}[A-Z]$"
+    },
+    "entity_type": {
+      "type": "string",
+      "enum": ["P", "C", "H", "F", "A", "T", "B", "L", "J", "G"]
+    },
+    "entity_label": {
+      "type": "string"
+    }
+  },
+  "required": ["pan", "entity_type"]
+}

@@ -1,42 +1,54 @@
+const formatResponse = require('./utils/formatter');
+
 module.exports = async (req, res) => {
-  const { count = 1, format = 'json', type = 'P' } = req.query;
+  const { count = 1, type = 'P' } = req.query;
   const numCount = Math.min(parseInt(count), 100);
   
-  const generatePAN = (entityType) => {
-    const chars = 'ABCDEFGHIJKLMNOPQRSTUVWXYZ';
-    const nums = '0123456789';
-    
-    // 1-3: Random alpha
+  // PDF P.9: 4th char must match entity type
+  const entityTypes = ['P', 'C', 'H', 'F', 'A', 'T', 'B', 'L', 'J', 'G'];
+  const selectedType = entityTypes.includes(type.toUpperCase()) ? type.toUpperCase() : 'P';
+  
+  const entityLabels = {
+    'P': 'Individual',
+    'C': 'Company',
+    'H': 'HUF',
+    'F': 'Firm',
+    'A': 'AOP',
+    'T': 'Trust',
+    'B': 'BOI',
+    'L': 'Local Authority',
+    'J': 'Artificial Juridical Person',
+    'G': 'Government'
+  };
+
+  const generatePAN = () => {
     let pan = '';
-    for (let i = 0; i < 3; i++) pan += chars[Math.floor(Math.random() * 26)];
+    // First 3 chars: Alpha
+    for (let i = 0; i < 3; i++) {
+      pan += String.fromCharCode(65 + Math.floor(Math.random() * 26));
+    }
+    // 4th char: Entity Type
+    pan += selectedType;
+    // 5th char: Surname/Entity name first char
+    pan += String.fromCharCode(65 + Math.floor(Math.random() * 26));
+    // 6th to 9th: 4 digits
+    for (let i = 0; i < 4; i++) {
+      pan += Math.floor(Math.random() * 10).toString();
+    }
+    // 10th char: Last alpha check digit (simplified for test data)
+    pan += String.fromCharCode(65 + Math.floor(Math.random() * 26));
     
-    // 4: Entity type
-    pan += entityType.toUpperCase();
-    
-    // 5: Random alpha (Last name initial)
-    pan += chars[Math.floor(Math.random() * 26)];
-    
-    // 6-9: 4 digits
-    for (let i = 0; i < 4; i++) pan += nums[Math.floor(Math.random() * 10)];
-    
-    // 10: Check digit (alpha)
-    pan += chars[Math.floor(Math.random() * 26)];
-    
-    return pan;
+    return {
+      pan,
+      entity_type: selectedType,
+      entity_label: entityLabels[selectedType]
+    };
   };
 
   const results = [];
   for (let i = 0; i < numCount; i++) {
-    results.push(generatePAN(type));
+    results.push(generatePAN());
   }
 
-  if (format === 'csv') {
-    res.setHeader('Content-Type', 'text/csv');
-    return res.send('pan\n' + results.join('\n'));
-  }
-
-  res.status(200).json({
-    data: results,
-    meta: { count: numCount, format: 'json', generated_at: new Date().toISOString() }
-  });
+  return formatResponse(req, res, results, 'pan_records');
 };

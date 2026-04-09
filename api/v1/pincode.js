@@ -1,5 +1,7 @@
+const formatResponse = require('./utils/formatter');
+
 module.exports = async (req, res) => {
-  const { count = 1, format = 'json', state } = req.query;
+  const { count = 1, state } = req.query;
   const numCount = Math.min(parseInt(count), 100);
   
   const statePincodes = {
@@ -40,22 +42,5 @@ module.exports = async (req, res) => {
     results.push(generatePincode());
   }
 
-  if (format === 'csv') {
-    res.setHeader('Content-Type', 'text/csv');
-    return res.send('pincode,state\n' + results.map(r => `${r.pincode},${r.state}`).join('\n'));
-  }
-
-  if (format === 'sql') {
-    res.setHeader('Content-Type', 'text/plain');
-    return res.send(`INSERT INTO pincodes (pincode, state) VALUES\n${results.map(r => `('${r.pincode}', '${r.state}')`).join(',\n')};`);
-  }
-
-  res.status(200).json({
-    data: results,
-    meta: {
-      count: numCount,
-      format: 'json',
-      generated_at: new Date().toISOString()
-    }
-  });
+  return formatResponse(req, res, results, 'pincode_records');
 };

@@ -82,4 +82,9 @@ echo "🛡️  Running build integrity audit..."
 cd "$PROJECT_ROOT"
 bash scripts/verify-web-build.sh
 
+# NEW: Generate SEO-friendly landing pages for AI agents
+echo "🔍 Generating SEO landing pages for AI agents..."
+python3 scripts/generate-seo-pages.py
+cp -r public/tools app/build/web/
+
 echo "✅ Web build completed successfully!"

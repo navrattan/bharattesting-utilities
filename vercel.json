@@ -13,6 +13,9 @@
   ],
   "rewrites": [
     { "source": "/api/docs", "destination": "/api-docs.html" },
+    { "source": "/tools/aadhaar-generator", "destination": "/tools/aadhaar-generator.html" },
+    { "source": "/tools/pan-generator", "destination": "/tools/pan-generator.html" },
+    { "source": "/tools/indian-data-faker", "destination": "/tools/indian-data-faker.html" },
     { "source": "/indian-data-faker", "destination": "/indian-data-faker.html" },
     { "source": "/string-to-json", "destination": "/string-to-json.html" },
     { "source": "/image-reducer", "destination": "/image-reducer.html" },

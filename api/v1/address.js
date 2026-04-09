@@ -1,5 +1,7 @@
+const formatResponse = require('./utils/formatter');
+
 module.exports = async (req, res) => {
-  const { count = 1, format = 'json', state } = req.query;
+  const { count = 1, state } = req.query;
   const numCount = Math.min(parseInt(count), 100);
   
   const indianAddressData = [
@@ -27,7 +29,6 @@ module.exports = async (req, res) => {
     
     return {
       line1: `${houseNum}, ${locality}`,
-      line2: 'Near Main Market',
       city: data.city,
       state: data.state,
       pincode: data.pincode,
@@ -41,24 +42,5 @@ module.exports = async (req, res) => {
     results.push(generateAddress());
   }
 
-  if (format === 'csv') {
-    res.setHeader('Content-Type', 'text/csv');
-    const header = 'line1,city,state,pincode,country\n';
-    const rows = results.map(a => `"${a.line1}","${a.city}","${a.state}","${a.pincode}","India"`).join('\n');
-    return res.send(header + rows);
-  }
-
-  if (format === 'sql') {
-    res.setHeader('Content-Type', 'text/plain');
-    return res.send(`INSERT INTO addresses (line1, city, state, pincode, country) VALUES\n${results.map(a => `('${a.line1}', '${a.city}', '${a.state}', '${a.pincode}', 'India')`).join(',\n')};`);
-  }
-
-  res.status(200).json({
-    data: results,
-    meta: {
-      count: numCount,
-      format: 'json',
-      generated_at: new Date().toISOString()
-    }
-  });
+  return formatResponse(req, res, results, 'address_records');
 };

@@ -34,7 +34,7 @@ module.exports = async (req, res) => {
     results.push(generatePassport());
   }
 
-  if (format === 'csv') {
+  if (req.query.format === "csv") {
     res.setHeader('Content-Type', 'text/csv');
     return res.send('passport_number,type\n' + results.map(r => `${r.number},${r.type}`).join('\n'));
   }

@@ -32,7 +32,7 @@ module.exports = async (req, res) => {
     results.push(generateCompany());
   }
 
-  if (format === 'csv') {
+  if (req.query.format === "csv") {
     res.setHeader('Content-Type', 'text/csv');
     const header = 'name,cin,pan,gstin,state\n';
     const rows = results.map(r => `"${r.name}","${r.cin}","${r.pan}","${r.gstin}","${r.state}"`).join('\n');

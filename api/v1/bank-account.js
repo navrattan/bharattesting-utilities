@@ -1,5 +1,7 @@
+const formatResponse = require('./utils/formatter');
+
 module.exports = async (req, res) => {
-  const { count = 1, format = 'json', bank } = req.query;
+  const { count = 1, bank } = req.query;
   const numCount = Math.min(parseInt(count), 100);
   
   const bankRules = {
@@ -38,24 +40,5 @@ module.exports = async (req, res) => {
     results.push(generateAccount());
   }
 
-  if (format === 'csv') {
-    res.setHeader('Content-Type', 'text/csv');
-    const header = 'bank,account_number,type\n';
-    const rows = results.map(r => `"${r.bank}","${r.account_number}","${r.type}"`).join('\n');
-    return res.send(header + rows);
-  }
-
-  if (format === 'sql') {
-    res.setHeader('Content-Type', 'text/plain');
-    return res.send(`INSERT INTO bank_accounts (bank, account_number, type) VALUES\n${results.map(r => `('${r.bank}', '${r.account_number}', '${r.type}')`).join(',\n')};`);
-  }
-
-  res.status(200).json({
-    data: results,
-    meta: {
-      count: numCount,
-      format: 'json',
-      generated_at: new Date().toISOString()
-    }
-  });
+  return formatResponse(req, res, results, 'bank_records');
 };

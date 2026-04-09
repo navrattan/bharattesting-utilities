@@ -32,7 +32,7 @@ module.exports = async (req, res) => {
     results.push(generateEmail());
   }
 
-  if (format === 'csv') {
+  if (req.query.format === "csv") {
     res.setHeader('Content-Type', 'text/csv');
     return res.send('email\n' + results.join('\n'));
   }

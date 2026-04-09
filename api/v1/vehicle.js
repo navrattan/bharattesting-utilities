@@ -1,5 +1,7 @@
+const formatResponse = require('./utils/formatter');
+
 module.exports = async (req, res) => {
-  const { count = 1, format = 'json', state } = req.query;
+  const { count = 1, state } = req.query;
   const numCount = Math.min(parseInt(count), 100);
   
   const rtoCodes = {
@@ -26,7 +28,11 @@ module.exports = async (req, res) => {
     const series = String.fromCharCode(65 + Math.floor(Math.random() * 26)) + String.fromCharCode(65 + Math.floor(Math.random() * 26));
     const number = Math.floor(Math.random() * 9000) + 1000;
     
-    return `${stateCode} ${rto} ${series} ${number}`;
+    return {
+      registration_number: `${stateCode} ${rto} ${series} ${number}`,
+      state: stateCode,
+      rto_code: rto
+    };
   };
 
   const results = [];
@@ -34,22 +40,5 @@ module.exports = async (req, res) => {
     results.push(generateVehicleNum());
   }
 
-  if (format === 'csv') {
-    res.setHeader('Content-Type', 'text/csv');
-    return res.send('vehicle_number\n' + results.join('\n'));
-  }
-
-  if (format === 'sql') {
-    res.setHeader('Content-Type', 'text/plain');
-    return res.send(`INSERT INTO vehicles (registration_number) VALUES\n${results.map(r => `('${r}')`).join(',\n')};`);
-  }
-
-  res.status(200).json({
-    data: results,
-    meta: {
-      count: numCount,
-      format: 'json',
-      generated_at: new Date().toISOString()
-    }
-  });
+  return formatResponse(req, res, results, 'vehicle_records');
 };
