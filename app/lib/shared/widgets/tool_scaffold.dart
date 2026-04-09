@@ -69,40 +69,33 @@ class ToolScaffold extends ConsumerWidget {
 
     return Theme(
       data: brandedTheme,
-      child: Column(
-        children: [
-          const LegalDisclaimer(),
-          Expanded(
-            child: ResponsiveLayout(
-              mobile: _MobileLayout(
-                child: mainContent,
-                title: branding?.standaloneTitle ?? title,
-                actions: actions,
-                drawer: drawer,
-                endDrawer: endDrawer,
-                branding: branding,
-              ),
-              tablet: _TabletLayout(
-                child: mainContent,
-                title: branding?.title ?? title,
-                subtitle: subtitle,
-                actions: actions,
-                drawer: drawer,
-                endDrawer: endDrawer,
-                branding: branding,
-              ),
-              desktop: _DesktopLayout(
-                child: mainContent,
-                title: branding?.title ?? title,
-                subtitle: subtitle,
-                actions: actions,
-                drawer: drawer,
-                endDrawer: endDrawer,
-                branding: branding,
-              ),
-            ),
-          ),
-        ],
+      child: ResponsiveLayout(
+        mobile: _MobileLayout(
+          child: mainContent,
+          title: branding?.standaloneTitle ?? title,
+          actions: actions,
+          drawer: drawer,
+          endDrawer: endDrawer,
+          branding: branding,
+        ),
+        tablet: _TabletLayout(
+          child: mainContent,
+          title: branding?.title ?? title,
+          subtitle: subtitle,
+          actions: actions,
+          drawer: drawer,
+          endDrawer: endDrawer,
+          branding: branding,
+        ),
+        desktop: _DesktopLayout(
+          child: mainContent,
+          title: branding?.title ?? title,
+          subtitle: subtitle,
+          actions: actions,
+          drawer: drawer,
+          endDrawer: endDrawer,
+          branding: branding,
+        ),
       ),
     );
   }
@@ -148,7 +141,12 @@ class _MobileLayout extends ConsumerWidget {
       ),
       drawer: drawer,
       endDrawer: endDrawer,
-      body: child,
+      body: Column(
+        children: [
+          const LegalDisclaimer(),
+          Expanded(child: child),
+        ],
+      ),
       bottomNavigationBar: branding != null ? null : NavigationBar(
         selectedIndex: currentIndex,
         onDestinationSelected: (index) => AppRouter.navigateToIndex(context, index),
@@ -220,6 +218,7 @@ class _TabletLayout extends ConsumerWidget {
                   ],
                   automaticallyImplyLeading: branding != null,
                 ),
+                const LegalDisclaimer(),
                 Expanded(child: child),
                 const BTQAFooter(),
               ],
@@ -313,6 +312,7 @@ class _DesktopLayout extends ConsumerWidget {
               ),
             ),
           ),
+          const LegalDisclaimer(),
           // Content Area - FIXED: Removed centering logic which caused height collapse on Web
           Expanded(
             child: Container(

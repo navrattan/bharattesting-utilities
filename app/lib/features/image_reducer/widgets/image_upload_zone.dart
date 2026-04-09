@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:file_picker/file_picker.dart';
+import 'package:desktop_drop/desktop_drop.dart';
 import 'package:bharattesting_core/core.dart' hide ImageFormat;
 
 class ImageUploadZone extends StatefulWidget {
@@ -48,83 +49,99 @@ class _ImageUploadZoneState extends State<ImageUploadZone>
   Widget build(BuildContext context) {
     final theme = Theme.of(context);
 
-    return ScaleTransition(
-      scale: _scaleAnimation,
-      child: Container(
-        width: double.infinity,
-        constraints: const BoxConstraints(
-          minHeight: 200,
-          maxWidth: 600,
-        ),
-        decoration: BoxDecoration(
-          border: Border.all(
-            color: _isDragOver
-                ? theme.colorScheme.primary
-                : theme.colorScheme.outline,
-            width: _isDragOver ? 2 : 1,
-            style: BorderStyle.solid,
+    return DropTarget(
+      onDragEntered: (_) => _handleDragEnter(),
+      onDragExited: (_) => _handleDragLeave(),
+      onDragDone: (details) async {
+        final files = <PlatformFile>[];
+        for (final file in details.files) {
+          final bytes = await file.readAsBytes();
+          files.add(PlatformFile(
+            name: file.name,
+            size: bytes.length,
+            bytes: bytes,
+          ));
+        }
+        _handleDragDrop(files);
+      },
+      child: ScaleTransition(
+        scale: _scaleAnimation,
+        child: Container(
+          width: double.infinity,
+          constraints: const BoxConstraints(
+            minHeight: 200,
+            maxWidth: 600,
           ),
-          borderRadius: BorderRadius.circular(16),
-          color: _isDragOver
-              ? theme.colorScheme.primaryContainer.withOpacity(0.1)
-              : theme.colorScheme.surfaceVariant.withOpacity(0.3),
-        ),
-        child: Material(
-          color: Colors.transparent,
-          child: InkWell(
-            onTap: widget.onImagesPicked,
+          decoration: BoxDecoration(
+            border: Border.all(
+              color: _isDragOver
+                  ? theme.colorScheme.primary
+                  : theme.colorScheme.outline,
+              width: _isDragOver ? 2 : 1,
+              style: BorderStyle.solid,
+            ),
             borderRadius: BorderRadius.circular(16),
-            child: Padding(
-              padding: const EdgeInsets.all(32),
-              child: Column(
-                mainAxisAlignment: MainAxisAlignment.center,
-                children: [
-                  Icon(
-                    _isDragOver ? Icons.file_download : Icons.cloud_upload_outlined,
-                    size: 64,
-                    color: _isDragOver
-                        ? theme.colorScheme.primary
-                        : theme.colorScheme.onSurfaceVariant,
-                  ),
-                  const SizedBox(height: 16),
-                  Text(
-                    _isDragOver
-                        ? 'Drop images here'
-                        : 'Upload Images',
-                    style: theme.textTheme.headlineSmall?.copyWith(
+            color: _isDragOver
+                ? theme.colorScheme.primaryContainer.withOpacity(0.1)
+                : theme.colorScheme.surfaceVariant.withOpacity(0.3),
+          ),
+          child: Material(
+            color: Colors.transparent,
+            child: InkWell(
+              onTap: widget.onImagesPicked,
+              borderRadius: BorderRadius.circular(16),
+              child: Padding(
+                padding: const EdgeInsets.all(32),
+                child: Column(
+                  mainAxisAlignment: MainAxisAlignment.center,
+                  children: [
+                    Icon(
+                      _isDragOver ? Icons.file_download : Icons.cloud_upload_outlined,
+                      size: 64,
                       color: _isDragOver
                           ? theme.colorScheme.primary
-                          : theme.colorScheme.onSurface,
-                      fontWeight: FontWeight.w600,
+                          : theme.colorScheme.onSurfaceVariant,
                     ),
-                  ),
-                  const SizedBox(height: 8),
-                  Text(
-                    'Drag and drop images here or click to browse',
-                    style: theme.textTheme.bodyMedium?.copyWith(
-                      color: theme.colorScheme.onSurfaceVariant,
+                    const SizedBox(height: 16),
+                    Text(
+                      _isDragOver
+                          ? 'Drop images here'
+                          : 'Upload Images',
+                      style: theme.textTheme.headlineSmall?.copyWith(
+                        color: _isDragOver
+                            ? theme.colorScheme.primary
+                            : theme.colorScheme.onSurface,
+                        fontWeight: FontWeight.w600,
+                      ),
                     ),
-                    textAlign: TextAlign.center,
-                  ),
-                  const SizedBox(height: 24),
-                  Wrap(
-                    spacing: 8,
-                    runSpacing: 8,
-                    children: [
-                      _buildSupportedFormatChip('JPEG', theme),
-                      _buildSupportedFormatChip('PNG', theme),
-                      _buildSupportedFormatChip('WebP', theme),
-                      _buildSupportedFormatChip('BMP', theme),
-                      _buildSupportedFormatChip('GIF', theme),
-                    ],
-                  ),
-                  const SizedBox(height: 16),
-                  FilledButton.icon(
-                    onPressed: widget.onImagesPicked,
-                    icon: const Icon(Icons.file_upload),
-                    label: const Text('Choose Files'),
-                  ),
-                ],
+                    const SizedBox(height: 8),
+                    Text(
+                      'Drag and drop images here or click to browse',
+                      style: theme.textTheme.bodyMedium?.copyWith(
+                        color: theme.colorScheme.onSurfaceVariant,
+                      ),
+                      textAlign: TextAlign.center,
+                    ),
+                    const SizedBox(height: 24),
+                    Wrap(
+                      spacing: 8,
+                      runSpacing: 8,
+                      children: [
+                        _buildSupportedFormatChip('JPEG', theme),
+                        _buildSupportedFormatChip('PNG', theme),
+                        _buildSupportedFormatChip('WebP', theme),
+                        _buildSupportedFormatChip('BMP', theme),
+                        _buildSupportedFormatChip('GIF', theme),
+                      ],
+                    ),
+                    const SizedBox(height: 16),
+                    FilledButton.icon(
+                      onPressed: widget.onImagesPicked,
+                      icon: const Icon(Icons.file_upload),
+                      label: const Text('Choose Files'),
+                    ),
+                  ],
+                ),
               ),
             ),
           ),
