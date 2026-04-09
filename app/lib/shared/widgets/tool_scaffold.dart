@@ -38,7 +38,10 @@ class ToolScaffold extends ConsumerWidget {
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
-    final content = body ?? child ?? const SizedBox.shrink();
+    // If body is provided, we assume the caller handles scrolling (e.g. using Expanded).
+    // If child is provided, we wrap it in a SingleChildScrollView for convenience.
+    final Widget mainContent = body ?? (child != null ? SingleChildScrollView(child: child!) : const SizedBox.shrink());
+    
     final path = GoRouterState.of(context).uri.path;
     final intent = ToolIntent.fromPath(path);
     final branding = ToolBranding.all[intent];
@@ -57,7 +60,7 @@ class ToolScaffold extends ConsumerWidget {
         : Theme.of(context),
       child: ResponsiveLayout(
         mobile: _MobileLayout(
-          child: content,
+          child: mainContent,
           title: branding?.standaloneTitle ?? title,
           actions: actions,
           drawer: drawer,
@@ -65,7 +68,7 @@ class ToolScaffold extends ConsumerWidget {
           branding: branding,
         ),
         tablet: _TabletLayout(
-          child: content,
+          child: mainContent,
           title: branding?.title ?? title,
           subtitle: subtitle,
           actions: actions,
@@ -74,7 +77,7 @@ class ToolScaffold extends ConsumerWidget {
           branding: branding,
         ),
         desktop: _DesktopLayout(
-          child: content,
+          child: mainContent,
           title: branding?.title ?? title,
           subtitle: subtitle,
           actions: actions,
@@ -292,24 +295,26 @@ class _DesktopLayout extends StatelessWidget {
             ),
           ),
           Expanded(
-            child: SingleChildScrollView(
-              child: Column(
-                children: [
-                  if (subtitle != null)
-                    Padding(
-                      padding: const EdgeInsets.all(AppTheme.spacingXl),
-                      child: Align(
-                        alignment: Alignment.centerLeft,
-                        child: Text(subtitle!, style: theme.textTheme.bodyLarge),
-                      ),
+            child: Column(
+              children: [
+                if (subtitle != null)
+                  Padding(
+                    padding: const EdgeInsets.all(AppTheme.spacingXl),
+                    child: Align(
+                      alignment: Alignment.centerLeft,
+                      child: Text(subtitle!, style: theme.textTheme.bodyLarge),
                     ),
-                  ConstrainedBox(
-                    constraints: const BoxConstraints(maxWidth: 1200),
-                    child: child,
                   ),
-                  const BTQAFooter(),
-                ],
-              ),
+                Expanded(
+                  child: Center(
+                    child: ConstrainedBox(
+                      constraints: const BoxConstraints(maxWidth: 1200),
+                      child: child,
+                    ),
+                  ),
+                ),
+                const BTQAFooter(),
+              ],
             ),
           ),
         ],

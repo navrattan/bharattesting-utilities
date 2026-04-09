@@ -1,0 +1,75 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>API Documentation | BharatTesting for AI Agents</title>
+  <meta name="description" content="Official API documentation for BharatTesting. Generate Indian test data programmatically via REST API or MCP.">
+  
+  <style>
+    body { font-family: -apple-system, system-ui, sans-serif; line-height: 1.6; color: #1a1c1e; max-width: 900px; margin: 0 auto; padding: 40px 20px; background: #f8f9fa; }
+    h1 { color: #003366; border-bottom: 2px solid #eee; padding-bottom: 10px; }
+    h2 { color: #0056b3; margin-top: 40px; }
+    .endpoint { background: white; border: 1px solid #e1e4e8; border-radius: 8px; padding: 20px; margin-bottom: 20px; box-shadow: 0 2px 4px rgba(0,0,0,0.02); }
+    .method { background: #138808; color: white; padding: 4px 8px; border-radius: 4px; font-weight: bold; font-size: 0.8em; margin-right: 10px; }
+    code { background: #f1f3f5; padding: 2px 6px; border-radius: 4px; font-family: monospace; font-size: 0.9em; }
+    pre { background: #0d1117; color: #c9d1d9; padding: 16px; border-radius: 8px; overflow-x: auto; }
+    .tag { font-size: 0.8em; background: #e7f1ff; color: #0056b3; padding: 2px 8px; border-radius: 12px; margin-left: 10px; font-weight: 600; }
+  </style>
+</head>
+<body>
+  <h1>BharatTesting API Documentation <span class="tag">v1.0.0</span></h1>
+  <p>Welcome to the official API for India-specific test data. This API is optimized for <strong>AI Agents</strong>, developers, and QA teams.</p>
+
+  <h2>Authentication</h2>
+  <p>Basic usage is <strong>anonymous and keyless</strong>. No signup required for up to 60 requests/hour.</p>
+
+  <h2>Endpoints</h2>
+
+  <div class="endpoint">
+    <span class="method">GET</span> <code>/api/v1/aadhaar</code>
+    <p>Generate valid 12-digit Aadhaar numbers with Verhoeff checksum.</p>
+    <p><strong>Params:</strong> <code>count</code> (1-100), <code>format</code> (json, csv, xml)</p>
+  </div>
+
+  <div class="endpoint">
+    <span class="method">GET</span> <code>/api/v1/pan</code>
+    <p>Generate entity-aware PAN numbers.</p>
+    <p><strong>Params:</strong> <code>type</code> (P: Individual, C: Company, T: Trust), <code>count</code></p>
+  </div>
+
+  <div class="endpoint">
+    <span class="method">GET</span> <code>/api/v1/gstin</code>
+    <p>Generate state-aware GSTIN numbers with Mod-36 checksum.</p>
+    <p><strong>Params:</strong> <code>stateCode</code> (e.g., 27 for MH), <code>count</code></p>
+  </div>
+
+  <div class="endpoint">
+    <span class="method">GET</span> <code>/api/v1/profile</code>
+    <p>Generate complete Indian user profiles (Name, Phone, Email, Address).</p>
+    <p><strong>Params:</strong> <code>state</code>, <code>count</code></p>
+  </div>
+
+  <h2>SDK & Code Snippets</h2>
+  
+  <h3>cURL</h3>
+  <pre>curl "https://bharattesting.com/api/v1/aadhaar?count=5"</pre>
+
+  <h3>Node.js</h3>
+  <pre>const response = await fetch('https://bharattesting.com/api/v1/profile?count=1');
+const data = await response.json();</pre>
+
+  <h3>Python</h3>
+  <pre>import requests
+res = requests.get("https://bharattesting.com/api/v1/gstin?stateCode=27")
+print(res.json())</pre>
+
+  <h2>Model Context Protocol (MCP)</h2>
+  <p>AI Agents can natively discover our tools by connecting to:</p>
+  <pre>https://bharattesting.com/api/mcp</pre>
+
+  <footer style="margin-top: 60px; font-size: 0.8em; color: #666; text-align: center;">
+    © 2026 BharatTesting. Built for Digital India.
+  </footer>
+</body>
+</html>

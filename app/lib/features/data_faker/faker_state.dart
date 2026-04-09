@@ -20,9 +20,15 @@ enum TemplateType {
 
 /// Available identifier categories for selection
 enum ExportFormat {
-  csv('CSV', 'Comma-separated values'),
   json('JSON', 'JavaScript Object Notation'),
-  xlsx('XLSX', 'Microsoft Excel format');
+  csv('CSV', 'Comma-separated values'),
+  sql('SQL', 'SQL INSERT statements'),
+  xml('XML', 'eXtensible Markup Language'),
+  html('HTML', 'HTML Table format'),
+  js('Javascript', 'JS Object Array'),
+  ts('Typescript', 'TS Interface & Data'),
+  php('PHP', 'PHP Associative Array'),
+  python('Python', 'Python List of Dicts');
 
   const ExportFormat(this.displayName, this.description);
 

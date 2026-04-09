@@ -1,0 +1,58 @@
+{
+  "openapi": "3.0.0",
+  "info": {
+    "title": "BharatTesting API",
+    "description": "API for generating valid Indian test data including Aadhaar, PAN, GSTIN, and User Profiles.",
+    "version": "1.0.0"
+  },
+  "servers": [
+    {
+      "url": "https://bharattesting.com/api/v1",
+      "description": "Production server"
+    }
+  ],
+  "paths": {
+    "/aadhaar": {
+      "get": {
+        "summary": "Generate Aadhaar numbers",
+        "parameters": [
+          { "name": "count", "in": "query", "schema": { "type": "integer", "default": 1, "maximum": 100 } },
+          { "name": "format", "in": "query", "schema": { "type": "string", "enum": ["json", "csv", "xml"], "default": "json" } }
+        ],
+        "responses": {
+          "200": { "description": "Successful response" }
+        }
+      }
+    },
+    "/pan": {
+      "get": {
+        "summary": "Generate PAN numbers",
+        "parameters": [
+          { "name": "count", "in": "query", "schema": { "type": "integer", "default": 1 } },
+          { "name": "type", "in": "query", "schema": { "type": "string", "enum": ["P", "C", "H", "F", "A", "T", "B", "L", "J", "G"], "default": "P" } }
+        ],
+        "responses": { "200": { "description": "Successful response" } }
+      }
+    },
+    "/gstin": {
+      "get": {
+        "summary": "Generate GSTIN numbers",
+        "parameters": [
+          { "name": "count", "in": "query", "schema": { "type": "integer", "default": 1 } },
+          { "name": "stateCode", "in": "query", "schema": { "type": "string", "default": "27" } }
+        ],
+        "responses": { "200": { "description": "Successful response" } }
+      }
+    },
+    "/profile": {
+      "get": {
+        "summary": "Generate Indian user profiles",
+        "parameters": [
+          { "name": "count", "in": "query", "schema": { "type": "integer", "default": 1 } },
+          { "name": "state", "in": "query", "schema": { "type": "string" } }
+        ],
+        "responses": { "200": { "description": "Successful response" } }
+      }
+    }
+  }
+}

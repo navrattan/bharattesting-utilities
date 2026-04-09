@@ -1,0 +1,27 @@
+# BharatTesting.com
+
+> India's primary platform for generating, validating, and transforming India-specific test data. 100% offline and privacy-first.
+
+## API Base URL
+- Base URL: https://bharattesting.com/api/v1
+- OpenAPI Spec: https://bharattesting.com/api/v1/openapi.json
+- MCP Server: https://bharattesting.com/api/mcp
+
+## Key Capabilities
+- **Aadhaar Generator**: Valid 12-digit numbers with Verhoeff checksum.
+- **PAN Generator**: Entity-aware (Individual, Company, Trust) Permanent Account Numbers.
+- **GSTIN Generator**: State-aware Goods and Services Tax Identification Numbers with Mod-36 checksum.
+- **Indian Data Faker**: Generate profiles including Names (regional), Phone numbers (+91), UPI IDs, and Addresses with valid PIN codes.
+- **Utility Tools**: Image Size Reducer, PDF Merger, and Intelligent JSON/CSV/YAML Repair.
+
+## Data Formats
+All generators support:
+- JSON (default)
+- CSV
+- XML
+- SQL INSERT
+
+## Privacy & Security
+- 100% Client-side processing for UI.
+- No PII (Personally Identifiable Information) is ever stored or logged.
+- Generated data is synthetic but structurally valid.

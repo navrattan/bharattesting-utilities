@@ -4,12 +4,30 @@
   "framework": null,
   "alias": "bharattesting.com",
   "rewrites": [
+    { "source": "/api/docs", "destination": "/api-docs.html" },
+    { "source": "/indian-data-faker", "destination": "/indian-data-faker.html" },
+    { "source": "/string-to-json", "destination": "/string-to-json.html" },
+    { "source": "/image-reducer", "destination": "/image-reducer.html" },
+    { "source": "/pdf-merger", "destination": "/pdf-merger.html" },
+    { "source": "/document-scanner", "destination": "/document-scanner.html" },
+    {
+      "source": "/api/v1/(.*)",
+      "destination": "/api/v1/$1"
+    },
     {
       "source": "/((?!.*\\.).*)",
       "destination": "/index.html"
     }
   ],
   "headers": [
+    {
+      "source": "/api/(.*)",
+      "headers": [
+        { "key": "Access-Control-Allow-Origin", "value": "*" },
+        { "key": "Access-Control-Allow-Methods", "value": "GET,POST,OPTIONS" },
+        { "key": "Access-Control-Allow-Headers", "value": "Content-Type, Authorization" }
+      ]
+    },
     {
       "source": "/index.html",
       "headers": [
