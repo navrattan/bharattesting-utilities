@@ -42,102 +42,104 @@ class _ImageReducerScreenState extends ConsumerState<ImageReducerScreen>
     final notifier = ref.read(imageReducerProvider.notifier);
     final theme = Theme.of(context);
 
-    return ToolScaffold(
-      key: _scaffoldKey,
-      title: context.l10n.imageSizeReducerTitle,
-      subtitle: 'Compress, resize, and optimize images',
-      actions: [
-        IconButton(
-          icon: const Icon(Icons.settings_outlined),
-          onPressed: () => _scaffoldKey.currentState?.openEndDrawer(),
-          tooltip: 'Advanced Settings',
-        ),
-        IconButton(
-          icon: const Icon(Icons.help_outline),
-          onPressed: () => _showHelpDialog(context),
-          tooltip: 'Help',
-        ),
-      ],
-      body: Column(
-        children: [
-          // Processing stats bar
-          if (state.hasImages) ...[
-            ProcessingStatsPanel(
-              totalImages: state.images.length,
-              processedImages: state.images.where((img) => img.isProcessed).length,
-              totalSizeReduction: state.totalSizeReduction,
-              isProcessing: state.isProcessing,
-              progress: state.processingProgress,
-            ),
-            const SizedBox(height: 8),
-          ],
-
-          // Error messages
-          if (state.hasErrors) ...[
-            Container(
-              width: double.infinity,
-              margin: const EdgeInsets.all(16),
-              padding: const EdgeInsets.all(12),
-              decoration: BoxDecoration(
-                color: theme.colorScheme.errorContainer,
-                borderRadius: BorderRadius.circular(8),
+    return DefaultTabController(
+      length: state.showBatchMode ? 3 : 2,
+      child: ToolScaffold(
+        key: _scaffoldKey,
+        title: context.l10n.imageSizeReducerTitle,
+        subtitle: 'Compress, resize, and optimize images',
+        actions: [
+          IconButton(
+            icon: const Icon(Icons.settings_outlined),
+            onPressed: () => _scaffoldKey.currentState?.openEndDrawer(),
+            tooltip: 'Advanced Settings',
+          ),
+          IconButton(
+            icon: const Icon(Icons.help_outline),
+            onPressed: () => _showHelpDialog(context),
+            tooltip: 'Help',
+          ),
+        ],
+        endDrawer: _buildSettingsDrawer(context, state, notifier),
+        body: Column(
+          children: [
+            // Processing stats bar
+            if (state.hasImages) ...[
+              ProcessingStatsPanel(
+                totalImages: state.images.length,
+                processedImages: state.images.where((img) => img.isProcessed).length,
+                totalSizeReduction: state.totalSizeReduction,
+                isProcessing: state.isProcessing,
+                progress: state.processingProgress,
               ),
-              child: Column(
-                crossAxisAlignment: CrossAxisAlignment.start,
-                children: [
-                  Row(
-                    children: [
-                      Icon(
-                        Icons.error_outline,
-                        color: theme.colorScheme.onErrorContainer,
-                        size: 20,
-                      ),
-                      const SizedBox(width: 8),
-                      Text(
-                        'Processing Errors',
-                        style: TextStyle(
+              const SizedBox(height: 8),
+            ],
+
+            // Error messages
+            if (state.hasErrors) ...[
+              Container(
+                width: double.infinity,
+                margin: const EdgeInsets.all(16),
+                padding: const EdgeInsets.all(12),
+                decoration: BoxDecoration(
+                  color: theme.colorScheme.errorContainer,
+                  borderRadius: BorderRadius.circular(8),
+                ),
+                child: Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: [
+                    Row(
+                      children: [
+                        Icon(
+                          Icons.error_outline,
                           color: theme.colorScheme.onErrorContainer,
-                          fontWeight: FontWeight.w600,
+                          size: 20,
                         ),
-                      ),
-                      const Spacer(),
-                      IconButton(
-                        icon: const Icon(Icons.close, size: 16),
-                        onPressed: () {
-                          // Clear errors
-                          ref.read(imageReducerProvider.notifier);
-                        },
-                        color: theme.colorScheme.onErrorContainer,
-                      ),
-                    ],
-                  ),
-                  const SizedBox(height: 8),
-                  ...state.processingErrors.map(
-                    (error) => Padding(
-                      padding: const EdgeInsets.only(bottom: 4),
-                      child: Text(
-                        '• $error',
-                        style: TextStyle(
+                        const SizedBox(width: 8),
+                        Text(
+                          'Processing Errors',
+                          style: TextStyle(
+                            color: theme.colorScheme.onErrorContainer,
+                            fontWeight: FontWeight.w600,
+                          ),
+                        ),
+                        const Spacer(),
+                        IconButton(
+                          icon: const Icon(Icons.close, size: 16),
+                          onPressed: () {
+                            // Clear errors
+                          },
                           color: theme.colorScheme.onErrorContainer,
-                          fontSize: 13,
+                        ),
+                      ],
+                    ),
+                    const SizedBox(height: 8),
+                    ...state.processingErrors.map(
+                      (error) => Padding(
+                        padding: const EdgeInsets.only(bottom: 4),
+                        child: Text(
+                          '• $error',
+                          style: TextStyle(
+                            color: theme.colorScheme.onErrorContainer,
+                            fontSize: 13,
+                          ),
                         ),
                       ),
                     ),
-                  ),
-                ],
+                  ],
+                ),
               ),
+            ],
+
+            // Main content
+            Expanded(
+              child: !state.hasImages
+                  ? _buildEmptyState(context, notifier)
+                  : _buildImageProcessingInterface(context, state, notifier),
             ),
           ],
-
-          // Main content
-          Expanded(
-            child: !state.hasImages
-                ? _buildEmptyState(context, notifier)
-                : _buildImageProcessingInterface(context, state, notifier),
-          ),
-        ],
+        ),
       ),
-      endDrawer: _buildSettingsDrawer(context, state, notifier),
     );
   }
 

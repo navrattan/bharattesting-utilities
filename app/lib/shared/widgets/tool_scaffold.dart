@@ -38,8 +38,8 @@ class ToolScaffold extends ConsumerWidget {
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
-    // If body is provided, we assume the caller handles scrolling (e.g. using Expanded).
-    // If child is provided, we wrap it in a SingleChildScrollView for convenience.
+    // We assume the caller handles scrolling if body is provided.
+    // If child is provided, we wrap it in a SingleChildScrollView.
     final Widget mainContent = body ?? (child != null ? SingleChildScrollView(child: child!) : const SizedBox.shrink());
     
     final path = GoRouterState.of(context).uri.path;
@@ -306,7 +306,8 @@ class _DesktopLayout extends StatelessWidget {
                     ),
                   ),
                 Expanded(
-                  child: Center(
+                  child: Align(
+                    alignment: Alignment.topCenter,
                     child: ConstrainedBox(
                       constraints: const BoxConstraints(maxWidth: 1200),
                       child: child,
