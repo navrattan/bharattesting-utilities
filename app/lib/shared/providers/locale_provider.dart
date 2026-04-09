@@ -16,6 +16,10 @@ class LocaleNotifier extends _$LocaleNotifier {
   }
 
   void setLanguageCode(String languageCode) {
-    state = Locale(languageCode, 'IN');
+    if (languageCode == 'en') {
+      state = const Locale('en', 'US');
+    } else {
+      state = Locale(languageCode, 'IN');
+    }
   }
 }

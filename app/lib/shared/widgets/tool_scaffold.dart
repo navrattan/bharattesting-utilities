@@ -38,18 +38,19 @@ class ToolScaffold extends ConsumerWidget {
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
-    // We assume the caller handles scrolling if body is provided.
-    // If child is provided, we wrap it in a SingleChildScrollView.
+    // Audit Note: The "blank screen" was likely caused by wrapping Expanded widgets 
+    // inside a SingleChildScrollView here. We now only wrap 'child' in a scroll view.
+    // Screens using 'body' MUST handle their own scrolling if they don't use Expanded.
     final Widget mainContent = body ?? (child != null ? SingleChildScrollView(child: child!) : const SizedBox.shrink());
     
     final path = GoRouterState.of(context).uri.path;
     final intent = ToolIntent.fromPath(path);
     final branding = ToolBranding.all[intent];
     
-    // Update browser title
+    // Update browser title for SEO and UX
     BrandingService.updateBrowserTitle(path);
 
-    // Apply branding color if available
+    // Apply branding color if available via a Theme wrapper
     return Theme(
       data: branding != null 
         ? Theme.of(context).copyWith(
@@ -126,12 +127,7 @@ class _MobileLayout extends StatelessWidget {
       ),
       drawer: drawer,
       endDrawer: endDrawer,
-      body: Column(
-        children: [
-          Expanded(child: child),
-          const CompactBTQAFooter(),
-        ],
-      ),
+      body: child, // Removed Column to prevent layout issues, assuming child handles footer if needed
       bottomNavigationBar: NavigationBar(
         selectedIndex: currentIndex,
         onDestinationSelected: (index) => AppRouter.navigateToIndex(context, index),
@@ -299,15 +295,16 @@ class _DesktopLayout extends StatelessWidget {
               children: [
                 if (subtitle != null)
                   Padding(
-                    padding: const EdgeInsets.all(AppTheme.spacingXl),
+                    padding: const EdgeInsets.fromLTRB(AppTheme.spacingXl, AppTheme.spacingMd, AppTheme.spacingXl, 0),
                     child: Align(
                       alignment: Alignment.centerLeft,
                       child: Text(subtitle!, style: theme.textTheme.bodyLarge),
                     ),
                   ),
                 Expanded(
-                  child: Align(
-                    alignment: Alignment.topCenter,
+                  child: Container(
+                    width: double.infinity,
+                    alignment: Alignment.center,
                     child: ConstrainedBox(
                       constraints: const BoxConstraints(maxWidth: 1200),
                       child: child,
@@ -379,7 +376,7 @@ class LanguageSwitcher extends ConsumerWidget {
         const PopupMenuItem<String>(value: 'en', child: Text('English')),
         const PopupMenuItem<String>(value: 'hi', child: Text('हिन्दी (Hindi)')),
         const PopupMenuItem<String>(value: 'bn', child: Text('বাংলা (Bengali)')),
-        const PopupMenuItem<String>(value: 'mr', child: Text('मਰਾਠੀ (Marathi)')),
+        const PopupMenuItem<String>(value: 'mr', child: Text('मराठी (Marathi)')),
         const PopupMenuItem<String>(value: 'te', child: Text('తెలుగు (Telugu)')),
         const PopupMenuItem<String>(value: 'pa', child: Text('ਪੰਜਾਬੀ (Punjabi)')),
       ],
