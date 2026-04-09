@@ -211,8 +211,20 @@ extension FakerStateX on FakerState {
         return 'csv';
       case ExportFormat.json:
         return 'json';
-      case ExportFormat.xlsx:
-        return 'xlsx';
+      case ExportFormat.sql:
+        return 'sql';
+      case ExportFormat.xml:
+        return 'xml';
+      case ExportFormat.html:
+        return 'html';
+      case ExportFormat.js:
+        return 'js';
+      case ExportFormat.ts:
+        return 'ts';
+      case ExportFormat.php:
+        return 'php';
+      case ExportFormat.python:
+        return 'python';
     }
   }
 
@@ -223,8 +235,20 @@ extension FakerStateX on FakerState {
         return 'csv';
       case ExportFormat.json:
         return 'json';
-      case ExportFormat.xlsx:
-        return 'xlsx';
+      case ExportFormat.sql:
+        return 'sql';
+      case ExportFormat.xml:
+        return 'xml';
+      case ExportFormat.html:
+        return 'html';
+      case ExportFormat.js:
+        return 'js';
+      case ExportFormat.ts:
+        return 'ts';
+      case ExportFormat.php:
+        return 'php';
+      case ExportFormat.python:
+        return 'py';
     }
   }
 

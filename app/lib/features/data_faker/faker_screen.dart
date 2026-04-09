@@ -13,7 +13,7 @@ class FakerScreen extends ConsumerWidget {
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
-    final state = ref.watch(fakerProvider);
+    final state = ref.watch(fakerNotifierProvider);
     final theme = Theme.of(context);
 
     return ToolScaffold(
@@ -46,7 +46,7 @@ class FakerScreen extends ConsumerWidget {
                     width: 300,
                     height: 56,
                     child: ElevatedButton.icon(
-                      onPressed: state.isGenerating ? null : () => ref.read(fakerProvider.notifier).generateRecords(),
+                      onPressed: state.isGenerating ? null : () => ref.read(fakerNotifierProvider.notifier).generateRecords(),
                       icon: state.isGenerating 
                         ? const SizedBox(width: 20, height: 20, child: CircularProgressIndicator(strokeWidth: 2))
                         : const Icon(LucideIcons.zap),
@@ -131,7 +131,7 @@ class FakerScreen extends ConsumerWidget {
                     icon: const Icon(LucideIcons.copy),
                     onPressed: () {
                       Clipboard.setData(ClipboardData(text: state.generatedRecords.toString()));
-                      ScaffoldMessenger.of(context).showSnackBar(const ApiResponseSnackBar(message: 'Copied to clipboard'));
+                      ScaffoldMessenger.of(context).showSnackBar(ApiResponseSnackBar(message: 'Copied to clipboard'));
                     },
                   ),
                 ],
@@ -164,7 +164,7 @@ class _DataTypeGrid extends ConsumerWidget {
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
-    final notifier = ref.read(fakerProvider.notifier);
+    final notifier = ref.read(fakerNotifierProvider.notifier);
     
     final types = [
       ('Name', LucideIcons.user, 'name'),
@@ -212,7 +212,7 @@ class _FormatGrid extends ConsumerWidget {
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
-    final notifier = ref.read(fakerProvider.notifier);
+    final notifier = ref.read(fakerNotifierProvider.notifier);
     
     return GridView.builder(
       shrinkWrap: true,
