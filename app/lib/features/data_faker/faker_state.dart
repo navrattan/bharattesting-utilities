@@ -2,21 +2,7 @@
 ///
 /// Manages template selection, generation options, and export functionality
 
-import 'package:bharattesting_core/core.dart' as core hide TemplateType;
-
-/// Available template types for generation
-enum TemplateType {
-  individual('Individual', 'Personal identifiers for individuals'),
-  company('Company', 'Business identifiers for private/public companies'),
-  proprietorship('Proprietorship', 'Sole proprietorship business identifiers'),
-  partnership('Partnership', 'Partnership firm identifiers with partners'),
-  trust('Trust', 'Trust/Society/Association identifiers');
-
-  const TemplateType(this.displayName, this.description);
-
-  final String displayName;
-  final String description;
-}
+import 'package:bharattesting_core/core.dart' as core;
 
 /// Available identifier categories for selection
 enum ExportFormat {
@@ -53,7 +39,7 @@ enum BulkSize {
 /// State for Indian Data Faker
 class FakerState {
   const FakerState({
-    this.selectedTemplate = TemplateType.individual,
+    this.selectedTemplate = core.TemplateType.individual,
     this.bulkSize = BulkSize.single,
     this.useRandomSeed = true,
     this.customSeed,
@@ -73,7 +59,7 @@ class FakerState {
     this.lastExportTimeMs,
   });
 
-  final TemplateType selectedTemplate;
+  final core.TemplateType selectedTemplate;
   final BulkSize bulkSize;
   final bool useRandomSeed;
   final int? customSeed;
@@ -93,7 +79,7 @@ class FakerState {
   final int? lastExportTimeMs;
 
   FakerState copyWith({
-    TemplateType? selectedTemplate,
+    core.TemplateType? selectedTemplate,
     BulkSize? bulkSize,
     bool? useRandomSeed,
     int? customSeed,
@@ -140,19 +126,19 @@ extension FakerStateX on FakerState {
   /// Get available identifiers for the selected template
   List<String> get availableIdentifiers {
     switch (selectedTemplate) {
-      case TemplateType.individual:
+      case core.TemplateType.individual:
         return ['pan', 'aadhaar', 'pin_code', 'address', 'upi_id'];
 
-      case TemplateType.company:
+      case core.TemplateType.company:
         return ['pan', 'gstin', 'cin', 'tan', 'ifsc', 'upi_id', 'udyam'];
 
-      case TemplateType.proprietorship:
+      case core.TemplateType.proprietorship:
         return ['pan', 'gstin', 'udyam', 'tan', 'upi_id'];
 
-      case TemplateType.partnership:
+      case core.TemplateType.partnership:
         return ['pan', 'gstin', 'tan', 'ifsc', 'upi_id', 'partners'];
 
-      case TemplateType.trust:
+      case core.TemplateType.trust:
         return ['pan', 'gstin', 'tan', 'ifsc', 'upi_id', 'registration'];
     }
   }
@@ -190,18 +176,7 @@ extension FakerStateX on FakerState {
 
   /// Get template type string for core library
   String get templateTypeString {
-    switch (selectedTemplate) {
-      case TemplateType.individual:
-        return 'individual';
-      case TemplateType.company:
-        return 'company';
-      case TemplateType.proprietorship:
-        return 'proprietorship';
-      case TemplateType.partnership:
-        return 'partnership';
-      case TemplateType.trust:
-        return 'trust';
-    }
+    return selectedTemplate.name;
   }
 
   /// Get export format string for core library
@@ -283,7 +258,7 @@ extension FakerStateX on FakerState {
 
   /// Check if this is a business template (has business identifiers)
   bool get isBusinessTemplate {
-    return selectedTemplate != TemplateType.individual;
+    return selectedTemplate != core.TemplateType.individual;
   }
 
   /// Get template description with identifier count

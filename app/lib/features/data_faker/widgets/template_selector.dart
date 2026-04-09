@@ -4,6 +4,7 @@
 
 import 'package:flutter/material.dart';
 import 'package:lucide_icons/lucide_icons.dart';
+import 'package:bharattesting_core/core.dart' as core;
 
 import '../faker_state.dart';
 
@@ -15,8 +16,8 @@ class TemplateSelector extends StatelessWidget {
     super.key,
   });
 
-  final TemplateType selectedTemplate;
-  final ValueChanged<TemplateType> onTemplateChanged;
+  final core.TemplateType selectedTemplate;
+  final ValueChanged<core.TemplateType> onTemplateChanged;
 
   @override
   Widget build(BuildContext context) {
@@ -37,7 +38,7 @@ class TemplateSelector extends StatelessWidget {
           crossAxisSpacing: 12,
           mainAxisSpacing: 12,
           childAspectRatio: 2.2,
-          children: TemplateType.values.map((type) {
+          children: core.TemplateType.values.map((type) {
             return _TemplateCard(
               type: type,
               isSelected: selectedTemplate == type,
@@ -64,7 +65,7 @@ class _TemplateCard extends StatelessWidget {
     required this.onTap,
   });
 
-  final TemplateType type;
+  final core.TemplateType type;
   final bool isSelected;
   final VoidCallback onTap;
 
@@ -142,32 +143,32 @@ class _TemplateCard extends StatelessWidget {
     );
   }
 
-  IconData _getIconForType(TemplateType type) {
+  IconData _getIconForType(core.TemplateType type) {
     switch (type) {
-      case TemplateType.individual:
+      case core.TemplateType.individual:
         return LucideIcons.user;
-      case TemplateType.company:
+      case core.TemplateType.company:
         return LucideIcons.building;
-      case TemplateType.proprietorship:
+      case core.TemplateType.proprietorship:
         return LucideIcons.userCheck;
-      case TemplateType.partnership:
+      case core.TemplateType.partnership:
         return LucideIcons.users;
-      case TemplateType.trust:
+      case core.TemplateType.trust:
         return LucideIcons.landmark;
     }
   }
 
-  String _getDescriptionForType(TemplateType type) {
+  String _getDescriptionForType(core.TemplateType type) {
     switch (type) {
-      case TemplateType.individual:
+      case core.TemplateType.individual:
         return 'Personal PAN, Aadhaar...';
-      case TemplateType.company:
+      case core.TemplateType.company:
         return 'CIN, GSTIN, TAN...';
-      case TemplateType.proprietorship:
+      case core.TemplateType.proprietorship:
         return 'Individual + Business IDs';
-      case TemplateType.partnership:
+      case core.TemplateType.partnership:
         return 'Partnership Firm IDs';
-      case TemplateType.trust:
+      case core.TemplateType.trust:
         return 'NGO and Trust IDs';
     }
   }
