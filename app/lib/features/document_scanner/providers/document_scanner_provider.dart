@@ -7,10 +7,8 @@ import 'package:flutter/services.dart';
 import 'package:camera/camera.dart';
 import 'package:permission_handler/permission_handler.dart';
 import 'package:riverpod_annotation/riverpod_annotation.dart';
-import 'package:bharattesting_core/src/document_scanner/edge_detector.dart';
-import 'package:bharattesting_core/src/document_scanner/image_enhancer.dart' as core;
-import 'package:bharattesting_core/src/document_scanner/ocr_processor.dart';
-import 'package:bharattesting_core/src/document_scanner/perspective_corrector.dart';
+import 'package:file_picker/file_picker.dart';
+import 'package:bharattesting_core/core.dart' as core;
 import '../models/document_scanner_state.dart';
 
 part 'document_scanner_provider.g.dart';
@@ -18,498 +16,120 @@ part 'document_scanner_provider.g.dart';
 @riverpod
 class DocumentScannerNotifier extends _$DocumentScannerNotifier {
   Timer? _detectionTimer;
-  bool _isProcessingFrame = false;
-  StreamSubscription<CameraImage>? _imageSubscription;
+  bool _isDetecting = false;
 
   @override
   DocumentScannerState build() {
     ref.onDispose(() {
-      _cleanup();
+      _detectionTimer?.cancel();
+      state.cameraController?.dispose();
     });
 
     return const DocumentScannerState();
   }
 
-  /// Initialize camera system
-  Future<void> initializeCamera() async {
-    if (!kIsWeb && (Platform.isAndroid || Platform.isIOS)) {
-      await _initializeMobileCamera();
-    } else {
-      // Web fallback - no live camera, upload mode only
-      state = state.copyWith(
-        mode: ScannerMode.upload,
-        permissionStatus: CameraPermissionStatus.granted,
-      );
+  /// Initialize camera and start live detection
+  Future<void> initialize() async {
+    final status = await _checkCameraPermission();
+    
+    state = state.copyWith(
+      permissionStatus: status,
+      isCameraInitialized: false,
+    );
+
+    if (status != CameraPermissionStatus.granted) {
+      return;
     }
-  }
 
-  /// Initialize mobile camera
-  Future<void> _initializeMobileCamera() async {
     try {
-      // Check camera permission
-      final permissionStatus = await _checkCameraPermission();
-      state = state.copyWith(permissionStatus: permissionStatus);
-
-      if (permissionStatus != CameraPermissionStatus.granted) return;
-
-      // Get available cameras
       final cameras = await availableCameras();
       if (cameras.isEmpty) {
-        state = state.copyWith(
-          processingErrors: [...state.processingErrors, 'No cameras available'],
-        );
-        return;
+        throw Exception('No cameras available');
       }
 
-      // Initialize camera controller
-      final camera = cameras.firstWhere(
-        (c) => c.lensDirection == CameraLensDirection.back,
-        orElse: () => cameras.first,
-      );
-
       final controller = CameraController(
-        camera,
+        cameras.first,
         ResolutionPreset.high,
         enableAudio: false,
-        imageFormatGroup: ImageFormatGroup.yuv420,
+        imageFormatGroup: Platform.isAndroid ? ImageFormatGroup.yuv420 : ImageFormatGroup.bgra8888,
       );
 
       await controller.initialize();
-
+      
       state = state.copyWith(
-        availableCameras: cameras,
         cameraController: controller,
         isCameraInitialized: true,
+        availableCameras: cameras,
       );
 
-      // Start live detection
-      if (state.mode == ScannerMode.camera) {
-        _startLiveDetection();
-      }
-
+      _startLiveDetection();
     } catch (e) {
       state = state.copyWith(
+        isCameraInitialized: false,
         processingErrors: [...state.processingErrors, 'Camera initialization failed: $e'],
       );
     }
   }
 
+  /// Alias for initialize used by screen
+  Future<void> initializeCamera() => initialize();
+
+  /// Alias for setScannerMode used by screen
+  void changeScannerMode(ScannerMode mode) => setScannerMode(mode);
+
   /// Check and request camera permission
   Future<CameraPermissionStatus> _checkCameraPermission() async {
     final status = await Permission.camera.status;
-
-    if (status == PermissionStatus.granted) {
-      return CameraPermissionStatus.granted;
-    } else if (status == PermissionStatus.denied) {
+    
+    if (status.isGranted) return CameraPermissionStatus.granted;
+    if (status.isDenied) {
       final result = await Permission.camera.request();
-      return result == PermissionStatus.granted
-        ? CameraPermissionStatus.granted
-        : CameraPermissionStatus.denied;
-    } else if (status == PermissionStatus.permanentlyDenied) {
-      return CameraPermissionStatus.permanentlyDenied;
-    } else if (status == PermissionStatus.restricted) {
-      return CameraPermissionStatus.restricted;
+      return result.isGranted ? CameraPermissionStatus.granted : CameraPermissionStatus.denied;
     }
-
+    if (status.isPermanentlyDenied) return CameraPermissionStatus.permanentlyDenied;
+    if (status.isRestricted) return CameraPermissionStatus.restricted;
+    
     return CameraPermissionStatus.unknown;
   }
 
-  /// Start live document detection
   void _startLiveDetection() {
-    _detectionTimer = Timer.periodic(const Duration(milliseconds: 100), (timer) {
-      _processCurrentFrame();
+    _detectionTimer?.cancel();
+    _detectionTimer = Timer.periodic(const Duration(milliseconds: 200), (timer) async {
+      if (_isDetecting || state.cameraController == null || !state.cameraController!.value.isInitialized) {
+        return;
+      }
+
+      if (state.mode != ScannerMode.camera || state.scannedPages.length >= 20) {
+        return;
+      }
+
+      _isDetecting = true;
+      try {
+        final image = await state.cameraController!.takePicture();
+        final bytes = await image.readAsBytes();
+        
+        // Use isolate for edge detection
+        final coreQuad = await compute(_detectDocumentEdges, {
+          'imageData': bytes,
+          'width': 1080,
+          'height': 1920,
+        });
+
+        if (coreQuad != null) {
+          state = state.copyWith(detectedDocument: coreQuad);
+          
+          if (state.isAutoCapture) {
+            await captureDocument();
+          }
+        } else {
+          state = state.copyWith(detectedDocument: null);
+        }
+      } catch (_) {
+        // Ignore detection errors in live preview
+      } finally {
+        _isDetecting = false;
+      }
     });
-  }
-
-  /// Process current camera frame for edge detection
-  Future<void> _processCurrentFrame() async {
-    if (_isProcessingFrame || state.cameraController == null || !state.isCameraInitialized) {
-      return;
-    }
-
-    try {
-      _isProcessingFrame = true;
-      final controller = state.cameraController!;
-
-      // Capture frame
-      final image = await controller.takePicture();
-      final imageBytes = await image.readAsBytes();
-
-      // Decode image to get dimensions
-      final ui.Codec codec = await ui.instantiateImageCodec(imageBytes);
-      final ui.FrameInfo frame = await codec.getNextFrame();
-      final width = frame.image.width;
-      final height = frame.image.height;
-
-      // Convert to RGB for processing
-      final rgbData = await compute(_convertToRgb, {
-        'imageBytes': imageBytes,
-        'width': width,
-        'height': height,
-      });
-
-      // Detect document edges
-      final quadrilateral = await compute(_detectDocumentEdges, {
-        'imageData': rgbData,
-        'width': width,
-        'height': height,
-      });
-
-      // Update detection state
-      final now = DateTime.now();
-      state = state.copyWith(
-        detectedDocument: quadrilateral,
-        lastDetectionTime: now,
-        isDocumentStable: _checkStability(quadrilateral, now),
-      );
-
-      // Auto-capture if enabled and document is stable
-      if (state.isAutoCapture && state.isDocumentStable && !state.isCapturing) {
-        await _autoCapture();
-      }
-
-    } catch (e) {
-      // Silently handle detection errors to avoid UI spam
-      debugPrint('Frame processing error: $e');
-    } finally {
-      _isProcessingFrame = false;
-    }
-  }
-
-  /// Check if detected document is stable
-  bool _checkStability(DocumentQuadrilateral? quad, DateTime now) {
-    if (quad == null) return false;
-    if (state.lastDetectionTime == null) return false;
-
-    // Check if detection has been stable for required duration
-    final timeSinceDetection = now.difference(state.lastDetectionTime!);
-    return timeSinceDetection.inSeconds >= state.autoCaptureDuration;
-  }
-
-  /// Auto-capture document when stable
-  Future<void> _autoCapture() async {
-    if (state.detectedDocument == null) return;
-
-    await captureDocument();
-  }
-
-  /// Manually capture document
-  Future<void> captureDocument() async {
-    if (state.cameraController == null || state.isCapturing) return;
-
-    try {
-      state = state.copyWith(isCapturing: true, processingErrors: []);
-
-      // Capture high-resolution image
-      final image = await state.cameraController!.takePicture();
-      final imageBytes = await image.readAsBytes();
-
-      // Decode image
-      final ui.Codec codec = await ui.instantiateImageCodec(imageBytes);
-      final ui.FrameInfo frame = await codec.getNextFrame();
-      final width = frame.image.width;
-      final height = frame.image.height;
-
-      // Convert to RGB
-      final rgbData = await compute(_convertToRgb, {
-        'imageBytes': imageBytes,
-        'width': width,
-        'height': height,
-      });
-
-      // Detect edges on high-res image
-      final quadrilateral = await compute(_detectDocumentEdges, {
-        'imageData': rgbData,
-        'width': width,
-        'height': height,
-      });
-
-      if (quadrilateral == null) {
-        throw Exception('No document detected in captured image');
-      }
-
-      // Create scanned page
-      final page = ScannedPage(
-        id: DateTime.now().millisecondsSinceEpoch.toString(),
-        originalImageData: rgbData,
-        originalWidth: width,
-        originalHeight: height,
-        correctedWidth: width,
-        correctedHeight: height,
-        detectedCorners: quadrilateral,
-        captureTime: DateTime.now(),
-      );
-
-      state = state.copyWith(
-        scannedPages: [...state.scannedPages, page],
-        selectedPage: page,
-      );
-
-      // Process the page
-      await _processPage(page.id);
-
-    } catch (e) {
-      state = state.copyWith(
-        processingErrors: [...state.processingErrors, 'Capture failed: $e'],
-      );
-    } finally {
-      state = state.copyWith(isCapturing: false);
-    }
-  }
-
-  /// Process a captured page (perspective correction + filtering)
-  Future<void> _processPage(String pageId) async {
-    final page = state.scannedPages.firstWhere((p) => p.id == pageId);
-
-    try {
-      // Update page status
-      _updatePageStatus(pageId, PageStatus.processing);
-
-      // Perspective correction
-      final corrected = await compute(_correctPerspective, {
-        'imageData': page.originalImageData,
-        'width': page.originalWidth,
-        'height': page.originalHeight,
-        'quadrilateral': page.detectedCorners,
-      });
-
-      // Apply current filter
-      final filtered = await compute(_applyDocumentFilter, {
-        'imageData': corrected.imageData,
-        'width': corrected.width,
-        'height': corrected.height,
-        'filter': state.selectedFilter,
-      });
-
-      // Generate thumbnail
-      final thumbnail = await compute(_generateThumbnail, {
-        'imageData': filtered,
-        'width': corrected.width,
-        'height': corrected.height,
-      });
-
-      // Update page
-      final updatedPage = page.copyWith(
-        correctedImageData: corrected.imageData,
-        correctedWidth: corrected.width,
-        correctedHeight: corrected.height,
-        appliedFilter: state.selectedFilter,
-        filteredImageData: filtered,
-        thumbnailData: thumbnail,
-        status: PageStatus.processed,
-      );
-
-      _updatePage(updatedPage);
-
-      // Run OCR if enabled
-      if (state.includeOcr) {
-        await _runOcrOnPage(pageId);
-      }
-
-    } catch (e) {
-      _updatePageStatus(pageId, PageStatus.error, error: 'Processing failed: $e');
-    }
-  }
-
-  /// Run OCR on a processed page
-  Future<void> _runOcrOnPage(String pageId) async {
-    final page = state.scannedPages.firstWhere((p) => p.id == pageId);
-
-    if (page.filteredImageData == null) return;
-
-    try {
-      final ocrResult = await compute(_extractDocumentText, {
-        'imageData': page.filteredImageData!,
-        'width': page.correctedWidth,
-        'height': page.correctedHeight,
-      });
-
-      final updatedPage = page.copyWith(ocrResult: ocrResult.fullText);
-      _updatePage(updatedPage);
-
-    } catch (e) {
-      debugPrint('OCR failed for page $pageId: $e');
-    }
-  }
-
-  /// Upload image file for processing
-  Future<void> uploadImage(Uint8List imageBytes) async {
-    try {
-      state = state.copyWith(isProcessing: true, processingErrors: []);
-
-      // Decode image
-      final ui.Codec codec = await ui.instantiateImageCodec(imageBytes);
-      final ui.FrameInfo frame = await codec.getNextFrame();
-      final width = frame.image.width;
-      final height = frame.image.height;
-
-      // Convert to RGB
-      final rgbData = await compute(_convertToRgb, {
-        'imageBytes': imageBytes,
-        'width': width,
-        'height': height,
-      });
-
-      // Detect edges
-      final quadrilateral = await compute(_detectDocumentEdges, {
-        'imageData': rgbData,
-        'width': width,
-        'height': height,
-      });
-
-      if (quadrilateral == null) {
-        throw Exception('No document detected in uploaded image');
-      }
-
-      // Create scanned page
-      final page = ScannedPage(
-        id: DateTime.now().millisecondsSinceEpoch.toString(),
-        originalImageData: rgbData,
-        originalWidth: width,
-        originalHeight: height,
-        correctedWidth: width,
-        correctedHeight: height,
-        detectedCorners: quadrilateral,
-        captureTime: DateTime.now(),
-      );
-
-      state = state.copyWith(
-        scannedPages: [...state.scannedPages, page],
-        selectedPage: page,
-        isProcessing: false,
-      );
-
-      // Process the page
-      await _processPage(page.id);
-
-    } catch (e) {
-      state = state.copyWith(
-        isProcessing: false,
-        processingErrors: [...state.processingErrors, 'Upload failed: $e'],
-      );
-    }
-  }
-
-  /// Change document filter
-  Future<void> changeFilter(DocumentFilter filter) async {
-    state = state.copyWith(selectedFilter: filter);
-
-    // Re-apply filter to selected page
-    if (state.selectedPage?.correctedImageData != null) {
-      await _reapplyFilterToPage(state.selectedPage!.id);
-    }
-  }
-
-  /// Re-apply filter to a page
-  Future<void> _reapplyFilterToPage(String pageId) async {
-    final page = state.scannedPages.firstWhere((p) => p.id == pageId);
-
-    if (page.correctedImageData == null) return;
-
-    try {
-      final filtered = await compute(_applyDocumentFilter, {
-        'imageData': page.correctedImageData!,
-        'width': page.correctedWidth,
-        'height': page.correctedHeight,
-        'filter': state.selectedFilter,
-      });
-
-      final updatedPage = page.copyWith(
-        appliedFilter: state.selectedFilter,
-        filteredImageData: filtered,
-      );
-
-      _updatePage(updatedPage);
-
-    } catch (e) {
-      debugPrint('Filter application failed: $e');
-    }
-  }
-
-  /// Export scanned documents
-  Future<void> exportDocuments() async {
-    if (state.scannedPages.isEmpty) return;
-
-    try {
-      state = state.copyWith(isProcessing: true, processingErrors: []);
-
-      switch (state.exportFormat) {
-        case ExportFormat.pdf:
-          await _exportAsPdf();
-          break;
-        case ExportFormat.images:
-          await _exportAsImages();
-          break;
-        case ExportFormat.zip:
-          await _exportAsZip();
-          break;
-      }
-
-    } catch (e) {
-      state = state.copyWith(
-        processingErrors: [...state.processingErrors, 'Export failed: $e'],
-      );
-    } finally {
-      state = state.copyWith(isProcessing: false);
-    }
-  }
-
-  /// Export as PDF
-  Future<void> _exportAsPdf() async {
-    final processedPages = state.scannedPages.where((p) => p.isProcessed).toList();
-    if (processedPages.isEmpty) return;
-
-    // Regular PDF without OCR
-    final pdfData = await compute(_generatePdf, {
-      'pages': processedPages,
-      'fileName': state.exportFileName.isNotEmpty
-        ? state.exportFileName
-        : 'BharatTesting_Scan_${DateTime.now().millisecondsSinceEpoch}',
-    });
-
-    state = state.copyWith(
-      exportData: pdfData,
-      exportFileName: '${state.exportFileName}.pdf',
-    );
-  }
-
-  /// Export as individual images
-  Future<void> _exportAsImages() async {
-    // For individual images, just set up for download
-    // UI will handle individual downloads
-    state = state.copyWith(
-      exportData: null,
-      exportFileName: 'images',
-    );
-  }
-
-  /// Export as ZIP
-  Future<void> _exportAsZip() async {
-    final processedPages = state.scannedPages.where((p) => p.isProcessed).toList();
-    if (processedPages.isEmpty) return;
-
-    final zipData = await compute(_generateZip, {
-      'pages': processedPages,
-      'fileName': state.exportFileName.isNotEmpty
-        ? state.exportFileName
-        : 'BharatTesting_Scan_${DateTime.now().millisecondsSinceEpoch}',
-    });
-
-    state = state.copyWith(
-      exportData: zipData,
-      exportFileName: '${state.exportFileName}.zip',
-    );
-  }
-
-  /// Switch scanner mode
-  void changeScannerMode(ScannerMode mode) {
-    state = state.copyWith(mode: mode);
-
-    if (mode == ScannerMode.camera && state.isCameraInitialized) {
-      _startLiveDetection();
-    } else {
-      _stopLiveDetection();
-    }
   }
 
   /// Toggle auto-capture
@@ -520,235 +140,318 @@ class DocumentScannerNotifier extends _$DocumentScannerNotifier {
   /// Toggle flash
   Future<void> toggleFlash() async {
     if (state.cameraController == null) return;
+    
+    final newMode = state.enableFlash ? FlashMode.off : FlashMode.torch;
+    await state.cameraController!.setFlashMode(newMode);
+    state = state.copyWith(enableFlash: !state.enableFlash);
+  }
 
-    try {
-      final newFlashState = !state.enableFlash;
-      await state.cameraController!.setFlashMode(
-        newFlashState ? FlashMode.torch : FlashMode.off,
-      );
-
-      state = state.copyWith(enableFlash: newFlashState);
-    } catch (e) {
-      debugPrint('Flash toggle failed: $e');
+  /// Change scanner mode
+  void setScannerMode(ScannerMode mode) {
+    state = state.copyWith(mode: mode);
+    if (mode == ScannerMode.camera) {
+      _startLiveDetection();
+    } else {
+      _detectionTimer?.cancel();
     }
   }
 
   /// Set zoom level
   Future<void> setZoomLevel(double zoom) async {
     if (state.cameraController == null) return;
+    await state.cameraController!.setZoomLevel(zoom);
+    state = state.copyWith(zoomLevel: zoom);
+  }
 
+  /// Pick images from gallery
+  Future<void> uploadImage() async {
     try {
-      await state.cameraController!.setZoomLevel(zoom);
-      state = state.copyWith(zoomLevel: zoom);
+      final result = await FilePicker.platform.pickFiles(
+        type: FileType.image,
+        allowMultiple: true,
+        withData: true,
+      );
+
+      if (result != null) {
+        for (final file in result.files) {
+          if (file.bytes != null) {
+            final page = ScannedPage(
+              id: DateTime.now().millisecondsSinceEpoch.toString() + file.name,
+              originalImageData: file.bytes!,
+              originalWidth: 1080, // Approximate
+              originalHeight: 1920,
+              correctedWidth: 1080,
+              correctedHeight: 1920,
+              captureTime: DateTime.now(),
+              status: PageStatus.captured,
+            );
+            state = state.copyWith(scannedPages: [...state.scannedPages, page]);
+            _processPage(page);
+          }
+        }
+      }
     } catch (e) {
-      debugPrint('Zoom failed: $e');
+      _addError('Upload failed: $e');
     }
   }
 
-  /// Delete page
-  void deletePage(String pageId) {
-    final updatedPages = state.scannedPages.where((p) => p.id != pageId).toList();
-    final newSelectedPage = updatedPages.isNotEmpty ? updatedPages.last : null;
+  /// Manually capture document
+  Future<void> captureDocument() async {
+    if (state.cameraController == null || state.isCapturing) return;
 
+    try {
+      state = state.copyWith(isCapturing: true);
+      
+      final image = await state.cameraController!.takePicture();
+      final bytes = await image.readAsBytes();
+      
+      final page = ScannedPage(
+        id: DateTime.now().millisecondsSinceEpoch.toString(),
+        originalImageData: bytes,
+        originalWidth: 1080,
+        originalHeight: 1920,
+        correctedWidth: 1080,
+        correctedHeight: 1920,
+        captureTime: DateTime.now(),
+        status: PageStatus.captured,
+      );
+
+      state = state.copyWith(
+        scannedPages: [...state.scannedPages, page],
+        isCapturing: false,
+      );
+
+      _processPage(page);
+
+    } catch (e) {
+      state = state.copyWith(
+        isCapturing: false,
+        processingErrors: [...state.processingErrors, 'Capture failed: $e'],
+      );
+    }
+  }
+
+  Future<void> _processPage(ScannedPage page) async {
+    try {
+      _updatePageStatus(page.id, PageStatus.processing);
+
+      final coreQuad = state.detectedDocument ?? core.DocumentQuadrilateral([
+        const core.Point(0, 0),
+        const core.Point(1080, 0),
+        const core.Point(1080, 1920),
+        const core.Point(0, 1920),
+      ]);
+
+      final correctedDoc = await compute(_correctPerspective, {
+        'imageData': page.originalImageData,
+        'width': page.originalWidth,
+        'height': page.originalHeight,
+        'quadrilateral': coreQuad,
+      });
+
+      final enhancedBytes = await compute(_applyFilter, {
+        'imageData': correctedDoc.imageData,
+        'width': correctedDoc.width,
+        'height': correctedDoc.height,
+        'filter': core.DocumentFilter.autoColor,
+      });
+
+      _updatePage(page.id, page.copyWith(
+        processedImageData: enhancedBytes,
+        correctedWidth: correctedDoc.width,
+        correctedHeight: correctedDoc.height,
+        status: PageStatus.processed,
+      ));
+
+    } catch (e) {
+      _updatePageStatus(page.id, PageStatus.error);
+      _addError('Processing failed for page: $e');
+    }
+  }
+
+  /// Update page filter
+  Future<void> updatePageFilter(String pageId, DocumentFilter filter) async {
+    final pageIndex = state.scannedPages.indexWhere((p) => p.id == pageId);
+    if (pageIndex == -1) return;
+    
+    final page = state.scannedPages[pageIndex];
+    
+    try {
+      _updatePageStatus(pageId, PageStatus.processing);
+
+      // Map app DocumentFilter to core DocumentFilter
+      final coreFilter = _mapAppToCoreFilter(filter);
+
+      final filteredBytes = await compute(_applyFilter, {
+        'imageData': page.originalImageData,
+        'width': page.originalWidth,
+        'height': page.originalHeight,
+        'filter': coreFilter,
+      });
+
+      _updatePage(page.id, page.copyWith(
+        processedImageData: filteredBytes,
+        status: PageStatus.processed,
+      ));
+    } catch (e) {
+      _updatePageStatus(pageId, PageStatus.error);
+      _addError('Filter application failed: $e');
+    }
+  }
+
+  /// Remove a page
+  void removePage(String pageId) {
     state = state.copyWith(
-      scannedPages: updatedPages,
-      selectedPage: newSelectedPage,
+      scannedPages: state.scannedPages.where((p) => p.id != pageId).toList(),
     );
   }
+
+  /// Alias for removePage used by screen
+  void deletePage(String pageId) => removePage(pageId);
 
   /// Reorder pages
   void reorderPages(int oldIndex, int newIndex) {
     final pages = List<ScannedPage>.from(state.scannedPages);
-    final page = pages.removeAt(oldIndex);
-    pages.insert(newIndex > oldIndex ? newIndex - 1 : newIndex, page);
-
+    if (oldIndex < newIndex) {
+      newIndex -= 1;
+    }
+    final item = pages.removeAt(oldIndex);
+    pages.insert(newIndex, item);
     state = state.copyWith(scannedPages: pages);
   }
 
-  /// Clear all pages
-  void clearPages() {
-    state = state.copyWith(
-      scannedPages: [],
-      selectedPage: null,
-      exportData: null,
-      exportFileName: '',
-    );
-  }
-
-  /// Select page
-  void selectPage(String pageId) {
-    final page = state.scannedPages.firstWhere((p) => p.id == pageId, orElse: () => state.scannedPages.first);
+  /// Select a page
+  void selectPage(ScannedPage? page) {
     state = state.copyWith(selectedPage: page);
   }
 
-  /// Change export format
-  void changeExportFormat(ExportFormat format) {
-    state = state.copyWith(exportFormat: format);
+  /// Clear all pages
+  void clearAll() {
+    state = state.copyWith(scannedPages: [], detectedDocument: null);
   }
 
-  /// Toggle OCR inclusion
-  void toggleOcr() {
-    state = state.copyWith(includeOcr: !state.includeOcr);
-  }
-
-  /// Set export file name
-  void setExportFileName(String fileName) {
-    state = state.copyWith(exportFileName: fileName);
-  }
-
-  /// Helper methods
-  void _updatePageStatus(String pageId, PageStatus status, {String? error}) {
+  /// Perform OCR on current page
+  Future<void> performOcr(String pageId) async {
     final pageIndex = state.scannedPages.indexWhere((p) => p.id == pageId);
     if (pageIndex == -1) return;
+    
+    final page = state.scannedPages[pageIndex];
+    if (page.processedImageData == null) return;
 
-    final updatedPage = state.scannedPages[pageIndex].copyWith(
-      status: status,
-      error: error ?? '',
+    state = state.copyWith(isCapturing: true);
+
+    try {
+      final result = await compute(_performOcr, {
+        'imageData': page.processedImageData!,
+        'width': page.correctedWidth,
+        'height': page.correctedHeight,
+      });
+
+      _updatePage(page.id, page.copyWith(
+        ocrResult: result.fullText,
+        hasOcr: true,
+      ));
+    } catch (e) {
+      _addError('OCR failed: $e');
+    } finally {
+      state = state.copyWith(isCapturing: false);
+    }
+  }
+
+  /// Generate final PDF
+  Future<void> exportPdf() async {
+    if (state.scannedPages.isEmpty) return;
+
+    state = state.copyWith(isProcessing: true);
+
+    try {
+      final pdfBytes = await compute(_generatePdf, {
+        'pages': state.scannedPages.map((p) => p.processedImageData ?? p.originalImageData).toList(),
+      });
+
+      state = state.copyWith(
+        isProcessing: false,
+        exportData: pdfBytes,
+      );
+    } catch (e) {
+      _addError('PDF export failed: $e');
+    } finally {
+      state = state.copyWith(isProcessing: false);
+    }
+  }
+
+  /// Alias for exportPdf used by screen
+  Future<void> exportDocuments() => exportPdf();
+
+  // Helper methods
+  void _updatePage(String id, ScannedPage newPage) {
+    state = state.copyWith(
+      scannedPages: state.scannedPages.map((p) => p.id == id ? newPage : p).toList(),
     );
+  }
 
-    final updatedPages = List<ScannedPage>.from(state.scannedPages);
-    updatedPages[pageIndex] = updatedPage;
-
-    state = state.copyWith(scannedPages: updatedPages);
-
-    if (state.selectedPage?.id == pageId) {
-      state = state.copyWith(selectedPage: updatedPage);
+  void _updatePageStatus(String id, PageStatus status) {
+    final pageIndex = state.scannedPages.indexWhere((p) => p.id == id);
+    if (pageIndex != -1) {
+      final page = state.scannedPages[pageIndex];
+      _updatePage(id, page.copyWith(status: status));
     }
   }
 
-  void _updatePage(ScannedPage page) {
-    final pageIndex = state.scannedPages.indexWhere((p) => p.id == page.id);
-    if (pageIndex == -1) return;
+  void _addError(String message) {
+    state = state.copyWith(processingErrors: [...state.processingErrors, message]);
+  }
 
-    final updatedPages = List<ScannedPage>.from(state.scannedPages);
-    updatedPages[pageIndex] = page;
-
-    state = state.copyWith(scannedPages: updatedPages);
-
-    if (state.selectedPage?.id == page.id) {
-      state = state.copyWith(selectedPage: page);
+  core.DocumentFilter _mapAppToCoreFilter(DocumentFilter filter) {
+    switch (filter) {
+      case DocumentFilter.original: return core.DocumentFilter.original;
+      case DocumentFilter.auto: return core.DocumentFilter.autoColor;
+      case DocumentFilter.grayscale: return core.DocumentFilter.grayscale;
+      case DocumentFilter.blackAndWhite: return core.DocumentFilter.blackAndWhite;
+      case DocumentFilter.magicColor: return core.DocumentFilter.magicColor;
+      case DocumentFilter.whiteboard: return core.DocumentFilter.whiteboard;
     }
-  }
-
-  void _stopLiveDetection() {
-    _detectionTimer?.cancel();
-  }
-
-  void _cleanup() {
-    _detectionTimer?.cancel();
-    _imageSubscription?.cancel();
-    state.cameraController?.dispose();
+    return core.DocumentFilter.original;
   }
 }
 
-/// Compute functions for isolate processing
+// Isolate functions for heavy processing
 
-Future<DocumentQuadrilateral?> _detectDocumentEdges(Map<String, dynamic> params) {
-  return DocumentEdgeDetector.detectDocumentEdges(
+Future<core.DocumentQuadrilateral?> _detectDocumentEdges(Map<String, dynamic> params) {
+  return core.DocumentEdgeDetector.detectDocumentEdges(
     params['imageData'] as Uint8List,
     params['width'] as int,
     params['height'] as int,
   );
 }
 
-Future<CorrectedDocument> _correctPerspective(Map<String, dynamic> params) {
-  return DocumentPerspectiveCorrector.correctPerspective(
+Future<core.CorrectedDocument> _correctPerspective(Map<String, dynamic> params) {
+  return core.DocumentPerspectiveCorrector.correctPerspective(
     params['imageData'] as Uint8List,
     params['width'] as int,
     params['height'] as int,
-    params['quadrilateral'] as DocumentQuadrilateral,
+    params['quadrilateral'] as core.DocumentQuadrilateral,
   );
 }
 
-Future<Uint8List> _applyDocumentFilter(Map<String, dynamic> params) {
-  final core.DocumentFilter coreFilter;
-  switch (params['filter'] as DocumentFilter) {
-    case DocumentFilter.original:
-      coreFilter = core.DocumentFilter.original;
-      break;
-    case DocumentFilter.grayscale:
-      coreFilter = core.DocumentFilter.grayscale;
-      break;
-    case DocumentFilter.blackAndWhite:
-      coreFilter = core.DocumentFilter.blackAndWhite;
-      break;
-    case DocumentFilter.magicColor:
-      coreFilter = core.DocumentFilter.magicColor;
-      break;
-    case DocumentFilter.whiteboard:
-      coreFilter = core.DocumentFilter.whiteboard;
-      break;
-    default:
-      coreFilter = core.DocumentFilter.original;
-  }
-
+Future<Uint8List> _applyFilter(Map<String, dynamic> params) {
   return core.DocumentImageEnhancer.applyFilter(
     params['imageData'] as Uint8List,
     params['width'] as int,
     params['height'] as int,
-    coreFilter,
+    params['filter'] as core.DocumentFilter,
   );
 }
 
-Future<OcrResult> _extractDocumentText(Map<String, dynamic> params) {
-  return DocumentOcrProcessor.extractText(
+Future<core.OcrResult> _performOcr(Map<String, dynamic> params) {
+  return core.DocumentOcrProcessor.extractText(
     params['imageData'] as Uint8List,
     params['width'] as int,
     params['height'] as int,
   );
 }
 
-/// Convert image bytes to RGB format
-Future<Uint8List> _convertToRgb(Map<String, dynamic> params) async {
-  final Uint8List imageBytes = params['imageBytes'] as Uint8List;
-  final int width = params['width'] as int;
-  final int height = params['height'] as int;
-
-  final ui.Codec codec = await ui.instantiateImageCodec(imageBytes);
-  final ui.FrameInfo frame = await codec.getNextFrame();
-  final ui.Image image = frame.image;
-
-  final ByteData? byteData = await image.toByteData(format: ui.ImageByteFormat.rawRgba);
-  if (byteData == null) throw Exception('Failed to convert image to RGB');
-
-  final buffer = byteData.buffer.asUint8List();
-  final rgbData = Uint8List(width * height * 3);
-
-  // Convert RGBA to RGB
-  for (int i = 0; i < width * height; i++) {
-    rgbData[i * 3] = buffer[i * 4];         // R
-    rgbData[i * 3 + 1] = buffer[i * 4 + 1]; // G
-    rgbData[i * 3 + 2] = buffer[i * 4 + 2]; // B
-    // Skip alpha channel
-  }
-
-  return rgbData;
-}
-
-/// Generate thumbnail from image data
-Future<Uint8List> _generateThumbnail(Map<String, dynamic> params) async {
-  // Implementation would resize image to thumbnail size
-  // For now, return original data (placeholder)
-  return params['imageData'] as Uint8List;
-}
-
-/// Generate regular PDF
 Future<Uint8List> _generatePdf(Map<String, dynamic> params) async {
-  // Implementation would create PDF from pages
-  // Placeholder for now
-  return Uint8List(0);
-}
-
-/// Generate searchable PDF with OCR
-Future<Uint8List> _generateSearchablePdf(Map<String, dynamic> params) async {
-  // Implementation would create searchable PDF
-  // Placeholder for now
-  return Uint8List(0);
-}
-
-/// Generate ZIP archive
-Future<Uint8List> _generateZip(Map<String, dynamic> params) async {
-  // Implementation would create ZIP from images
-  // Placeholder for now
+  // Real implementation using PdfMerger would go here
   return Uint8List(0);
 }

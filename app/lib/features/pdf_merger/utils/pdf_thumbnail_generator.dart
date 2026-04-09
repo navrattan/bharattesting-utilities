@@ -36,6 +36,13 @@ class PdfThumbnailGenerator {
     }
   }
 
+  /// Generate thumbnails for all pages in a PDF
+  static Future<List<Uint8List>> generate(Uint8List pdfData) async {
+    // In a real implementation, this would count pages and render each
+    // For now, assume at least 1 page and return a placeholder
+    return [await _createPlaceholderThumbnail(0)];
+  }
+
   /// Create a placeholder thumbnail for demonstration
   static Future<Uint8List> _createPlaceholderThumbnail(int pageIndex) async {
     // This would be replaced with actual PDF rendering

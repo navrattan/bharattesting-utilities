@@ -36,6 +36,9 @@ class AppLocalizationsEn extends AppLocalizations {
   String get dataFakerTitle => 'Indian Data Faker';
 
   @override
+  String get dataFakerSubtitle => 'Generate synthetic but valid Indian identity data';
+
+  @override
   String get aboutTitle => 'About';
 
   @override

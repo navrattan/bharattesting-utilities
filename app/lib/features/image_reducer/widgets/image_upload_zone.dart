@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:file_picker/file_picker.dart';
+import 'package:bharattesting_core/core.dart' hide ImageFormat;
 
 class ImageUploadZone extends StatefulWidget {
   final Function(List<PlatformFile>) onImagesSelected;

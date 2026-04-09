@@ -652,23 +652,46 @@ class DocumentQuadrilateral {
   List<Point> get orderedCorners {
     if (corners.length != 4) return corners;
 
-    // Sort by y-coordinate to get top and bottom pairs
-    final sortedByY = List<Point>.from(corners)..sort((a, b) => a.y.compareTo(b.y));
+    final sorted = List<Point>.from(corners);
+    
+    // Calculate centroid
+    double cx = 0;
+    double cy = 0;
+    for (final p in sorted) {
+      cx += p.x;
+      cy += p.y;
+    }
+    cx /= 4;
+    cy /= 4;
 
-    final topPair = sortedByY.take(2).toList();
-    final bottomPair = sortedByY.skip(2).toList();
+    // Sort points by angle from centroid
+    sorted.sort((a, b) => math.atan2(a.y - cy, a.x - cx).compareTo(math.atan2(b.y - cy, b.x - cx)));
 
-    // Sort each pair by x-coordinate
-    topPair.sort((a, b) => a.x.compareTo(b.x));
-    bottomPair.sort((a, b) => a.x.compareTo(b.x));
+    // Ensure the order is TL, TR, BR, BL by checking which corner is closest to origin (0,0)
+    // and rotating accordingly
+    int tlIndex = 0;
+    double minSum = sorted[0].x + sorted[0].y;
+    for (int i = 1; i < 4; i++) {
+      double sum = sorted[i].x + sorted[i].y;
+      if (sum < minSum) {
+        minSum = sum;
+        tlIndex = i;
+      }
+    }
 
-    return [
-      topPair[0],    // top-left
-      topPair[1],    // top-right
-      bottomPair[1], // bottom-right
-      bottomPair[0], // bottom-left
-    ];
+    final result = <Point>[];
+    for (int i = 0; i < 4; i++) {
+      result.add(sorted[(tlIndex + i) % 4]);
+    }
+
+    return result;
   }
+
+  /// Convenience getters for ordered corners
+  Point get topLeft => orderedCorners[0];
+  Point get topRight => orderedCorners[1];
+  Point get bottomRight => orderedCorners[2];
+  Point get bottomLeft => orderedCorners[3];
 
   double get area => DocumentEdgeDetector._calculateQuadrilateralArea(corners);
 

@@ -2,8 +2,8 @@ import 'dart:async';
 import 'dart:convert';
 import 'package:flutter/services.dart';
 import 'package:riverpod_annotation/riverpod_annotation.dart';
-import 'package:bharattesting_core/core.dart';
-import '../models/json_converter_state.dart';
+import 'package:bharattesting_core/core.dart' as core;
+import '../models/json_converter_state.dart' hide InputFormat, RepairRule;
 
 part 'json_converter_provider.g.dart';
 
@@ -20,35 +20,36 @@ class JsonConverter extends _$JsonConverter {
     return const JsonConverterState();
   }
 
-  void updateInputText(String text) {
-    if (text == state.inputText) return;
+  /// Update input text with debouncing
+  void updateInput(String input) {
+    state = state.copyWith(inputText: input);
 
-    state = state.copyWith(
-      inputText: text,
-      errors: <String>[],
-      warnings: <String>[],
-      errorLineNumber: null,
-      errorColumnNumber: null,
-      errorMessage: null,
-    );
-
-    // Debounce auto-processing
     _debounceTimer?.cancel();
-    if (text.trim().isNotEmpty) {
+    if (input.trim().isNotEmpty) {
       _debounceTimer = Timer(const Duration(milliseconds: 500), () {
         processInput();
       });
     } else {
       state = state.copyWith(
         outputText: '',
-        detectedFormat: InputFormat.unknown,
+        detectedFormat: core.InputFormat.unknown,
         formatConfidence: 0.0,
-        appliedRepairs: <RepairRule>[],
+        appliedRepairs: <core.RepairRule>[],
         metadata: null,
       );
     }
   }
 
+  /// Alias for updateInput used by some UI components
+  void updateInputText(String input) => updateInput(input);
+
+  /// Set input from example
+  void setInputFromExample(String example) {
+    state = state.copyWith(inputText: example);
+    processInput();
+  }
+
+  /// Toggle auto-repair functionality
   void toggleAutoRepair() {
     state = state.copyWith(autoRepairEnabled: !state.autoRepairEnabled);
     if (state.hasInput) {
@@ -56,13 +57,15 @@ class JsonConverter extends _$JsonConverter {
     }
   }
 
+  /// Toggle pretty-print output
   void togglePrettify() {
     state = state.copyWith(prettifyOutput: !state.prettifyOutput);
-    if (state.hasOutput && state.detectedFormat == InputFormat.json) {
+    if (state.hasOutput && state.detectedFormat == core.InputFormat.json) {
       _formatJsonOutput();
     }
   }
 
+  /// Process the current input text
   Future<void> processInput() async {
     if (!state.canProcess) return;
 
@@ -95,7 +98,7 @@ class JsonConverter extends _$JsonConverter {
   Future<void> _processWithAutoRepair(String input) async {
     try {
       // Try auto-repair first
-      final repairResult = AutoRepair.repairJSON(input);
+      final repairResult = core.AutoRepair.repairJSON(input);
 
       if (repairResult.isSuccess) {
         // Successfully repaired
@@ -107,7 +110,7 @@ class JsonConverter extends _$JsonConverter {
         state = state.copyWith(
           isProcessing: false,
           outputText: formattedJson,
-          detectedFormat: InputFormat.json,
+          detectedFormat: core.InputFormat.json,
           formatConfidence: 1.0,
           appliedRepairs: repairResult.appliedRules,
           warnings: const <String>[],
@@ -133,121 +136,99 @@ class JsonConverter extends _$JsonConverter {
       state = state.copyWith(
         isProcessing: false,
         outputText: formattedJson,
-        detectedFormat: InputFormat.json,
+        detectedFormat: core.InputFormat.json,
         formatConfidence: 1.0,
-        appliedRepairs: <RepairRule>[],
+        appliedRepairs: <core.RepairRule>[],
+        warnings: const <String>[],
       );
     } catch (e) {
-      // JSON parsing failed, try multi-format detection
+      // Direct JSON failed, try other formats
       await _processMultiFormat(input, null);
     }
   }
 
-  Future<void> _processMultiFormat(String input, RepairResult? failedRepair) async {
-    final parseResult = StringParser.parseAny(input);
+  Future<void> _processMultiFormat(String input, core.RepairResult? repairResult) async {
+    try {
+      // Use core multi-format parser
+      final parseResult = core.StringParser.parseAny(input);
 
-    if (parseResult.isSuccess) {
-      String outputJson;
-      try {
-        outputJson = state.prettifyOutput
+      if (parseResult.isSuccess) {
+        final formattedJson = state.prettifyOutput
             ? const JsonEncoder.withIndent('  ').convert(parseResult.data)
             : jsonEncode(parseResult.data);
-      } catch (e) {
-        outputJson = jsonEncode({
-          'data': parseResult.data,
-          'metadata': parseResult.metadata,
-        });
-      }
 
-      final warnings = <String>[];
-      if (parseResult.detectedFormat != InputFormat.json) {
-        warnings.add('Converted from ${parseResult.detectedFormat.name.toUpperCase()} to JSON');
+        state = state.copyWith(
+          isProcessing: false,
+          outputText: formattedJson,
+          detectedFormat: parseResult.detectedFormat,
+          formatConfidence: parseResult.confidence,
+          appliedRepairs: repairResult?.appliedRules ?? <core.RepairRule>[],
+          warnings: <String>[], // Add warnings if ParseResult has them
+          metadata: parseResult.metadata,
+        );
+      } else {
+        // All parsing attempts failed
+        state = state.copyWith(
+          isProcessing: false,
+          outputText: '',
+          detectedFormat: core.InputFormat.unknown,
+          formatConfidence: 0.0,
+          errors: parseResult.errors ?? ['Could not parse input as JSON, CSV, or YAML'],
+          errorMessage: parseResult.errors?.first,
+        );
       }
-
+    } catch (e) {
       state = state.copyWith(
         isProcessing: false,
-        outputText: outputJson,
-        detectedFormat: parseResult.detectedFormat,
-        formatConfidence: parseResult.confidence,
-        warnings: warnings,
-        metadata: parseResult.metadata,
-        appliedRepairs: <RepairRule>[],
-      );
-    } else {
-      // All parsing failed
-      final errors = <String>[];
-
-      if (failedRepair != null && failedRepair.errors != null) {
-        errors.addAll(failedRepair.errors!.map((e) => e.message));
-      }
-
-      if (parseResult.errors != null) {
-        errors.addAll(parseResult.errors!);
-      }
-
-      if (errors.isEmpty) {
-        errors.add('Unable to parse input as any supported format');
-      }
-
-      state = state.copyWith(
-        isProcessing: false,
+        errors: ['Detection failed: ${e.toString()}'],
         outputText: '',
-        errors: errors,
-        detectedFormat: InputFormat.unknown,
-        formatConfidence: 0.0,
-        errorLineNumber: failedRepair?.lineNumber,
-        errorColumnNumber: failedRepair?.columnNumber,
-        errorMessage: errors.first,
       );
     }
   }
 
   void _formatJsonOutput() {
-    if (state.outputText.isEmpty) return;
-
     try {
       final jsonData = jsonDecode(state.outputText);
-      final formatted = state.prettifyOutput
+      final formattedJson = state.prettifyOutput
           ? const JsonEncoder.withIndent('  ').convert(jsonData)
           : jsonEncode(jsonData);
 
-      state = state.copyWith(outputText: formatted);
-    } catch (e) {
-      // Keep existing output if formatting fails
+      state = state.copyWith(outputText: formattedJson);
+    } catch (_) {
+      // Keep original output if re-formatting fails
     }
   }
 
+  /// Copy output to clipboard
   Future<void> copyToClipboard() async {
-    if (state.hasOutput) {
-      await Clipboard.setData(ClipboardData(text: state.outputText));
-    }
+    if (state.outputText.isEmpty) return;
+    await Clipboard.setData(ClipboardData(text: state.outputText));
   }
 
+  /// Paste from clipboard
   Future<void> pasteFromClipboard() async {
-    final clipboardData = await Clipboard.getData(Clipboard.kTextPlain);
-    if (clipboardData?.text != null) {
-      updateInputText(clipboardData!.text!);
+    final data = await Clipboard.getData(Clipboard.kTextPlain);
+    if (data?.text != null) {
+      updateInput(data!.text!);
     }
   }
 
+  /// Clear input
   void clearInput() {
+    state = state.copyWith(
+      inputText: '',
+      outputText: '',
+      detectedFormat: core.InputFormat.unknown,
+      formatConfidence: 0.0,
+      appliedRepairs: [],
+      errors: [],
+      warnings: [],
+      metadata: null,
+    );
+  }
+
+  /// Clear all input and output
+  void clearAll() {
     state = const JsonConverterState();
-  }
-
-  void setInputFromExample(String example) {
-    updateInputText(example);
-  }
-
-  Map<String, dynamic> getConversionSummary() {
-    return {
-      'detectedFormat': state.formatDisplayName,
-      'confidence': state.confidenceDisplayText,
-      'wasRepaired': state.wasRepaired,
-      'appliedRepairs': state.appliedRepairs.length,
-      'hasWarnings': state.hasWarnings,
-      'warningCount': state.warnings.length,
-      'inputLength': state.inputText.length,
-      'outputLength': state.outputText.length,
-    };
   }
 }

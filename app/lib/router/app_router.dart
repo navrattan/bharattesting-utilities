@@ -8,6 +8,7 @@ import '../features/home/home_screen.dart';
 import '../features/image_reducer/image_reducer_screen.dart';
 import '../features/json_converter/json_converter_screen.dart';
 import '../features/pdf_merger/pdf_merger_screen.dart';
+import '../features/document_scanner/screens/document_scanner_screen.dart';
 import '../shared/coming_soon_screen.dart';
 import '../shared/widgets/tool_scaffold.dart';
 
@@ -59,20 +60,7 @@ class AppRouter {
           GoRoute(
             path: '/document-scanner',
             name: 'document-scanner',
-            builder: (context, state) => const ComingSoonScreen(
-              toolName: 'Document Scanner',
-              toolDescription: 'Camera + OCR → Searchable PDF',
-              toolIcon: Icons.document_scanner,
-              features: [
-                'Real-time edge detection',
-                'Auto-capture with stability timer',
-                '6 enhancement filters',
-                'OCR with text recognition',
-                'Multi-page scanning',
-                'Searchable PDF export',
-                'Web: Upload + manual crop',
-              ],
-            ),
+            builder: (context, state) => const DocumentScannerScreen(),
           ),
           GoRoute(
             path: '/about',

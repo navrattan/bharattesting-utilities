@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:bharattesting_core/core.dart';
 import '../../shared/widgets/tool_scaffold.dart';
 import '../../l10n/l10n.dart';
 import 'models/image_reducer_state.dart';
@@ -361,7 +362,7 @@ class _ImageReducerScreenState extends ConsumerState<ImageReducerScreen>
               const SizedBox(height: 16),
               DropdownButtonFormField<ResizePreset>(
                 value: state.selectedPreset,
-                onChanged: (preset) {
+                onChanged: (ResizePreset? preset) {
                   if (preset != null) {
                     notifier.updateResizePreset(preset);
                   }
@@ -425,7 +426,7 @@ class _ImageReducerScreenState extends ConsumerState<ImageReducerScreen>
               const SizedBox(height: 16),
               DropdownButtonFormField<PrivacyLevel>(
                 value: state.privacyLevel,
-                onChanged: (level) {
+                onChanged: (PrivacyLevel? level) {
                   if (level != null) {
                     notifier.updatePrivacyLevel(level);
                   }

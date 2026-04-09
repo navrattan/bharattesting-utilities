@@ -2,7 +2,7 @@ import 'dart:typed_data';
 import 'dart:ui';
 import 'package:freezed_annotation/freezed_annotation.dart';
 import 'package:camera/camera.dart';
-import 'package:bharattesting_core/src/document_scanner/edge_detector.dart';
+import 'package:bharattesting_core/core.dart' as core;
 
 part 'document_scanner_state.freezed.dart';
 
@@ -66,7 +66,7 @@ abstract class DocumentScannerState with _$DocumentScannerState {
     @Default(false) bool isProcessing,
     @Default(0) int processingProgress,
     @Default([]) List<String> processingErrors,
-    DocumentQuadrilateral? detectedDocument,
+    core.DocumentQuadrilateral? detectedDocument,
     @Default(false) bool isDocumentStable,
     @Default(0.0) double stabilityScore,
     DateTime? lastDetectionTime,
@@ -105,7 +105,7 @@ abstract class ScannedPage with _$ScannedPage {
     required DateTime captureTime,
     @Default(DocumentFilter.original) DocumentFilter appliedFilter,
     @Default([]) List<Offset> corners,
-    DocumentQuadrilateral? detectedCorners,
+    core.DocumentQuadrilateral? detectedCorners,
     String? ocrResult,
     @Default(false) bool isSelected,
     @Default(false) bool hasOcr,
@@ -136,18 +136,6 @@ abstract class ScannerOperation with _$ScannerOperation {
     @Default(false) bool isCompleted,
     String? error,
   }) = _ScannerOperation;
-}
-
-@freezed
-abstract class DetectionMetrics with _$DetectionMetrics {
-  const factory DetectionMetrics({
-    required double confidence,
-    required double area,
-    required double aspectRatio,
-    @Default([]) List<Offset> corners,
-    @Default(false) bool isStable,
-    @Default(0) int framesSinceLastDetection,
-  }) = _DetectionMetrics;
 }
 
 @freezed

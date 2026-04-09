@@ -1,10 +1,10 @@
 import 'package:flutter/material.dart';
-import 'package:bharattesting_core/src/json_converter/json_converter.dart';
+import 'package:bharattesting_core/core.dart' as core;
 
 class FormatInfoPanel extends StatelessWidget {
   final String detectedFormat;
   final String confidence;
-  final List<RepairRule> appliedRepairs;
+  final List<core.RepairRule> appliedRepairs;
   final bool hasWarnings;
   final int warningCount;
 
@@ -19,275 +19,113 @@ class FormatInfoPanel extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final theme = Theme.of(context);
-
-    return Card(
-      child: Padding(
-        padding: const EdgeInsets.all(16),
-        child: Column(
-          crossAxisAlignment: CrossAxisAlignment.start,
-          mainAxisSize: MainAxisSize.min,
+    return Column(
+      crossAxisAlignment: CrossAxisAlignment.start,
+      children: [
+        Row(
           children: [
-            // Detection info
-            Row(
-              children: [
-                _buildFormatChip(context, detectedFormat),
-                const SizedBox(width: 8),
-                _buildConfidenceChip(context, confidence),
-                if (appliedRepairs.isNotEmpty) ...[
-                  const SizedBox(width: 8),
-                  _buildRepairChip(context, appliedRepairs.length),
-                ],
-                if (hasWarnings) ...[
-                  const SizedBox(width: 8),
-                  _buildWarningChip(context, warningCount),
-                ],
-              ],
-            ),
-
-            // Applied repairs details
-            if (appliedRepairs.isNotEmpty) ...[
-              const SizedBox(height: 12),
-              Text(
-                'Applied Repairs:',
-                style: theme.textTheme.bodySmall?.copyWith(
-                  fontWeight: FontWeight.w500,
-                  color: theme.colorScheme.onSurface.withOpacity(0.8),
+            Expanded(child: _buildInfoRow(context, 'Detected Format', detectedFormat)),
+            if (hasWarnings)
+              Container(
+                margin: const EdgeInsets.only(left: 8),
+                padding: const EdgeInsets.symmetric(horizontal: 6, vertical: 2),
+                decoration: BoxDecoration(
+                  color: Colors.orange.withOpacity(0.2),
+                  borderRadius: BorderRadius.circular(10),
+                  border: Border.all(color: Colors.orange),
+                ),
+                child: Row(
+                  mainAxisSize: MainAxisSize.min,
+                  children: [
+                    const Icon(Icons.warning_amber_rounded, size: 12, color: Colors.orange),
+                    const SizedBox(width: 4),
+                    Text(
+                      '$warningCount warnings',
+                      style: const TextStyle(fontSize: 10, color: Colors.orange, fontWeight: FontWeight.bold),
+                    ),
+                  ],
                 ),
               ),
-              const SizedBox(height: 6),
-              Wrap(
-                spacing: 6,
-                runSpacing: 4,
-                children: appliedRepairs.map((repair) {
-                  return _buildRepairDetailChip(context, repair);
-                }).toList(),
-              ),
-            ],
           ],
         ),
+        _buildInfoRow(context, 'Confidence', confidence),
+        if (appliedRepairs.isNotEmpty) ...[
+          const SizedBox(height: 12),
+          Text(
+            'Applied Repairs',
+            style: Theme.of(context).textTheme.titleSmall,
+          ),
+          const SizedBox(height: 8),
+          ...appliedRepairs.map((repair) => _buildRepairItem(context, repair)),
+        ],
+      ],
+    );
+  }
+
+  Widget _buildInfoRow(BuildContext context, String label, String value) {
+    return Padding(
+      padding: const EdgeInsets.symmetric(vertical: 4),
+      child: Row(
+        mainAxisAlignment: MainAxisAlignment.spaceBetween,
+        children: [
+          Text(label, style: const TextStyle(fontWeight: FontWeight.w500)),
+          Text(value),
+        ],
       ),
     );
   }
 
-  Widget _buildFormatChip(BuildContext context, String format) {
-    final theme = Theme.of(context);
-    final isUnknown = format == 'Unknown';
-
-    return Container(
-      padding: const EdgeInsets.symmetric(horizontal: 12, vertical: 6),
-      decoration: BoxDecoration(
-        color: isUnknown
-            ? theme.colorScheme.surfaceVariant
-            : theme.colorScheme.primaryContainer,
-        borderRadius: BorderRadius.circular(16),
-      ),
+  Widget _buildRepairItem(BuildContext context, core.RepairRule repair) {
+    return Padding(
+      padding: const EdgeInsets.symmetric(vertical: 2),
       child: Row(
-        mainAxisSize: MainAxisSize.min,
         children: [
           Icon(
-            isUnknown ? Icons.help_outline : Icons.code,
-            size: 14,
-            color: isUnknown
-                ? theme.colorScheme.onSurfaceVariant
-                : theme.colorScheme.onPrimaryContainer,
+            _getRepairIcon(repair),
+            size: 16,
+            color: Colors.green,
           ),
-          const SizedBox(width: 4),
+          const SizedBox(width: 8),
           Text(
-            format,
-            style: theme.textTheme.bodySmall?.copyWith(
-              color: isUnknown
-                  ? theme.colorScheme.onSurfaceVariant
-                  : theme.colorScheme.onPrimaryContainer,
-              fontWeight: FontWeight.w500,
-            ),
+            _getRepairName(repair),
+            style: const TextStyle(fontSize: 12),
           ),
         ],
       ),
     );
   }
 
-  Widget _buildConfidenceChip(BuildContext context, String confidence) {
-    final theme = Theme.of(context);
-
-    Color getConfidenceColor() {
-      switch (confidence) {
-        case 'High confidence':
-          return theme.colorScheme.tertiary;
-        case 'Medium confidence':
-          return Colors.orange;
-        case 'Low confidence':
-          return Colors.amber;
-        default:
-          return theme.colorScheme.surfaceVariant;
-      }
+  String _getRepairName(core.RepairRule repair) {
+    switch (repair) {
+      case core.RepairRule.trailingCommas:
+        return 'Removed trailing commas';
+      case core.RepairRule.singleQuotes:
+        return 'Converted single quotes';
+      case core.RepairRule.unquotedKeys:
+        return 'Quoted unquoted keys';
+      case core.RepairRule.jsComments:
+        return 'Removed JavaScript comments';
+      case core.RepairRule.pythonLiterals:
+        return 'Fixed Python literals';
+      case core.RepairRule.trailingText:
+        return 'Removed trailing text';
     }
-
-    Color getConfidenceOnColor() {
-      switch (confidence) {
-        case 'High confidence':
-          return theme.colorScheme.onTertiary;
-        case 'Medium confidence':
-          return Colors.white;
-        case 'Low confidence':
-          return Colors.black87;
-        default:
-          return theme.colorScheme.onSurfaceVariant;
-      }
-    }
-
-    return Container(
-      padding: const EdgeInsets.symmetric(horizontal: 10, vertical: 6),
-      decoration: BoxDecoration(
-        color: getConfidenceColor().withOpacity(0.2),
-        borderRadius: BorderRadius.circular(16),
-        border: Border.all(
-          color: getConfidenceColor().withOpacity(0.5),
-          width: 1,
-        ),
-      ),
-      child: Text(
-        confidence,
-        style: theme.textTheme.bodySmall?.copyWith(
-          color: getConfidenceOnColor(),
-          fontSize: 11,
-          fontWeight: FontWeight.w500,
-        ),
-      ),
-    );
   }
 
-  Widget _buildRepairChip(BuildContext context, int repairCount) {
-    final theme = Theme.of(context);
-
-    return Container(
-      padding: const EdgeInsets.symmetric(horizontal: 10, vertical: 6),
-      decoration: BoxDecoration(
-        color: theme.colorScheme.secondary.withOpacity(0.2),
-        borderRadius: BorderRadius.circular(16),
-        border: Border.all(
-          color: theme.colorScheme.secondary.withOpacity(0.5),
-          width: 1,
-        ),
-      ),
-      child: Row(
-        mainAxisSize: MainAxisSize.min,
-        children: [
-          Icon(
-            Icons.build_circle_outlined,
-            size: 12,
-            color: theme.colorScheme.secondary,
-          ),
-          const SizedBox(width: 4),
-          Text(
-            '$repairCount repair${repairCount == 1 ? '' : 's'}',
-            style: theme.textTheme.bodySmall?.copyWith(
-              color: theme.colorScheme.secondary,
-              fontSize: 11,
-              fontWeight: FontWeight.w500,
-            ),
-          ),
-        ],
-      ),
-    );
-  }
-
-  Widget _buildWarningChip(BuildContext context, int count) {
-    final theme = Theme.of(context);
-
-    return Container(
-      padding: const EdgeInsets.symmetric(horizontal: 10, vertical: 6),
-      decoration: BoxDecoration(
-        color: Colors.orange.withOpacity(0.2),
-        borderRadius: BorderRadius.circular(16),
-        border: Border.all(
-          color: Colors.orange.withOpacity(0.5),
-          width: 1,
-        ),
-      ),
-      child: Row(
-        mainAxisSize: MainAxisSize.min,
-        children: [
-          Icon(
-            Icons.warning_amber_outlined,
-            size: 12,
-            color: Colors.orange.shade700,
-          ),
-          const SizedBox(width: 4),
-          Text(
-            '$count warning${count == 1 ? '' : 's'}',
-            style: theme.textTheme.bodySmall?.copyWith(
-              color: Colors.orange.shade700,
-              fontSize: 11,
-              fontWeight: FontWeight.w500,
-            ),
-          ),
-        ],
-      ),
-    );
-  }
-
-  Widget _buildRepairDetailChip(BuildContext context, RepairRule repair) {
-    final theme = Theme.of(context);
-
-    String getRepairDisplayName(RepairRule rule) {
-      switch (rule) {
-        case RepairRule.trailingCommas:
-          return 'Trailing commas';
-        case RepairRule.singleQuotes:
-          return 'Single quotes';
-        case RepairRule.unquotedKeys:
-          return 'Unquoted keys';
-        case RepairRule.jsComments:
-          return 'JS comments';
-        case RepairRule.pythonLiterals:
-          return 'Python literals';
-        case RepairRule.trailingText:
-          return 'Trailing text';
-      }
+  IconData _getRepairIcon(core.RepairRule repair) {
+    switch (repair) {
+      case core.RepairRule.trailingCommas:
+        return Icons.format_list_bulleted;
+      case core.RepairRule.singleQuotes:
+        return Icons.swap_horiz;
+      case core.RepairRule.unquotedKeys:
+        return Icons.vpn_key;
+      case core.RepairRule.jsComments:
+        return Icons.comment_bank;
+      case core.RepairRule.pythonLiterals:
+        return Icons.code;
+      case core.RepairRule.trailingText:
+        return Icons.text_snippet;
     }
-
-    IconData getRepairIcon(RepairRule rule) {
-      switch (rule) {
-        case RepairRule.trailingCommas:
-          return Icons.remove_circle_outline;
-        case RepairRule.singleQuotes:
-          return Icons.format_quote;
-        case RepairRule.unquotedKeys:
-          return Icons.code;
-        case RepairRule.jsComments:
-          return Icons.comment;
-        case RepairRule.pythonLiterals:
-          return Icons.translate;
-        case RepairRule.trailingText:
-          return Icons.content_cut;
-      }
-    }
-
-    return Container(
-      padding: const EdgeInsets.symmetric(horizontal: 8, vertical: 4),
-      decoration: BoxDecoration(
-        color: theme.colorScheme.surfaceVariant.withOpacity(0.7),
-        borderRadius: BorderRadius.circular(12),
-      ),
-      child: Row(
-        mainAxisSize: MainAxisSize.min,
-        children: [
-          Icon(
-            getRepairIcon(repair),
-            size: 10,
-            color: theme.colorScheme.onSurfaceVariant,
-          ),
-          const SizedBox(width: 4),
-          Text(
-            getRepairDisplayName(repair),
-            style: theme.textTheme.bodySmall?.copyWith(
-              color: theme.colorScheme.onSurfaceVariant,
-              fontSize: 10,
-            ),
-          ),
-        ],
-      ),
-    );
   }
 }

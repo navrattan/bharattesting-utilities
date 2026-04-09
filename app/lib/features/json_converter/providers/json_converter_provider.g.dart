@@ -6,7 +6,7 @@ part of 'json_converter_provider.dart';
 // RiverpodGenerator
 // **************************************************************************
 
-String _$jsonConverterHash() => r'a7aa1b31952466e3e88a43ae58ee7d9884992022';
+String _$jsonConverterHash() => r'ce1b2391bc15aab9f7b692cb45a002374f1b07aa';
 
 /// See also [JsonConverter].
 @ProviderFor(JsonConverter)

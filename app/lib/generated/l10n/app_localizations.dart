@@ -147,6 +147,12 @@ abstract class AppLocalizations {
   /// **'Indian Data Faker'**
   String get dataFakerTitle;
 
+  /// Subtitle for the Indian data faker tool
+  ///
+  /// In en, this message translates to:
+  /// **'Generate synthetic but valid Indian identity data'**
+  String get dataFakerSubtitle;
+
   /// Title for the about page
   ///
   /// In en, this message translates to:

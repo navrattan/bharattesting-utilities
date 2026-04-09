@@ -44,6 +44,16 @@
     "description": "Title for the Indian data faker tool"
   },
 
+  "dataFakerSubtitle": "Generate synthetic but valid Indian identity data",
+  "@dataFakerSubtitle": {
+    "description": "Subtitle for the Indian data faker tool"
+  },
+
+  "dataFakerSubtitle": "Generate synthetic but valid Indian identity data",
+  "@dataFakerSubtitle": {
+    "description": "Subtitle for the Indian data faker tool"
+  },
+
   "aboutTitle": "About",
   "@aboutTitle": {
     "description": "Title for the about page"

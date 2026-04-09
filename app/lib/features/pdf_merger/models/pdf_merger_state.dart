@@ -1,5 +1,6 @@
 import 'dart:typed_data';
 import 'package:freezed_annotation/freezed_annotation.dart';
+import 'package:bharattesting_core/core.dart' as core;
 
 part 'pdf_merger_state.freezed.dart';
 

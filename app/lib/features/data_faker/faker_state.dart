@@ -3,6 +3,7 @@
 /// Manages template selection, generation options, and export functionality
 
 import 'package:freezed_annotation/freezed_annotation.dart';
+import 'package:bharattesting_core/core.dart' as core hide TemplateType;
 
 part 'faker_state.freezed.dart';
 
@@ -20,7 +21,7 @@ enum TemplateType {
   final String description;
 }
 
-/// Available export formats
+/// Available identifier categories for selection
 enum ExportFormat {
   csv('CSV', 'Comma-separated values'),
   json('JSON', 'JavaScript Object Notation'),

@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:bharattesting_core/core.dart';
 import '../models/image_reducer_state.dart';
 
 class QualityControlPanel extends StatefulWidget {
@@ -245,7 +246,7 @@ class _QualityControlPanelState extends State<QualityControlPanel>
 
         DropdownButtonFormField<ConvertibleFormat>(
           value: widget.targetFormat,
-          onChanged: widget.isProcessing ? null : (format) {
+          onChanged: widget.isProcessing ? null : (ConvertibleFormat? format) {
             if (format != null) {
               widget.onFormatChanged(format);
             }
@@ -448,6 +449,8 @@ class _QualityControlPanelState extends State<QualityControlPanel>
         return Colors.pink;
       case ConvertibleFormat.tiff:
         return Colors.teal;
+      default:
+        return Colors.grey;
     }
   }
 
@@ -465,6 +468,8 @@ class _QualityControlPanelState extends State<QualityControlPanel>
         return Icons.privacy_tip;
       case ConversionStrategy.webOptimized:
         return Icons.language;
+      default:
+        return Icons.settings;
     }
   }
 

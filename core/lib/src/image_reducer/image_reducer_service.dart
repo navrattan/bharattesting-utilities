@@ -31,6 +31,9 @@ enum ResizePreset {
   const ResizePreset(this.maxDimension, this.displayName);
   final int maxDimension;
   final String displayName;
+
+  /// Get dimensions description
+  String get dimensions => maxDimension == 0 ? 'Custom' : '${maxDimension}px (max)';
 }
 
 /// Image processing result

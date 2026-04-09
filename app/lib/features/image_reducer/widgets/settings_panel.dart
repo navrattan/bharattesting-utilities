@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:bharattesting_core/core.dart';
 import '../models/image_reducer_state.dart';
 
 class SettingsPanel extends StatelessWidget {
@@ -127,7 +128,7 @@ class SettingsPanel extends StatelessWidget {
                 return RadioListTile<ConvertibleFormat>(
                   value: format,
                   groupValue: targetFormat,
-                  onChanged: (value) {
+                  onChanged: (ConvertibleFormat? value) {
                     if (value != null) {
                       onFormatChanged(value);
                     }
@@ -156,7 +157,7 @@ class SettingsPanel extends StatelessWidget {
 
               DropdownButtonFormField<ConversionStrategy>(
                 value: strategy,
-                onChanged: (value) {
+                onChanged: (ConversionStrategy? value) {
                   if (value != null) {
                     onStrategyChanged(value);
                   }

@@ -7,7 +7,7 @@ part of 'document_scanner_provider.dart';
 // **************************************************************************
 
 String _$documentScannerNotifierHash() =>
-    r'9d47d78479018babcf2f5f3b4f2bd254806cf4e9';
+    r'92171fdca810a3c5f3c33471281ac1fc1760fa6e';
 
 /// See also [DocumentScannerNotifier].
 @ProviderFor(DocumentScannerNotifier)
