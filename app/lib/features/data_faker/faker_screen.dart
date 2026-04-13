@@ -334,8 +334,28 @@ class _DataTypeGrid extends ConsumerWidget {
       
       switch (id) {
         case 'name': 
-          label = state.selectedTemplate == core.TemplateType.individual ? 'Person Name' : 'Company Name';
-          icon = state.selectedTemplate == core.TemplateType.individual ? LucideIcons.user : LucideIcons.building;
+          label = 'Person Name';
+          icon = LucideIcons.user;
+          break;
+        case 'companyName':
+          label = 'Company Name';
+          icon = LucideIcons.building;
+          break;
+        case 'businessName':
+          label = 'Business Name';
+          icon = LucideIcons.briefcase;
+          break;
+        case 'proprietorName':
+          label = 'Proprietor Name';
+          icon = LucideIcons.userCheck;
+          break;
+        case 'firmName':
+          label = 'Firm Name';
+          icon = LucideIcons.users;
+          break;
+        case 'trustName':
+          label = 'Trust Name';
+          icon = LucideIcons.landmark;
           break;
         case 'pan': 
           label = 'PAN Card';
@@ -353,7 +373,7 @@ class _DataTypeGrid extends ConsumerWidget {
           label = 'CIN Number';
           icon = LucideIcons.building; 
           break;
-        case 'upi_id': 
+        case 'upi': 
           label = 'UPI ID';
           icon = LucideIcons.wallet; 
           break;
@@ -369,7 +389,7 @@ class _DataTypeGrid extends ConsumerWidget {
           label = 'Address';
           icon = LucideIcons.mapPin; 
           break;
-        case 'pin_code': 
+        case 'pinCode': 
           label = 'PIN Code';
           icon = LucideIcons.map; 
           break;
@@ -382,7 +402,7 @@ class _DataTypeGrid extends ConsumerWidget {
           icon = LucideIcons.fileText;
           break;
         default: 
-          label = id.replaceAll('_', ' ').toUpperCase();
+          label = id.replaceAll(RegExp(r'(?=[A-Z])'), ' ').toUpperCase();
           icon = LucideIcons.database;
       }
       return (label, icon, id);

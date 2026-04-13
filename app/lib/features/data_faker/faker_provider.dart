@@ -152,73 +152,46 @@ List<Map<String, dynamic>> _generateRecordsInIsolate(Map<String, dynamic> params
   final identifiers = params['identifiers'] as List<String>;
   final templateName = params['template'] as String;
 
-  print('Isolate: Generating $count records for template: $templateName');
-  print('Isolate: Requested identifiers: $identifiers');
-
-  List<Map<String, dynamic>> rawRecords;
-
-  try {
-    switch (templateName) {
-      case 'company':
-        rawRecords = core.CompanyTemplate.generateBulk(count: count, baseSeed: seed);
-        break;
-      case 'proprietorship':
-        rawRecords = core.ProprietorshipTemplate.generateBulk(count: count, baseSeed: seed);
-        break;
-      case 'partnership':
-        rawRecords = core.PartnershipTemplate.generateBulk(count: count, baseSeed: seed);
-        break;
-      case 'trust':
-        rawRecords = core.TrustTemplate.generateBulk(count: count, baseSeed: seed);
-        break;
-      default:
-        rawRecords = core.IndividualTemplate.generateBulk(count: count, baseSeed: seed);
-    }
-
-    print('Isolate: Generated ${rawRecords.length} raw records');
-    if (rawRecords.isNotEmpty) {
-      print('Isolate: Raw record keys: ${rawRecords.first.keys}');
-    }
-  } catch (e) {
-    print('Isolate: Error generating raw records: $e');
-    throw Exception('Failed to generate records for $templateName template: $e');
-  }
+  final service = core.DataFakerService(seed: seed);
   
-  final filteredRecords = rawRecords.map((record) {
-    final filtered = <String, dynamic>{};
-
-    // Filter based on requested identifiers with smart mapping
-    for (final id in identifiers) {
-      if (record.containsKey(id)) {
-        filtered[id] = record[id];
-      } else if (id == 'name' && record.containsKey('company_name')) {
-        // Map company_name to name if name was requested
-        filtered['name'] = record['company_name'];
-      }
-    }
-
-    // Include essential fields even if not explicitly requested, 
-    // but prioritize the requested 'name' label
-    if (!filtered.containsKey('name')) {
-      if (record.containsKey('name')) {
-        filtered['name'] = record['name'];
-      } else if (record.containsKey('company_name')) {
-        filtered['name'] = record['company_name'];
-      }
-    }
-
-    // Include template type for UI hints
-    filtered['template_type'] = record['template_type'] ?? templateName;
-
-    return filtered;
-  }).toList();
-
-  print('Isolate: Filtered to ${filteredRecords.length} records');
-  if (filteredRecords.isNotEmpty) {
-    print('Isolate: Filtered record keys: ${filteredRecords.first.keys}');
+  // Convert string template name back to enum
+  core.TemplateType template;
+  switch (templateName) {
+    case 'company':
+      template = core.TemplateType.company;
+      break;
+    case 'proprietorship':
+      template = core.TemplateType.proprietorship;
+      break;
+    case 'partnership':
+      template = core.TemplateType.partnership;
+      break;
+    case 'trust':
+      template = core.TemplateType.trust;
+      break;
+    default:
+      template = core.TemplateType.individual;
   }
 
-  return filteredRecords;
+  // Convert string identifiers to core IdentifierType enums
+  final idTypes = <core.IdentifierType>{};
+  for (final id in identifiers) {
+    try {
+      idTypes.add(core.IdentifierType.values.firstWhere((e) => e.name == id));
+    } catch (_) {
+      // Manual fallback for any missed mappings
+      if (id == 'upi') idTypes.add(core.IdentifierType.upi);
+      if (id == 'pinCode') idTypes.add(core.IdentifierType.pinCode);
+    }
+  }
+
+  final records = service.generateBulk(
+    template: template,
+    identifiers: idTypes,
+    count: count,
+  );
+
+  return records.map((record) => record.toJson()).toList();
 }
 
 Uint8List _exportRecordsInIsolate(Map<String, dynamic> params) {

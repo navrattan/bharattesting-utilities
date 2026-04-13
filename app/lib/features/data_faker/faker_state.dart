@@ -131,19 +131,19 @@ extension FakerStateX on FakerState {
   List<String> get availableIdentifiers {
     switch (selectedTemplate) {
       case core.TemplateType.individual:
-        return ['name', 'phone', 'email', 'pan', 'aadhaar', 'pin_code', 'address', 'upi_id'];
+        return ['name', 'phone', 'email', 'pan', 'aadhaar', 'pinCode', 'address', 'upi'];
 
       case core.TemplateType.company:
-        return ['name', 'pan', 'gstin', 'cin', 'tan', 'ifsc', 'upi_id', 'udyam', 'address', 'pin_code'];
+        return ['companyName', 'pan', 'gstin', 'cin', 'tan', 'ifsc', 'upi', 'udyam', 'address', 'pinCode'];
 
       case core.TemplateType.proprietorship:
-        return ['name', 'pan', 'gstin', 'udyam', 'tan', 'upi_id', 'address', 'pin_code'];
+        return ['proprietorName', 'businessName', 'pan', 'gstin', 'udyam', 'tan', 'upi', 'address', 'pinCode'];
 
       case core.TemplateType.partnership:
-        return ['name', 'pan', 'gstin', 'tan', 'ifsc', 'upi_id', 'partners', 'address', 'pin_code'];
+        return ['firmName', 'pan', 'gstin', 'tan', 'ifsc', 'upi', 'address', 'pinCode'];
 
       case core.TemplateType.trust:
-        return ['name', 'pan', 'gstin', 'tan', 'ifsc', 'upi_id', 'registration', 'address', 'pin_code'];
+        return ['trustName', 'pan', 'gstin', 'tan', 'ifsc', 'upi', 'address', 'pinCode'];
     }
   }
 
