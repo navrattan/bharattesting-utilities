@@ -136,6 +136,7 @@ class PdfMerger extends _$PdfMerger {
 
   Future<void> _generateAllThumbnails() async {
     final List<PdfPageThumbnail> allPages = [];
+    int globalIdx = 0;
     
     for (final doc in state.documents) {
       final thumbnails = await PdfThumbnailGenerator.generate(doc.data);
@@ -143,9 +144,11 @@ class PdfMerger extends _$PdfMerger {
         allPages.add(PdfPageThumbnail(
           id: '${doc.id}_p$i',
           documentId: doc.id,
-          originalPageIndex: i,
+          pageNumber: i + 1,
+          globalIndex: globalIdx++,
+          dimensions: const PageDimensions(width: 595, height: 842), // Default A4
           thumbnailData: thumbnails[i],
-          fileName: doc.fileName,
+          status: ThumbnailStatus.ready,
         ));
       }
     }
@@ -205,9 +208,11 @@ class PdfMerger extends _$PdfMerger {
     
     // Web safe download implementation
     try {
-      final blob = core.UniversalFile.createBlob(state.mergedPdfData!, 'application/pdf');
-      final url = core.UniversalFile.createBlobUrl(blob);
-      core.UniversalFile.downloadFromUrl(url, 'merged_document.pdf');
+      core.UniversalFile.downloadBytes(
+        state.mergedPdfData!, 
+        'merged_document.pdf',
+        mimeType: 'application/pdf',
+      );
     } catch (e) {
       state = state.copyWith(processingErrors: [...state.processingErrors, 'Download failed: $e']);
     }

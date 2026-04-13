@@ -1,6 +1,6 @@
 import 'dart:typed_data';
 import 'package:pdfx/pdfx.dart';
-import '../models/pdf_merger_state.dart';
+import '../models/pdf_merger_state.dart' hide PdfDocument;
 
 /// Utility class for generating PDF page thumbnails
 class PdfThumbnailGenerator {

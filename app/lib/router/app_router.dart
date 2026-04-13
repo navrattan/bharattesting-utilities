@@ -27,40 +27,45 @@ class AppRouter {
     initialLocation: '/',
     debugLogDiagnostics: false,
     routes: [
-      GoRoute(
-        path: '/',
-        name: 'home',
-        builder: (context, state) => const HomeScreen(),
-      ),
-      GoRoute(
-        path: '/indian-data-faker',
-        name: 'indian-data-faker',
-        builder: (context, state) => const FakerScreen(),
-      ),
-      GoRoute(
-        path: '/string-to-json',
-        name: 'string-to-json',
-        builder: (context, state) => const JsonConverterScreen(),
-      ),
-      GoRoute(
-        path: '/image-reducer',
-        name: 'image-reducer',
-        builder: (context, state) => const ImageReducerScreen(),
-      ),
-      GoRoute(
-        path: '/pdf-merger',
-        name: 'pdf-merger',
-        builder: (context, state) => const PdfMergerScreen(),
-      ),
-      GoRoute(
-        path: '/document-scanner',
-        name: 'document-scanner',
-        builder: (context, state) => const DocumentScannerScreen(),
-      ),
-      GoRoute(
-        path: '/about',
-        name: 'about',
-        builder: (context, state) => const _AboutScreen(),
+      ShellRoute(
+        builder: (context, state, child) => ToolScaffold(child: child),
+        routes: [
+          GoRoute(
+            path: '/',
+            name: 'home',
+            builder: (context, state) => const HomeScreen(),
+          ),
+          GoRoute(
+            path: '/indian-data-faker',
+            name: 'indian-data-faker',
+            builder: (context, state) => const FakerScreen(),
+          ),
+          GoRoute(
+            path: '/string-to-json',
+            name: 'string-to-json',
+            builder: (context, state) => const JsonConverterScreen(),
+          ),
+          GoRoute(
+            path: '/image-reducer',
+            name: 'image-reducer',
+            builder: (context, state) => const ImageReducerScreen(),
+          ),
+          GoRoute(
+            path: '/pdf-merger',
+            name: 'pdf-merger',
+            builder: (context, state) => const PdfMergerScreen(),
+          ),
+          GoRoute(
+            path: '/document-scanner',
+            name: 'document-scanner',
+            builder: (context, state) => const DocumentScannerScreen(),
+          ),
+          GoRoute(
+            path: '/about',
+            name: 'about',
+            builder: (context, state) => const _AboutScreen(),
+          ),
+        ],
       ),
     ],
     errorBuilder: (context, state) => Scaffold(

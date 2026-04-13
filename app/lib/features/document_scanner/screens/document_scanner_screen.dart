@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
-import '../../l10n/l10n.dart';
+import '../../../l10n/l10n.dart';
 import '../providers/document_scanner_provider.dart';
 import '../widgets/document_upload_zone.dart';
 import '../widgets/scanner_preview_panel.dart';
