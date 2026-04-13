@@ -131,19 +131,19 @@ extension FakerStateX on FakerState {
   List<String> get availableIdentifiers {
     switch (selectedTemplate) {
       case core.TemplateType.individual:
-        return ['pan', 'aadhaar', 'pin_code', 'address', 'upi_id'];
+        return ['name', 'phone', 'email', 'pan', 'aadhaar', 'pin_code', 'address', 'upi_id'];
 
       case core.TemplateType.company:
         return ['name', 'pan', 'gstin', 'cin', 'tan', 'ifsc', 'upi_id', 'udyam', 'address', 'pin_code'];
 
       case core.TemplateType.proprietorship:
-        return ['pan', 'gstin', 'udyam', 'tan', 'upi_id'];
+        return ['name', 'pan', 'gstin', 'udyam', 'tan', 'upi_id', 'address', 'pin_code'];
 
       case core.TemplateType.partnership:
-        return ['pan', 'gstin', 'tan', 'ifsc', 'upi_id', 'partners'];
+        return ['name', 'pan', 'gstin', 'tan', 'ifsc', 'upi_id', 'partners', 'address', 'pin_code'];
 
       case core.TemplateType.trust:
-        return ['pan', 'gstin', 'tan', 'ifsc', 'upi_id', 'registration'];
+        return ['name', 'pan', 'gstin', 'tan', 'ifsc', 'upi_id', 'registration', 'address', 'pin_code'];
     }
   }
 

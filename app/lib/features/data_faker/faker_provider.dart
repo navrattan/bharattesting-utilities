@@ -23,18 +23,31 @@ class FakerNotifier extends _$FakerNotifier {
 
   void updateTemplate(core.TemplateType template) {
     if (state.selectedTemplate == template) return;
-    
-    // Create a new state with the new template and reset identifiers to defaults for that template
-    final newState = FakerState(
+
+    // Update template and reset identifiers while preserving other state
+    state = state.copyWith(
       selectedTemplate: template,
-      recordCount: state.recordCount,
-      selectedExportFormat: state.selectedExportFormat,
+      // Clear generated records when switching templates
+      generatedRecords: [],
+      errorMessage: null,
+      // Reset identifiers to defaults for new template
+      selectedIdentifiers: _getDefaultIdentifiersForTemplate(template),
     );
-    
-    // Sync identifiers: switch to defaults for the new template
-    state = newState.copyWith(
-      selectedIdentifiers: newState.availableIdentifiers.toSet(),
-    );
+  }
+
+  Set<String> _getDefaultIdentifiersForTemplate(core.TemplateType template) {
+    switch (template) {
+      case core.TemplateType.individual:
+        return {'name', 'phone', 'email', 'pan', 'aadhaar'};
+      case core.TemplateType.company:
+        return {'name', 'pan', 'gstin', 'cin'};
+      case core.TemplateType.proprietorship:
+        return {'pan', 'gstin', 'udyam'};
+      case core.TemplateType.partnership:
+        return {'pan', 'gstin', 'tan'};
+      case core.TemplateType.trust:
+        return {'pan', 'gstin', 'registration'};
+    }
   }
 
   void updateExportFormat(ExportFormat format) {

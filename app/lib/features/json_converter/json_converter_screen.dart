@@ -128,8 +128,9 @@ class _JsonConverterScreenState extends ConsumerState<JsonConverterScreen>
           ),
         ),
       ],
-    );
-  }
+    ),
+  );
+}
 
   Widget _buildInputSection() {
     final state = ref.watch(jsonConverterProvider);

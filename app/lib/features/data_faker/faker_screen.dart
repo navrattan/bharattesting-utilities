@@ -232,8 +232,9 @@ class FakerScreen extends ConsumerWidget {
           const SizedBox(height: 60),
         ],
       ),
-    );
-  }
+    ),
+  );
+}
 
   Widget _buildSectionHeader(BuildContext context, String number, String title) {
     final theme = Theme.of(context);
