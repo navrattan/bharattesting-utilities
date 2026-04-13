@@ -61,10 +61,25 @@ class FakerNotifier extends _$FakerNotifier {
 
   Future<void> generateRecords() async {
     if (state.isGenerating) return;
-    
+
+    // Validate that we have selected identifiers
+    if (state.selectedIdentifiers.isEmpty) {
+      state = state.copyWith(
+        isGenerating: false,
+        errorMessage: 'Please select at least one data type to generate',
+      );
+      return;
+    }
+
     state = state.copyWith(isGenerating: true, errorMessage: null);
     try {
       final seed = state.useRandomSeed ? null : state.customSeed;
+
+      // Debug logging
+      print('Generating records with template: ${state.selectedTemplate.name}');
+      print('Selected identifiers: ${state.selectedIdentifiers}');
+      print('Record count: ${state.recordCount}');
+
       final records = await compute(_generateRecordsInIsolate, {
         'template': state.selectedTemplate.name,
         'count': state.recordCount,
@@ -73,13 +88,19 @@ class FakerNotifier extends _$FakerNotifier {
         'identifiers': state.selectedIdentifiers.toList(),
       });
 
+      print('Generated ${records.length} records');
+      if (records.isNotEmpty) {
+        print('First record keys: ${records.first.keys}');
+      }
+
       state = state.copyWith(
         generatedRecords: records,
         lastGeneratedAt: DateTime.now(),
         isGenerating: false,
       );
     } catch (e) {
-      state = state.copyWith(isGenerating: false, errorMessage: e.toString());
+      print('Error generating records: $e');
+      state = state.copyWith(isGenerating: false, errorMessage: 'Failed to generate data: ${e.toString()}');
     }
   }
 
@@ -117,39 +138,82 @@ List<Map<String, dynamic>> _generateRecordsInIsolate(Map<String, dynamic> params
   final seed = params['seed'] as int?;
   final identifiers = params['identifiers'] as List<String>;
   final templateName = params['template'] as String;
-  
+
+  print('Isolate: Generating $count records for template: $templateName');
+  print('Isolate: Requested identifiers: $identifiers');
+
   List<Map<String, dynamic>> rawRecords;
-  
-  switch (templateName) {
-    case 'company':
-      rawRecords = core.CompanyTemplate.generateBulk(count: count, baseSeed: seed);
-      break;
-    case 'proprietorship':
-      rawRecords = core.ProprietorshipTemplate.generateBulk(count: count, baseSeed: seed);
-      break;
-    case 'partnership':
-      rawRecords = core.PartnershipTemplate.generateBulk(count: count, baseSeed: seed);
-      break;
-    case 'trust':
-      rawRecords = core.TrustTemplate.generateBulk(count: count, baseSeed: seed);
-      break;
-    default:
-      rawRecords = core.IndividualTemplate.generateBulk(count: count, baseSeed: seed);
+
+  try {
+    switch (templateName) {
+      case 'company':
+        rawRecords = core.CompanyTemplate.generateBulk(count: count, baseSeed: seed);
+        break;
+      case 'proprietorship':
+        rawRecords = core.ProprietorshipTemplate.generateBulk(count: count, baseSeed: seed);
+        break;
+      case 'partnership':
+        rawRecords = core.PartnershipTemplate.generateBulk(count: count, baseSeed: seed);
+        break;
+      case 'trust':
+        rawRecords = core.TrustTemplate.generateBulk(count: count, baseSeed: seed);
+        break;
+      default:
+        rawRecords = core.IndividualTemplate.generateBulk(count: count, baseSeed: seed);
+    }
+
+    print('Isolate: Generated ${rawRecords.length} raw records');
+    if (rawRecords.isNotEmpty) {
+      print('Isolate: Raw record keys: ${rawRecords.first.keys}');
+    }
+  } catch (e) {
+    print('Isolate: Error generating raw records: $e');
+    throw Exception('Failed to generate records for $templateName template: $e');
   }
   
-  return rawRecords.map((record) {
+  final filteredRecords = rawRecords.map((record) {
     final filtered = <String, dynamic>{};
+
+    // Filter based on requested identifiers
     for (final id in identifiers) {
       if (record.containsKey(id)) {
         filtered[id] = record[id];
       }
     }
-    // Always include a name if available
+
+    // Always include a name field - handle both individual and company names
     if (record.containsKey('name')) {
       filtered['name'] = record['name'];
+    } else if (record.containsKey('company_name')) {
+      filtered['name'] = record['company_name'];
+      filtered['company_name'] = record['company_name'];
     }
+
+    // Include template type for debugging
+    if (record.containsKey('template_type')) {
+      filtered['template_type'] = record['template_type'];
+    }
+
+    // Ensure we always have at least some data
+    if (filtered.isEmpty && record.isNotEmpty) {
+      // If filtering resulted in empty record, include a few key fields
+      final fallbackFields = ['name', 'company_name', 'pan', 'gstin', 'aadhaar'];
+      for (final field in fallbackFields) {
+        if (record.containsKey(field)) {
+          filtered[field] = record[field];
+        }
+      }
+    }
+
     return filtered;
   }).toList();
+
+  print('Isolate: Filtered to ${filteredRecords.length} records');
+  if (filteredRecords.isNotEmpty) {
+    print('Isolate: Filtered record keys: ${filteredRecords.first.keys}');
+  }
+
+  return filteredRecords;
 }
 
 Uint8List _exportRecordsInIsolate(Map<String, dynamic> params) {

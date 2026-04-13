@@ -134,7 +134,7 @@ extension FakerStateX on FakerState {
         return ['pan', 'aadhaar', 'pin_code', 'address', 'upi_id'];
 
       case core.TemplateType.company:
-        return ['pan', 'gstin', 'cin', 'tan', 'ifsc', 'upi_id', 'udyam'];
+        return ['name', 'pan', 'gstin', 'cin', 'tan', 'ifsc', 'upi_id', 'udyam', 'address', 'pin_code'];
 
       case core.TemplateType.proprietorship:
         return ['pan', 'gstin', 'udyam', 'tan', 'upi_id'];
