@@ -1,6 +1,8 @@
 /// Indian state codes and mappings for GSTIN, PIN codes, and CIN
 library state_codes;
 
+import 'dart:math';
+
 /// GSTIN state code mappings (01-37)
 ///
 /// Used in GSTIN first two digits and CIN state validation.
