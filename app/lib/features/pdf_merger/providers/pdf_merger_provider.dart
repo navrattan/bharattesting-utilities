@@ -53,7 +53,7 @@ class PdfMerger extends _$PdfMerger {
       state = state.copyWith(documents: [...state.documents, ...newDocs]);
       await _generateAllThumbnails();
     } catch (error) {
-      state = state.copyWith(errorMessage: error.toString());
+      state = state.copyWith(processingErrors: [...state.processingErrors, error.toString()]);
     }
   }
 
