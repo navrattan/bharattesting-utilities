@@ -190,12 +190,28 @@ class StateCodes {
   /// Get GSTIN state code from state name
   static int? getStateCode(String stateName) => stateNameToCode[stateName];
 
-  /// Get random state code
+  /// Get random state code from supported list
   static int getRandomStateCode() {
-    final codes = gstinStateCodes.keys.toList();
-    codes.removeWhere((code) => code == 37); // Remove reserved code
-    codes.shuffle();
-    return codes.first;
+    // Only use states that are fully supported by PIN/Address generators
+    final safeStates = [
+      7,  // Delhi
+      26, // Maharashtra
+      27, // Karnataka
+      31, // Tamil Nadu
+      34, // Telangana
+      19, // West Bengal
+      9,  // Uttar Pradesh
+      24, // Gujarat
+      8,  // Rajasthan
+      20, // Jharkhand
+      10, // Bihar
+      21, // Odisha
+      23, // Madhya Pradesh
+      3,  // Punjab
+      6,  // Haryana
+    ];
+    final random = Random();
+    return safeStates[random.nextInt(safeStates.length)];
   }
 
   /// Get random PIN code for a state
