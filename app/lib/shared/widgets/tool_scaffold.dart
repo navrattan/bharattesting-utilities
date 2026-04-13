@@ -50,6 +50,10 @@ class ToolScaffold extends ConsumerWidget {
     // Provide the content
     final Widget mainContent = body ?? child ?? const SizedBox.shrink();
 
+    // Use branding defaults if title/subtitle not provided
+    final effectiveTitle = title ?? branding?.title;
+    final effectiveSubtitle = subtitle ?? branding?.subtitle;
+
     // FIX: Ensure we inherit the FULL theme and only override specific branding colors
     final baseTheme = Theme.of(context);
     final brandedTheme = branding != null 
@@ -72,7 +76,7 @@ class ToolScaffold extends ConsumerWidget {
       child: ResponsiveLayout(
         mobile: _MobileLayout(
           child: mainContent,
-          title: branding?.standaloneTitle ?? title,
+          title: branding?.standaloneTitle ?? effectiveTitle,
           actions: actions,
           drawer: drawer,
           endDrawer: endDrawer,
@@ -80,8 +84,8 @@ class ToolScaffold extends ConsumerWidget {
         ),
         tablet: _TabletLayout(
           child: mainContent,
-          title: branding?.title ?? title,
-          subtitle: subtitle,
+          title: effectiveTitle,
+          subtitle: effectiveSubtitle,
           actions: actions,
           drawer: drawer,
           endDrawer: endDrawer,
@@ -89,8 +93,8 @@ class ToolScaffold extends ConsumerWidget {
         ),
         desktop: _DesktopLayout(
           child: mainContent,
-          title: branding?.title ?? title,
-          subtitle: subtitle,
+          title: effectiveTitle,
+          subtitle: effectiveSubtitle,
           actions: actions,
           drawer: drawer,
           endDrawer: endDrawer,

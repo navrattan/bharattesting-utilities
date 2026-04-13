@@ -1,10 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import '../../l10n/l10n.dart';
-import '../../shared/widgets/tool_scaffold.dart';
 import 'models/pdf_merger_state.dart';
 import 'providers/pdf_merger_provider.dart';
-import 'package:bharattesting_core/core.dart' as core;
 import 'widgets/pdf_drop_zone.dart';
 import 'widgets/pdf_page_grid.dart';
 import 'widgets/pdf_document_list.dart';
@@ -39,47 +37,30 @@ class _PdfMergerScreenState extends ConsumerState<PdfMergerScreen>
     final state = ref.watch(pdfMergerProvider);
     final notifier = ref.read(pdfMergerProvider.notifier);
 
-    return ToolScaffold(
-      title: context.l10n.pdfMergerTitle,
-      subtitle: 'Merge, rotate, password-protect',
-      actions: [
-        if (state.mergedPdfData != null)
-          IconButton(
-            icon: const Icon(Icons.download),
-            onPressed: () => notifier.downloadMergedPdf(),
-            tooltip: 'Download Merged PDF',
+    return Column(
+      children: [
+        Material(
+          color: Theme.of(context).colorScheme.surface,
+          child: TabBar(
+            controller: _tabController,
+            tabs: const [
+              Tab(text: 'Files', icon: Icon(Icons.description)),
+              Tab(text: 'Pages', icon: Icon(Icons.grid_view)),
+              Tab(text: 'Settings', icon: Icon(Icons.settings)),
+            ],
           ),
-        IconButton(
-          icon: const Icon(Icons.settings_outlined),
-          onPressed: () => _showSettings(context, state, notifier),
-          tooltip: 'Merge Settings',
+        ),
+        Expanded(
+          child: TabBarView(
+            controller: _tabController,
+            children: [
+              _buildFilesTab(context, state, notifier),
+              _buildPagesTab(context, state, notifier),
+              _buildSettingsTab(context, state, notifier),
+            ],
+          ),
         ),
       ],
-      body: Column(
-        children: [
-          Material(
-            color: Theme.of(context).colorScheme.surface,
-            child: TabBar(
-              controller: _tabController,
-              tabs: const [
-                Tab(text: 'Files', icon: Icon(Icons.description)),
-                Tab(text: 'Pages', icon: Icon(Icons.grid_view)),
-                Tab(text: 'Settings', icon: Icon(Icons.settings)),
-              ],
-            ),
-          ),
-          Expanded(
-            child: TabBarView(
-              controller: _tabController,
-              children: [
-                _buildFilesTab(context, state, notifier),
-                _buildPagesTab(context, state, notifier),
-                _buildSettingsTab(context, state, notifier),
-              ],
-            ),
-          ),
-        ],
-      ),
     );
   }
 
@@ -164,23 +145,6 @@ class _PdfMergerScreenState extends ConsumerState<PdfMergerScreen>
           const SizedBox(height: 8),
           Text(subtitle, style: Theme.of(context).textTheme.bodyMedium),
         ],
-      ),
-    );
-  }
-
-  void _showSettings(BuildContext context, PdfMergerState state, PdfMerger notifier) {
-    showModalBottomSheet(
-      context: context,
-      isScrollControlled: true,
-      builder: (context) => DraggableScrollableSheet(
-        initialChildSize: 0.7,
-        minChildSize: 0.5,
-        maxChildSize: 0.9,
-        expand: false,
-        builder: (context, scrollController) => SingleChildScrollView(
-          controller: scrollController,
-          child: _buildSettingsTab(context, state, notifier),
-        ),
       ),
     );
   }

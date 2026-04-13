@@ -21,6 +21,7 @@ enum ToolIntent {
 class ToolBranding {
   final String title;
   final String standaloneTitle;
+  final String subtitle;
   final Color primaryColor;
   final IconData icon;
   final String seoTitle;
@@ -28,6 +29,7 @@ class ToolBranding {
   const ToolBranding({
     required this.title,
     required this.standaloneTitle,
+    required this.subtitle,
     required this.primaryColor,
     required this.icon,
     required this.seoTitle,
@@ -37,6 +39,7 @@ class ToolBranding {
     ToolIntent.faker: const ToolBranding(
       title: 'Indian Data Faker',
       standaloneTitle: 'BT Faker',
+      subtitle: 'Generate synthetic but valid Indian identity and business data',
       primaryColor: Colors.blue,
       icon: Icons.badge_outlined,
       seoTitle: 'Indian Data Faker | BharatTesting',
@@ -44,6 +47,7 @@ class ToolBranding {
     ToolIntent.json: const ToolBranding(
       title: 'String to JSON',
       standaloneTitle: 'BT JSON',
+      subtitle: 'Smart JSON repair and conversion',
       primaryColor: Colors.indigo,
       icon: Icons.data_object_outlined,
       seoTitle: 'JSON Converter & Repair | BharatTesting',
@@ -51,6 +55,7 @@ class ToolBranding {
     ToolIntent.image: const ToolBranding(
       title: 'Image Size Reducer',
       standaloneTitle: 'BT Image',
+      subtitle: 'Optimize images for official portals',
       primaryColor: Colors.teal,
       icon: Icons.photo_size_select_large_outlined,
       seoTitle: 'Image Size Reducer | BharatTesting',
@@ -58,6 +63,7 @@ class ToolBranding {
     ToolIntent.pdf: const ToolBranding(
       title: 'PDF Merger',
       standaloneTitle: 'BT PDF',
+      subtitle: 'Combine and organize PDF documents securely',
       primaryColor: Color(0xFFE53935),
       icon: Icons.picture_as_pdf_outlined,
       seoTitle: 'Secure PDF Merger | BharatTesting',
@@ -65,6 +71,7 @@ class ToolBranding {
     ToolIntent.scanner: const ToolBranding(
       title: 'Document Scanner',
       standaloneTitle: 'BT Scanner',
+      subtitle: 'Professional scanning with OCR and edge detection',
       primaryColor: Color(0xFFFF8F00),
       icon: Icons.document_scanner_outlined,
       seoTitle: 'Document Scanner | BharatTesting',

@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
-import '../../shared/widgets/tool_scaffold.dart';
 import '../../l10n/l10n.dart';
+import '../../theme/app_theme.dart';
 import 'providers/json_converter_provider.dart';
 import 'widgets/input_editor.dart';
 import 'widgets/output_viewer.dart';
@@ -19,7 +19,6 @@ class JsonConverterScreen extends ConsumerStatefulWidget {
 class _JsonConverterScreenState extends ConsumerState<JsonConverterScreen>
     with SingleTickerProviderStateMixin {
   late TabController _tabController;
-  final GlobalKey<ScaffoldState> _scaffoldKey = GlobalKey<ScaffoldState>();
 
   @override
   void initState() {
@@ -38,19 +37,8 @@ class _JsonConverterScreenState extends ConsumerState<JsonConverterScreen>
     final state = ref.watch(jsonConverterProvider);
     final notifier = ref.read(jsonConverterProvider.notifier);
 
-    return ToolScaffold(
-      title: context.l10n.jsonConverterTitle,
-      subtitle: context.l10n.jsonConverterSubtitle,
-      actions: [
-        IconButton(
-          icon: const Icon(Icons.help_outline),
-          onPressed: () => _showHelpDialog(context),
-          tooltip: 'Help',
-        ),
-      ],
-      body: Column(
-        children: [
-        
+    return Column(
+      children: [
         // Format info and action buttons
         Padding(
           padding: const EdgeInsets.all(16),
@@ -128,9 +116,8 @@ class _JsonConverterScreenState extends ConsumerState<JsonConverterScreen>
           ),
         ),
       ],
-    ),
-  );
-}
+    );
+  }
 
   Widget _buildInputSection() {
     final state = ref.watch(jsonConverterProvider);
@@ -152,41 +139,6 @@ class _JsonConverterScreenState extends ConsumerState<JsonConverterScreen>
       isLoading: state.isProcessing,
       errors: state.errors,
       warnings: state.warnings,
-    );
-  }
-
-  Widget _buildExamplesDrawer() {
-    final notifier = ref.read(jsonConverterProvider.notifier);
-    return ExamplesPanel(
-      onExampleSelected: (example) {
-        notifier.updateInput(example);
-        _scaffoldKey.currentState?.closeDrawer();
-      },
-    );
-  }
-
-  void _showHelpDialog(BuildContext context) {
-    showDialog(
-      context: context,
-      builder: (context) => AlertDialog(
-        title: const Text('Intelligent JSON Converter'),
-        content: const Column(
-          mainAxisSize: MainAxisSize.min,
-          crossAxisAlignment: CrossAxisAlignment.start,
-          children: [
-            Text('• Auto-detects JSON, CSV, YAML, XML, URL-encoded'),
-            Text('• Repairs common JSON syntax errors automatically'),
-            Text('• Formats and prettifies messy code'),
-            Text('• 100% private - data never leaves your device'),
-          ],
-        ),
-        actions: [
-          TextButton(
-            onPressed: () => Navigator.of(context).pop(),
-            child: const Text('Got it'),
-          ),
-        ],
-      ),
     );
   }
 }

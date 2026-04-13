@@ -17,14 +17,11 @@ class FakerScreen extends ConsumerWidget {
     final state = ref.watch(fakerNotifierProvider);
     final theme = Theme.of(context);
 
-    return ToolScaffold(
-      title: context.l10n.dataFakerTitle,
-      subtitle: 'Generate synthetic but valid Indian identity and business data',
-      body: SingleChildScrollView(
-        padding: const EdgeInsets.all(AppTheme.spacingXl),
-        child: Column(
-          crossAxisAlignment: CrossAxisAlignment.start,
-          children: [
+    return SingleChildScrollView(
+      padding: const EdgeInsets.all(AppTheme.spacingXl),
+      child: Column(
+        crossAxisAlignment: CrossAxisAlignment.start,
+        children: [
 
           // STEP 0: SELECT TEMPLATE
           _buildSectionHeader(context, "0", "Select Template"),
@@ -232,9 +229,8 @@ class FakerScreen extends ConsumerWidget {
           const SizedBox(height: 60),
         ],
       ),
-    ),
-  );
-}
+    );
+  }
 
   Widget _buildSectionHeader(BuildContext context, String number, String title) {
     final theme = Theme.of(context);
