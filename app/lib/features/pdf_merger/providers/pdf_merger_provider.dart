@@ -17,23 +17,44 @@ class PdfMerger extends _$PdfMerger {
 
   /// Add documents to the list
   Future<void> addDocuments(List<PlatformFile> files) async {
-    final newDocs = <PdfDocument>[];
-    
-    for (final file in files) {
-      if (file.bytes == null) continue;
-      
-      final doc = PdfDocument(
-        id: DateTime.now().millisecondsSinceEpoch.toString() + file.name,
-        fileName: file.name,
-        fileSize: file.size,
-        data: file.bytes!,
-        pageCount: 0,
-      );
-      newDocs.add(doc);
-    }
+    try {
+      // Validate input
+      if (files.isEmpty) {
+        throw Exception('No files selected');
+      }
 
-    state = state.copyWith(documents: [...state.documents, ...newDocs]);
-    _generateAllThumbnails();
+      final newDocs = <PdfDocument>[];
+
+      for (final file in files) {
+        if (file.bytes == null) {
+          throw Exception('Invalid file: ${file.name} has no data');
+        }
+
+        // Check file size (limit to 50MB per file)
+        if (file.size > 50 * 1024 * 1024) {
+          throw Exception('File ${file.name} is too large (max 50MB)');
+        }
+
+        // Check total document limit
+        if (state.documents.length >= 20) {
+          throw Exception('Maximum 20 documents allowed');
+        }
+
+        final doc = PdfDocument(
+          id: DateTime.now().millisecondsSinceEpoch.toString() + file.name,
+          fileName: file.name,
+          fileSize: file.size,
+          data: file.bytes!,
+          pageCount: 0,
+        );
+        newDocs.add(doc);
+      }
+
+      state = state.copyWith(documents: [...state.documents, ...newDocs]);
+      await _generateAllThumbnails();
+    } catch (error) {
+      state = state.copyWith(errorMessage: error.toString());
+    }
   }
 
   void removeDocument(String id) {
