@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:bharattesting_core/core.dart' as core;
+import '../../../shared/widgets/tool_scaffold.dart';
+import '../../../l10n/l10n.dart';
 import '../models/document_scanner_state.dart';
 import '../providers/document_scanner_provider.dart';
 import '../widgets/camera_preview_widget.dart';
@@ -29,20 +31,19 @@ class _DocumentScannerScreenState extends ConsumerState<DocumentScannerScreen> {
     final state = ref.watch(documentScannerNotifierProvider);
     final notifier = ref.read(documentScannerNotifierProvider.notifier);
 
-    return Scaffold(
-      appBar: AppBar(
-        title: const Text('Document Scanner'),
-        actions: [
-          IconButton(
-            icon: Icon(state.enableFlash ? Icons.flash_on : Icons.flash_off),
-            onPressed: () => notifier.toggleFlash(),
-          ),
-          IconButton(
-            icon: const Icon(Icons.settings),
-            onPressed: () => _showSettings(context, state, notifier),
-          ),
-        ],
-      ),
+    return ToolScaffold(
+      title: 'Document Scanner',
+      subtitle: 'Scan documents with automatic edge detection and OCR',
+      actions: [
+        IconButton(
+          icon: Icon(state.enableFlash ? Icons.flash_on : Icons.flash_off),
+          onPressed: () => notifier.toggleFlash(),
+        ),
+        IconButton(
+          icon: const Icon(Icons.settings),
+          onPressed: () => _showSettings(context, state, notifier),
+        ),
+      ],
       body: Column(
         children: [
           Expanded(

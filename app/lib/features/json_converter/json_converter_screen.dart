@@ -38,32 +38,18 @@ class _JsonConverterScreenState extends ConsumerState<JsonConverterScreen>
     final state = ref.watch(jsonConverterProvider);
     final notifier = ref.read(jsonConverterProvider.notifier);
 
-    return Column(
-      children: [
-        // Header Area (replacing ToolScaffold header part)
-        Padding(
-          padding: const EdgeInsets.fromLTRB(16, 16, 16, 0),
-          child: Row(
-            children: [
-              Column(
-                crossAxisAlignment: CrossAxisAlignment.start,
-                children: [
-                  Text(
-                    context.l10n.jsonConverterTitle,
-                    style: Theme.of(context).textTheme.headlineSmall?.copyWith(fontWeight: FontWeight.bold),
-                  ),
-                  Text(context.l10n.jsonConverterSubtitle),
-                ],
-              ),
-              const Spacer(),
-              IconButton(
-                icon: const Icon(Icons.help_outline),
-                onPressed: () => _showHelpDialog(context),
-                tooltip: 'Help',
-              ),
-            ],
-          ),
+    return ToolScaffold(
+      title: context.l10n.jsonConverterTitle,
+      subtitle: context.l10n.jsonConverterSubtitle,
+      actions: [
+        IconButton(
+          icon: const Icon(Icons.help_outline),
+          onPressed: () => _showHelpDialog(context),
+          tooltip: 'Help',
         ),
+      ],
+      body: Column(
+        children: [
         
         // Format info and action buttons
         Padding(

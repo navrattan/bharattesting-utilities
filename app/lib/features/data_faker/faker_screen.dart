@@ -17,18 +17,14 @@ class FakerScreen extends ConsumerWidget {
     final state = ref.watch(fakerNotifierProvider);
     final theme = Theme.of(context);
 
-    return SingleChildScrollView(
-      padding: const EdgeInsets.all(AppTheme.spacingXl),
-      child: Column(
-        crossAxisAlignment: CrossAxisAlignment.start,
-        children: [
-          // Header Area (Replacing ToolScaffold header part)
-          Text(
-            context.l10n.dataFakerTitle,
-            style: theme.textTheme.headlineMedium?.copyWith(fontWeight: FontWeight.bold),
-          ),
-          const Text('Generate synthetic but valid Indian identity and business data'),
-          const SizedBox(height: 32),
+    return ToolScaffold(
+      title: context.l10n.dataFakerTitle,
+      subtitle: 'Generate synthetic but valid Indian identity and business data',
+      body: SingleChildScrollView(
+        padding: const EdgeInsets.all(AppTheme.spacingXl),
+        child: Column(
+          crossAxisAlignment: CrossAxisAlignment.start,
+          children: [
 
           // STEP 0: SELECT TEMPLATE
           _buildSectionHeader(context, "0", "Select Template"),
@@ -152,6 +148,87 @@ class FakerScreen extends ConsumerWidget {
               ],
             ),
           ),
+
+          // Error display
+          if (state.errorMessage != null) ...[
+            const SizedBox(height: 24),
+            Container(
+              padding: const EdgeInsets.all(16),
+              decoration: BoxDecoration(
+                color: theme.colorScheme.errorContainer,
+                borderRadius: BorderRadius.circular(8),
+              ),
+              child: Row(
+                children: [
+                  Icon(
+                    LucideIcons.alertCircle,
+                    color: theme.colorScheme.error,
+                  ),
+                  const SizedBox(width: 8),
+                  Expanded(
+                    child: Text(
+                      state.errorMessage!,
+                      style: TextStyle(color: theme.colorScheme.error),
+                    ),
+                  ),
+                ],
+              ),
+            ),
+          ],
+
+          // Export functionality
+          if (state.generatedRecords.isNotEmpty) ...[
+            const SizedBox(height: 32),
+            Center(
+              child: SizedBox(
+                width: 300,
+                height: 56,
+                child: OutlinedButton.icon(
+                  onPressed: state.isExporting
+                    ? null
+                    : () => ref.read(fakerNotifierProvider.notifier).exportRecords(),
+                  icon: state.isExporting
+                    ? const SizedBox(width: 20, height: 20, child: CircularProgressIndicator(strokeWidth: 2))
+                    : const Icon(LucideIcons.download),
+                  label: Text(
+                    state.isExporting ? 'EXPORTING...' : 'EXPORT ${state.selectedExportFormat.displayName}',
+                    style: const TextStyle(fontWeight: FontWeight.bold),
+                  ),
+                ),
+              ),
+            ),
+          ],
+
+          // Disclaimer
+          Container(
+            margin: const EdgeInsets.symmetric(vertical: 32),
+            padding: const EdgeInsets.all(16),
+            decoration: BoxDecoration(
+              color: theme.colorScheme.surfaceVariant.withOpacity(0.5),
+              borderRadius: BorderRadius.circular(8),
+              border: Border.all(color: theme.colorScheme.outline.withOpacity(0.3)),
+            ),
+            child: Row(
+              children: [
+                Icon(
+                  LucideIcons.info,
+                  color: theme.colorScheme.onSurfaceVariant,
+                  size: 20,
+                ),
+                const SizedBox(width: 8),
+                Expanded(
+                  child: Text(
+                    'All data is synthetic and for testing only. Do not use for fraud or illegal activities.',
+                    style: TextStyle(
+                      color: theme.colorScheme.onSurfaceVariant,
+                      fontSize: 12,
+                    ),
+                  ),
+                ),
+              ],
+            ),
+          ),
+
           const SizedBox(height: 60),
         ],
       ),
