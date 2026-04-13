@@ -15,16 +15,16 @@ import 'package:bharattesting_core/src/data_faker/data/state_codes.dart';
 /// Geographic regions for PIN code first digit
 enum PINRegion {
   /// Northern region (Delhi, Punjab, Haryana, etc.)
-  northern(1, 'Northern', ['Delhi', 'Punjab', 'Haryana', 'Himachal Pradesh', 'Jammu and Kashmir', 'Ladakh']),
+  northern(1, 'Northern', ['Delhi', 'Punjab', 'Haryana', 'Himachal Pradesh', 'Jammu and Kashmir', 'Ladakh', 'Chandigarh']),
 
   /// Western region (Maharashtra, Gujarat, Rajasthan, etc.)
-  western(2, 'Western', ['Maharashtra', 'Gujarat', 'Rajasthan', 'Goa']),
+  western(2, 'Western', ['Maharashtra', 'Gujarat', 'Rajasthan', 'Goa', 'Dadra and Nagar Haveli and Daman and Diu']),
 
   /// Southern region (Tamil Nadu, Karnataka, Andhra Pradesh, etc.)
-  southern(3, 'Southern', ['Tamil Nadu', 'Karnataka', 'Andhra Pradesh', 'Telangana', 'Kerala']),
+  southern(3, 'Southern', ['Tamil Nadu', 'Karnataka', 'Andhra Pradesh', 'Telangana', 'Kerala', 'Puducherry', 'Lakshadweep']),
 
   /// Eastern region (West Bengal, Bihar, Jharkhand, etc.)
-  eastern(4, 'Eastern', ['West Bengal', 'Bihar', 'Jharkhand', 'Odisha']),
+  eastern(4, 'Eastern', ['West Bengal', 'Bihar', 'Jharkhand', 'Odisha', 'Andaman and Nicobar Islands']),
 
   /// Central region (Uttar Pradesh, Madhya Pradesh, etc.)
   central(5, 'Central', ['Uttar Pradesh', 'Madhya Pradesh', 'Chhattisgarh']),
