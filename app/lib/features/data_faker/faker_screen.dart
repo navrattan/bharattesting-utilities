@@ -329,19 +329,61 @@ class _DataTypeGrid extends ConsumerWidget {
     // Dynamically get identifiers based on template
     final availableIds = state.availableIdentifiers;
     final types = availableIds.map((id) {
-      final label = id.replaceAll('_', ' ').split(' ').map((s) => s.substring(0, 1).toUpperCase() + s.substring(1)).join(' ');
+      String label;
       IconData icon;
+      
       switch (id) {
-        case 'pan': icon = LucideIcons.creditCard; break;
-        case 'aadhaar': icon = LucideIcons.fingerprint; break;
-        case 'gstin': icon = LucideIcons.briefcase; break;
-        case 'cin': icon = LucideIcons.building; break;
-        case 'upi_id': icon = LucideIcons.wallet; break;
-        case 'phone': icon = LucideIcons.phone; break;
-        case 'email': icon = LucideIcons.mail; break;
-        case 'address': icon = LucideIcons.mapPin; break;
-        case 'pin_code': icon = LucideIcons.map; break;
-        default: icon = LucideIcons.database;
+        case 'name': 
+          label = state.selectedTemplate == core.TemplateType.individual ? 'Person Name' : 'Company Name';
+          icon = state.selectedTemplate == core.TemplateType.individual ? LucideIcons.user : LucideIcons.building;
+          break;
+        case 'pan': 
+          label = 'PAN Card';
+          icon = LucideIcons.creditCard; 
+          break;
+        case 'aadhaar': 
+          label = 'Aadhaar';
+          icon = LucideIcons.fingerprint; 
+          break;
+        case 'gstin': 
+          label = 'GSTIN';
+          icon = LucideIcons.briefcase; 
+          break;
+        case 'cin': 
+          label = 'CIN Number';
+          icon = LucideIcons.building; 
+          break;
+        case 'upi_id': 
+          label = 'UPI ID';
+          icon = LucideIcons.wallet; 
+          break;
+        case 'phone': 
+          label = 'Phone';
+          icon = LucideIcons.phone; 
+          break;
+        case 'email': 
+          label = 'Email';
+          icon = LucideIcons.mail; 
+          break;
+        case 'address': 
+          label = 'Address';
+          icon = LucideIcons.mapPin; 
+          break;
+        case 'pin_code': 
+          label = 'PIN Code';
+          icon = LucideIcons.map; 
+          break;
+        case 'tan':
+          label = 'TAN Number';
+          icon = LucideIcons.hash;
+          break;
+        case 'udyam':
+          label = 'Udyam Num';
+          icon = LucideIcons.fileText;
+          break;
+        default: 
+          label = id.replaceAll('_', ' ').toUpperCase();
+          icon = LucideIcons.database;
       }
       return (label, icon, id);
     }).toList();

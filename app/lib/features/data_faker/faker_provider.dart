@@ -187,36 +187,28 @@ List<Map<String, dynamic>> _generateRecordsInIsolate(Map<String, dynamic> params
   final filteredRecords = rawRecords.map((record) {
     final filtered = <String, dynamic>{};
 
-    // Filter based on requested identifiers
+    // Filter based on requested identifiers with smart mapping
     for (final id in identifiers) {
       if (record.containsKey(id)) {
         filtered[id] = record[id];
+      } else if (id == 'name' && record.containsKey('company_name')) {
+        // Map company_name to name if name was requested
+        filtered['name'] = record['company_name'];
       }
     }
 
-    // Always include a name field - handle both individual and company names
-    if (record.containsKey('name')) {
-      filtered['name'] = record['name'];
-    } else if (record.containsKey('company_name')) {
-      filtered['name'] = record['company_name'];
-      filtered['company_name'] = record['company_name'];
-    }
-
-    // Include template type for debugging
-    if (record.containsKey('template_type')) {
-      filtered['template_type'] = record['template_type'];
-    }
-
-    // Ensure we always have at least some data
-    if (filtered.isEmpty && record.isNotEmpty) {
-      // If filtering resulted in empty record, include a few key fields
-      final fallbackFields = ['name', 'company_name', 'pan', 'gstin', 'aadhaar'];
-      for (final field in fallbackFields) {
-        if (record.containsKey(field)) {
-          filtered[field] = record[field];
-        }
+    // Include essential fields even if not explicitly requested, 
+    // but prioritize the requested 'name' label
+    if (!filtered.containsKey('name')) {
+      if (record.containsKey('name')) {
+        filtered['name'] = record['name'];
+      } else if (record.containsKey('company_name')) {
+        filtered['name'] = record['company_name'];
       }
     }
+
+    // Include template type for UI hints
+    filtered['template_type'] = record['template_type'] ?? templateName;
 
     return filtered;
   }).toList();
