@@ -135,20 +135,48 @@ class PdfMerger extends _$PdfMerger {
   }
 
   Future<void> _generateAllThumbnails() async {
-    // Implementation for thumbnail generation
+    final List<PdfPageThumbnail> allPages = [];
+    
+    for (final doc in state.documents) {
+      final thumbnails = await PdfThumbnailGenerator.generate(doc.data);
+      for (int i = 0; i < thumbnails.length; i++) {
+        allPages.add(PdfPageThumbnail(
+          id: '${doc.id}_p$i',
+          documentId: doc.id,
+          originalPageIndex: i,
+          thumbnailData: thumbnails[i],
+          fileName: doc.fileName,
+        ));
+      }
+    }
+    
+    state = state.copyWith(pages: allPages);
   }
 
   void _rebuildPagesFromDocs() {
-    // Logic to rebuild pages list when documents are reordered
+    final Map<String, List<PdfPageThumbnail>> docPages = {};
+    for (final page in state.pages) {
+      docPages.putIfAbsent(page.documentId, () => []).add(page);
+    }
+
+    final List<PdfPageThumbnail> newPages = [];
+    for (final doc in state.documents) {
+      if (docPages.containsKey(doc.id)) {
+        newPages.addAll(docPages[doc.id]!);
+      }
+    }
+    
+    state = state.copyWith(pages: newPages);
   }
 
   /// Merge PDFs
   Future<void> mergePdfs() async {
     if (state.pages.isEmpty) return;
 
-    state = state.copyWith(isProcessing: true, processingProgress: 0);
+    state = state.copyWith(isProcessing: true, processingErrors: [], processingProgress: 0);
 
     try {
+      // PDF merging is compute heavy, but on web we do it in-memory
       final inputFiles = state.documents.map((doc) => core.PdfInputFile(
         data: doc.data,
         fileName: doc.fileName,
@@ -173,7 +201,16 @@ class PdfMerger extends _$PdfMerger {
   }
 
   void downloadMergedPdf() {
-    // Web download logic
+    if (state.mergedPdfData == null) return;
+    
+    // Web safe download implementation
+    try {
+      final blob = core.UniversalFile.createBlob(state.mergedPdfData!, 'application/pdf');
+      final url = core.UniversalFile.createBlobUrl(blob);
+      core.UniversalFile.downloadFromUrl(url, 'merged_document.pdf');
+    } catch (e) {
+      state = state.copyWith(processingErrors: [...state.processingErrors, 'Download failed: $e']);
+    }
   }
 
   /// Get merge statistics
