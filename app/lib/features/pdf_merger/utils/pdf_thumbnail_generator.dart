@@ -1,6 +1,6 @@
 import 'dart:typed_data';
-import 'package:pdfx/pdfx.dart';
-import '../models/pdf_merger_state.dart' hide PdfDocument;
+import 'package:pdfx/pdfx.dart' as px;
+import '../models/pdf_merger_state.dart';
 
 /// Utility class for generating PDF page thumbnails
 class PdfThumbnailGenerator {
@@ -11,7 +11,7 @@ class PdfThumbnailGenerator {
     final List<Uint8List> thumbnails = [];
     
     try {
-      final document = await PdfDocument.openData(pdfData);
+      final document = await px.PdfDocument.openData(pdfData);
       final pageCount = document.pagesCount;
       
       for (int i = 1; i <= pageCount; i++) {
@@ -19,7 +19,7 @@ class PdfThumbnailGenerator {
         final pageImage = await page.render(
           width: page.width,
           height: page.height,
-          format: PdfPageImageFormat.jpeg,
+          format: px.PdfPageImageFormat.jpeg,
           quality: 70,
         );
         
@@ -40,7 +40,7 @@ class PdfThumbnailGenerator {
   /// Get page count only
   static Future<int> getPageCount(Uint8List pdfData) async {
     try {
-      final document = await PdfDocument.openData(pdfData);
+      final document = await px.PdfDocument.openData(pdfData);
       final count = document.pagesCount;
       await document.close();
       return count;

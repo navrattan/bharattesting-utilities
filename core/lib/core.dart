@@ -25,3 +25,6 @@ export 'src/pdf_merger/pdf_merger.dart';
 
 // Document Scanner
 export 'src/document_scanner/document_scanner.dart';
+
+// Shared Utils
+export 'src/shared/utils/universal_file.dart';

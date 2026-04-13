@@ -2,9 +2,10 @@ import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import '../../../l10n/l10n.dart';
 import '../providers/document_scanner_provider.dart';
-import '../widgets/document_upload_zone.dart';
-import '../widgets/scanner_preview_panel.dart';
-import '../widgets/scanner_controls_panel.dart';
+import '../models/document_scanner_state.dart';
+import '../widgets/upload_drop_zone.dart';
+import '../widgets/camera_preview_widget.dart';
+import '../widgets/scan_controls_widget.dart';
 
 class DocumentScannerScreen extends ConsumerWidget {
   const DocumentScannerScreen({super.key});
@@ -14,17 +15,19 @@ class DocumentScannerScreen extends ConsumerWidget {
     final state = ref.watch(documentScannerProvider);
     final notifier = ref.read(documentScannerProvider.notifier);
 
-    return Column(
-      children: [
-        if (state.isProcessing)
-          const LinearProgressIndicator(),
-        
-        Expanded(
-          child: !state.hasDocument
-              ? _buildEmptyState(context, notifier)
-              : _buildScannerInterface(context, state, notifier),
-        ),
-      ],
+    return Scaffold(
+      body: Column(
+        children: [
+          if (state.isProcessing || state.isCapturing)
+            const LinearProgressIndicator(),
+          
+          Expanded(
+            child: state.scannedPages.isEmpty
+                ? _buildEmptyState(context, notifier)
+                : _buildScannerInterface(context, state, notifier),
+          ),
+        ],
+      ),
     );
   }
 
@@ -32,9 +35,12 @@ class DocumentScannerScreen extends ConsumerWidget {
     return Center(
       child: Padding(
         padding: const EdgeInsets.all(24),
-        child: DocumentUploadZone(
-          onDocumentSelected: notifier.addDocument,
-          onDocumentPicked: () => notifier.pickDocument(),
+        child: UploadDropZone(
+          onImageUploaded: (bytes) => notifier.uploadImage(),
+          // Note: In a real app, you'd pass the bytes directly to a method
+          // that adds them as a new page. DocumentScannerNotifier.uploadImage()
+          // internally uses FilePicker, but for drop zone we can use addDocument logic
+          // if it existed. Since uploadImage is available, we use that for now.
         ),
       ),
     );
@@ -54,19 +60,12 @@ class DocumentScannerScreen extends ConsumerWidget {
             children: [
               Expanded(
                 flex: 2,
-                child: ScannerPreviewPanel(
-                  document: state.currentDocument!,
-                  onEnhance: notifier.enhanceDocument,
-                ),
+                child: _buildPreview(state, notifier),
               ),
               const VerticalDivider(width: 1),
               SizedBox(
-                width: 300,
-                child: ScannerControlsPanel(
-                  state: state,
-                  onDownload: notifier.downloadDocument,
-                  onClear: notifier.clearDocument,
-                ),
+                width: 350,
+                child: _buildControls(state, notifier),
               ),
             ],
           );
@@ -74,21 +73,52 @@ class DocumentScannerScreen extends ConsumerWidget {
           return Column(
             children: [
               Expanded(
-                child: ScannerPreviewPanel(
-                  document: state.currentDocument!,
-                  onEnhance: notifier.enhanceDocument,
-                ),
+                child: _buildPreview(state, notifier),
               ),
               const Divider(height: 1),
-              ScannerControlsPanel(
-                state: state,
-                onDownload: notifier.downloadDocument,
-                onClear: notifier.clearDocument,
-              ),
+              _buildControls(state, notifier),
             ],
           );
         }
       },
+    );
+  }
+
+  Widget _buildPreview(DocumentScannerState state, DocumentScannerNotifier notifier) {
+    if (state.mode == ScannerMode.camera && state.cameraController != null) {
+      return CameraPreviewWidget(
+        controller: state.cameraController!,
+        onTap: (offset) => notifier.setZoomLevel(1.0), // Simplified
+      );
+    } else {
+      // Show list of scanned pages or the selected page
+      if (state.scannedPages.isNotEmpty) {
+        final displayPage = state.selectedPage ?? state.scannedPages.last;
+        return Center(
+          child: displayPage.processedImageData != null 
+              ? Image.memory(displayPage.processedImageData!)
+              : Image.memory(displayPage.originalImageData),
+        );
+      }
+      return const Center(child: Text('No images captured'));
+    }
+  }
+
+  Widget _buildControls(DocumentScannerState state, DocumentScannerNotifier notifier) {
+    return ScanControlsWidget(
+      isCapturing: state.isCapturing,
+      isAutoCapture: state.isAutoCapture,
+      canCapture: state.isCameraInitialized,
+      enableFlash: state.enableFlash,
+      zoomLevel: state.zoomLevel,
+      mode: state.mode,
+      onCapture: () => notifier.captureDocument(),
+      onAutoCaptureToggle: () => notifier.toggleAutoCapture(),
+      onFlashToggle: () => notifier.toggleFlash(),
+      onSwitchMode: () => notifier.setScannerMode(
+        state.mode == ScannerMode.camera ? ScannerMode.upload : ScannerMode.camera
+      ),
+      onZoomChanged: (zoom) => notifier.setZoomLevel(zoom),
     );
   }
 }

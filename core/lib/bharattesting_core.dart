@@ -22,3 +22,6 @@ export 'src/json_converter/json_converter.dart';
 
 // Document Scanner
 export 'src/document_scanner/document_scanner.dart';
+
+// Shared Utils
+export 'src/shared/utils/universal_file.dart';
