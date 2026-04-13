@@ -18,158 +18,160 @@ class HomeScreen extends StatelessWidget {
     final theme = Theme.of(context);
     final l10n = context.l10n;
 
-    return CustomScrollView(
-      slivers: [
-        // Elegant App Bar with Language Switcher
-        SliverAppBar(
-          expandedHeight: 180.0,
-          floating: false,
-          pinned: true,
-          backgroundColor: theme.colorScheme.surface,
-          elevation: 0,
-          actions: const [
-            LanguageSwitcher(),
-            SizedBox(width: 8),
-          ],
-          flexibleSpace: FlexibleSpaceBar(
-            centerTitle: true,
-            titlePadding: const EdgeInsets.only(bottom: 16),
-            title: Row(
-              mainAxisAlignment: MainAxisAlignment.center,
-              mainAxisSize: MainAxisSize.min,
-              children: [
-                Container(
-                  padding: const EdgeInsets.all(4),
-                  decoration: BoxDecoration(
-                    color: theme.colorScheme.primary,
-                    borderRadius: BorderRadius.circular(4),
+    return ToolScaffold(
+      body: CustomScrollView(
+        slivers: [
+          // Elegant App Bar with Language Switcher
+          SliverAppBar(
+            expandedHeight: 180.0,
+            floating: false,
+            pinned: true,
+            backgroundColor: theme.colorScheme.surface,
+            elevation: 0,
+            actions: const [
+              LanguageSwitcher(),
+              SizedBox(width: 8),
+            ],
+            flexibleSpace: FlexibleSpaceBar(
+              centerTitle: true,
+              titlePadding: const EdgeInsets.only(bottom: 16),
+              title: Row(
+                mainAxisAlignment: MainAxisAlignment.center,
+                mainAxisSize: MainAxisSize.min,
+                children: [
+                  Container(
+                    padding: const EdgeInsets.all(4),
+                    decoration: BoxDecoration(
+                      color: theme.colorScheme.primary,
+                      borderRadius: BorderRadius.circular(4),
+                    ),
+                    child: const Text(
+                      'BT',
+                      style: TextStyle(
+                        color: Colors.white,
+                        fontSize: 16,
+                        fontWeight: FontWeight.bold,
+                      ),
+                    ),
                   ),
-                  child: const Text(
-                    'BT',
+                  const SizedBox(width: 8),
+                  Text(
+                    'BharatTesting',
                     style: TextStyle(
-                      color: Colors.white,
-                      fontSize: 16,
+                      color: theme.colorScheme.onSurface,
+                      fontWeight: FontWeight.bold,
+                      fontSize: 18,
+                    ),
+                  ),
+                ],
+              ),
+              background: Container(
+                decoration: BoxDecoration(
+                  gradient: LinearGradient(
+                    begin: Alignment.topLeft,
+                    end: Alignment.bottomRight,
+                    colors: [
+                      theme.colorScheme.primary.withOpacity(0.05),
+                      theme.colorScheme.surface,
+                    ],
+                  ),
+                ),
+                child: Center(
+                  child: Column(
+                    mainAxisAlignment: MainAxisAlignment.center,
+                    children: [
+                      const SizedBox(height: 20),
+                      Icon(
+                        Icons.verified_user_outlined,
+                        size: 40,
+                        color: theme.colorScheme.primary.withOpacity(0.2),
+                      ),
+                    ],
+                  ),
+                ),
+              ),
+            ),
+          ),
+
+          // Main Content
+          SliverToBoxAdapter(
+            child: Padding(
+              padding: const EdgeInsets.symmetric(horizontal: 24.0),
+              child: Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  const SizedBox(height: 32),
+                  
+                  // Trust Badge
+                  Center(
+                    child: Container(
+                      padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 8),
+                      decoration: BoxDecoration(
+                        color: Colors.green.withOpacity(0.1),
+                        borderRadius: BorderRadius.circular(20),
+                        border: Border.all(color: Colors.green.withOpacity(0.2)),
+                      ),
+                      child: Row(
+                        mainAxisSize: MainAxisSize.min,
+                        children: [
+                          const Icon(Icons.lock_outline, size: 16, color: Colors.green),
+                          const SizedBox(width: 8),
+                          Text(
+                            '100% Private & Offline - No Data Leaves Your Device',
+                            style: theme.textTheme.labelMedium?.copyWith(
+                              color: Colors.green[700],
+                              fontWeight: FontWeight.bold,
+                            ),
+                          ),
+                        ],
+                      ),
+                    ),
+                  ),
+                  
+                  const SizedBox(height: 40),
+                  
+                  Text(
+                    l10n.homeTitle,
+                    style: theme.textTheme.headlineSmall?.copyWith(
                       fontWeight: FontWeight.bold,
                     ),
                   ),
-                ),
-                const SizedBox(width: 8),
-                Text(
-                  'BharatTesting',
-                  style: TextStyle(
-                    color: theme.colorScheme.onSurface,
-                    fontWeight: FontWeight.bold,
-                    fontSize: 18,
-                  ),
-                ),
-              ],
-            ),
-            background: Container(
-              decoration: BoxDecoration(
-                gradient: LinearGradient(
-                  begin: Alignment.topLeft,
-                  end: Alignment.bottomRight,
-                  colors: [
-                    theme.colorScheme.primary.withOpacity(0.05),
-                    theme.colorScheme.surface,
-                  ],
-                ),
-              ),
-              child: Center(
-                child: Column(
-                  mainAxisAlignment: MainAxisAlignment.center,
-                  children: [
-                    const SizedBox(height: 20),
-                    Icon(
-                      Icons.verified_user_outlined,
-                      size: 40,
-                      color: theme.colorScheme.primary.withOpacity(0.2),
+                  const SizedBox(height: 24),
+                  
+                  // Bento Grid
+                  _BentoToolGrid(),
+                  
+                  const SizedBox(height: 60),
+                  
+                  // Privacy & Security Section
+                  Text(
+                    'Privacy & Security',
+                    style: theme.textTheme.titleLarge?.copyWith(
+                      fontWeight: FontWeight.bold,
                     ),
-                  ],
-                ),
+                  ),
+                  const SizedBox(height: 16),
+                  const _PrivacySection(),
+                  
+                  const SizedBox(height: 60),
+                  
+                  // Footer info
+                  Center(
+                    child: Opacity(
+                      opacity: 0.5,
+                      child: Text(
+                        '© 2026 BharatTesting Utilities • v1.0.0',
+                        style: theme.textTheme.bodySmall,
+                      ),
+                    ),
+                  ),
+                  const SizedBox(height: 40),
+                ],
               ),
             ),
           ),
-        ),
-
-        // Main Content
-        SliverToBoxAdapter(
-          child: Padding(
-            padding: const EdgeInsets.symmetric(horizontal: 24.0),
-            child: Column(
-              crossAxisAlignment: CrossAxisAlignment.start,
-              children: [
-                const SizedBox(height: 32),
-                
-                // Trust Badge
-                Center(
-                  child: Container(
-                    padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 8),
-                    decoration: BoxDecoration(
-                      color: Colors.green.withOpacity(0.1),
-                      borderRadius: BorderRadius.circular(20),
-                      border: Border.all(color: Colors.green.withOpacity(0.2)),
-                    ),
-                    child: Row(
-                      mainAxisSize: MainAxisSize.min,
-                      children: [
-                        const Icon(Icons.lock_outline, size: 16, color: Colors.green),
-                        const SizedBox(width: 8),
-                        Text(
-                          '100% Private & Offline - No Data Leaves Your Device',
-                          style: theme.textTheme.labelMedium?.copyWith(
-                            color: Colors.green[700],
-                            fontWeight: FontWeight.bold,
-                          ),
-                        ),
-                      ],
-                    ),
-                  ),
-                ),
-                
-                const SizedBox(height: 40),
-                
-                Text(
-                  l10n.homeTitle,
-                  style: theme.textTheme.headlineSmall?.copyWith(
-                    fontWeight: FontWeight.bold,
-                  ),
-                ),
-                const SizedBox(height: 24),
-                
-                // Bento Grid
-                _BentoToolGrid(),
-                
-                const SizedBox(height: 60),
-                
-                // Privacy & Security Section
-                Text(
-                  'Privacy & Security',
-                  style: theme.textTheme.titleLarge?.copyWith(
-                    fontWeight: FontWeight.bold,
-                  ),
-                ),
-                const SizedBox(height: 16),
-                const _PrivacySection(),
-                
-                const SizedBox(height: 60),
-                
-                // Footer info
-                Center(
-                  child: Opacity(
-                    opacity: 0.5,
-                    child: Text(
-                      '© 2026 BharatTesting Utilities • v1.0.0',
-                      style: theme.textTheme.bodySmall,
-                    ),
-                  ),
-                ),
-                const SizedBox(height: 40),
-              ],
-            ),
-          ),
-        ),
-      ],
+        ],
+      ),
     );
   }
 }
