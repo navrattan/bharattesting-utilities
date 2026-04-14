@@ -39,10 +39,10 @@ class ToolBranding {
     ToolIntent.faker: const ToolBranding(
       title: 'Indian Data Faker',
       standaloneTitle: 'BT Faker',
-      subtitle: 'Generate synthetic but valid Indian identity and business data',
+      subtitle: 'Valid Indian test data for QA Engineers, Manual Testers, and Developers',
       primaryColor: Colors.blue,
       icon: Icons.badge_outlined,
-      seoTitle: 'Indian Data Faker | BharatTesting',
+      seoTitle: 'Indian Data Faker for QA & Testers | BharatTesting',
     ),
     ToolIntent.json: const ToolBranding(
       title: 'String to JSON',

@@ -1,6 +1,6 @@
 # BharatTesting.com
 
-> India's primary platform for generating, validating, and transforming India-specific test data. 100% offline and privacy-first.
+> India's primary platform for generating, validating, and transforming India-specific test data. Optimized for QA Engineers, Manual Testers, and Developers. 100% offline and privacy-first.
 
 ## API Base URL
 - Base URL: https://api.bharattesting.com/v1

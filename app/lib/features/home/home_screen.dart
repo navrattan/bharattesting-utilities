@@ -321,7 +321,7 @@ class _PrivacySection extends StatelessWidget {
           _PrivacyItem(
             icon: Icons.code_outlined,
             title: 'Open Source',
-            description: 'Transparent and verifiable code built for the community.',
+            description: 'Transparent and verifiable code built for QA and Developer communities.',
           ),
         ],
       ),

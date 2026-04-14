@@ -22,6 +22,17 @@ class FakerScreen extends ConsumerWidget {
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
+          // SEO Introduction
+          Text(
+            "Indian Test Data Generator for QA & Developers",
+            style: theme.textTheme.titleLarge?.copyWith(fontWeight: FontWeight.bold),
+          ),
+          const SizedBox(height: 8),
+          Text(
+            "Generate realistic, structurally valid Indian identifiers including Aadhaar, PAN, GSTIN, and UPI IDs. Essential for manual testing, QA automation, and KYC flow validation. 100% offline and secure.",
+            style: theme.textTheme.bodyMedium?.copyWith(color: theme.colorScheme.onSurfaceVariant),
+          ),
+          const SizedBox(height: 24),
 
           // STEP 0: SELECT TEMPLATE
           _buildSectionHeader(context, "0", "Select Template"),

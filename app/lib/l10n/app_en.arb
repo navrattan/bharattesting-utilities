@@ -4,7 +4,7 @@
     "description": "The title of the application"
   },
 
-  "homeTitle": "Developer Tools",
+  "homeTitle": "BharatTesting Tools",
   "@homeTitle": {
     "description": "Title for the home screen"
   },
@@ -44,12 +44,12 @@
     "description": "Title for the Indian data faker tool"
   },
 
-  "dataFakerSubtitle": "Generate synthetic but valid Indian identity data",
+  "dataFakerSubtitle": "Valid Indian test data for QA, Testers, and Developers",
   "@dataFakerSubtitle": {
     "description": "Subtitle for the Indian data faker tool"
   },
 
-  "dataFakerSubtitle": "Generate synthetic but valid Indian identity data",
+  "dataFakerSubtitle": "Valid Indian test data for QA, Testers, and Developers",
   "@dataFakerSubtitle": {
     "description": "Subtitle for the Indian data faker tool"
   },
