@@ -12,8 +12,8 @@ class DocumentScannerScreen extends ConsumerWidget {
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
-    final state = ref.watch(documentScannerProvider);
-    final notifier = ref.read(documentScannerProvider.notifier);
+    final state = ref.watch(documentScannerNotifierProvider);
+    final notifier = ref.read(documentScannerNotifierProvider.notifier);
 
     return Scaffold(
       body: Column(
