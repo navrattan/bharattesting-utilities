@@ -188,34 +188,6 @@ class _BentoToolGrid extends StatelessWidget {
         route: '/indian-data-faker',
         color: Colors.blue,
       ),
-      _ToolData(
-        title: l10n.jsonConverterTitle,
-        description: l10n.jsonConverterSubtitle,
-        icon: Icons.data_object_outlined,
-        route: '/string-to-json',
-        color: Colors.indigo,
-      ),
-      _ToolData(
-        title: l10n.imageSizeReducerTitle,
-        description: 'Optimize images for official portals and uploads.',
-        icon: Icons.photo_size_select_large_outlined,
-        route: '/image-reducer',
-        color: Colors.teal,
-      ),
-      _ToolData(
-        title: l10n.pdfMergerTitle,
-        description: 'Combine and organize PDF documents securely.',
-        icon: Icons.picture_as_pdf_outlined,
-        route: '/pdf-merger',
-        color: Colors.redAccent,
-      ),
-      _ToolData(
-        title: l10n.documentScannerTitle,
-        description: 'Professional scanning with OCR and edge detection.',
-        icon: Icons.document_scanner_outlined,
-        route: '/document-scanner',
-        color: Colors.amber[800]!,
-      ),
     ];
 
     return GridView.builder(
