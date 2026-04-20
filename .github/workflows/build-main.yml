@@ -51,7 +51,7 @@ jobs:
           echo "| Web | $WEB_SIZE | ✅ |" >> $GITHUB_STEP_SUMMARY
 
       - name: Upload Web Artifacts
-        uses: actions/upload-artifact@v4
+        uses: actions/upload-artifact@v7
         with:
           name: web-build
           path: app/build/web/
